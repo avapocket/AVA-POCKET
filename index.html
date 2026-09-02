@@ -1,1 +1,1816 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#7c3aed">
 
+<title>AVA ОБУЧЕНИЕ</title>
+
+<style>
+:root{
+  --purple:#8b5cf6;
+  --purple2:#6d28d9;
+  --bg:#08070d;
+  --card:#12101b;
+  --card2:#181524;
+  --text:#f7f5ff;
+  --muted:#a7a0b8;
+  --line:#29233a;
+  --green:#35d07f;
+  --red:#ff5577;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      #28134c 0,
+      #0c0913 40%,
+      #07060b 100%
+    );
+  color:var(--text);
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:16px 15px 95px;
+}
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+  animation:show .25s ease;
+}
+
+@keyframes show{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* TOP */
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.brand{
+  font-weight:950;
+  letter-spacing:.4px;
+}
+
+.brand span{
+  color:#a78bfa;
+}
+
+.pill{
+  font-size:11px;
+  background:#171323;
+  border:1px solid var(--line);
+  padding:7px 10px;
+  border-radius:99px;
+  color:#c9c1d8;
+}
+
+/* HERO */
+
+.hero{
+  padding:25px 4px 18px;
+}
+
+.eyebrow{
+  display:inline-block;
+  padding:7px 10px;
+  border-radius:99px;
+  background:#24133e;
+  color:#c4a7ff;
+  font-size:11px;
+  font-weight:850;
+}
+
+.hero h1{
+  font-size:50px;
+  line-height:.92;
+  margin:15px 0;
+  font-weight:950;
+  letter-spacing:-2.5px;
+}
+
+.hero h1 span{
+  color:#a78bfa;
+}
+
+.hero p{
+  color:var(--muted);
+  line-height:1.55;
+}
+
+/* BUTTON */
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:15px;
+  padding:15px;
+  color:#fff;
+  font-size:15px;
+  font-weight:850;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--purple2)
+    );
+  box-shadow:0 12px 30px #6d28d933;
+  cursor:pointer;
+}
+
+.btn:active{
+  transform:scale(.98);
+}
+
+.btn.secondary{
+  background:#17131f;
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+
+/* CARDS */
+
+.card,
+.stat{
+  background:
+    linear-gradient(
+      145deg,
+      #171321,
+      #0f0d16
+    );
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:10px;
+}
+
+.card h2,
+.card h3{
+  margin-top:0;
+}
+
+.card p{
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.stat b{
+  display:block;
+  font-size:21px;
+}
+
+.stat small{
+  color:var(--muted);
+}
+
+.icon{
+  font-size:27px;
+}
+
+.section-title{
+  font-size:21px;
+  font-weight:900;
+  margin:23px 0 11px;
+}
+
+/* CHART */
+
+.chart{
+  height:165px;
+  border-radius:17px;
+  background:#0b0910;
+  border:1px solid #292039;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+.chart svg{
+  width:100%;
+  height:100%;
+}
+
+/* PROGRESS */
+
+.progress-wrap{
+  height:8px;
+  background:#211b2b;
+  border-radius:20px;
+  overflow:hidden;
+  margin:10px 0 17px;
+}
+
+.progress{
+  height:100%;
+  width:0;
+  background:
+    linear-gradient(
+      90deg,
+      #7c3aed,
+      #c084fc
+    );
+  transition:.3s;
+}
+
+/* LESSON */
+
+.lesson-head{
+  display:flex;
+  justify-content:space-between;
+}
+
+.lesson-num{
+  font-size:12px;
+  color:#bda6e9;
+}
+
+.lesson-text{
+  font-size:15px;
+  line-height:1.65;
+  color:#d3cdda;
+}
+
+/* QUESTIONS */
+
+.question{
+  font-size:19px;
+  font-weight:900;
+  line-height:1.35;
+  margin:12px 0 16px;
+}
+
+.answers{
+  display:grid;
+  gap:9px;
+}
+
+.answer{
+  padding:14px;
+  border:1px solid var(--line);
+  background:#14111d;
+  color:#eee9f5;
+  border-radius:13px;
+  text-align:left;
+  font-weight:750;
+  cursor:pointer;
+}
+
+.answer.correct{
+  border-color:var(--green);
+  background:#0e291c;
+}
+
+.answer.wrong{
+  border-color:var(--red);
+  background:#2a111a;
+}
+
+.feedback{
+  margin:12px 0;
+  padding:12px;
+  border-radius:12px;
+  background:#17131f;
+  color:#cfc7da;
+  line-height:1.45;
+}
+
+.hide{
+  display:none!important;
+}
+
+/* DICTIONARY */
+
+.dict-search{
+  width:100%;
+  padding:13px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:#100d16;
+  color:#fff;
+  outline:none;
+  margin-bottom:10px;
+}
+
+.term b{
+  display:block;
+  margin-bottom:5px;
+}
+
+.term span{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
+}
+
+/* FINAL */
+
+.score{
+  font-size:58px;
+  font-weight:950;
+  color:#c4a0ff;
+}
+
+.stars{
+  font-size:27px;
+  letter-spacing:3px;
+}
+
+.center{
+  text-align:center;
+}
+
+.notice{
+  border-left:3px solid #8b5cf6;
+  padding-left:12px;
+  color:#aaa2b5;
+  font-size:12px;
+  line-height:1.5;
+}
+
+/* NAV */
+
+.nav{
+  position:fixed;
+  left:50%;
+  bottom:9px;
+  transform:translateX(-50%);
+  width:min(490px,calc(100% - 24px));
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+  padding:7px;
+  background:#100d17ee;
+  border:1px solid #30283e;
+  border-radius:18px;
+  backdrop-filter:blur(16px);
+  z-index:20;
+}
+
+.nav button{
+  border:0;
+  background:transparent;
+  color:#8f879e;
+  padding:8px 2px;
+  border-radius:12px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.nav button.active{
+  background:#25183b;
+  color:#c8a9ff;
+}
+
+.nav i{
+  display:block;
+  font-style:normal;
+  font-size:18px;
+  margin-bottom:3px;
+}
+
+@media(max-width:380px){
+  .hero h1{
+    font-size:42px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="top">
+  <div class="brand">
+    AVA <span>ОБУЧЕНИЕ</span>
+  </div>
+
+  <div class="pill" id="level">
+    Старт
+  </div>
+</header>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="screen active">
+
+  <div class="hero">
+
+    <div class="eyebrow">
+      🟣 МИНИ-ПОДГОТОВКА
+    </div>
+
+    <h1>
+      Понимай<br>
+      <span>график.</span>
+    </h1>
+
+    <p>
+      Короткий путь от
+      «я ничего не понимаю»
+      до базового понимания
+      свечей, тренда, уровней и риска.
+    </p>
+
+    <button
+      class="btn"
+      onclick="go('course')"
+    >
+      Начать подготовку →
+    </button>
+
+  </div>
+
+
+  <div class="chart">
+
+    <svg
+      viewBox="0 0 500 165"
+      preserveAspectRatio="none"
+    >
+
+      <polyline
+        points="
+        0,135
+        45,120
+        80,132
+        115,94
+        150,106
+        180,73
+        215,82
+        250,53
+        285,68
+        320,41
+        355,56
+        395,28
+        430,42
+        470,18
+        500,27"
+        fill="none"
+        stroke="#a78bfa"
+        stroke-width="4"
+      />
+
+    </svg>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="stat">
+      <b id="hp">0%</b>
+      <small>прогресс</small>
+    </div>
+
+    <div class="stat">
+      <b id="hs">0 ⭐</b>
+      <small>награда</small>
+    </div>
+
+  </div>
+
+
+  <div class="section-title">
+    Что внутри
+  </div>
+
+
+  <div class="card">
+
+    <div class="icon">
+      🕯️
+    </div>
+
+    <h3>
+      Свечи
+    </h3>
+
+    <p>
+      Тело и тени свечи и что они
+      говорят о движении цены.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="icon">
+      📈
+    </div>
+
+    <h3>
+      Движение цены
+    </h3>
+
+    <p>
+      Тренд, уровни и простая
+      логика рынка без перегруза.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="icon">
+      🛡️
+    </div>
+
+    <h3>
+      Риск
+    </h3>
+
+    <p>
+      Почему контроль риска важнее
+      желания быстро заработать.
+    </p>
+
+  </div>
+
+
+  <p class="notice">
+    Важно: это образовательный материал,
+    а не финансовая рекомендация.
+    Торговля связана с риском потери денег.
+  </p>
+
+</section>
+
+
+
+<!-- ================= COURSE ================= -->
+
+<section id="course" class="screen">
+
+  <div class="section-title">
+    Подготовка
+  </div>
+
+  <div class="card">
+
+    <div class="lesson-head">
+
+      <span
+        class="lesson-num"
+        id="ln"
+      ></span>
+
+      <span id="ls">
+        ☆
+      </span>
+
+    </div>
+
+
+    <div class="progress-wrap">
+
+      <div
+        class="progress"
+        id="cp"
+      ></div>
+
+    </div>
+
+
+    <div id="lesson"></div>
+
+
+    <button
+      class="btn"
+      id="lb"
+      onclick="checkLesson()"
+    >
+      Я прочитал — проверить себя
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- ================= TEST ================= -->
+
+<section id="test" class="screen">
+
+  <div class="section-title">
+    Проверка знаний
+  </div>
+
+  <div class="card">
+
+    <div
+      class="lesson-num"
+      id="qn"
+    ></div>
+
+
+    <div class="progress-wrap">
+
+      <div
+        class="progress"
+        id="tp"
+      ></div>
+
+    </div>
+
+
+    <div
+      class="question"
+      id="qq"
+    ></div>
+
+
+    <div
+      class="answers"
+      id="aa"
+    ></div>
+
+
+    <div id="ff"></div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ================= DICTIONARY ================= -->
+
+<section id="dictionary" class="screen">
+
+  <div class="section-title">
+    Словарь
+  </div>
+
+  <input
+    class="dict-search"
+    id="search"
+    placeholder="Поиск термина..."
+    oninput="dictRender()"
+  >
+
+  <div id="dict"></div>
+
+</section>
+
+
+
+<!-- ================= FINAL ================= -->
+
+<section id="final" class="screen">
+
+  <div class="section-title">
+    Финал
+  </div>
+
+
+  <div class="card center">
+
+    <div class="eyebrow">
+      ПОДГОТОВКА ЗАВЕРШЕНА
+    </div>
+
+    <div
+      class="score"
+      id="fs"
+    >
+      0%
+    </div>
+
+    <div
+      class="stars"
+      id="fst"
+    >
+      ☆☆☆☆☆
+    </div>
+
+    <h2 id="ft">
+      Начни с понимания
+    </h2>
+
+    <p
+      id="fx"
+      class="muted"
+    >
+      Пройди материал и проверь себя.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <h3>
+      Что дальше?
+    </h3>
+
+    <p>
+      Если хочешь продолжить изучать рынок,
+      можешь перейти к каналу AVA или
+      самостоятельно изучить условия
+      выбранной платформы.
+    </p>
+
+  </div>
+
+
+  <button
+    class="btn"
+    onclick="window.open(
+      'https://u3.shortink.io/register?utm_campaign=787509&utm_source=affiliate&utm_medium=sr&a=o7nD89164UWb0o&ac=avatrader&code=WELCOME50',
+      '_blank'
+    )"
+  >
+    🚀 Перейти к брокеру
+  </button>
+
+
+  <div style="height:9px"></div>
+
+
+  <button
+    class="btn secondary"
+    onclick="window.open(
+      'https://t.me/+D1kxbrvyGSViZWFi',
+      '_blank'
+    )"
+  >
+    📢 Telegram канал
+  </button>
+
+
+  <div style="height:9px"></div>
+
+
+  <button
+    class="btn secondary"
+    onclick="window.open(
+      'https://t.me/m/OsDQxjCLNTUy',
+      '_blank'
+    )"
+  >
+    💬 Связь со мной
+  </button>
+
+
+  <p
+    class="notice"
+    style="margin-top:15px"
+  >
+    Регистрация добровольна и не гарантирует
+    прибыль. Не используй деньги, потерю
+    которых не можешь себе позволить.
+  </p>
+
+</section>
+
+</div>
+
+
+
+<!-- ================= NAV ================= -->
+
+<nav class="nav">
+
+  <button
+    data-n="home"
+    onclick="go('home')"
+  >
+    <i>⌂</i>
+    Главная
+  </button>
+
+  <button
+    data-n="course"
+    onclick="go('course')"
+  >
+    <i>📖</i>
+    Учебник
+  </button>
+
+  <button
+    data-n="test"
+    onclick="go('test')"
+  >
+    <i>🧠</i>
+    Проверка
+  </button>
+
+  <button
+    data-n="final"
+    onclick="go('final')"
+  >
+    <i>🏆</i>
+    Финал
+  </button>
+
+</nav>
+
+
+
+<script>
+
+/* ================= DATA ================= */
+
+const lessons = [
+
+{
+title:"Свеча — язык графика",
+
+html:`
+<p class="lesson-text">
+
+Свеча показывает движение цены
+за выбранный период.
+
+<b>Тело</b> — разница между открытием
+и закрытием.
+
+<b>Тени</b> показывают крайние значения
+цены за этот период.
+
+</p>
+
+<div class="chart">
+
+<svg viewBox="0 0 500 165">
+
+<line
+x1="250"
+y1="25"
+x2="250"
+y2="145"
+stroke="#c4a0ff"
+stroke-width="4"
+/>
+
+<rect
+x="215"
+y="60"
+width="70"
+height="55"
+rx="5"
+fill="#7c3aed"
+/>
+
+<line
+x1="370"
+y1="45"
+x2="370"
+y2="150"
+stroke="#777"
+stroke-width="4"
+/>
+
+<rect
+x="335"
+y="72"
+width="70"
+height="45"
+rx="5"
+fill="#35d07f"
+/>
+
+</svg>
+
+</div>
+`
+},
+
+{
+title:"Бычья и медвежья свеча",
+
+html:`
+<p class="lesson-text">
+
+Если цена закрылась выше открытия —
+свеча показывает рост.
+
+Если цена закрылась ниже открытия —
+свеча показывает падение.
+
+Но одна свеча не может гарантировать
+следующее движение цены.
+
+</p>
+`
+},
+
+{
+title:"Тренд",
+
+html:`
+<p class="lesson-text">
+
+Тренд — это общее направление
+движения цены.
+
+Восходящее движение обычно формирует
+более высокие максимумы и минимумы.
+
+В нисходящем движении происходит
+обратная картина.
+
+</p>
+
+<div class="chart">
+
+<svg viewBox="0 0 500 165">
+
+<polyline
+points="
+20,140
+90,115
+150,125
+220,82
+280,98
+350,50
+420,68
+480,25"
+fill="none"
+stroke="#a78bfa"
+stroke-width="5"
+/>
+
+</svg>
+
+</div>
+`
+},
+
+{
+title:"Уровни",
+
+html:`
+<p class="lesson-text">
+
+Уровень — это зона, где цена
+раньше реагировала.
+
+Поддержка может замедлять падение.
+
+Сопротивление может замедлять рост.
+
+Но уровень не является гарантией
+разворота.
+
+</p>
+`
+},
+
+{
+title:"Таймфрейм",
+
+html:`
+<p class="lesson-text">
+
+Таймфрейм — период времени,
+который представляет одна свеча.
+
+Маленькие периоды дают больше
+краткосрочного шума.
+
+Большие периоды помогают увидеть
+более общую структуру.
+
+</p>
+`
+},
+
+{
+title:"Риск прежде всего",
+
+html:`
+<p class="lesson-text">
+
+Не воспринимай одну сделку как способ
+быстро заработать.
+
+Определи сумму, которую готов потерять,
+и не используй деньги, необходимые
+для жизни.
+
+</p>
+
+<div class="card">
+
+<h3>
+🛡️ Контроль
+</h3>
+
+<p>
+Не увеличивай риск только потому,
+что предыдущая сделка была неудачной.
+</p>
+
+</div>
+`
+},
+
+{
+title:"Дисциплина",
+
+html:`
+<p class="lesson-text">
+
+Хороший процесс важнее эмоций.
+
+Не обязательно входить в каждое
+движение рынка.
+
+Если ты не понимаешь,
+почему принимаешь решение —
+лучше остановиться и разобраться.
+
+</p>
+
+<div class="card">
+
+<h3>
+Главная мысль
+</h3>
+
+<p>
+Сначала понимание → практика →
+и только потом решения
+с реальными деньгами.
+</p>
+
+</div>
+`
+}
+
+];
+
+
+const questions = [
+
+[
+"Что показывает тело свечи?",
+
+[
+"Разницу между открытием и закрытием",
+"Только максимальную цену",
+"Количество сделок",
+"Будущую цену"
+],
+
+0
+],
+
+[
+"Если цена закрылась ниже открытия, это…",
+
+[
+"Рост",
+"Падение",
+"Гарантированный разворот",
+"Отсутствие движения"
+],
+
+1
+],
+
+[
+"Что лучше описывает восходящий тренд?",
+
+[
+"Случайные свечи",
+"Более высокие максимумы и минимумы",
+"Только красные свечи",
+"Одна большая свеча"
+],
+
+1
+],
+
+[
+"Что такое уровень?",
+
+[
+"Гарантия разворота",
+"Зона прошлой реакции цены",
+"Название индикатора",
+"Размер депозита"
+],
+
+1
+],
+
+[
+"Что означает таймфрейм?",
+
+[
+"Размер графика",
+"Период, представленный одной свечой",
+"Размер депозита",
+"Количество индикаторов"
+],
+
+1
+],
+
+[
+"Что наиболее разумно?",
+
+[
+"Рисковать деньгами на жизнь",
+"Увеличивать ставку после убытка",
+"Сначала изучить риск и правила",
+"Торговать каждую минуту"
+],
+
+2
+],
+
+[
+"Цена три раза подошла к зоне и замедлялась. Что это может быть?",
+
+[
+"Уровень реакции",
+"Гарантия прибыли",
+"Сигнал на всё сразу",
+"Ничего"
+],
+
+0
+],
+
+[
+"Тень свечи показывает…",
+
+[
+"Крайние цены за период",
+"Только цену открытия",
+"Будущую свечу",
+"Размер риска"
+],
+
+0
+],
+
+[
+"Если не понимаешь причину входа, лучше…",
+
+[
+"Увеличить сумму",
+"Остановиться и разобраться",
+"Открыть несколько сделок",
+"Следовать эмоциям"
+],
+
+1
+],
+
+[
+"Что НЕ является гарантией результата?",
+
+[
+"Анализ рынка",
+"Прошлая реакция цены",
+"Любой отдельный паттерн",
+"Контроль риска"
+],
+
+2
+],
+
+[
+"После убытка хочется удвоить сумму. Что разумнее?",
+
+[
+"Удвоить",
+"Сохранить план и риск",
+"Срочно отыграться",
+"Открыть ещё пять сделок"
+],
+
+1
+],
+
+[
+"Главная идея подготовки?",
+
+[
+"Быстрые деньги",
+"Понимание → практика → решения",
+"Торговать без остановки",
+"Игнорировать риск"
+],
+
+1
+]
+
+];
+
+
+const dictionary = [
+
+[
+"Свеча",
+"Элемент графика, показывающий движение цены за выбранный период."
+],
+
+[
+"Тело",
+"Разница между открытием и закрытием."
+],
+
+[
+"Тень",
+"Крайнее значение цены за период."
+],
+
+[
+"Тренд",
+"Общее направление движения цены."
+],
+
+[
+"Поддержка",
+"Зона, где падение ранее могло замедляться."
+],
+
+[
+"Сопротивление",
+"Зона, где рост ранее мог замедляться."
+],
+
+[
+"Таймфрейм",
+"Период времени, представленный одной свечой."
+],
+
+[
+"Риск",
+"Возможность получить финансовый убыток."
+],
+
+[
+"Волатильность",
+"Степень и скорость изменения цены."
+],
+
+[
+"Дисциплина",
+"Следование правилам, а не эмоциям."
+]
+
+];
+
+
+/* ================= STATE ================= */
+
+let state =
+JSON.parse(
+localStorage.getItem("avaState")
+||
+'{"lesson":0,"stars":0,"q":0,"score":0,"answers":0}'
+);
+
+
+/* ================= SAVE ================= */
+
+function save(){
+
+  localStorage.setItem(
+    "avaState",
+    JSON.stringify(state)
+  );
+
+  updateStats();
+}
+
+
+/* ================= STATS ================= */
+
+function updateStats(){
+
+  const progress =
+    Math.min(
+      100,
+      Math.round(
+        state.lesson / 7 * 70 +
+        state.answers / 12 * 30
+      )
+    );
+
+  document.getElementById("hp")
+    .textContent =
+    progress + "%";
+
+  document.getElementById("hs")
+    .textContent =
+    state.stars + " ⭐";
+
+  document.getElementById("level")
+    .textContent =
+    state.lesson >= 7
+    ? "Готово"
+    : state.lesson
+    ? "В процессе"
+    : "Старт";
+}
+
+
+/* ================= NAV ================= */
+
+function go(id){
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(
+      x => x.classList.remove("active")
+    );
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(
+      x =>
+      x.classList.toggle(
+        "active",
+        x.dataset.n === id
+      )
+    );
+
+  if(id === "course")
+    renderLesson();
+
+  if(id === "test")
+    renderQuestion();
+
+  if(id === "dictionary")
+    renderDictionary();
+
+  if(id === "final")
+    renderFinal();
+
+  window.scrollTo(0,0);
+}
+
+
+/* ================= LESSON ================= */
+
+function renderLesson(){
+
+  const i =
+    Math.min(
+      state.lesson,
+      lessons.length - 1
+    );
+
+  const lesson =
+    lessons[i];
+
+  document.getElementById("ln")
+    .textContent =
+    `Урок ${i + 1} из ${lessons.length}`;
+
+  document.getElementById("ls")
+    .textContent =
+    "☆";
+
+  document.getElementById("cp")
+    .style.width =
+    (i / lessons.length * 100) + "%";
+
+  document.getElementById("lesson")
+    .innerHTML =
+    `<h2>${lesson.title}</h2>
+     ${lesson.html}`;
+
+  document.getElementById("lb")
+    .classList.remove("hide");
+
+  document.getElementById("lb")
+    .textContent =
+    "Я прочитал — проверить себя";
+}
+
+
+/* ================= LESSON CHECK ================= */
+
+function checkLesson(){
+
+  const i =
+    Math.min(
+      state.lesson,
+      lessons.length - 1
+    );
+
+  const q =
+    questions[i % questions.length];
+
+  document.getElementById("lesson")
+    .innerHTML = `
+
+      <div class="eyebrow">
+        БЫСТРАЯ ПРОВЕРКА
+      </div>
+
+      <div class="question">
+        ${q[0]}
+      </div>
+
+      <div class="answers">
+
+        ${q[1].map(
+          (answer,index) => `
+
+          <button
+            class="answer"
+            onclick="lessonAnswer(
+              ${index},
+              ${q[2]}
+            )"
+          >
+            ${answer}
+          </button>
+
+        `
+        ).join("")}
+
+      </div>
+
+      <div id="lf"></div>
+    `;
+
+  document.getElementById("lb")
+    .classList.add("hide");
+}
+
+
+/* ================= LESSON ANSWER ================= */
+
+function lessonAnswer(index, correct){
+
+  document
+    .querySelectorAll("#lesson .answer")
+    .forEach(
+      (button,i)=>{
+
+        button.disabled = true;
+
+        if(i === correct)
+          button.classList.add("correct");
+
+        if(
+          i === index &&
+          i !== correct
+        )
+          button.classList.add("wrong");
+
+      }
+    );
+
+  const correctAnswer =
+    index === correct;
+
+  if(correctAnswer){
+
+    state.stars++;
+    state.lesson++;
+
+  }
+
+  document.getElementById("lf")
+    .innerHTML = `
+
+      <div class="feedback">
+
+        ${
+          correctAnswer
+          ? "✅ Верно! +1 ⭐"
+          : "❌ Не совсем. Правильный ответ выделен."
+        }
+
+      </div>
+
+      <button
+        class="btn"
+        onclick="go(
+          '${state.lesson >= 7
+            ? "test"
+            : "course"}'
+        )"
+      >
+
+        ${
+          state.lesson >= 7
+          ? "Перейти к проверке →"
+          : "Следующий урок →"
+        }
+
+      </button>
+    `;
+
+  save();
+}
+
+
+/* ================= TEST ================= */
+
+function renderQuestion(){
+
+  if(state.q >= questions.length){
+
+    go("final");
+    return;
+
+  }
+
+  const q =
+    questions[state.q];
+
+  document.getElementById("qn")
+    .textContent =
+    `Вопрос ${state.q + 1} из ${questions.length}`;
+
+  document.getElementById("tp")
+    .style.width =
+    (state.q / questions.length * 100)
+    + "%";
+
+  document.getElementById("qq")
+    .textContent =
+    q[0];
+
+  document.getElementById("aa")
+    .innerHTML =
+    q[1].map(
+      (answer,index)=>`
+
+        <button
+          class="answer"
+          onclick="answer(
+            ${index},
+            ${q[2]}
+          )"
+        >
+          ${answer}
+        </button>
+
+      `
+    ).join("");
+
+  document.getElementById("ff")
+    .innerHTML = "";
+}
+
+
+/* ================= ANSWER ================= */
+
+function answer(index, correct){
+
+  document
+    .querySelectorAll("#aa .answer")
+    .forEach(
+      (button,i)=>{
+
+        button.disabled = true;
+
+        if(i === correct)
+          button.classList.add("correct");
+
+        if(
+          i === index &&
+          i !== correct
+        )
+          button.classList.add("wrong");
+
+      }
+    );
+
+  const isCorrect =
+    index === correct;
+
+  if(isCorrect){
+
+    state.score++;
+    state.stars++;
+
+  }
+
+  state.answers =
+    Math.max(
+      state.answers,
+      state.q + 1
+    );
+
+  document.getElementById("ff")
+    .innerHTML = `
+
+      <div class="feedback">
+
+        ${
+          isCorrect
+          ? "✅ Верно!"
+          : "❌ Неверно. Правильный ответ выделен."
+        }
+
+      </div>
+
+      <button
+        class="btn"
+        onclick="nextQuestion()"
+      >
+        Дальше →
+      </button>
+    `;
+
+  save();
+}
+
+
+/* ================= NEXT QUESTION ================= */
+
+function nextQuestion(){
+
+  state.q++;
+
+  save();
+
+  if(
+    state.q >= questions.length
+  ){
+
+    go("final");
+
+  }else{
+
+    renderQuestion();
+
+  }
+}
+
+
+/* ================= DICTIONARY ================= */
+
+function renderDictionary(){
+
+  const search =
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase();
+
+  document.getElementById("dict")
+    .innerHTML =
+
+    dictionary
+
+      .filter(
+        item =>
+          (
+            item[0] +
+            " " +
+            item[1]
+          )
+          .toLowerCase()
+          .includes(search)
+      )
+
+      .map(
+        item => `
+
+          <div class="card term">
+
+            <b>
+              ${item[0]}
+            </b>
+
+            <span>
+              ${item[1]}
+            </span>
+
+          </div>
+
+        `
+      )
+
+      .join("")
+
+      ||
+
+      `
+      <div class="card muted">
+        Ничего не найдено.
+      </div>
+      `;
+}
+
+
+/* ================= FINAL ================= */
+
+function renderFinal(){
+
+  const percent =
+    Math.round(
+      state.score /
+      questions.length *
+      100
+    );
+
+  const stars =
+    Math.min(
+      5,
+      Math.round(percent / 20)
+    );
+
+  document.getElementById("fs")
+    .textContent =
+    percent + "%";
+
+  document.getElementById("fst")
+    .textContent =
+    "★".repeat(stars) +
+    "☆".repeat(5 - stars);
+
+  document.getElementById("ft")
+    .textContent =
+
+    percent >= 85
+    ? "Сильный результат 🔥"
+
+    : percent >= 65
+    ? "Хорошая база 💜"
+
+    : "Есть что повторить 📚";
+
+  document.getElementById("fx")
+    .textContent =
+
+    percent >= 65
+
+    ? "Ты прошёл базовую подготовку. Дальше главное — не спешить и соблюдать риск."
+
+    : "Вернись к учебнику, повтори материал и попробуй тест ещё раз.";
+}
+
+
+/* ================= START ================= */
+
+updateStats();
+
+document
+  .querySelector('[data-n="home"]')
+  .classList.add("active");
+
+</script>
+
+</body>
+</html>
