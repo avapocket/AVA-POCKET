@@ -2,27 +2,31 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#7c3aed">
-
-<title>AVA ОБУЧЕНИЕ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#08070d">
+<meta name="description" content="AVA TEAM — trading community">
+<title>AVA TEAM</title>
 
 <style>
 :root{
+  --bg:#07060b;
+  --bg2:#0d0a14;
+  --card:#12101a;
+  --card2:#181421;
   --purple:#8b5cf6;
   --purple2:#6d28d9;
-  --bg:#08070d;
-  --card:#12101b;
-  --card2:#181524;
-  --text:#f7f5ff;
-  --muted:#a7a0b8;
-  --line:#29233a;
+  --purple3:#a78bfa;
+  --text:#f8f7ff;
+  --muted:#9992aa;
+  --line:#282235;
   --green:#35d07f;
   --red:#ff5577;
+  --yellow:#f5c451;
 }
 
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html{
@@ -32,393 +36,756 @@ html{
 body{
   margin:0;
   background:
-    radial-gradient(
-      circle at 50% -10%,
-      #28134c 0,
-      #0c0913 40%,
-      #07060b 100%
-    );
+    radial-gradient(circle at 50% -10%,rgba(139,92,246,.20),transparent 35%),
+    radial-gradient(circle at 0% 45%,rgba(109,40,217,.08),transparent 30%),
+    var(--bg);
   color:var(--text);
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+  min-height:100vh;
+}
+
+button,a{
+  font-family:inherit;
+}
+
+button{
+  border:0;
 }
 
 .app{
   width:100%;
   max-width:520px;
   margin:auto;
-  padding:16px 15px 95px;
+  min-height:100vh;
+  padding-bottom:92px;
+  position:relative;
 }
+
+/* HEADER */
+
+.header{
+  padding:22px 18px 8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.logo span{
+  color:var(--purple3);
+}
+
+.logo-sub{
+  font-size:8px;
+  color:var(--muted);
+  letter-spacing:2px;
+  margin-top:2px;
+}
+
+.live{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border:1px solid rgba(53,208,127,.2);
+  background:rgba(53,208,127,.06);
+  border-radius:30px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.live-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+  animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.45;transform:scale(.7)}
+}
+
+/* SCREENS */
 
 .screen{
   display:none;
+  padding:10px 16px;
+  animation:fadeIn .35s ease;
 }
 
 .screen.active{
   display:block;
-  animation:show .25s ease;
 }
 
-@keyframes show{
-  from{
-    opacity:0;
-    transform:translateY(8px);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-/* TOP */
-
-.top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:15px;
-}
-
-.brand{
-  font-weight:950;
-  letter-spacing:.4px;
-}
-
-.brand span{
-  color:#a78bfa;
-}
-
-.pill{
-  font-size:11px;
-  background:#171323;
-  border:1px solid var(--line);
-  padding:7px 10px;
-  border-radius:99px;
-  color:#c9c1d8;
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
 /* HERO */
 
 .hero{
-  padding:25px 4px 18px;
+  min-height:480px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
 }
 
-.eyebrow{
-  display:inline-block;
-  padding:7px 10px;
-  border-radius:99px;
-  background:#24133e;
-  color:#c4a7ff;
-  font-size:11px;
-  font-weight:850;
+.hero-glow{
+  position:absolute;
+  width:280px;
+  height:280px;
+  right:-120px;
+  top:50px;
+  background:var(--purple);
+  opacity:.12;
+  filter:blur(90px);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.system{
+  color:var(--purple3);
+  font-size:10px;
+  letter-spacing:2.5px;
+  font-weight:800;
+  margin-bottom:18px;
 }
 
 .hero h1{
-  font-size:50px;
-  line-height:.92;
-  margin:15px 0;
+  font-size:43px;
+  line-height:.98;
+  letter-spacing:-2px;
+  margin:0 0 20px;
   font-weight:950;
-  letter-spacing:-2.5px;
 }
 
 .hero h1 span{
-  color:#a78bfa;
+  color:var(--purple3);
+  text-shadow:0 0 35px rgba(139,92,246,.35);
 }
 
 .hero p{
   color:var(--muted);
-  line-height:1.55;
+  font-size:14px;
+  line-height:1.6;
+  max-width:420px;
+  margin:0 0 28px;
 }
 
-/* BUTTON */
-
-.btn{
+.primary{
   width:100%;
-  border:0;
-  border-radius:15px;
-  padding:15px;
-  color:#fff;
-  font-size:15px;
-  font-weight:850;
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--purple2)
-    );
-  box-shadow:0 12px 30px #6d28d933;
+  padding:16px 18px;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  color:white;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.5px;
+  box-shadow:0 10px 35px rgba(109,40,217,.28);
   cursor:pointer;
+  transition:.2s;
 }
 
-.btn:active{
-  transform:scale(.98);
+.primary:active{
+  transform:scale(.97);
 }
 
-.btn.secondary{
-  background:#17131f;
+.secondary{
+  width:100%;
+  padding:15px 18px;
+  border-radius:16px;
+  background:var(--card);
+  color:var(--text);
   border:1px solid var(--line);
-  box-shadow:none;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+/* MINI GRAPH */
+
+.graph-card{
+  margin-top:15px;
+  padding:16px;
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(24,20,33,.95),rgba(12,10,18,.95));
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+
+.graph-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.graph-name{
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:1px;
+}
+
+.graph-value{
+  color:var(--green);
+  font-size:12px;
+  font-weight:800;
+}
+
+.graph{
+  width:100%;
+  height:125px;
+  display:block;
+}
+
+.grid{
+  stroke:#272132;
+  stroke-width:1;
+}
+
+.chart-line{
+  fill:none;
+  stroke:var(--purple3);
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 0 7px rgba(167,139,250,.45));
+  stroke-dasharray:500;
+  stroke-dashoffset:500;
+  animation:draw 2.5s ease forwards;
+}
+
+@keyframes draw{
+  to{stroke-dashoffset:0}
+}
+
+/* SECTION */
+
+.section-title{
+  margin:26px 0 13px;
+}
+
+.eyebrow{
+  color:var(--purple3);
+  font-size:9px;
+  letter-spacing:2px;
+  font-weight:900;
+  margin-bottom:7px;
+}
+
+.section-title h2{
+  font-size:25px;
+  letter-spacing:-1px;
+  margin:0;
+}
+
+.section-title p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
 }
 
 /* CARDS */
 
-.card,
-.stat{
-  background:
-    linear-gradient(
-      145deg,
-      #171321,
-      #0f0d16
-    );
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:10px;
-}
-
-.card h2,
-.card h3{
-  margin-top:0;
-}
-
-.card p{
-  color:var(--muted);
-  line-height:1.55;
-}
-
-.grid{
+.cards{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
 }
 
+.card{
+  background:linear-gradient(145deg,var(--card2),var(--card));
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+}
+
+.card-icon{
+  font-size:22px;
+  margin-bottom:13px;
+}
+
+.card h3{
+  font-size:13px;
+  margin:0 0 7px;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+  margin:0;
+}
+
+/* LEVEL */
+
+.levels{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.level{
+  padding:15px;
+  border:1px solid var(--line);
+  background:var(--card);
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.level:active{
+  transform:scale(.98);
+}
+
+.level.selected{
+  border-color:var(--purple);
+  background:rgba(139,92,246,.10);
+  box-shadow:0 0 25px rgba(139,92,246,.08);
+}
+
+.level-num{
+  width:34px;
+  height:34px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(139,92,246,.12);
+  color:var(--purple3);
+  font-weight:900;
+  font-size:12px;
+}
+
+.level strong{
+  display:block;
+  font-size:13px;
+}
+
+.level small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+  font-size:10px;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:10px;
+}
+
+.stat{
+  text-align:center;
+  padding:14px 8px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:15px;
+}
+
 .stat b{
   display:block;
-  font-size:21px;
+  font-size:20px;
 }
 
-.stat small{
+.stat span{
+  display:block;
   color:var(--muted);
+  font-size:8px;
+  letter-spacing:.6px;
+  margin-top:4px;
 }
 
-.icon{
-  font-size:27px;
+/* MARKET LAB */
+
+.lab-head{
+  padding-top:15px;
 }
 
-.section-title{
-  font-size:21px;
-  font-weight:900;
-  margin:23px 0 11px;
+.lab-head h1{
+  font-size:31px;
+  margin:0 0 8px;
+  letter-spacing:-1.2px;
 }
 
-/* CHART */
-
-.chart{
-  height:165px;
-  border-radius:17px;
-  background:#0b0910;
-  border:1px solid #292039;
-  overflow:hidden;
-  margin:15px 0;
+.lab-head p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
 }
-
-.chart svg{
-  width:100%;
-  height:100%;
-}
-
-/* PROGRESS */
 
 .progress-wrap{
-  height:8px;
-  background:#211b2b;
-  border-radius:20px;
+  height:5px;
+  background:var(--line);
+  border-radius:10px;
+  margin:18px 0;
   overflow:hidden;
-  margin:10px 0 17px;
 }
 
 .progress{
   height:100%;
   width:0;
-  background:
-    linear-gradient(
-      90deg,
-      #7c3aed,
-      #c084fc
-    );
-  transition:.3s;
+  background:linear-gradient(90deg,var(--purple2),var(--purple3));
+  transition:.4s;
 }
 
-/* LESSON */
-
-.lesson-head{
-  display:flex;
-  justify-content:space-between;
-}
-
-.lesson-num{
-  font-size:12px;
-  color:#bda6e9;
-}
-
-.lesson-text{
-  font-size:15px;
-  line-height:1.65;
-  color:#d3cdda;
-}
-
-/* QUESTIONS */
-
-.question{
-  font-size:19px;
+.question-count{
+  color:var(--purple3);
+  font-size:10px;
   font-weight:900;
-  line-height:1.35;
-  margin:12px 0 16px;
+  letter-spacing:1.5px;
+}
+
+.scenario{
+  margin-top:10px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:14px;
+}
+
+.scenario-title{
+  font-size:15px;
+  font-weight:900;
+  margin:5px 0 15px;
+}
+
+.candle-chart{
+  width:100%;
+  height:210px;
+  background:#0b0910;
+  border-radius:15px;
+  border:1px solid #211c2b;
 }
 
 .answers{
-  display:grid;
+  display:flex;
+  flex-direction:column;
   gap:9px;
+  margin-top:14px;
 }
 
 .answer{
-  padding:14px;
-  border:1px solid var(--line);
-  background:#14111d;
-  color:#eee9f5;
-  border-radius:13px;
   text-align:left;
-  font-weight:750;
+  padding:15px;
+  border-radius:14px;
+  background:#17131f;
+  border:1px solid var(--line);
+  color:var(--text);
+  font-size:12px;
+  font-weight:700;
   cursor:pointer;
+  transition:.2s;
+}
+
+.answer:hover{
+  border-color:var(--purple);
 }
 
 .answer.correct{
   border-color:var(--green);
-  background:#0e291c;
+  background:rgba(53,208,127,.08);
 }
 
 .answer.wrong{
   border-color:var(--red);
-  background:#2a111a;
+  background:rgba(255,85,119,.08);
 }
 
-.feedback{
-  margin:12px 0;
-  padding:12px;
-  border-radius:12px;
-  background:#17131f;
-  color:#cfc7da;
-  line-height:1.45;
-}
-
-.hide{
-  display:none!important;
-}
-
-/* DICTIONARY */
-
-.dict-search{
-  width:100%;
-  padding:13px;
-  border-radius:13px;
-  border:1px solid var(--line);
-  background:#100d16;
-  color:#fff;
-  outline:none;
-  margin-bottom:10px;
-}
-
-.term b{
-  display:block;
-  margin-bottom:5px;
-}
-
-.term span{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.45;
-}
-
-/* FINAL */
-
-.score{
-  font-size:58px;
-  font-weight:950;
-  color:#c4a0ff;
-}
-
-.stars{
-  font-size:27px;
-  letter-spacing:3px;
-}
-
-.center{
-  text-align:center;
-}
-
-.notice{
-  border-left:3px solid #8b5cf6;
-  padding-left:12px;
-  color:#aaa2b5;
+.result{
+  display:none;
+  margin-top:12px;
+  padding:14px;
+  border-radius:15px;
+  background:rgba(139,92,246,.08);
+  border:1px solid rgba(139,92,246,.2);
   font-size:12px;
   line-height:1.5;
 }
 
+.result.show{
+  display:block;
+}
+
+/* SCORE */
+
+.score-box{
+  text-align:center;
+  padding:30px 20px;
+  border-radius:22px;
+  background:linear-gradient(145deg,#191425,#0e0b14);
+  border:1px solid var(--line);
+  margin-top:15px;
+}
+
+.score-circle{
+  width:130px;
+  height:130px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at center,#100d16 55%,transparent 56%),
+    conic-gradient(var(--purple3) 0deg,var(--purple2) 220deg,#272132 220deg);
+  box-shadow:0 0 45px rgba(139,92,246,.15);
+}
+
+.score-circle b{
+  font-size:38px;
+}
+
+.score-circle span{
+  color:var(--muted);
+  font-size:8px;
+  letter-spacing:1px;
+}
+
+/* TEAM */
+
+.team-hero{
+  padding:25px 0 10px;
+}
+
+.team-hero h1{
+  font-size:38px;
+  letter-spacing:-1.8px;
+  margin:0 0 10px;
+}
+
+.team-hero h1 span{
+  color:var(--purple3);
+}
+
+.team-hero p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+.team-card{
+  margin-top:15px;
+  padding:20px;
+  border-radius:21px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(139,92,246,.18),transparent 40%),
+    var(--card);
+  border:1px solid var(--line);
+}
+
+.team-row{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  margin-bottom:17px;
+}
+
+.team-row:last-child{
+  margin-bottom:0;
+}
+
+.team-number{
+  min-width:31px;
+  height:31px;
+  border-radius:10px;
+  background:rgba(139,92,246,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--purple3);
+  font-size:11px;
+  font-weight:900;
+}
+
+.team-row h3{
+  margin:0 0 5px;
+  font-size:13px;
+}
+
+.team-row p{
+  margin:0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.45;
+}
+
+/* JOIN */
+
+.join{
+  text-align:center;
+  padding-top:50px;
+}
+
+.join-logo{
+  width:76px;
+  height:76px;
+  border-radius:24px;
+  margin:0 auto 22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  font-size:24px;
+  background:linear-gradient(145deg,var(--purple),var(--purple2));
+  box-shadow:0 15px 50px rgba(109,40,217,.35);
+}
+
+.join h1{
+  font-size:34px;
+  line-height:1;
+  letter-spacing:-1.5px;
+  margin:0 0 14px;
+}
+
+.join p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin:0 auto 25px;
+  max-width:390px;
+}
+
+.join-card{
+  text-align:left;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:17px;
+  margin-bottom:10px;
+}
+
+.join-card strong{
+  display:block;
+  font-size:13px;
+  margin-bottom:5px;
+}
+
+.join-card span{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.4;
+}
+
 /* NAV */
 
-.nav{
+.bottom-nav{
   position:fixed;
+  z-index:50;
+  bottom:12px;
   left:50%;
-  bottom:9px;
   transform:translateX(-50%);
-  width:min(490px,calc(100% - 24px));
+  width:calc(100% - 24px);
+  max-width:496px;
+  padding:8px;
+  border-radius:20px;
+  background:rgba(15,12,22,.88);
+  border:1px solid #30293e;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:5px;
-  padding:7px;
-  background:#100d17ee;
-  border:1px solid #30283e;
-  border-radius:18px;
-  backdrop-filter:blur(16px);
-  z-index:20;
+  box-shadow:0 15px 45px rgba(0,0,0,.45);
 }
 
-.nav button{
-  border:0;
+.nav-btn{
   background:transparent;
-  color:#8f879e;
-  padding:8px 2px;
-  border-radius:12px;
-  font-size:10px;
+  color:#777184;
+  padding:8px 4px;
+  border-radius:14px;
+  cursor:pointer;
+  font-size:9px;
   font-weight:800;
+  transition:.2s;
 }
 
-.nav button.active{
-  background:#25183b;
-  color:#c8a9ff;
-}
-
-.nav i{
+.nav-btn .nav-icon{
   display:block;
-  font-style:normal;
   font-size:18px;
   margin-bottom:3px;
 }
 
-@media(max-width:380px){
-  .hero h1{
-    font-size:42px;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
+.nav-btn.active{
+  color:white;
+  background:rgba(139,92,246,.13);
 }
+
+.nav-btn.active .nav-icon{
+  filter:drop-shadow(0 0 7px rgba(167,139,250,.7));
+}
+
+/* FOOTER */
+
+.disclaimer{
+  margin-top:28px;
+  padding:14px;
+  color:#696273;
+  font-size:8px;
+  line-height:1.5;
+  text-align:center;
+}
+
+.link-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  z-index:100;
+  left:50%;
+  bottom:92px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  background:#211b2d;
+  border:1px solid #3a304c;
+  color:white;
+  padding:11px 16px;
+  border-radius:12px;
+  font-size:11px;
+  transition:.3s;
+  white-space:nowrap;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* MOBILE */
+
+@media(max-width:380px){
+  .hero h1{font-size:36px}
+  .hero{min-height:440px}
+  .cards{grid-template-columns:1fr}
+  .team-hero h1{font-size:33px}
+}
+
 </style>
 </head>
 
@@ -426,1389 +793,982 @@ body{
 
 <div class="app">
 
-<header class="top">
-  <div class="brand">
-    AVA <span>ОБУЧЕНИЕ</span>
+<header class="header">
+  <div>
+    <div class="logo">A<span>V</span>A</div>
+    <div class="logo-sub">TRADING COMMUNITY</div>
   </div>
 
-  <div class="pill" id="level">
-    Старт
+  <div class="live">
+    <span class="live-dot"></span>
+    ONLINE
   </div>
 </header>
 
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
 <section id="home" class="screen active">
 
   <div class="hero">
 
-    <div class="eyebrow">
-      🟣 МИНИ-ПОДГОТОВКА
-    </div>
+    <div class="hero-glow"></div>
+
+    <div class="system">AVA SYSTEM // 001</div>
 
     <h1>
-      Понимай<br>
-      <span>график.</span>
+      НЕ ПРОСТО<br>
+      СМОТРИ.<br>
+      <span>ЗАМЕЧАЙ.</span>
     </h1>
 
     <p>
-      Короткий путь от
-      «я ничего не понимаю»
-      до базового понимания
-      свечей, тренда, уровней и риска.
+      Рынок постоянно что-то показывает.
+      Вопрос только в том — замечаешь ли ты это?
+      Проверь себя в интерактивном режиме AVA.
     </p>
 
-    <button
-      class="btn"
-      onclick="go('course')"
-    >
-      Начать подготовку →
+    <button class="primary" onclick="go('lab')">
+      ЗАПУСТИТЬ MARKET LAB →
     </button>
 
-  </div>
+    <div class="graph-card">
 
+      <div class="graph-top">
+        <div class="graph-name">EUR / USD · DEMO</div>
+        <div class="graph-value">+0.84%</div>
+      </div>
 
-  <div class="chart">
+      <svg class="graph" viewBox="0 0 400 125" preserveAspectRatio="none">
 
-    <svg
-      viewBox="0 0 500 165"
-      preserveAspectRatio="none"
-    >
+        <line class="grid" x1="0" y1="25" x2="400" y2="25"/>
+        <line class="grid" x1="0" y1="62" x2="400" y2="62"/>
+        <line class="grid" x1="0" y1="100" x2="400" y2="100"/>
 
-      <polyline
-        points="
-        0,135
-        45,120
-        80,132
-        115,94
-        150,106
-        180,73
-        215,82
-        250,53
-        285,68
-        320,41
-        355,56
-        395,28
-        430,42
-        470,18
-        500,27"
-        fill="none"
-        stroke="#a78bfa"
-        stroke-width="4"
-      />
+        <polyline
+          class="chart-line"
+          points="
+          0,100
+          25,92
+          48,97
+          70,80
+          94,85
+          115,67
+          138,72
+          160,58
+          184,64
+          208,43
+          230,50
+          255,34
+          280,42
+          302,27
+          325,35
+          350,19
+          375,25
+          400,10
+          "/>
 
-    </svg>
+      </svg>
 
-  </div>
-
-
-  <div class="grid">
-
-    <div class="stat">
-      <b id="hp">0%</b>
-      <small>прогресс</small>
-    </div>
-
-    <div class="stat">
-      <b id="hs">0 ⭐</b>
-      <small>награда</small>
     </div>
 
   </div>
 
 
   <div class="section-title">
-    Что внутри
+    <div class="eyebrow">AVA INSIDE</div>
+    <h2>Что тебя ждёт</h2>
   </div>
 
+  <div class="cards">
 
-  <div class="card">
-
-    <div class="icon">
-      🕯️
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h3>Market Lab</h3>
+      <p>Интерактивные рыночные сценарии без скучной теории.</p>
     </div>
 
-    <h3>
-      Свечи
-    </h3>
-
-    <p>
-      Тело и тени свечи и что они
-      говорят о движении цены.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="icon">
-      📈
+    <div class="card">
+      <div class="card-icon">◈</div>
+      <h3>AVA Community</h3>
+      <p>Люди, идеи, обсуждения и общая атмосфера команды.</p>
     </div>
 
-    <h3>
-      Движение цены
-    </h3>
-
-    <p>
-      Тренд, уровни и простая
-      логика рынка без перегруза.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="icon">
-      🛡️
+    <div class="card">
+      <div class="card-icon">◎</div>
+      <h3>Практика</h3>
+      <p>Смотри на график и учись замечать детали самостоятельно.</p>
     </div>
 
-    <h3>
-      Риск
-    </h3>
-
-    <p>
-      Почему контроль риска важнее
-      желания быстро заработать.
-    </p>
+    <div class="card">
+      <div class="card-icon">✦</div>
+      <h3>Team</h3>
+      <p>Возможность узнать больше о закрытом сообществе AVA.</p>
+    </div>
 
   </div>
 
 
-  <p class="notice">
-    Важно: это образовательный материал,
-    а не финансовая рекомендация.
-    Торговля связана с риском потери денег.
-  </p>
+  <div class="section-title">
+    <div class="eyebrow">YOUR LEVEL</div>
+    <h2>С чего начинаешь?</h2>
+    <p>Выбери вариант. Это ни на что тебя не обязывает.</p>
+  </div>
+
+  <div class="levels">
+
+    <div class="level" onclick="selectLevel(this,'Новичок')">
+      <div class="level-num">01</div>
+      <div>
+        <strong>Я только начинаю</strong>
+        <small>Хочу понять, что вообще происходит на графике.</small>
+      </div>
+    </div>
+
+    <div class="level" onclick="selectLevel(this,'Интересующийся')">
+      <div class="level-num">02</div>
+      <div>
+        <strong>Уже интересуюсь</strong>
+        <small>Смотрю рынок, но хочу разобраться глубже.</small>
+      </div>
+    </div>
+
+    <div class="level" onclick="selectLevel(this,'Трейдер')">
+      <div class="level-num">03</div>
+      <div>
+        <strong>Уже торгую</strong>
+        <small>Ищу окружение и новые идеи.</small>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div class="stat">
+      <b id="labStat">0</b>
+      <span>LAB ПРОЙДЕНО</span>
+    </div>
+
+    <div class="stat">
+      <b id="scoreStat">0</b>
+      <span>MARKET SCORE</span>
+    </div>
+
+    <div class="stat">
+      <b id="levelStat">—</b>
+      <span>ТВОЙ LEVEL</span>
+    </div>
+
+  </div>
 
 </section>
 
 
+<!-- MARKET LAB -->
 
-<!-- ================= COURSE ================= -->
+<section id="lab" class="screen">
 
-<section id="course" class="screen">
+  <div class="lab-head">
 
-  <div class="section-title">
-    Подготовка
+    <div class="eyebrow">AVA // MARKET LAB</div>
+
+    <h1>Проверь своё<br><span style="color:var(--purple3)">наблюдение.</span></h1>
+
+    <p>
+      Перед тобой несколько условных рыночных ситуаций.
+      Не спеши. Смотри на график и выбирай наиболее логичный вариант.
+    </p>
+
   </div>
 
-  <div class="card">
+  <div class="progress-wrap">
+    <div class="progress" id="progress"></div>
+  </div>
 
-    <div class="lesson-head">
+  <div class="question-count" id="questionCount">
+    SCENARIO 01 / 06
+  </div>
 
-      <span
-        class="lesson-num"
-        id="ln"
-      ></span>
+  <div class="scenario">
 
-      <span id="ls">
-        ☆
+    <div class="scenario-title" id="question">
+      Что сейчас происходит с движением цены?
+    </div>
+
+    <div id="chartContainer"></div>
+
+    <div class="answers" id="answers"></div>
+
+    <div class="result" id="result"></div>
+
+  </div>
+
+</section>
+
+
+<!-- TEAM -->
+
+<section id="team" class="screen">
+
+  <div class="team-hero">
+
+    <div class="eyebrow">AVA // COMMUNITY</div>
+
+    <h1>Не просто<br><span>чат.</span></h1>
+
+    <p>
+      AVA — это окружение людей, которым интересны рынок,
+      дисциплина, практика и развитие.
+    </p>
+
+  </div>
+
+
+  <div class="team-card">
+
+    <div class="team-row">
+      <div class="team-number">01</div>
+      <div>
+        <h3>Окружение</h3>
+        <p>
+          Общение с людьми, которые находятся в той же сфере
+          и развиваются вместе.
+        </p>
+      </div>
+    </div>
+
+    <div class="team-row">
+      <div class="team-number">02</div>
+      <div>
+        <h3>Практика</h3>
+        <p>
+          Разборы, идеи, наблюдения за рынком и интерактивные
+          материалы вместо бесконечной теории.
+        </p>
+      </div>
+    </div>
+
+    <div class="team-row">
+      <div class="team-number">03</div>
+      <div>
+        <h3>Команда</h3>
+        <p>
+          Закрытая атмосфера и люди, которые двигаются
+          в одном направлении.
+        </p>
+      </div>
+    </div>
+
+    <div class="team-row">
+      <div class="team-number">04</div>
+      <div>
+        <h3>Рост</h3>
+        <p>
+          Система не обещает результат. Она помогает тебе
+          самостоятельно становиться сильнее.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="section-title">
+    <div class="eyebrow">HOW IT WORKS</div>
+    <h2>Как попасть внутрь?</h2>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-icon">01</div>
+      <h3>Посмотри</h3>
+      <p>Изучи приложение и пойми атмосферу AVA.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">02</div>
+      <h3>Попробуй</h3>
+      <p>Пройди Market Lab и проверь своё наблюдение.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">03</div>
+      <h3>Узнай</h3>
+      <p>Перейди в наше сообщество и познакомься с командой.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">04</div>
+      <h3>Реши</h3>
+      <p>Только ты решаешь, подходит ли тебе это окружение.</p>
+    </div>
+
+  </div>
+
+
+  <button class="primary" style="margin-top:16px" onclick="go('join')">
+    ХОЧУ УЗНАТЬ БОЛЬШЕ →
+  </button>
+
+</section>
+
+
+<!-- JOIN -->
+
+<section id="join" class="screen">
+
+  <div class="join">
+
+    <div class="join-logo">AVA</div>
+
+    <div class="eyebrow">AVA TEAM // ACCESS</div>
+
+    <h1>
+      Возможно,<br>
+      тебе сюда.
+    </h1>
+
+    <p>
+      Если тебе интересен трейдинг, окружение и развитие —
+      начни с нашего Telegram-сообщества.
+    </p>
+
+
+    <div class="join-card">
+      <strong>◉ AVA COMMUNITY</strong>
+      <span>
+        Основной Telegram-канал AVA. Новости, идеи,
+        материалы и жизнь сообщества.
       </span>
-
     </div>
 
-
-    <div class="progress-wrap">
-
-      <div
-        class="progress"
-        id="cp"
-      ></div>
-
+    <div class="join-card">
+      <strong>✦ PERSONAL CONTACT</strong>
+      <span>
+        Если хочешь задать вопрос или узнать подробнее
+        о команде — напиши напрямую.
+      </span>
     </div>
 
-
-    <div id="lesson"></div>
-
-
-    <button
-      class="btn"
-      id="lb"
-      onclick="checkLesson()"
+    <a
+      class="primary link-btn"
+      href="https://t.me/+D1kxbrvyGSViZWFi"
+      target="_blank"
+      rel="noopener noreferrer"
     >
-      Я прочитал — проверить себя
-    </button>
+      ОТКРЫТЬ AVA TELEGRAM →
+    </a>
+
+    <a
+      class="secondary link-btn"
+      href="https://t.me/m/OsDQxjCLNTUy"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      НАПИСАТЬ НАПРЯМУЮ
+    </a>
+
+
+    <div style="margin-top:25px">
+
+      <div class="eyebrow">BROKER ACCESS</div>
+
+      <div class="join-card">
+        <strong>POCKET OPTION</strong>
+        <span>
+          Если тебе уже знакома платформа и ты хочешь
+          зарегистрироваться через нашу партнёрскую ссылку.
+        </span>
+      </div>
+
+      <a
+        class="secondary link-btn"
+        href="https://u3.shortink.io/register?utm_campaign=787509&utm_source=affiliate&utm_medium=sr&a=o7nD89164UWb0o&ac=avatrader&code=WELCOME50"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ОТКРЫТЬ POCKET OPTION →
+      </a>
+
+    </div>
+
+
+    <div class="disclaimer">
+      AVA TEAM не гарантирует получение прибыли.
+      Торговля финансовыми инструментами связана с риском
+      потери средств. Все интерактивные задания в приложении
+      являются демонстрационными и не являются торговыми сигналами
+      или индивидуальной финансовой рекомендацией.
+    </div>
 
   </div>
 
 </section>
 
 
+<!-- BOTTOM NAV -->
 
-<!-- ================= TEST ================= -->
+<nav class="bottom-nav">
 
-<section id="test" class="screen">
-
-  <div class="section-title">
-    Проверка знаний
-  </div>
-
-  <div class="card">
-
-    <div
-      class="lesson-num"
-      id="qn"
-    ></div>
-
-
-    <div class="progress-wrap">
-
-      <div
-        class="progress"
-        id="tp"
-      ></div>
-
-    </div>
-
-
-    <div
-      class="question"
-      id="qq"
-    ></div>
-
-
-    <div
-      class="answers"
-      id="aa"
-    ></div>
-
-
-    <div id="ff"></div>
-
-  </div>
-
-</section>
-
-
-
-<!-- ================= DICTIONARY ================= -->
-
-<section id="dictionary" class="screen">
-
-  <div class="section-title">
-    Словарь
-  </div>
-
-  <input
-    class="dict-search"
-    id="search"
-    placeholder="Поиск термина..."
-    oninput="dictRender()"
-  >
-
-  <div id="dict"></div>
-
-</section>
-
-
-
-<!-- ================= FINAL ================= -->
-
-<section id="final" class="screen">
-
-  <div class="section-title">
-    Финал
-  </div>
-
-
-  <div class="card center">
-
-    <div class="eyebrow">
-      ПОДГОТОВКА ЗАВЕРШЕНА
-    </div>
-
-    <div
-      class="score"
-      id="fs"
-    >
-      0%
-    </div>
-
-    <div
-      class="stars"
-      id="fst"
-    >
-      ☆☆☆☆☆
-    </div>
-
-    <h2 id="ft">
-      Начни с понимания
-    </h2>
-
-    <p
-      id="fx"
-      class="muted"
-    >
-      Пройди материал и проверь себя.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>
-      Что дальше?
-    </h3>
-
-    <p>
-      Если хочешь продолжить изучать рынок,
-      можешь перейти к каналу AVA или
-      самостоятельно изучить условия
-      выбранной платформы.
-    </p>
-
-  </div>
-
-
-  <button
-    class="btn"
-    onclick="window.open(
-      'https://u3.shortink.io/register?utm_campaign=787509&utm_source=affiliate&utm_medium=sr&a=o7nD89164UWb0o&ac=avatrader&code=WELCOME50',
-      '_blank'
-    )"
-  >
-    🚀 Перейти к брокеру
+  <button class="nav-btn active" data-screen="home" onclick="go('home')">
+    <span class="nav-icon">⌂</span>
+    HOME
   </button>
 
-
-  <div style="height:9px"></div>
-
-
-  <button
-    class="btn secondary"
-    onclick="window.open(
-      'https://t.me/+D1kxbrvyGSViZWFi',
-      '_blank'
-    )"
-  >
-    📢 Telegram канал
+  <button class="nav-btn" data-screen="lab" onclick="go('lab')">
+    <span class="nav-icon">⌁</span>
+    LAB
   </button>
 
-
-  <div style="height:9px"></div>
-
-
-  <button
-    class="btn secondary"
-    onclick="window.open(
-      'https://t.me/m/OsDQxjCLNTUy',
-      '_blank'
-    )"
-  >
-    💬 Связь со мной
+  <button class="nav-btn" data-screen="team" onclick="go('team')">
+    <span class="nav-icon">◈</span>
+    TEAM
   </button>
 
-
-  <p
-    class="notice"
-    style="margin-top:15px"
-  >
-    Регистрация добровольна и не гарантирует
-    прибыль. Не используй деньги, потерю
-    которых не можешь себе позволить.
-  </p>
-
-</section>
-
-</div>
-
-
-
-<!-- ================= NAV ================= -->
-
-<nav class="nav">
-
-  <button
-    data-n="home"
-    onclick="go('home')"
-  >
-    <i>⌂</i>
-    Главная
-  </button>
-
-  <button
-    data-n="course"
-    onclick="go('course')"
-  >
-    <i>📖</i>
-    Учебник
-  </button>
-
-  <button
-    data-n="test"
-    onclick="go('test')"
-  >
-    <i>🧠</i>
-    Проверка
-  </button>
-
-  <button
-    data-n="final"
-    onclick="go('final')"
-  >
-    <i>🏆</i>
-    Финал
+  <button class="nav-btn" data-screen="join" onclick="go('join')">
+    <span class="nav-icon">✦</span>
+    JOIN
   </button>
 
 </nav>
 
+<div class="toast" id="toast"></div>
+
+</div>
 
 
 <script>
 
-/* ================= DATA ================= */
-
-const lessons = [
-
-{
-title:"Свеча — язык графика",
-
-html:`
-<p class="lesson-text">
-
-Свеча показывает движение цены
-за выбранный период.
-
-<b>Тело</b> — разница между открытием
-и закрытием.
-
-<b>Тени</b> показывают крайние значения
-цены за этот период.
-
-</p>
-
-<div class="chart">
-
-<svg viewBox="0 0 500 165">
-
-<line
-x1="250"
-y1="25"
-x2="250"
-y2="145"
-stroke="#c4a0ff"
-stroke-width="4"
-/>
-
-<rect
-x="215"
-y="60"
-width="70"
-height="55"
-rx="5"
-fill="#7c3aed"
-/>
-
-<line
-x1="370"
-y1="45"
-x2="370"
-y2="150"
-stroke="#777"
-stroke-width="4"
-/>
-
-<rect
-x="335"
-y="72"
-width="70"
-height="45"
-rx="5"
-fill="#35d07f"
-/>
-
-</svg>
-
-</div>
-`
-},
-
-{
-title:"Бычья и медвежья свеча",
-
-html:`
-<p class="lesson-text">
-
-Если цена закрылась выше открытия —
-свеча показывает рост.
-
-Если цена закрылась ниже открытия —
-свеча показывает падение.
-
-Но одна свеча не может гарантировать
-следующее движение цены.
-
-</p>
-`
-},
-
-{
-title:"Тренд",
-
-html:`
-<p class="lesson-text">
-
-Тренд — это общее направление
-движения цены.
-
-Восходящее движение обычно формирует
-более высокие максимумы и минимумы.
-
-В нисходящем движении происходит
-обратная картина.
-
-</p>
-
-<div class="chart">
-
-<svg viewBox="0 0 500 165">
-
-<polyline
-points="
-20,140
-90,115
-150,125
-220,82
-280,98
-350,50
-420,68
-480,25"
-fill="none"
-stroke="#a78bfa"
-stroke-width="5"
-/>
-
-</svg>
-
-</div>
-`
-},
-
-{
-title:"Уровни",
-
-html:`
-<p class="lesson-text">
-
-Уровень — это зона, где цена
-раньше реагировала.
-
-Поддержка может замедлять падение.
-
-Сопротивление может замедлять рост.
-
-Но уровень не является гарантией
-разворота.
-
-</p>
-`
-},
-
-{
-title:"Таймфрейм",
-
-html:`
-<p class="lesson-text">
-
-Таймфрейм — период времени,
-который представляет одна свеча.
-
-Маленькие периоды дают больше
-краткосрочного шума.
-
-Большие периоды помогают увидеть
-более общую структуру.
-
-</p>
-`
-},
-
-{
-title:"Риск прежде всего",
-
-html:`
-<p class="lesson-text">
-
-Не воспринимай одну сделку как способ
-быстро заработать.
-
-Определи сумму, которую готов потерять,
-и не используй деньги, необходимые
-для жизни.
-
-</p>
-
-<div class="card">
-
-<h3>
-🛡️ Контроль
-</h3>
-
-<p>
-Не увеличивай риск только потому,
-что предыдущая сделка была неудачной.
-</p>
-
-</div>
-`
-},
-
-{
-title:"Дисциплина",
-
-html:`
-<p class="lesson-text">
-
-Хороший процесс важнее эмоций.
-
-Не обязательно входить в каждое
-движение рынка.
-
-Если ты не понимаешь,
-почему принимаешь решение —
-лучше остановиться и разобраться.
-
-</p>
-
-<div class="card">
-
-<h3>
-Главная мысль
-</h3>
-
-<p>
-Сначала понимание → практика →
-и только потом решения
-с реальными деньгами.
-</p>
-
-</div>
-`
-}
-
-];
-
-
-const questions = [
-
-[
-"Что показывает тело свечи?",
-
-[
-"Разницу между открытием и закрытием",
-"Только максимальную цену",
-"Количество сделок",
-"Будущую цену"
-],
-
-0
-],
-
-[
-"Если цена закрылась ниже открытия, это…",
-
-[
-"Рост",
-"Падение",
-"Гарантированный разворот",
-"Отсутствие движения"
-],
-
-1
-],
-
-[
-"Что лучше описывает восходящий тренд?",
-
-[
-"Случайные свечи",
-"Более высокие максимумы и минимумы",
-"Только красные свечи",
-"Одна большая свеча"
-],
-
-1
-],
-
-[
-"Что такое уровень?",
-
-[
-"Гарантия разворота",
-"Зона прошлой реакции цены",
-"Название индикатора",
-"Размер депозита"
-],
-
-1
-],
-
-[
-"Что означает таймфрейм?",
-
-[
-"Размер графика",
-"Период, представленный одной свечой",
-"Размер депозита",
-"Количество индикаторов"
-],
-
-1
-],
-
-[
-"Что наиболее разумно?",
-
-[
-"Рисковать деньгами на жизнь",
-"Увеличивать ставку после убытка",
-"Сначала изучить риск и правила",
-"Торговать каждую минуту"
-],
-
-2
-],
-
-[
-"Цена три раза подошла к зоне и замедлялась. Что это может быть?",
-
-[
-"Уровень реакции",
-"Гарантия прибыли",
-"Сигнал на всё сразу",
-"Ничего"
-],
-
-0
-],
-
-[
-"Тень свечи показывает…",
-
-[
-"Крайние цены за период",
-"Только цену открытия",
-"Будущую свечу",
-"Размер риска"
-],
-
-0
-],
-
-[
-"Если не понимаешь причину входа, лучше…",
-
-[
-"Увеличить сумму",
-"Остановиться и разобраться",
-"Открыть несколько сделок",
-"Следовать эмоциям"
-],
-
-1
-],
-
-[
-"Что НЕ является гарантией результата?",
-
-[
-"Анализ рынка",
-"Прошлая реакция цены",
-"Любой отдельный паттерн",
-"Контроль риска"
-],
-
-2
-],
-
-[
-"После убытка хочется удвоить сумму. Что разумнее?",
-
-[
-"Удвоить",
-"Сохранить план и риск",
-"Срочно отыграться",
-"Открыть ещё пять сделок"
-],
-
-1
-],
-
-[
-"Главная идея подготовки?",
-
-[
-"Быстрые деньги",
-"Понимание → практика → решения",
-"Торговать без остановки",
-"Игнорировать риск"
-],
-
-1
-]
-
-];
-
-
-const dictionary = [
-
-[
-"Свеча",
-"Элемент графика, показывающий движение цены за выбранный период."
-],
-
-[
-"Тело",
-"Разница между открытием и закрытием."
-],
-
-[
-"Тень",
-"Крайнее значение цены за период."
-],
-
-[
-"Тренд",
-"Общее направление движения цены."
-],
-
-[
-"Поддержка",
-"Зона, где падение ранее могло замедляться."
-],
-
-[
-"Сопротивление",
-"Зона, где рост ранее мог замедляться."
-],
-
-[
-"Таймфрейм",
-"Период времени, представленный одной свечой."
-],
-
-[
-"Риск",
-"Возможность получить финансовый убыток."
-],
-
-[
-"Волатильность",
-"Степень и скорость изменения цены."
-],
-
-[
-"Дисциплина",
-"Следование правилам, а не эмоциям."
-]
-
-];
-
-
-/* ================= STATE ================= */
-
-let state =
-JSON.parse(
-localStorage.getItem("avaState")
-||
-'{"lesson":0,"stars":0,"q":0,"score":0,"answers":0}'
-);
-
-
-/* ================= SAVE ================= */
+/* =========================================
+   AVA TEAM
+   MAIN APPLICATION
+========================================= */
+
+const STORAGE_KEY = "avaTeamState";
+
+let state = {
+  level: "",
+  completed: 0,
+  score: 0
+};
+
+try{
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if(saved){
+    state = {...state,...saved};
+  }
+}catch(e){}
 
 function save(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+}
 
-  localStorage.setItem(
-    "avaState",
-    JSON.stringify(state)
-  );
+function toast(text){
 
-  updateStats();
+  const el = document.getElementById("toast");
+
+  el.textContent = text;
+  el.classList.add("show");
+
+  setTimeout(()=>{
+    el.classList.remove("show");
+  },1800);
 }
 
 
-/* ================= STATS ================= */
-
-function updateStats(){
-
-  const progress =
-    Math.min(
-      100,
-      Math.round(
-        state.lesson / 7 * 70 +
-        state.answers / 12 * 30
-      )
-    );
-
-  document.getElementById("hp")
-    .textContent =
-    progress + "%";
-
-  document.getElementById("hs")
-    .textContent =
-    state.stars + " ⭐";
-
-  document.getElementById("level")
-    .textContent =
-    state.lesson >= 7
-    ? "Готово"
-    : state.lesson
-    ? "В процессе"
-    : "Старт";
-}
-
-
-/* ================= NAV ================= */
+/* NAVIGATION */
 
 function go(id){
 
-  document
-    .querySelectorAll(".screen")
-    .forEach(
-      x => x.classList.remove("active")
-    );
+  document.querySelectorAll(".screen").forEach(screen=>{
+    screen.classList.remove("active");
+  });
 
-  document
-    .getElementById(id)
-    .classList.add("active");
+  const target = document.getElementById(id);
 
-  document
-    .querySelectorAll(".nav button")
-    .forEach(
-      x =>
-      x.classList.toggle(
-        "active",
-        x.dataset.n === id
-      )
-    );
-
-  if(id === "course")
-    renderLesson();
-
-  if(id === "test")
-    renderQuestion();
-
-  if(id === "dictionary")
-    renderDictionary();
-
-  if(id === "final")
-    renderFinal();
-
-  window.scrollTo(0,0);
-}
-
-
-/* ================= LESSON ================= */
-
-function renderLesson(){
-
-  const i =
-    Math.min(
-      state.lesson,
-      lessons.length - 1
-    );
-
-  const lesson =
-    lessons[i];
-
-  document.getElementById("ln")
-    .textContent =
-    `Урок ${i + 1} из ${lessons.length}`;
-
-  document.getElementById("ls")
-    .textContent =
-    "☆";
-
-  document.getElementById("cp")
-    .style.width =
-    (i / lessons.length * 100) + "%";
-
-  document.getElementById("lesson")
-    .innerHTML =
-    `<h2>${lesson.title}</h2>
-     ${lesson.html}`;
-
-  document.getElementById("lb")
-    .classList.remove("hide");
-
-  document.getElementById("lb")
-    .textContent =
-    "Я прочитал — проверить себя";
-}
-
-
-/* ================= LESSON CHECK ================= */
-
-function checkLesson(){
-
-  const i =
-    Math.min(
-      state.lesson,
-      lessons.length - 1
-    );
-
-  const q =
-    questions[i % questions.length];
-
-  document.getElementById("lesson")
-    .innerHTML = `
-
-      <div class="eyebrow">
-        БЫСТРАЯ ПРОВЕРКА
-      </div>
-
-      <div class="question">
-        ${q[0]}
-      </div>
-
-      <div class="answers">
-
-        ${q[1].map(
-          (answer,index) => `
-
-          <button
-            class="answer"
-            onclick="lessonAnswer(
-              ${index},
-              ${q[2]}
-            )"
-          >
-            ${answer}
-          </button>
-
-        `
-        ).join("")}
-
-      </div>
-
-      <div id="lf"></div>
-    `;
-
-  document.getElementById("lb")
-    .classList.add("hide");
-}
-
-
-/* ================= LESSON ANSWER ================= */
-
-function lessonAnswer(index, correct){
-
-  document
-    .querySelectorAll("#lesson .answer")
-    .forEach(
-      (button,i)=>{
-
-        button.disabled = true;
-
-        if(i === correct)
-          button.classList.add("correct");
-
-        if(
-          i === index &&
-          i !== correct
-        )
-          button.classList.add("wrong");
-
-      }
-    );
-
-  const correctAnswer =
-    index === correct;
-
-  if(correctAnswer){
-
-    state.stars++;
-    state.lesson++;
-
+  if(target){
+    target.classList.add("active");
   }
 
-  document.getElementById("lf")
-    .innerHTML = `
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.screen === id
+    );
+  });
 
-      <div class="feedback">
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-        ${
-          correctAnswer
-          ? "✅ Верно! +1 ⭐"
-          : "❌ Не совсем. Правильный ответ выделен."
-        }
-
-      </div>
-
-      <button
-        class="btn"
-        onclick="go(
-          '${state.lesson >= 7
-            ? "test"
-            : "course"}'
-        )"
-      >
-
-        ${
-          state.lesson >= 7
-          ? "Перейти к проверке →"
-          : "Следующий урок →"
-        }
-
-      </button>
-    `;
-
-  save();
+  if(id === "lab"){
+    renderQuestion();
+  }
 }
 
 
-/* ================= TEST ================= */
+/* LEVEL */
+
+function selectLevel(element,level){
+
+  document.querySelectorAll(".level").forEach(el=>{
+    el.classList.remove("selected");
+  });
+
+  element.classList.add("selected");
+
+  state.level = level;
+
+  save();
+  updateStats();
+
+  toast("LEVEL: " + level);
+}
+
+function updateStats(){
+
+  document.getElementById("labStat").textContent =
+    state.completed;
+
+  document.getElementById("scoreStat").textContent =
+    state.score;
+
+  document.getElementById("levelStat").textContent =
+    state.level || "—";
+}
+
+
+/* MARKET LAB */
+
+const scenarios = [
+
+  {
+    question:"Цена несколько раз обновляет локальные максимумы. Что ты замечаешь?",
+    candles:[2,4,3,6,5,8,7,10,9,12],
+    answers:[
+      "Преимущественно восходящее движение",
+      "Преимущественно нисходящее движение",
+      "Полностью случайное движение",
+      "По этим данным ничего нельзя заметить"
+    ],
+    correct:0,
+    info:"Здесь визуально преобладает последовательность более высоких максимумов."
+  },
+
+  {
+    question:"Цена движется между двумя примерно одинаковыми уровнями. Что это больше всего напоминает?",
+    candles:[7,5,8,6,7,5,8,6,7,5],
+    answers:[
+      "Устойчивый тренд вверх",
+      "Устойчивый тренд вниз",
+      "Диапазонное движение",
+      "Резкий импульс"
+    ],
+    correct:2,
+    info:"Цена несколько раз возвращается к похожим верхним и нижним уровням."
+  },
+
+  {
+    question:"После сильного движения вверх появляются несколько небольших свечей. Что важно учитывать?",
+    candles:[2,4,6,8,11,13,12,13,12,13],
+    answers:[
+      "Движение обязательно продолжится",
+      "Может происходить замедление движения",
+      "Цена гарантированно развернётся",
+      "Ничего анализировать не нужно"
+    ],
+    correct:1,
+    info:"После импульса замедление может быть важным наблюдением, но само по себе не гарантирует разворот."
+  },
+
+  {
+    question:"Несколько свечей подряд формируют последовательность более низких максимумов.",
+    candles:[12,11,10,9,10,8,9,7,8,6],
+    answers:[
+      "Восходящая структура",
+      "Нисходящая структура",
+      "Флэт без движения",
+      "График сломан"
+    ],
+    correct:1,
+    info:"В сценарии наблюдается последовательность снижающихся максимумов."
+  },
+
+  {
+    question:"После резкого движения цена начинает двигаться небольшими свечами в узком диапазоне.",
+    candles:[4,5,8,11,15,16,15,16,15,16],
+    answers:[
+      "Консолидация",
+      "Гарантированный разворот",
+      "Новый сильный импульс",
+      "Отсутствие цены"
+    ],
+    correct:0,
+    info:"После импульса цена может временно консолидироваться в более узком диапазоне."
+  },
+
+  {
+    question:"На графике недостаточно информации о более старшем таймфрейме. Что разумнее сделать?",
+    candles:[7,8,7,8,7,8,7,8,7,8],
+    answers:[
+      "Сделать максимально уверенный прогноз",
+      "Игнорировать контекст",
+      "Признать, что данных недостаточно",
+      "Открыть сделку наугад"
+    ],
+    correct:2,
+    info:"Умение сказать «данных недостаточно» — тоже часть анализа."
+  }
+
+];
+
+let currentQuestion = 0;
+let labScore = 0;
+let answered = false;
+
+
+/* CHART */
+
+function buildChart(values){
+
+  const width = 390;
+  const height = 210;
+
+  const min = Math.min(...values) - 2;
+  const max = Math.max(...values) + 2;
+
+  const step = width / values.length;
+
+  let html = `
+  <svg class="candle-chart"
+       viewBox="0 0 ${width} ${height}"
+       preserveAspectRatio="none">
+
+    <rect width="100%" height="100%" fill="#0b0910"/>
+
+    <line x1="0" y1="42" x2="${width}" y2="42"
+      stroke="#201b29" />
+
+    <line x1="0" y1="84" x2="${width}" y2="84"
+      stroke="#201b29" />
+
+    <line x1="0" y1="126" x2="${width}" y2="126"
+      stroke="#201b29" />
+
+    <line x1="0" y1="168" x2="${width}" y2="168"
+      stroke="#201b29" />
+  `;
+
+  values.forEach((v,i)=>{
+
+    const x = i * step + step/2;
+
+    const y = height -
+      ((v-min)/(max-min))*height;
+
+    const previous =
+      i === 0 ? v : values[i-1];
+
+    const bullish = v >= previous;
+
+    const bodyHeight =
+      Math.max(10,Math.abs(v-previous)*7);
+
+    const bodyY =
+      bullish ? y-bodyHeight : y;
+
+    const wickTop =
+      Math.max(10,y-20);
+
+    const wickBottom =
+      Math.min(height-10,y+20);
+
+    const color =
+      bullish ? "#35d07f" : "#ff5577";
+
+    html += `
+
+      <line
+        x1="${x}"
+        y1="${wickTop}"
+        x2="${x}"
+        y2="${wickBottom}"
+        stroke="${color}"
+        stroke-width="2"
+        opacity=".8"
+      />
+
+      <rect
+        x="${x-5}"
+        y="${bodyY}"
+        width="10"
+        height="${bodyHeight}"
+        rx="2"
+        fill="${color}"
+        opacity=".9"
+      />
+    `;
+  });
+
+  html += `</svg>`;
+
+  return html;
+}
+
+
+/* RENDER QUESTION */
 
 function renderQuestion(){
 
-  if(state.q >= questions.length){
+  const data = scenarios[currentQuestion];
 
-    go("final");
-    return;
+  answered = false;
 
-  }
+  document.getElementById("questionCount").textContent =
+    "SCENARIO " +
+    String(currentQuestion+1).padStart(2,"0") +
+    " / " +
+    String(scenarios.length).padStart(2,"0");
 
-  const q =
-    questions[state.q];
+  document.getElementById("progress").style.width =
+    ((currentQuestion)/scenarios.length)*100 + "%";
 
-  document.getElementById("qn")
-    .textContent =
-    `Вопрос ${state.q + 1} из ${questions.length}`;
+  document.getElementById("question").textContent =
+    data.question;
 
-  document.getElementById("tp")
-    .style.width =
-    (state.q / questions.length * 100)
-    + "%";
+  document.getElementById("chartContainer").innerHTML =
+    buildChart(data.candles);
 
-  document.getElementById("qq")
-    .textContent =
-    q[0];
+  const answers =
+    document.getElementById("answers");
 
-  document.getElementById("aa")
-    .innerHTML =
-    q[1].map(
-      (answer,index)=>`
+  answers.innerHTML = "";
 
-        <button
-          class="answer"
-          onclick="answer(
-            ${index},
-            ${q[2]}
-          )"
-        >
-          ${answer}
-        </button>
+  data.answers.forEach((answer,index)=>{
 
-      `
-    ).join("");
+    const button = document.createElement("button");
 
-  document.getElementById("ff")
-    .innerHTML = "";
+    button.className = "answer";
+
+    button.textContent =
+      String.fromCharCode(65+index) +
+      "  " +
+      answer;
+
+    button.onclick = ()=>{
+      chooseAnswer(index,button);
+    };
+
+    answers.appendChild(button);
+
+  });
+
+  const result =
+    document.getElementById("result");
+
+  result.classList.remove("show");
+  result.innerHTML = "";
+
 }
 
 
-/* ================= ANSWER ================= */
+/* ANSWER */
 
-function answer(index, correct){
+function chooseAnswer(index,button){
 
-  document
-    .querySelectorAll("#aa .answer")
-    .forEach(
-      (button,i)=>{
+  if(answered) return;
 
-        button.disabled = true;
+  answered = true;
 
-        if(i === correct)
-          button.classList.add("correct");
+  const data = scenarios[currentQuestion];
 
-        if(
-          i === index &&
-          i !== correct
-        )
-          button.classList.add("wrong");
+  const buttons =
+    document.querySelectorAll(".answer");
 
-      }
-    );
+  buttons.forEach((btn,i)=>{
 
-  const isCorrect =
-    index === correct;
+    btn.disabled = true;
 
-  if(isCorrect){
+    if(i === data.correct){
+      btn.classList.add("correct");
+    }
 
-    state.score++;
-    state.stars++;
+  });
 
+  if(index !== data.correct){
+    button.classList.add("wrong");
+  }else{
+    labScore += 1;
   }
 
-  state.answers =
-    Math.max(
-      state.answers,
-      state.q + 1
-    );
+  const result =
+    document.getElementById("result");
 
-  document.getElementById("ff")
-    .innerHTML = `
+  if(index === data.correct){
 
-      <div class="feedback">
-
-        ${
-          isCorrect
-          ? "✅ Верно!"
-          : "❌ Неверно. Правильный ответ выделен."
-        }
-
-      </div>
-
-      <button
-        class="btn"
-        onclick="nextQuestion()"
-      >
-        Дальше →
-      </button>
-    `;
-
-  save();
-}
-
-
-/* ================= NEXT QUESTION ================= */
-
-function nextQuestion(){
-
-  state.q++;
-
-  save();
-
-  if(
-    state.q >= questions.length
-  ){
-
-    go("final");
+    result.innerHTML =
+      "<strong style='color:var(--green)'>✓ Хорошее наблюдение</strong><br><br>" +
+      data.info;
 
   }else{
 
-    renderQuestion();
+    result.innerHTML =
+      "<strong style='color:var(--red)'>Не совсем.</strong><br><br>" +
+      data.info;
 
   }
+
+  result.classList.add("show");
+
+  setTimeout(()=>{
+
+    currentQuestion++;
+
+    if(currentQuestion < scenarios.length){
+
+      renderQuestion();
+
+    }else{
+
+      finishLab();
+
+    }
+
+  },1700);
+
 }
 
 
-/* ================= DICTIONARY ================= */
+/* FINISH */
 
-function renderDictionary(){
+function finishLab(){
 
-  const search =
-    document
-      .getElementById("search")
-      .value
-      .toLowerCase();
-
-  document.getElementById("dict")
-    .innerHTML =
-
-    dictionary
-
-      .filter(
-        item =>
-          (
-            item[0] +
-            " " +
-            item[1]
-          )
-          .toLowerCase()
-          .includes(search)
-      )
-
-      .map(
-        item => `
-
-          <div class="card term">
-
-            <b>
-              ${item[0]}
-            </b>
-
-            <span>
-              ${item[1]}
-            </span>
-
-          </div>
-
-        `
-      )
-
-      .join("")
-
-      ||
-
-      `
-      <div class="card muted">
-        Ничего не найдено.
-      </div>
-      `;
-}
-
-
-/* ================= FINAL ================= */
-
-function renderFinal(){
-
-  const percent =
+  const finalScore =
     Math.round(
-      state.score /
-      questions.length *
-      100
+      (labScore / scenarios.length) * 100
     );
 
-  const stars =
-    Math.min(
-      5,
-      Math.round(percent / 20)
-    );
+  state.score = finalScore;
 
-  document.getElementById("fs")
-    .textContent =
-    percent + "%";
+  state.completed += 1;
 
-  document.getElementById("fst")
-    .textContent =
-    "★".repeat(stars) +
-    "☆".repeat(5 - stars);
+  save();
+  updateStats();
 
-  document.getElementById("ft")
-    .textContent =
+  document.getElementById("questionCount").textContent =
+    "LAB COMPLETE";
 
-    percent >= 85
-    ? "Сильный результат 🔥"
+  document.getElementById("progress").style.width =
+    "100%";
 
-    : percent >= 65
-    ? "Хорошая база 💜"
+  document.getElementById("question").textContent =
+    "Твой Market Score";
 
-    : "Есть что повторить 📚";
+  document.getElementById("chartContainer").innerHTML = `
 
-  document.getElementById("fx")
-    .textContent =
+    <div class="score-box">
 
-    percent >= 65
+      <div class="score-circle">
 
-    ? "Ты прошёл базовую подготовку. Дальше главное — не спешить и соблюдать риск."
+        <b>${finalScore}</b>
 
-    : "Вернись к учебнику, повтори материал и попробуй тест ещё раз.";
+        <span>MARKET SCORE</span>
+
+      </div>
+
+      <div style="font-size:15px;font-weight:900;margin-bottom:7px">
+        ${getScoreTitle(finalScore)}
+      </div>
+
+      <div style="font-size:11px;color:var(--muted);line-height:1.5">
+        Этот показатель отражает только результат
+        интерактивного задания и не является показателем
+        реальной торговой способности.
+      </div>
+
+    </div>
+  `;
+
+  document.getElementById("answers").innerHTML = `
+
+    <button class="primary" onclick="restartLab()">
+      ПРОЙТИ ЕЩЁ РАЗ
+    </button>
+
+    <button class="secondary" onclick="go('team')">
+      УЗНАТЬ ПРО AVA TEAM →
+    </button>
+
+  `;
+
+  document.getElementById("result").classList.remove("show");
+
+}
+
+function getScoreTitle(score){
+
+  if(score >= 85)
+    return "Ты хорошо замечаешь детали.";
+
+  if(score >= 65)
+    return "Хорошая база наблюдения.";
+
+  if(score >= 40)
+    return "Есть над чем поработать.";
+
+  return "Начало — уже хороший результат.";
 }
 
 
-/* ================= START ================= */
+function restartLab(){
+
+  currentQuestion = 0;
+  labScore = 0;
+  renderQuestion();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* INITIAL */
 
 updateStats();
 
-document
-  .querySelector('[data-n="home"]')
-  .classList.add("active");
+
+/* PREVENT DOUBLE TAP ZOOM */
+
+document.addEventListener(
+  "dblclick",
+  e => e.preventDefault(),
+  {passive:false}
+);
+
+
+/* SMALL APP FEEDBACK */
+
+document.addEventListener("click",function(e){
+
+  const button =
+    e.target.closest(".primary,.secondary");
+
+  if(button && !button.href){
+
+    button.style.transform="scale(.98)";
+
+    setTimeout(()=>{
+      button.style.transform="";
+    },120);
+
+  }
+
+});
 
 </script>
 
