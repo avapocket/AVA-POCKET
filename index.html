@@ -1,1156 +1,3727 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b0714">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-  <title>AVA TEAM</title>
+<title>AVA TEAM</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-    :root {
-      --bg: #08070d;
-      --card: #12101b;
-      --card2: #181522;
-      --purple: #8b5cf6;
-      --purple2: #a78bfa;
-      --text: #ffffff;
-      --muted: #8f8a9d;
-      --line: rgba(255,255,255,.07);
-      --green: #35d07f;
-      --red: #ff5268;
-    }
+:root{
+    --bg:#08060d;
+    --bg2:#0d0916;
+    --card:#12101b;
+    --card2:#171322;
+    --purple:#8b5cf6;
+    --purple2:#a855f7;
+    --violet:#7c3aed;
+    --text:#ffffff;
+    --muted:#918aa5;
+    --line:rgba(255,255,255,.07);
+    --green:#22c55e;
+    --red:#ef4444;
+    --yellow:#f59e0b;
+    --blue:#3b82f6;
+    --radius:22px;
+}
 
-    body {
-      background:
-        radial-gradient(circle at 50% -10%, rgba(139,92,246,.24), transparent 35%),
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 20% 0%,rgba(139,92,246,.16),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(168,85,247,.08),transparent 25%),
         var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    button {
-      font: inherit;
-      border: 0;
-      cursor: pointer;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding-bottom: 95px;
-    }
-
-    /* HEADER */
-
-    .header {
-      padding: 24px 18px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
-
-    .logo {
-      width: 43px;
-      height: 43px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #a78bfa, #6d28d9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 17px;
-      box-shadow: 0 8px 30px rgba(139,92,246,.25);
-    }
-
-    .brand-text b {
-      display: block;
-      font-size: 17px;
-      letter-spacing: .3px;
-    }
-
-    .brand-text span {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 2px;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--card2);
-      border: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 19px;
-    }
-
-    /* SCREENS */
-
-    .screen {
-      display: none;
-      padding: 8px 18px 25px;
-      animation: fade .25s ease;
-    }
-
-    .screen.active {
-      display: block;
-    }
-
-    @keyframes fade {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .welcome {
-      margin-top: 18px;
-      margin-bottom: 20px;
-    }
-
-    .welcome small {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .welcome h1 {
-      margin-top: 5px;
-      font-size: 29px;
-      line-height: 1.1;
-    }
-
-    .welcome h1 span {
-      color: var(--purple2);
-    }
-
-    /* HERO */
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 22px;
-      min-height: 190px;
-      border-radius: 25px;
-      background:
-        linear-gradient(145deg, rgba(139,92,246,.30), rgba(37,22,65,.55)),
-        var(--card);
-      border: 1px solid rgba(167,139,250,.15);
-      box-shadow: 0 15px 50px rgba(0,0,0,.25);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      right: -70px;
-      bottom: -80px;
-      border-radius: 50%;
-      background: rgba(167,139,250,.17);
-      filter: blur(10px);
-    }
-
-    .hero-label {
-      display: inline-flex;
-      padding: 7px 11px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.08);
-      color: #d8cdfb;
-      font-size: 11px;
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-
-    .hero h2 {
-      font-size: 25px;
-      line-height: 1.15;
-      max-width: 300px;
-    }
-
-    .hero p {
-      color: #b9b2c9;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-top: 9px;
-      max-width: 320px;
-    }
-
-    .hero-button {
-      margin-top: 18px;
-      padding: 12px 16px;
-      border-radius: 13px;
-      background: white;
-      color: #17121f;
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    /* STATS */
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 9px;
-      margin-top: 12px;
-    }
-
-    .stat {
-      padding: 15px 12px;
-      border-radius: 18px;
-      background: var(--card);
-      border: 1px solid var(--line);
-    }
-
-    .stat b {
-      display: block;
-      font-size: 20px;
-    }
-
-    .stat span {
-      display: block;
-      color: var(--muted);
-      font-size: 10px;
-      margin-top: 4px;
-    }
-
-    /* SECTION */
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 25px 0 12px;
-    }
-
-    .section-title h3 {
-      font-size: 17px;
-    }
-
-    .section-title span {
-      color: var(--purple2);
-      font-size: 11px;
-    }
-
-    /* MODULES */
-
-    .modules {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .module {
-      position: relative;
-      overflow: hidden;
-      text-align: left;
-      min-height: 145px;
-      padding: 17px;
-      border-radius: 21px;
-      color: white;
-      background: var(--card);
-      border: 1px solid var(--line);
-      transition: .2s;
-    }
-
-    .module:active {
-      transform: scale(.97);
-    }
-
-    .module .icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(139,92,246,.15);
-      font-size: 20px;
-      margin-bottom: 25px;
-    }
-
-    .module b {
-      display: block;
-      font-size: 15px;
-    }
-
-    .module span {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 5px;
-      line-height: 1.35;
-    }
-
-    .module.signal {
-      background:
-        linear-gradient(145deg, rgba(139,92,246,.28), rgba(18,16,27,.9));
-    }
-
-    .module.academy .icon {
-      background: rgba(59,130,246,.14);
-    }
-
-    .module.practice .icon {
-      background: rgba(34,197,94,.13);
-    }
-
-    .module.games .icon {
-      background: rgba(245,158,11,.13);
-    }
-
-    /* NEWS */
-
-    .news-card {
-      padding: 16px;
-      border-radius: 19px;
-      background: var(--card);
-      border: 1px solid var(--line);
-    }
-
-    .news-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .news-top span {
-      color: var(--purple2);
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    .news-card h4 {
-      margin-top: 10px;
-      font-size: 15px;
-    }
-
-    .news-card p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-      margin-top: 6px;
-    }
-
-    /* SIGNAL */
-
-    .signal-header {
-      margin-top: 15px;
-    }
-
-    .signal-header h1 {
-      font-size: 28px;
-    }
-
-    .signal-header p {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 7px;
-      line-height: 1.4;
-    }
-
-    .signal-box {
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 23px;
-      background: var(--card);
-      border: 1px solid var(--line);
-    }
-
-    .field {
-      margin-bottom: 16px;
-    }
-
-    .field label {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      margin-bottom: 8px;
-    }
-
-    .choices {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-    }
-
-    .choice {
-      padding: 11px 13px;
-      border-radius: 12px;
-      background: var(--card2);
-      color: #c4bfce;
-      border: 1px solid var(--line);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .choice.active {
-      color: white;
-      background: rgba(139,92,246,.23);
-      border-color: rgba(167,139,250,.45);
-    }
-
-    .generate {
-      width: 100%;
-      padding: 15px;
-      margin-top: 4px;
-      border-radius: 15px;
-      color: white;
-      font-weight: 900;
-      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-      box-shadow: 0 12px 35px rgba(109,40,217,.25);
-    }
-
-    .signal-result {
-      display: none;
-      margin-top: 13px;
-      padding: 17px;
-      border-radius: 18px;
-      background: var(--card2);
-      border: 1px solid var(--line);
-      text-align: center;
-    }
-
-    .signal-result.show {
-      display: block;
-    }
-
-    .signal-result small {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .direction {
-      font-size: 31px;
-      font-weight: 900;
-      margin: 9px 0 4px;
-    }
-
-    .direction.call {
-      color: var(--green);
-    }
-
-    .direction.put {
-      color: var(--red);
-    }
-
-    .signal-note {
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.4;
-      margin-top: 12px;
-    }
-
-    /* PROFILE */
-
-    .profile-card {
-      margin-top: 15px;
-      padding: 20px;
-      border-radius: 23px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      text-align: center;
-    }
-
-    .big-avatar {
-      width: 75px;
-      height: 75px;
-      margin: 0 auto 12px;
-      border-radius: 25px;
-      background: linear-gradient(135deg, #a78bfa, #6d28d9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-    }
-
-    .profile-card h2 {
-      font-size: 20px;
-    }
-
-    .profile-card p {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .progress {
-      height: 7px;
-      margin-top: 17px;
-      border-radius: 10px;
-      background: #26222e;
-      overflow: hidden;
-    }
-
-    .progress div {
-      height: 100%;
-      width: 62%;
-      background: linear-gradient(90deg, #8b5cf6, #c4b5fd);
-      border-radius: inherit;
-    }
-
-    /* PLACEHOLDER */
-
-    .placeholder {
-      margin-top: 15px;
-      padding: 30px 20px;
-      text-align: center;
-      border-radius: 22px;
-      background: var(--card);
-      border: 1px solid var(--line);
-    }
-
-    .placeholder .big-icon {
-      font-size: 38px;
-      margin-bottom: 13px;
-    }
-
-    .placeholder h2 {
-      font-size: 19px;
-    }
-
-    .placeholder p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-      margin-top: 7px;
-    }
-
-    /* BOTTOM NAV */
-
-    .bottom-nav {
-      position: fixed;
-      z-index: 100;
-      left: 50%;
-      bottom: 10px;
-      transform: translateX(-50%);
-      width: calc(100% - 24px);
-      max-width: 495px;
-      height: 68px;
-      padding: 6px;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 3px;
-      border-radius: 22px;
-      background: rgba(18,16,27,.92);
-      border: 1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 15px 45px rgba(0,0,0,.45);
-    }
-
-    .nav-btn {
-      background: transparent;
-      color: #777181;
-      border-radius: 17px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      font-size: 9px;
-      font-weight: 700;
-    }
-
-    .nav-btn .nav-icon {
-      font-size: 19px;
-    }
-
-    .nav-btn.active {
-      color: white;
-      background: rgba(139,92,246,.17);
-    }
-
-    /* RESPONSIVE */
-
-    @media (min-width: 600px) {
-      .app {
-        padding-top: 15px;
-      }
-
-      .bottom-nav {
-        bottom: 18px;
-      }
-    }
-  </style>
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+#app{
+    width:100%;
+    max-width:560px;
+    margin:0 auto;
+    min-height:100vh;
+    position:relative;
+    padding-bottom:92px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar{
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(8,6,13,.82);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.logo{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    font-size:18px;
+    background:linear-gradient(135deg,#a855f7,#6d28d9);
+    box-shadow:0 8px 30px rgba(139,92,246,.35);
+}
+
+.brand-text{
+    font-size:15px;
+    font-weight:900;
+    letter-spacing:.8px;
+}
+
+.brand-sub{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:2px;
+    letter-spacing:1.5px;
+}
+
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.icon-btn{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--line);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page{
+    display:none;
+    padding:18px;
+    animation:pageIn .28s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+.eyebrow{
+    color:#a78bfa;
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin-bottom:7px;
+}
+
+.title{
+    font-size:29px;
+    line-height:1.08;
+    font-weight:900;
+    letter-spacing:-1px;
+}
+
+.subtitle{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.55;
+    margin-top:9px;
+}
+
+.section-title{
+    font-size:18px;
+    font-weight:900;
+    margin-bottom:13px;
+}
+
+.section-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:25px 0 13px;
+}
+
+.section-row .section-title{
+    margin:0;
+}
+
+.see-all{
+    color:#a78bfa;
+    font-size:11px;
+    font-weight:700;
+}
+
+/* =========================
+   HOME HERO
+========================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:24px;
+    border-radius:28px;
+    background:
+        radial-gradient(circle at 100% 0%,rgba(168,85,247,.35),transparent 38%),
+        linear-gradient(145deg,#171022,#0e0a16);
+    border:1px solid rgba(168,85,247,.18);
+    box-shadow:0 20px 70px rgba(0,0,0,.25);
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:rgba(139,92,246,.13);
+    filter:blur(20px);
+    right:-80px;
+    bottom:-80px;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-size:34px;
+    line-height:1;
+    font-weight:900;
+    letter-spacing:-1.5px;
+}
+
+.hero h1 span{
+    color:#a78bfa;
+}
+
+.hero p{
+    margin-top:12px;
+    color:#aaa3b8;
+    font-size:13px;
+    max-width:340px;
+    line-height:1.55;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:9px;
+    margin-top:19px;
+}
+
+.primary-btn{
+    min-height:45px;
+    padding:0 17px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#9b5cff,#7134d5);
+    color:white;
+    font-size:12px;
+    font-weight:800;
+    box-shadow:0 10px 25px rgba(124,58,237,.3);
+}
+
+.secondary-btn{
+    min-height:45px;
+    padding:0 17px;
+    border-radius:14px;
+    background:rgba(255,255,255,.06);
+    color:white;
+    border:1px solid var(--line);
+    font-size:12px;
+    font-weight:800;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:12px;
+}
+
+.stat-card{
+    padding:15px 11px;
+    border-radius:17px;
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--line);
+}
+
+.stat-icon{
+    font-size:16px;
+    margin-bottom:9px;
+}
+
+.stat-value{
+    font-size:17px;
+    font-weight:900;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+/* =========================
+   MODULE CARDS
+========================= */
+
+.module-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+.module{
+    min-height:170px;
+    border-radius:21px;
+    padding:18px;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(145deg,#16121f,#0f0c16);
+    border:1px solid var(--line);
+    transition:.2s;
+}
+
+.module:active{
+    transform:scale(.98);
+}
+
+.module-icon{
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+    background:rgba(139,92,246,.14);
+    margin-bottom:18px;
+}
+
+.module h3{
+    font-size:15px;
+    font-weight:900;
+}
+
+.module p{
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.45;
+    margin-top:6px;
+}
+
+.module-arrow{
+    position:absolute;
+    right:16px;
+    bottom:16px;
+    color:#a78bfa;
+    font-size:15px;
+}
+
+/* =========================
+   NEWS
+========================= */
+
+.news-card{
+    border-radius:21px;
+    padding:17px;
+    background:linear-gradient(145deg,#15111f,#0f0c15);
+    border:1px solid var(--line);
+}
+
+.news-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.news-badge{
+    font-size:9px;
+    font-weight:800;
+    padding:6px 9px;
+    border-radius:8px;
+    background:rgba(139,92,246,.13);
+    color:#b69cff;
+}
+
+.news-date{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.news-title{
+    font-size:14px;
+    font-weight:800;
+    margin-top:12px;
+}
+
+.news-text{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.5;
+    margin-top:6px;
+}
+
+/* =========================
+   SIGNAL
+========================= */
+
+.signal-hero{
+    padding:21px;
+    border-radius:24px;
+    background:
+        radial-gradient(circle at 100% 0%,rgba(139,92,246,.25),transparent 40%),
+        #12101a;
+    border:1px solid rgba(139,92,246,.15);
+    margin-bottom:15px;
+}
+
+.signal-status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:#a78bfa;
+    font-size:10px;
+    font-weight:800;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#8b5cf6;
+    box-shadow:0 0 12px #8b5cf6;
+}
+
+.signal-hero h2{
+    margin-top:11px;
+    font-size:24px;
+    font-weight:900;
+}
+
+.signal-hero p{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.5;
+    margin-top:6px;
+}
+
+.market-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    padding:4px;
+    background:#100d17;
+    border-radius:16px;
+    border:1px solid var(--line);
+    margin-bottom:13px;
+}
+
+.market-tab{
+    min-height:43px;
+    border-radius:12px;
+    background:transparent;
+    color:var(--muted);
+    font-size:11px;
+    font-weight:800;
+}
+
+.market-tab.active{
+    color:white;
+    background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+}
+
+.search-box{
+    position:relative;
+    margin-bottom:12px;
+}
+
+.search-box input{
+    width:100%;
+    height:46px;
+    border-radius:15px;
+    border:1px solid var(--line);
+    outline:none;
+    background:#11101a;
+    color:white;
+    padding:0 16px 0 43px;
+    font-size:12px;
+}
+
+.search-box span{
+    position:absolute;
+    left:15px;
+    top:14px;
+    color:#777082;
+}
+
+.filter-row{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    padding-bottom:3px;
+    scrollbar-width:none;
+}
+
+.filter-row::-webkit-scrollbar{
+    display:none;
+}
+
+.filter-chip{
+    flex:0 0 auto;
+    padding:8px 11px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:#11101a;
+    color:var(--muted);
+    font-size:9px;
+    font-weight:700;
+}
+
+.filter-chip.active{
+    color:white;
+    border-color:rgba(139,92,246,.4);
+    background:rgba(139,92,246,.13);
+}
+
+.pairs-list{
+    margin-top:12px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.pair-card{
+    min-height:65px;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    border-radius:16px;
+    background:#11101a;
+    border:1px solid var(--line);
+}
+
+.pair-icon{
+    width:37px;
+    height:37px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(139,92,246,.1);
+    font-size:14px;
+}
+
+.pair-info{
+    flex:1;
+    min-width:0;
+}
+
+.pair-name{
+    font-size:12px;
+    font-weight:800;
+}
+
+.pair-meta{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:4px;
+}
+
+.star{
+    background:none;
+    color:#615a6e;
+    font-size:17px;
+}
+
+.star.active{
+    color:#fbbf24;
+}
+
+.pair-select{
+    padding:8px 10px;
+    border-radius:10px;
+    background:rgba(139,92,246,.1);
+    color:#b69cff;
+    font-size:9px;
+    font-weight:800;
+}
+
+/* =========================
+   SIGNAL SETTINGS
+========================= */
+
+.signal-panel{
+    margin-top:15px;
+    padding:17px;
+    border-radius:20px;
+    background:#11101a;
+    border:1px solid var(--line);
+}
+
+.setting-title{
+    color:#9d95aa;
+    font-size:9px;
+    text-transform:uppercase;
+    font-weight:800;
+    letter-spacing:1px;
+    margin-bottom:9px;
+}
+
+.selected-pair{
+    font-size:18px;
+    font-weight:900;
+    margin-bottom:15px;
+}
+
+.expiry-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:6px;
+}
+
+.expiry{
+    height:38px;
+    border-radius:10px;
+    background:#181522;
+    border:1px solid var(--line);
+    color:#8e8798;
+    font-size:10px;
+    font-weight:800;
+}
+
+.expiry.active{
+    background:rgba(139,92,246,.16);
+    border-color:rgba(139,92,246,.4);
+    color:white;
+}
+
+.generate-btn{
+    width:100%;
+    height:53px;
+    margin-top:15px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#a855f7,#6d28d9);
+    color:white;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.3px;
+    box-shadow:0 12px 35px rgba(124,58,237,.25);
+}
+
+.generate-btn:active{
+    transform:scale(.98);
+}
+
+/* =========================
+   RESULT
+========================= */
+
+.signal-result{
+    display:none;
+    margin-top:14px;
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid rgba(139,92,246,.2);
+    background:#11101a;
+}
+
+.signal-result.show{
+    display:block;
+    animation:resultIn .3s ease;
+}
+
+@keyframes resultIn{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.result-head{
+    padding:18px;
+    text-align:center;
+    background:linear-gradient(145deg,#171021,#100d16);
+}
+
+.result-label{
+    color:var(--muted);
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.result-direction{
+    font-size:38px;
+    font-weight:900;
+    margin-top:7px;
+}
+
+.result-direction.call{
+    color:#22c55e;
+}
+
+.result-direction.put{
+    color:#ef4444;
+}
+
+.result-pair{
+    font-size:13px;
+    font-weight:800;
+    margin-top:3px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--line);
+}
+
+.result-stat{
+    text-align:center;
+    padding:14px 5px;
+    border-right:1px solid var(--line);
+}
+
+.result-stat:last-child{
+    border-right:0;
+}
+
+.result-stat b{
+    display:block;
+    font-size:13px;
+}
+
+.result-stat span{
+    color:var(--muted);
+    font-size:8px;
+    display:block;
+    margin-top:3px;
+}
+
+.demo-note{
+    padding:11px 15px;
+    color:#777082;
+    font-size:8px;
+    line-height:1.5;
+    border-top:1px solid var(--line);
+}
+
+/* =========================
+   CONTENT CARDS
+========================= */
+
+.large-card{
+    padding:20px;
+    border-radius:22px;
+    background:#11101a;
+    border:1px solid var(--line);
+    margin-bottom:11px;
+}
+
+.large-icon{
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:15px;
+    background:rgba(139,92,246,.12);
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.large-card h3{
+    font-size:16px;
+    font-weight:900;
+}
+
+.large-card p{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.55;
+    margin-top:6px;
+}
+
+.progress-wrap{
+    margin-top:15px;
+}
+
+.progress-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:9px;
+    color:var(--muted);
+    margin-bottom:7px;
+}
+
+.progress{
+    height:6px;
+    background:#211c2b;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:35%;
+    background:linear-gradient(90deg,#8b5cf6,#c084fc);
+    border-radius:10px;
+}
+
+/* =========================
+   LESSONS
+========================= */
+
+.lesson-list{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.lesson{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    border-radius:17px;
+    background:#11101a;
+    border:1px solid var(--line);
+}
+
+.lesson-num{
+    width:36px;
+    height:36px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:900;
+    background:rgba(139,92,246,.12);
+    color:#b69cff;
+}
+
+.lesson-info{
+    flex:1;
+}
+
+.lesson-info h4{
+    font-size:11px;
+    font-weight:800;
+}
+
+.lesson-info p{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.lesson-status{
+    font-size:14px;
+}
+
+/* =========================
+   PRACTICE
+========================= */
+
+.practice-card{
+    padding:19px;
+    border-radius:21px;
+    background:#11101a;
+    border:1px solid var(--line);
+    margin-bottom:11px;
+}
+
+.question-tag{
+    display:inline-block;
+    padding:6px 9px;
+    border-radius:8px;
+    background:rgba(139,92,246,.12);
+    color:#b69cff;
+    font-size:8px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+.practice-card h3{
+    font-size:17px;
+    line-height:1.3;
+    margin-top:12px;
+}
+
+.answer-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:15px;
+}
+
+.answer{
+    width:100%;
+    min-height:48px;
+    text-align:left;
+    padding:12px 14px;
+    border-radius:14px;
+    background:#181521;
+    border:1px solid var(--line);
+    color:white;
+    font-size:11px;
+    font-weight:700;
+}
+
+.answer:hover{
+    border-color:rgba(139,92,246,.35);
+}
+
+/* =========================
+   GAMES
+========================= */
+
+.games-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.game-card{
+    min-height:155px;
+    padding:17px;
+    border-radius:20px;
+    background:linear-gradient(145deg,#161220,#100d16);
+    border:1px solid var(--line);
+}
+
+.game-icon{
+    font-size:28px;
+    margin-bottom:18px;
+}
+
+.game-card h3{
+    font-size:13px;
+    font-weight:900;
+}
+
+.game-card p{
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.45;
+    margin-top:5px;
+}
+
+/* =========================
+   RANKING
+========================= */
+
+.rank-card{
+    padding:20px;
+    border-radius:22px;
+    background:linear-gradient(145deg,#171220,#100d16);
+    border:1px solid rgba(139,92,246,.15);
+    text-align:center;
+}
+
+.rank-position{
+    font-size:11px;
+    color:var(--muted);
+}
+
+.rank-avatar{
+    width:62px;
+    height:62px;
+    border-radius:20px;
+    margin:12px auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+    font-size:23px;
+    font-weight:900;
+}
+
+.rank-name{
+    font-size:17px;
+    font-weight:900;
+}
+
+.rank-xp{
+    color:#a78bfa;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.rank-list{
+    margin-top:13px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.rank-item{
+    display:flex;
+    align-items:center;
+    padding:12px;
+    border-radius:15px;
+    background:#11101a;
+    border:1px solid var(--line);
+}
+
+.rank-num{
+    width:28px;
+    color:#777082;
+    font-size:10px;
+    font-weight:900;
+}
+
+.rank-small-avatar{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+    background:#211b2b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+}
+
+.rank-user{
+    flex:1;
+    margin-left:9px;
+}
+
+.rank-user b{
+    display:block;
+    font-size:10px;
+}
+
+.rank-user span{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.rank-points{
+    color:#b69cff;
+    font-size:10px;
+    font-weight:800;
+}
+
+/* =========================
+   TEAM
+========================= */
+
+.team-banner{
+    padding:22px;
+    border-radius:24px;
+    background:
+        radial-gradient(circle at 100% 0%,rgba(139,92,246,.3),transparent 40%),
+        #12101a;
+    border:1px solid var(--line);
+}
+
+.team-banner h2{
+    font-size:23px;
+    font-weight:900;
+}
+
+.team-banner p{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.55;
+    margin-top:7px;
+}
+
+.team-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin-top:16px;
+}
+
+.team-action{
+    padding:13px;
+    border-radius:14px;
+    background:rgba(255,255,255,.05);
+    color:white;
+    font-size:10px;
+    font-weight:800;
+    border:1px solid var(--line);
+}
+
+.member-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.member{
+    display:flex;
+    align-items:center;
+    padding:12px;
+    border-radius:16px;
+    background:#11101a;
+    border:1px solid var(--line);
+}
+
+.member-avatar{
+    width:38px;
+    height:38px;
+    border-radius:13px;
+    background:#211a2d;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    color:#b69cff;
+}
+
+.member-info{
+    flex:1;
+    margin-left:10px;
+}
+
+.member-info b{
+    display:block;
+    font-size:11px;
+}
+
+.member-info span{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.member-level{
+    font-size:9px;
+    font-weight:800;
+    color:#a78bfa;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-head{
+    text-align:center;
+    padding:23px 15px;
+    border-radius:24px;
+    background:#11101a;
+    border:1px solid var(--line);
+}
+
+.profile-avatar{
+    width:78px;
+    height:78px;
+    border-radius:25px;
+    margin:0 auto 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:900;
+    background:linear-gradient(135deg,#a855f7,#6d28d9);
+    box-shadow:0 15px 40px rgba(124,58,237,.25);
+}
+
+.profile-name{
+    font-size:19px;
+    font-weight:900;
+}
+
+.profile-handle{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:4px;
+}
+
+.level-box{
+    margin-top:18px;
+    text-align:left;
+}
+
+.level-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    font-weight:800;
+}
+
+.level-top span{
+    color:#a78bfa;
+}
+
+.profile-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-top:12px;
+}
+
+.profile-stat{
+    padding:14px 5px;
+    border-radius:15px;
+    background:#181521;
+}
+
+.profile-stat b{
+    display:block;
+    font-size:15px;
+}
+
+.profile-stat span{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:4px;
+}
+
+.achievement-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.achievement{
+    min-height:92px;
+    padding:12px 7px;
+    border-radius:16px;
+    background:#11101a;
+    border:1px solid var(--line);
+    text-align:center;
+}
+
+.achievement-icon{
+    font-size:23px;
+}
+
+.achievement span{
+    display:block;
+    font-size:8px;
+    font-weight:700;
+    margin-top:7px;
+    color:#aaa3b8;
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+    position:fixed;
+    z-index:100;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:560px;
+    padding:9px 10px calc(9px + env(safe-area-inset-bottom));
+    background:rgba(10,8,15,.92);
+    backdrop-filter:blur(20px);
+    border-top:1px solid rgba(255,255,255,.06);
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+}
+
+.nav-item{
+    background:none;
+    color:#686171;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    font-size:8px;
+    font-weight:700;
+    padding:4px;
+}
+
+.nav-icon{
+    width:32px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    font-size:17px;
+}
+
+.nav-item.active{
+    color:#b69cff;
+}
+
+.nav-item.active .nav-icon{
+    background:rgba(139,92,246,.13);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:200;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(7px);
+    align-items:flex-end;
+    justify-content:center;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:560px;
+    max-height:85vh;
+    overflow:auto;
+    border-radius:26px 26px 0 0;
+    background:#11101a;
+    border:1px solid var(--line);
+    padding:21px;
+    animation:modalIn .25s ease;
+}
+
+@keyframes modalIn{
+    from{
+        transform:translateY(100%);
+    }
+    to{
+        transform:translateY(0);
+    }
+}
+
+.modal-handle{
+    width:38px;
+    height:4px;
+    border-radius:10px;
+    background:#3b3544;
+    margin:0 auto 18px;
+}
+
+.modal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:16px;
+}
+
+.modal-head h3{
+    font-size:18px;
+    font-weight:900;
+}
+
+.close{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+    background:#1b1724;
+    color:white;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    z-index:300;
+    left:50%;
+    bottom:95px;
+    transform:translateX(-50%) translateY(20px);
+    opacity:0;
+    pointer-events:none;
+    background:#1b1724;
+    border:1px solid rgba(139,92,246,.25);
+    padding:11px 15px;
+    border-radius:13px;
+    color:white;
+    font-size:10px;
+    font-weight:700;
+    transition:.25s;
+    white-space:nowrap;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    text-align:center;
+    padding:30px 15px;
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:360px){
+    .title{
+        font-size:25px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .module{
+        min-height:155px;
+    }
+
+    .expiry-grid{
+        gap:4px;
+    }
+
+    .expiry{
+        font-size:9px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<div class="app">
+<div id="app">
 
-  <!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
-  <header class="header">
+<header class="topbar">
+
     <div class="brand">
-      <div class="logo">A</div>
-
-      <div class="brand-text">
-        <b>AVA TEAM</b>
-        <span>Trading ecosystem</span>
-      </div>
+        <div class="logo">A</div>
+        <div>
+            <div class="brand-text">AVA TEAM</div>
+            <div class="brand-sub">TRADING ECOSYSTEM</div>
+        </div>
     </div>
 
-    <button class="avatar" onclick="openScreen('profile')">
-      👤
-    </button>
-  </header>
-
-
-  <!-- HOME -->
-
-  <main id="home" class="screen active">
-
-    <div class="welcome">
-      <small>Добро пожаловать 👋</small>
-      <h1>Твой путь в <span>AVA TEAM</span></h1>
+    <div class="header-actions">
+        <button class="icon-btn" onclick="openNotifications()">🔔</button>
+        <button class="icon-btn" onclick="go('profile')">👤</button>
     </div>
+
+</header>
+
+
+<!-- =========================
+     HOME
+========================= -->
+
+<main id="home" class="page active">
 
     <section class="hero">
 
-      <div class="hero-label">
-        ⚡ AVA TEAM
-      </div>
+        <div class="hero-content">
 
-      <h2>
-        Изучай рынок.<br>
-        Практикуйся. Развивайся.
-      </h2>
+            <div class="eyebrow">Добро пожаловать</div>
 
-      <p>
-        Обучение, практика, сигналы, игры,
-        достижения и сообщество — всё в одном месте.
-      </p>
+            <h1>
+                Добро пожаловать<br>
+                в <span>AVA TEAM</span>
+            </h1>
 
-      <button class="hero-button" onclick="openScreen('academy')">
-        Начать обучение
-      </button>
+            <p>
+                Обучение, практика, сигналы, игры и комьюнити
+                — всё в одном месте.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    class="primary-btn"
+                    onclick="go('signal')">
+                    ⚡ AVA SIGNAL
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="go('academy')">
+                    Академия
+                </button>
+
+            </div>
+
+        </div>
 
     </section>
 
 
-    <div class="stats">
+    <div class="stats-grid">
 
-      <div class="stat">
-        <b>0</b>
-        <span>XP сегодня</span>
-      </div>
+        <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-value" id="homeXP">0</div>
+            <div class="stat-label">XP</div>
+        </div>
 
-      <div class="stat">
-        <b>1</b>
-        <span>День серии</span>
-      </div>
+        <div class="stat-card">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-value" id="homeStreak">1</div>
+            <div class="stat-label">дней подряд</div>
+        </div>
 
-      <div class="stat">
-        <b>0</b>
-        <span>Достижений</span>
-      </div>
-
-    </div>
-
-
-    <div class="section-title">
-      <h3>Разделы</h3>
-      <span>AVA TEAM</span>
-    </div>
-
-
-    <div class="modules">
-
-      <button class="module signal" onclick="openScreen('signal')">
-        <div class="icon">⚡</div>
-        <b>AVA SIGNAL</b>
-        <span>Работа с торговыми сигналами</span>
-      </button>
-
-
-      <button class="module academy" onclick="openScreen('academy')">
-        <div class="icon">🎓</div>
-        <b>Академия</b>
-        <span>Уроки и знания о рынке</span>
-      </button>
-
-
-      <button class="module practice" onclick="openScreen('practice')">
-        <div class="icon">🎯</div>
-        <b>Практика</b>
-        <span>Проверяй свои знания</span>
-      </button>
-
-
-      <button class="module games" onclick="openScreen('games')">
-        <div class="icon">🎮</div>
-        <b>Игры</b>
-        <span>Развивай навыки через игру</span>
-      </button>
+        <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-value" id="homeLevel">1</div>
+            <div class="stat-label">уровень</div>
+        </div>
 
     </div>
 
 
-    <div class="section-title">
-      <h3>Новости AVA</h3>
-      <span>Все</span>
+    <div class="section-row">
+        <div class="section-title">Возможности</div>
+        <div class="see-all">AVA TEAM</div>
+    </div>
+
+
+    <div class="module-grid">
+
+        <button class="module" onclick="go('signal')">
+
+            <div class="module-icon">⚡</div>
+
+            <h3>AVA SIGNAL</h3>
+
+            <p>
+                Выбор рынка, пары и времени
+                экспирации.
+            </p>
+
+            <div class="module-arrow">→</div>
+
+        </button>
+
+
+        <button class="module" onclick="go('academy')">
+
+            <div class="module-icon">📚</div>
+
+            <h3>Академия</h3>
+
+            <p>
+                Свечи, графики, тренды,
+                уровни и риск.
+            </p>
+
+            <div class="module-arrow">→</div>
+
+        </button>
+
+
+        <button class="module" onclick="go('practice')">
+
+            <div class="module-icon">🎯</div>
+
+            <h3>Практика</h3>
+
+            <p>
+                Проверяй знания через
+                разные типы заданий.
+            </p>
+
+            <div class="module-arrow">→</div>
+
+        </button>
+
+
+        <button class="module" onclick="go('games')">
+
+            <div class="module-icon">🎮</div>
+
+            <h3>Игры</h3>
+
+            <p>
+                Получай XP и развивай
+                торговое мышление.
+            </p>
+
+            <div class="module-arrow">→</div>
+
+        </button>
+
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-title">Последнее</div>
+        <div class="see-all">НОВОСТИ</div>
     </div>
 
 
     <div class="news-card">
 
-      <div class="news-top">
-        <span>AVA TEAM</span>
-        <span>Скоро</span>
-      </div>
+        <div class="news-top">
+            <div class="news-badge">AVA TEAM</div>
+            <div class="news-date">Сегодня</div>
+        </div>
 
-      <h4>Большое обновление уже готовится</h4>
+        <div class="news-title">
+            Добро пожаловать в новую экосистему AVA
+        </div>
 
-      <p>
-        Мы постепенно открываем новые разделы
-        приложения и добавляем новые возможности.
-      </p>
+        <div class="news-text">
+            Здесь будут появляться обновления,
+            новые задания, функции и события команды.
+        </div>
 
     </div>
 
-  </main>
+</main>
 
 
-  <!-- SIGNAL -->
+<!-- =========================
+     SIGNAL
+========================= -->
 
-  <main id="signal" class="screen">
+<main id="signal" class="page">
 
-    <div class="signal-header">
-      <h1>⚡ AVA SIGNAL</h1>
+    <div class="eyebrow">AVA TOOLS</div>
 
-      <p>
+    <div class="title">
+        AVA SIGNAL
+    </div>
+
+    <div class="subtitle">
         Выбери рынок, валютную пару и время
         экспирации.
-      </p>
     </div>
 
 
-    <section class="signal-box">
+    <div class="signal-hero" style="margin-top:18px;">
 
-      <div class="field">
-
-        <label>РЫНОК</label>
-
-        <div class="choices">
-
-          <button class="choice active" data-group="market">
-            OTC
-          </button>
-
-          <button class="choice" data-group="market">
-            Биржа
-          </button>
-
+        <div class="signal-status">
+            <div class="status-dot"></div>
+            SIGNAL ENGINE
         </div>
 
-      </div>
+        <h2>
+            Найди нужную пару
+        </h2>
+
+        <p>
+            В будущем здесь будет подключён
+            реальный источник рыночных данных
+            и алгоритм анализа.
+        </p>
+
+    </div>
 
 
-      <div class="field">
+    <div class="market-tabs">
 
-        <label>ВАЛЮТНАЯ ПАРА</label>
+        <button
+            class="market-tab active"
+            id="otcTab"
+            onclick="setMarket('OTC')">
+            🟣 OTC
+        </button>
 
-        <div class="choices">
+        <button
+            class="market-tab"
+            id="exchangeTab"
+            onclick="setMarket('EXCHANGE')">
+            🔵 БИРЖА
+        </button>
 
-          <button class="choice active" data-group="pair">
+    </div>
+
+
+    <div class="search-box">
+
+        <span>🔍</span>
+
+        <input
+            id="pairSearch"
+            type="text"
+            placeholder="Поиск валютной пары..."
+            oninput="renderPairs()">
+
+    </div>
+
+
+    <div class="filter-row">
+
+        <button
+            class="filter-chip active"
+            data-filter="ALL"
+            onclick="setPairFilter('ALL')">
+            Все
+        </button>
+
+        <button
+            class="filter-chip"
+            data-filter="MAJOR"
+            onclick="setPairFilter('MAJOR')">
+            Основные
+        </button>
+
+        <button
+            class="filter-chip"
+            data-filter="CROSS"
+            onclick="setPairFilter('CROSS')">
+            Кроссы
+        </button>
+
+        <button
+            class="filter-chip"
+            data-filter="EXOTIC"
+            onclick="setPairFilter('EXOTIC')">
+            Экзотические
+        </button>
+
+        <button
+            class="filter-chip"
+            data-filter="FAVORITES"
+            onclick="setPairFilter('FAVORITES')">
+            ⭐ Избранные
+        </button>
+
+    </div>
+
+
+    <div id="pairsList" class="pairs-list"></div>
+
+
+    <div class="signal-panel">
+
+        <div class="setting-title">
+            Выбранная пара
+        </div>
+
+        <div
+            class="selected-pair"
+            id="selectedPair">
             EUR/USD
-          </button>
+        </div>
 
-          <button class="choice" data-group="pair">
-            GBP/USD
-          </button>
+        <div class="setting-title">
+            Экспирация
+        </div>
 
-          <button class="choice" data-group="pair">
-            USD/JPY
-          </button>
+        <div class="expiry-grid">
 
-          <button class="choice" data-group="pair">
-            EUR/JPY
-          </button>
+            <button
+                class="expiry active"
+                data-expiry="1"
+                onclick="setExpiry(1)">
+                1 мин
+            </button>
+
+            <button
+                class="expiry"
+                data-expiry="2"
+                onclick="setExpiry(2)">
+                2 мин
+            </button>
+
+            <button
+                class="expiry"
+                data-expiry="3"
+                onclick="setExpiry(3)">
+                3 мин
+            </button>
+
+            <button
+                class="expiry"
+                data-expiry="5"
+                onclick="setExpiry(5)">
+                5 мин
+            </button>
+
+            <button
+                class="expiry"
+                data-expiry="10"
+                onclick="setExpiry(10)">
+                10 мин
+            </button>
 
         </div>
 
-      </div>
+
+        <button
+            class="generate-btn"
+            onclick="generateSignal()">
+            ⚡ СГЕНЕРИРОВАТЬ СИГНАЛ
+        </button>
+
+    </div>
 
 
-      <div class="field">
+    <div id="signalResult" class="signal-result">
 
-        <label>ЭКСПИРАЦИЯ</label>
+        <div class="result-head">
 
-        <div class="choices">
+            <div class="result-label">
+                Результат
+            </div>
 
-          <button class="choice active" data-group="time">
-            1 мин
-          </button>
+            <div
+                id="resultDirection"
+                class="result-direction">
+                CALL
+            </div>
 
-          <button class="choice" data-group="time">
-            2 мин
-          </button>
-
-          <button class="choice" data-group="time">
-            3 мин
-          </button>
-
-          <button class="choice" data-group="time">
-            5 мин
-          </button>
-
-          <button class="choice" data-group="time">
-            10 мин
-          </button>
+            <div
+                id="resultPair"
+                class="result-pair">
+                EUR/USD
+            </div>
 
         </div>
 
-      </div>
 
+        <div class="result-grid">
 
-      <button class="generate" onclick="generateSignal()">
-        ⚡ СГЕНЕРИРОВАТЬ СИГНАЛ
-      </button>
+            <div class="result-stat">
+                <b id="resultExpiry">1 мин</b>
+                <span>ЭКСПИРАЦИЯ</span>
+            </div>
 
+            <div class="result-stat">
+                <b id="resultMarket">OTC</b>
+                <span>РЫНОК</span>
+            </div>
 
-      <div id="signalResult" class="signal-result">
+            <div class="result-stat">
+                <b id="resultTime">--:--</b>
+                <span>ВРЕМЯ</span>
+            </div>
 
-        <small>СИГНАЛ</small>
-
-        <div id="direction" class="direction">
-          CALL
         </div>
 
-        <div id="signalInfo">
-          EUR/USD · 1 мин
+
+        <div class="demo-note">
+            DEMO: текущий интерфейс не подключён к реальным
+            рыночным котировкам. Направление генерируется
+            демонстрационно. Для настоящего сигнала понадобится
+            источник данных и отдельный алгоритм анализа.
         </div>
 
-        <div class="signal-note">
-          Демо-интерфейс. Реальный сигнал будет
-          подключён после добавления источника
-          рыночных данных и алгоритма анализа.
+    </div>
+
+</main>
+
+
+<!-- =========================
+     ACADEMY
+========================= -->
+
+<main id="academy" class="page">
+
+    <div class="eyebrow">AVA EDUCATION</div>
+
+    <div class="title">
+        Академия
+    </div>
+
+    <div class="subtitle">
+        Учись понимать рынок простыми словами
+        и переходи от теории к практике.
+    </div>
+
+
+    <div class="large-card" style="margin-top:18px;">
+
+        <div class="large-icon">📚</div>
+
+        <h3>
+            Твой прогресс
+        </h3>
+
+        <p>
+            Продолжай обучение и открывай
+            новые уровни.
+        </p>
+
+        <div class="progress-wrap">
+
+            <div class="progress-label">
+                <span>Прогресс</span>
+                <span>35%</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+
         </div>
 
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- ACADEMY -->
-
-  <main id="academy" class="screen">
-
-    <div class="welcome">
-      <small>🎓 AVA EDUCATION</small>
-      <h1>Академия</h1>
     </div>
 
-    <div class="placeholder">
-      <div class="big-icon">🎓</div>
 
-      <h2>Обучение</h2>
-
-      <p>
-        Здесь появятся полноценные уроки,
-        интерактивные задания, тесты,
-        уровни и система прогресса.
-      </p>
+    <div class="section-row">
+        <div class="section-title">Курс</div>
     </div>
 
-  </main>
+
+    <div class="lesson-list">
+
+        <button class="lesson" onclick="openLesson(1)">
+            <div class="lesson-num">01</div>
+
+            <div class="lesson-info">
+                <h4>Основы свечей</h4>
+                <p>Что показывает японская свеча</p>
+            </div>
+
+            <div class="lesson-status">✓</div>
+        </button>
 
 
-  <!-- PRACTICE -->
+        <button class="lesson" onclick="openLesson(2)">
+            <div class="lesson-num">02</div>
 
-  <main id="practice" class="screen">
+            <div class="lesson-info">
+                <h4>График цены</h4>
+                <p>Как читать движение рынка</p>
+            </div>
 
-    <div class="welcome">
-      <small>🎯 TRAINING</small>
-      <h1>Практика</h1>
-    </div>
-
-    <div class="placeholder">
-      <div class="big-icon">🎯</div>
-
-      <h2>Практические задания</h2>
-
-      <p>
-        Здесь будут разные типы заданий:
-        графики, сценарии, выбор решения,
-        поиск ошибок и многое другое.
-      </p>
-    </div>
-
-  </main>
+            <div class="lesson-status">✓</div>
+        </button>
 
 
-  <!-- GAMES -->
+        <button class="lesson" onclick="openLesson(3)">
+            <div class="lesson-num">03</div>
 
-  <main id="games" class="screen">
+            <div class="lesson-info">
+                <h4>Тренд</h4>
+                <p>Рост, падение и боковое движение</p>
+            </div>
 
-    <div class="welcome">
-      <small>🎮 AVA GAMES</small>
-      <h1>Игры</h1>
-    </div>
-
-    <div class="placeholder">
-      <div class="big-icon">🎮</div>
-
-      <h2>Игровой центр</h2>
-
-      <p>
-        Мини-игры, соревнования, XP,
-        достижения и ежедневные задания
-        появятся здесь.
-      </p>
-    </div>
-
-  </main>
+            <div class="lesson-status">🔒</div>
+        </button>
 
 
-  <!-- RANKING -->
+        <button class="lesson" onclick="openLesson(4)">
+            <div class="lesson-num">04</div>
 
-  <main id="ranking" class="screen">
+            <div class="lesson-info">
+                <h4>Уровни</h4>
+                <p>Поддержка и сопротивление</p>
+            </div>
 
-    <div class="welcome">
-      <small>🏆 AVA RANKING</small>
-      <h1>Рейтинг</h1>
-    </div>
-
-    <div class="placeholder">
-      <div class="big-icon">🏆</div>
-
-      <h2>Таблица лидеров</h2>
-
-      <p>
-        Здесь будет рейтинг участников
-        AVA TEAM по XP, активности
-        и достижениям.
-      </p>
-    </div>
-
-  </main>
+            <div class="lesson-status">🔒</div>
+        </button>
 
 
-  <!-- TEAM -->
+        <button class="lesson" onclick="openLesson(5)">
+            <div class="lesson-num">05</div>
 
-  <main id="team" class="screen">
+            <div class="lesson-info">
+                <h4>Импульс</h4>
+                <p>Как цена ускоряется</p>
+            </div>
 
-    <div class="welcome">
-      <small>👥 AVA COMMUNITY</small>
-      <h1>Team</h1>
-    </div>
-
-    <div class="placeholder">
-      <div class="big-icon">👥</div>
-
-      <h2>Сообщество</h2>
-
-      <p>
-        Комьюнити, участники, активности,
-        новости и другие возможности
-        команды будут здесь.
-      </p>
-    </div>
-
-  </main>
+            <div class="lesson-status">🔒</div>
+        </button>
 
 
-  <!-- PROFILE -->
+        <button class="lesson" onclick="openLesson(6)">
+            <div class="lesson-num">06</div>
 
-  <main id="profile" class="screen">
+            <div class="lesson-info">
+                <h4>Риск-менеджмент</h4>
+                <p>Как контролировать риск</p>
+            </div>
 
-    <div class="welcome">
-      <small>👤 ACCOUNT</small>
-      <h1>Профиль</h1>
-    </div>
-
-    <div class="profile-card">
-
-      <div class="big-avatar">
-        👤
-      </div>
-
-      <h2>Участник AVA TEAM</h2>
-
-      <p>Новый аккаунт</p>
-
-      <div class="progress">
-        <div></div>
-      </div>
+            <div class="lesson-status">🔒</div>
+        </button>
 
     </div>
 
-    <div class="stats">
+</main>
 
-      <div class="stat">
-        <b>1</b>
-        <span>Уровень</span>
-      </div>
 
-      <div class="stat">
-        <b>0</b>
-        <span>XP</span>
-      </div>
+<!-- =========================
+     PRACTICE
+========================= -->
 
-      <div class="stat">
-        <b>0</b>
-        <span>Достижения</span>
-      </div>
+<main id="practice" class="page">
+
+    <div class="eyebrow">AVA TRAINING</div>
+
+    <div class="title">
+        Практика
+    </div>
+
+    <div class="subtitle">
+        Здесь задания будут постепенно становиться
+        сложнее.
+    </div>
+
+
+    <div class="practice-card" style="margin-top:18px;">
+
+        <div class="question-tag">
+            Вопрос #01
+        </div>
+
+        <h3>
+            Что показывает зелёная свеча
+            на графике?
+        </h3>
+
+
+        <div class="answer-list">
+
+            <button
+                class="answer"
+                onclick="answerQuestion(this,true)">
+                Цена закрытия выше открытия
+            </button>
+
+            <button
+                class="answer"
+                onclick="answerQuestion(this,false)">
+                Цена всегда будет расти
+            </button>
+
+            <button
+                class="answer"
+                onclick="answerQuestion(this,false)">
+                Рынок обязательно разворачивается
+            </button>
+
+            <button
+                class="answer"
+                onclick="answerQuestion(this,false)">
+                Это означает отсутствие движения
+            </button>
+
+        </div>
 
     </div>
 
-  </main>
 
-</div>
+    <div class="large-card">
+
+        <div class="large-icon">🎯</div>
+
+        <h3>
+            Система заданий
+        </h3>
+
+        <p>
+            В следующих версиях здесь появятся
+            разные механики: выбор ответа, свайпы,
+            последовательности, поиск ошибок,
+            сценарии и интерактивные графики.
+        </p>
+
+    </div>
+
+</main>
 
 
-<!-- BOTTOM NAV -->
+<!-- =========================
+     GAMES
+========================= -->
+
+<main id="games" class="page">
+
+    <div class="eyebrow">AVA PLAY</div>
+
+    <div class="title">
+        Игры
+    </div>
+
+    <div class="subtitle">
+        Тренируй реакцию, память и понимание
+        движения цены.
+    </div>
+
+
+    <div class="games-grid" style="margin-top:18px;">
+
+        <button class="game-card" onclick="startGame('memory')">
+
+            <div class="game-icon">🧠</div>
+
+            <h3>
+                Memory
+            </h3>
+
+            <p>
+                Запоминай элементы
+                и находи пары.
+            </p>
+
+        </button>
+
+
+        <button class="game-card" onclick="startGame('direction')">
+
+            <div class="game-icon">📈</div>
+
+            <h3>
+                Направление
+            </h3>
+
+            <p>
+                Угадай возможное
+                продолжение сценария.
+            </p>
+
+        </button>
+
+
+        <button class="game-card" onclick="startGame('speed')">
+
+            <div class="game-icon">⚡</div>
+
+            <h3>
+                Speed
+            </h3>
+
+            <p>
+                Отвечай быстро
+                и получай больше XP.
+            </p>
+
+        </button>
+
+
+        <button class="game-card" onclick="startGame('risk')">
+
+            <div class="game-icon">🎲</div>
+
+            <h3>
+                Risk
+            </h3>
+
+            <p>
+                Учись выбирать
+                между риском и наградой.
+            </p>
+
+        </button>
+
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-title">Сегодня</div>
+    </div>
+
+
+    <div class="large-card">
+
+        <div class="large-icon">🔥</div>
+
+        <h3>
+            Ежедневное задание
+        </h3>
+
+        <p>
+            Зайди каждый день, выполни
+            активность и поддерживай streak.
+        </p>
+
+        <button
+            class="primary-btn"
+            style="margin-top:15px;"
+            onclick="dailyReward()">
+            Получить +25 XP
+        </button>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     RANKING
+========================= -->
+
+<main id="ranking" class="page">
+
+    <div class="eyebrow">AVA COMMUNITY</div>
+
+    <div class="title">
+        Рейтинг
+    </div>
+
+    <div class="subtitle">
+        Соревнуйся, выполняй задания
+        и поднимайся выше.
+    </div>
+
+
+    <div class="rank-card" style="margin-top:18px;">
+
+        <div class="rank-position">
+            ТВОЯ ПОЗИЦИЯ
+        </div>
+
+        <div class="rank-avatar">
+            A
+        </div>
+
+        <div class="rank-name">
+            AVA USER
+        </div>
+
+        <div class="rank-xp">
+            <span id="rankXP">0</span> XP
+        </div>
+
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-title">Топ участников</div>
+    </div>
+
+
+    <div class="rank-list">
+
+        <div class="rank-item">
+
+            <div class="rank-num">01</div>
+
+            <div class="rank-small-avatar">🔥</div>
+
+            <div class="rank-user">
+                <b>Trader One</b>
+                <span>AVA PRO</span>
+            </div>
+
+            <div class="rank-points">12 840 XP</div>
+
+        </div>
+
+
+        <div class="rank-item">
+
+            <div class="rank-num">02</div>
+
+            <div class="rank-small-avatar">⚡</div>
+
+            <div class="rank-user">
+                <b>AVA Master</b>
+                <span>LEVEL 18</span>
+            </div>
+
+            <div class="rank-points">11 420 XP</div>
+
+        </div>
+
+
+        <div class="rank-item">
+
+            <div class="rank-num">03</div>
+
+            <div class="rank-small-avatar">🧠</div>
+
+            <div class="rank-user">
+                <b>Chart King</b>
+                <span>LEVEL 16</span>
+            </div>
+
+            <div class="rank-points">10 970 XP</div>
+
+        </div>
+
+
+        <div class="rank-item">
+
+            <div class="rank-num">04</div>
+
+            <div class="rank-small-avatar">🚀</div>
+
+            <div class="rank-user">
+                <b>Market Mind</b>
+                <span>LEVEL 15</span>
+            </div>
+
+            <div class="rank-points">9 650 XP</div>
+
+        </div>
+
+
+        <div class="rank-item">
+
+            <div class="rank-num">05</div>
+
+            <div class="rank-small-avatar">💜</div>
+
+            <div class="rank-user">
+                <b>AVA Player</b>
+                <span>LEVEL 14</span>
+            </div>
+
+            <div class="rank-points">8 420 XP</div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     TEAM
+========================= -->
+
+<main id="team" class="page">
+
+    <div class="eyebrow">AVA COMMUNITY</div>
+
+    <div class="title">
+        Команда
+    </div>
+
+    <div class="subtitle">
+        Место, где участники AVA TEAM
+        находятся вместе.
+    </div>
+
+
+    <div class="team-banner" style="margin-top:18px;">
+
+        <h2>
+            AVA TEAM
+        </h2>
+
+        <p>
+            Общение, события, новости,
+            активности и развитие команды.
+        </p>
+
+        <div class="team-actions">
+
+            <button
+                class="team-action"
+                onclick="openTelegram()">
+                ✈️ Telegram
+            </button>
+
+            <button
+                class="team-action"
+                onclick="showToast('Скоро будет доступно')">
+                💬 Сообщество
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-title">Участники</div>
+    </div>
+
+
+    <div class="member-list">
+
+        <div class="member">
+
+            <div class="member-avatar">
+                A
+            </div>
+
+            <div class="member-info">
+                <b>AVA TEAM</b>
+                <span>Создатель</span>
+            </div>
+
+            <div class="member-level">
+                ADMIN
+            </div>
+
+        </div>
+
+
+        <div class="member">
+
+            <div class="member-avatar">
+                T
+            </div>
+
+            <div class="member-info">
+                <b>Trader</b>
+                <span>Участник команды</span>
+            </div>
+
+            <div class="member-level">
+                LVL 12
+            </div>
+
+        </div>
+
+
+        <div class="member">
+
+            <div class="member-avatar">
+                V
+            </div>
+
+            <div class="member-info">
+                <b>Violet</b>
+                <span>Участник команды</span>
+            </div>
+
+            <div class="member-level">
+                LVL 9
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     PROFILE
+========================= -->
+
+<main id="profile" class="page">
+
+    <div class="eyebrow">AVA ACCOUNT</div>
+
+    <div class="title">
+        Профиль
+    </div>
+
+
+    <div class="profile-head" style="margin-top:18px;">
+
+        <div class="profile-avatar">
+            A
+        </div>
+
+        <div class="profile-name">
+            AVA USER
+        </div>
+
+        <div class="profile-handle">
+            Telegram аккаунт будет подключён позже
+        </div>
+
+
+        <div class="level-box">
+
+            <div class="level-top">
+                <span>LEVEL <b id="profileLevel">1</b></span>
+                <span><b id="profileXP">0</b> / 100 XP</span>
+            </div>
+
+            <div class="progress" style="margin-top:8px;">
+                <div
+                    id="profileProgress"
+                    class="progress-bar"
+                    style="width:0%;">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="profile-stats">
+
+            <div class="profile-stat">
+                <b id="profileStreak">1</b>
+                <span>STREAK</span>
+            </div>
+
+            <div class="profile-stat">
+                <b id="profileSignals">0</b>
+                <span>SIGNALS</span>
+            </div>
+
+            <div class="profile-stat">
+                <b id="profileGames">0</b>
+                <span>ИГР</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-title">Достижения</div>
+    </div>
+
+
+    <div class="achievement-grid">
+
+        <div class="achievement">
+            <div class="achievement-icon">🚀</div>
+            <span>Первый запуск</span>
+        </div>
+
+        <div class="achievement">
+            <div class="achievement-icon">⚡</div>
+            <span>Первый сигнал</span>
+        </div>
+
+        <div class="achievement">
+            <div class="achievement-icon">📚</div>
+            <span>Ученик</span>
+        </div>
+
+        <div class="achievement">
+            <div class="achievement-icon">🔥</div>
+            <span>7 дней</span>
+        </div>
+
+        <div class="achievement">
+            <div class="achievement-icon">🏆</div>
+            <span>TOP 10</span>
+        </div>
+
+        <div class="achievement">
+            <div class="achievement-icon">💎</div>
+            <span>AVA PRO</span>
+        </div>
+
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-title">Настройки</div>
+    </div>
+
+
+    <div class="large-card">
+
+        <button
+            class="secondary-btn"
+            style="width:100%;"
+            onclick="showToast('Telegram авторизация будет подключена на следующем этапе')">
+            🔐 Подключить Telegram
+        </button>
+
+        <button
+            class="secondary-btn"
+            style="width:100%;margin-top:8px;"
+            onclick="showToast('Уведомления настроены')">
+            🔔 Уведомления
+        </button>
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     BOTTOM NAV
+========================= -->
 
 <nav class="bottom-nav">
 
-  <button class="nav-btn active" data-screen="home" onclick="openScreen('home')">
-    <div class="nav-icon">🏠</div>
-    Главная
-  </button>
+    <button
+        class="nav-item active"
+        data-page="home"
+        onclick="go('home')">
 
-  <button class="nav-btn" data-screen="signal" onclick="openScreen('signal')">
-    <div class="nav-icon">⚡</div>
-    Signal
-  </button>
+        <div class="nav-icon">⌂</div>
+        <span>Главная</span>
 
-  <button class="nav-btn" data-screen="academy" onclick="openScreen('academy')">
-    <div class="nav-icon">🎓</div>
-    Академия
-  </button>
+    </button>
 
-  <button class="nav-btn" data-screen="ranking" onclick="openScreen('ranking')">
-    <div class="nav-icon">🏆</div>
-    Рейтинг
-  </button>
 
-  <button class="nav-btn" data-screen="profile" onclick="openScreen('profile')">
-    <div class="nav-icon">👤</div>
-    Профиль
-  </button>
+    <button
+        class="nav-item"
+        data-page="signal"
+        onclick="go('signal')">
+
+        <div class="nav-icon">⚡</div>
+        <span>Signal</span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        data-page="academy"
+        onclick="go('academy')">
+
+        <div class="nav-icon">📚</div>
+        <span>Academy</span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        data-page="ranking"
+        onclick="go('ranking')">
+
+        <div class="nav-icon">🏆</div>
+        <span>Рейтинг</span>
+
+    </button>
+
+
+    <button
+        class="nav-item"
+        data-page="profile"
+        onclick="go('profile')">
+
+        <div class="nav-icon">👤</div>
+        <span>Профиль</span>
+
+    </button>
 
 </nav>
 
 
+<!-- =========================
+     MODAL
+========================= -->
+
+<div id="modal" class="modal" onclick="closeModal(event)">
+
+    <div class="modal-box">
+
+        <div class="modal-handle"></div>
+
+        <div class="modal-head">
+
+            <h3 id="modalTitle">
+                AVA
+            </h3>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+                ✕
+            </button>
+
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+</div>
+
+
 <script>
 
-  /* NAVIGATION */
+/* =========================================================
+   AVA TEAM — CORE STATE
+========================================================= */
 
-  function openScreen(screenId) {
+const state = {
 
-    document.querySelectorAll(".screen").forEach(screen => {
-      screen.classList.remove("active");
-    });
+    page: 'home',
 
-    const target = document.getElementById(screenId);
+    market: 'OTC',
 
-    if (target) {
-      target.classList.add("active");
+    pairFilter: 'ALL',
+
+    selectedPair: 'EUR/USD',
+
+    expiry: 1,
+
+    xp: Number(localStorage.getItem('ava_xp')) || 0,
+
+    streak: Number(localStorage.getItem('ava_streak')) || 1,
+
+    signals: Number(localStorage.getItem('ava_signals')) || 0,
+
+    games: Number(localStorage.getItem('ava_games')) || 0,
+
+    dailyReward: localStorage.getItem('ava_daily') || '',
+
+    favorites:
+        JSON.parse(
+            localStorage.getItem('ava_favorites') || '[]'
+        )
+
+};
+
+
+/* =========================================================
+   PAIRS DATABASE
+========================================================= */
+
+/*
+    Большой каталог.
+    Позже список можно синхронизировать
+    с актуальным списком доступных активов.
+*/
+
+const pairs = [
+
+    /* MAJOR */
+
+    {name:'EUR/USD',type:'MAJOR',icon:'🇪🇺🇺🇸'},
+    {name:'GBP/USD',type:'MAJOR',icon:'🇬🇧🇺🇸'},
+    {name:'USD/JPY',type:'MAJOR',icon:'🇺🇸🇯🇵'},
+    {name:'USD/CHF',type:'MAJOR',icon:'🇺🇸🇨🇭'},
+    {name:'USD/CAD',type:'MAJOR',icon:'🇺🇸🇨🇦'},
+    {name:'AUD/USD',type:'MAJOR',icon:'🇦🇺🇺🇸'},
+    {name:'NZD/USD',type:'MAJOR',icon:'🇳🇿🇺🇸'},
+
+    /* CROSS */
+
+    {name:'EUR/GBP',type:'CROSS',icon:'🇪🇺🇬🇧'},
+    {name:'EUR/JPY',type:'CROSS',icon:'🇪🇺🇯🇵'},
+    {name:'EUR/CHF',type:'CROSS',icon:'🇪🇺🇨🇭'},
+    {name:'EUR/AUD',type:'CROSS',icon:'🇪🇺🇦🇺'},
+    {name:'EUR/CAD',type:'CROSS',icon:'🇪🇺🇨🇦'},
+    {name:'EUR/NZD',type:'CROSS',icon:'🇪🇺🇳🇿'},
+
+    {name:'GBP/JPY',type:'CROSS',icon:'🇬🇧🇯🇵'},
+    {name:'GBP/CHF',type:'CROSS',icon:'🇬🇧🇨🇭'},
+    {name:'GBP/AUD',type:'CROSS',icon:'🇬🇧🇦🇺'},
+    {name:'GBP/CAD',type:'CROSS',icon:'🇬🇧🇨🇦'},
+    {name:'GBP/NZD',type:'CROSS',icon:'🇬🇧🇳🇿'},
+
+    {name:'AUD/JPY',type:'CROSS',icon:'🇦🇺🇯🇵'},
+    {name:'AUD/CHF',type:'CROSS',icon:'🇦🇺🇨🇭'},
+    {name:'AUD/CAD',type:'CROSS',icon:'🇦🇺🇨🇦'},
+    {name:'AUD/NZD',type:'CROSS',icon:'🇦🇺🇳🇿'},
+
+    {name:'CAD/JPY',type:'CROSS',icon:'🇨🇦🇯🇵'},
+    {name:'CAD/CHF',type:'CROSS',icon:'🇨🇦🇨🇭'},
+
+    {name:'CHF/JPY',type:'CROSS',icon:'🇨🇭🇯🇵'},
+
+    {name:'NZD/JPY',type:'CROSS',icon:'🇳🇿🇯🇵'},
+    {name:'NZD/CHF',type:'CROSS',icon:'🇳🇿🇨🇭'},
+    {name:'NZD/CAD',type:'CROSS',icon:'🇳🇿🇨🇦'},
+
+    /* EXOTIC */
+
+    {name:'USD/CNH',type:'EXOTIC',icon:'🇺🇸🇨🇳'},
+    {name:'USD/SGD',type:'EXOTIC',icon:'🇺🇸🇸🇬'},
+    {name:'USD/HKD',type:'EXOTIC',icon:'🇺🇸🇭🇰'},
+    {name:'USD/THB',type:'EXOTIC',icon:'🇺🇸🇹🇭'},
+    {name:'USD/MXN',type:'EXOTIC',icon:'🇺🇸🇲🇽'},
+    {name:'USD/BRL',type:'EXOTIC',icon:'🇺🇸🇧🇷'},
+    {name:'USD/TRY',type:'EXOTIC',icon:'🇺🇸🇹🇷'},
+    {name:'USD/ZAR',type:'EXOTIC',icon:'🇺🇸🇿🇦'},
+    {name:'USD/PLN',type:'EXOTIC',icon:'🇺🇸🇵🇱'},
+    {name:'USD/CZK',type:'EXOTIC',icon:'🇺🇸🇨🇿'},
+    {name:'USD/HUF',type:'EXOTIC',icon:'🇺🇸🇭🇺'},
+    {name:'USD/RON',type:'EXOTIC',icon:'🇺🇸🇷🇴'},
+    {name:'USD/INR',type:'EXOTIC',icon:'🇺🇸🇮🇳'},
+    {name:'USD/IDR',type:'EXOTIC',icon:'🇺🇸🇮🇩'},
+    {name:'USD/MYR',type:'EXOTIC',icon:'🇺🇸🇲🇾'},
+    {name:'USD/PKR',type:'EXOTIC',icon:'🇺🇸🇵🇰'},
+    {name:'USD/BDT',type:'EXOTIC',icon:'🇺🇸🇧🇩'},
+    {name:'USD/PHP',type:'EXOTIC',icon:'🇺🇸🇵🇭'},
+    {name:'USD/VND',type:'EXOTIC',icon:'🇺🇸🇻🇳'},
+    {name:'USD/NGN',type:'EXOTIC',icon:'🇺🇸🇳🇬'},
+    {name:'USD/KES',type:'EXOTIC',icon:'🇺🇸🇰🇪'},
+    {name:'USD/EGP',type:'EXOTIC',icon:'🇺🇸🇪🇬'},
+    {name:'USD/DZD',type:'EXOTIC',icon:'🇺🇸🇩🇿'},
+    {name:'USD/MAD',type:'EXOTIC',icon:'🇺🇸🇲🇦'},
+    {name:'USD/TND',type:'EXOTIC',icon:'🇺🇸🇹🇳'},
+    {name:'USD/COP',type:'EXOTIC',icon:'🇺🇸🇨🇴'},
+    {name:'USD/ARS',type:'EXOTIC',icon:'🇺🇸🇦🇷'},
+
+    {name:'EUR/TRY',type:'EXOTIC',icon:'🇪🇺🇹🇷'},
+    {name:'EUR/PLN',type:'EXOTIC',icon:'🇪🇺🇵🇱'},
+    {name:'EUR/CZK',type:'EXOTIC',icon:'🇪🇺🇨🇿'},
+    {name:'EUR/HUF',type:'EXOTIC',icon:'🇪🇺🇭🇺'},
+    {name:'EUR/RON',type:'EXOTIC',icon:'🇪🇺🇷🇴'},
+    {name:'EUR/ZAR',type:'EXOTIC',icon:'🇪🇺🇿🇦'},
+    {name:'EUR/MXN',type:'EXOTIC',icon:'🇪🇺🇲🇽'},
+    {name:'EUR/SGD',type:'EXOTIC',icon:'🇪🇺🇸🇬'},
+
+    {name:'GBP/TRY',type:'EXOTIC',icon:'🇬🇧🇹🇷'},
+    {name:'GBP/ZAR',type:'EXOTIC',icon:'🇬🇧🇿🇦'},
+    {name:'GBP/SGD',type:'EXOTIC',icon:'🇬🇧🇸🇬'},
+
+    {name:'CHF/SGD',type:'EXOTIC',icon:'🇨🇭🇸🇬'},
+    {name:'CHF/ZAR',type:'EXOTIC',icon:'🇨🇭🇿🇦'},
+
+    {name:'AUD/SGD',type:'EXOTIC',icon:'🇦🇺🇸🇬'},
+    {name:'AUD/ZAR',type:'EXOTIC',icon:'🇦🇺🇿🇦'},
+
+    {name:'NZD/SGD',type:'EXOTIC',icon:'🇳🇿🇸🇬'},
+    {name:'NZD/ZAR',type:'EXOTIC',icon:'🇳🇿🇿🇦'},
+
+    /* ADDITIONAL */
+
+    {name:'CAD/SGD',type:'EXOTIC',icon:'🇨🇦🇸🇬'},
+    {name:'NOK/SEK',type:'EXOTIC',icon:'🇳🇴🇸🇪'},
+    {name:'NOK/JPY',type:'EXOTIC',icon:'🇳🇴🇯🇵'},
+    {name:'SEK/JPY',type:'EXOTIC',icon:'🇸🇪🇯🇵'},
+    {name:'DKK/JPY',type:'EXOTIC',icon:'🇩🇰🇯🇵'},
+    {name:'ZAR/JPY',type:'EXOTIC',icon:'🇿🇦🇯🇵'}
+
+];
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function go(page){
+
+    document
+        .querySelectorAll('.page')
+        .forEach(el => el.classList.remove('active'));
+
+    const target = document.getElementById(page);
+
+    if(target){
+        target.classList.add('active');
     }
 
-    document.querySelectorAll(".nav-btn").forEach(button => {
-      button.classList.remove("active");
-    });
-
-    const navButton =
-      document.querySelector(
-        `.nav-btn[data-screen="${screenId}"]`
-      );
-
-    if (navButton) {
-      navButton.classList.add("active");
-    }
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }
-
-
-  /* CHOICE BUTTONS */
-
-  document.querySelectorAll(".choice").forEach(button => {
-
-    button.addEventListener("click", function() {
-
-      const group = this.dataset.group;
-
-      document
-        .querySelectorAll(`.choice[data-group="${group}"]`)
-        .forEach(item => {
-          item.classList.remove("active");
+    document
+        .querySelectorAll('.nav-item')
+        .forEach(el => {
+            el.classList.toggle(
+                'active',
+                el.dataset.page === page
+            );
         });
 
-      this.classList.add("active");
+    state.page = page;
+
+    window.scrollTo({
+        top:0,
+        behavior:'smooth'
+    });
+}
+
+
+/* =========================================================
+   MARKET
+========================================================= */
+
+function setMarket(market){
+
+    state.market = market;
+
+    document
+        .getElementById('otcTab')
+        .classList.toggle(
+            'active',
+            market === 'OTC'
+        );
+
+    document
+        .getElementById('exchangeTab')
+        .classList.toggle(
+            'active',
+            market === 'EXCHANGE'
+        );
+
+    renderPairs();
+
+    showToast(
+        market === 'OTC'
+            ? 'Выбран OTC рынок'
+            : 'Выбран биржевой рынок'
+    );
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function setPairFilter(filter){
+
+    state.pairFilter = filter;
+
+    document
+        .querySelectorAll('.filter-chip')
+        .forEach(el => {
+            el.classList.toggle(
+                'active',
+                el.dataset.filter === filter
+            );
+        });
+
+    renderPairs();
+}
+
+
+/* =========================================================
+   RENDER PAIRS
+========================================================= */
+
+function renderPairs(){
+
+    const list =
+        document.getElementById('pairsList');
+
+    const search =
+        (
+            document.getElementById('pairSearch')
+            ?.value || ''
+        )
+        .trim()
+        .toLowerCase();
+
+
+    let filtered = pairs.filter(pair => {
+
+        const matchesSearch =
+            pair.name
+                .toLowerCase()
+                .includes(search);
+
+        let matchesFilter = true;
+
+        if(state.pairFilter !== 'ALL'){
+
+            if(state.pairFilter === 'FAVORITES'){
+
+                matchesFilter =
+                    state.favorites.includes(pair.name);
+
+            }else{
+
+                matchesFilter =
+                    pair.type === state.pairFilter;
+
+            }
+
+        }
+
+        return matchesSearch && matchesFilter;
 
     });
 
-  });
+
+    if(!filtered.length){
+
+        list.innerHTML = `
+            <div class="empty">
+                Ничего не найдено
+            </div>
+        `;
+
+        return;
+    }
 
 
-  /* DEMO SIGNAL */
+    list.innerHTML = filtered.map(pair => {
 
-  function generateSignal() {
+        const favorite =
+            state.favorites.includes(pair.name);
 
-    const result =
-      document.getElementById("signalResult");
+        return `
+
+            <div class="pair-card">
+
+                <div class="pair-icon">
+                    ${pair.icon}
+                </div>
+
+                <div class="pair-info">
+
+                    <div class="pair-name">
+                        ${pair.name}
+                    </div>
+
+                    <div class="pair-meta">
+                        ${state.market === 'OTC'
+                            ? 'OTC'
+                            : 'Биржа'
+                        }
+                        · ${pair.type}
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="star ${favorite ? 'active' : ''}"
+                    onclick="toggleFavorite('${pair.name}')">
+
+                    ${favorite ? '★' : '☆'}
+
+                </button>
+
+
+                <button
+                    class="pair-select"
+                    onclick="selectPair('${pair.name}')">
+
+                    Выбрать
+
+                </button>
+
+            </div>
+
+        `;
+
+    }).join('');
+
+}
+
+
+/* =========================================================
+   SELECT PAIR
+========================================================= */
+
+function selectPair(pair){
+
+    state.selectedPair = pair;
+
+    document
+        .getElementById('selectedPair')
+        .textContent = pair;
+
+    showToast(
+        `${pair} выбрана`
+    );
+
+}
+
+
+/* =========================================================
+   FAVORITES
+========================================================= */
+
+function toggleFavorite(pair){
+
+    const index =
+        state.favorites.indexOf(pair);
+
+    if(index >= 0){
+
+        state.favorites.splice(index,1);
+
+        showToast(
+            'Удалено из избранного'
+        );
+
+    }else{
+
+        state.favorites.push(pair);
+
+        showToast(
+            'Добавлено в избранное ⭐'
+        );
+
+    }
+
+    localStorage.setItem(
+        'ava_favorites',
+        JSON.stringify(state.favorites)
+    );
+
+    renderPairs();
+
+}
+
+
+/* =========================================================
+   EXPIRY
+========================================================= */
+
+function setExpiry(minutes){
+
+    state.expiry = minutes;
+
+    document
+        .querySelectorAll('.expiry')
+        .forEach(el => {
+
+            el.classList.toggle(
+                'active',
+                Number(el.dataset.expiry) === minutes
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   SIGNAL
+========================================================= */
+
+function generateSignal(){
+
+    const directions =
+        ['CALL','PUT'];
 
     const direction =
-      document.getElementById("direction");
+        directions[
+            Math.floor(
+                Math.random() * directions.length
+            )
+        ];
 
-    const pair =
-      document.querySelector(
-        '.choice[data-group="pair"].active'
-      );
 
-    const time =
-      document.querySelector(
-        '.choice[data-group="time"].active'
-      );
+    const result =
+        document.getElementById('signalResult');
 
-    const random =
-      Math.random() > 0.5;
+    const directionEl =
+        document.getElementById('resultDirection');
 
-    direction.textContent =
-      random ? "CALL ↑" : "PUT ↓";
 
-    direction.className =
-      "direction " + (random ? "call" : "put");
+    directionEl.textContent =
+        direction;
 
-    document.getElementById("signalInfo").textContent =
-      `${pair ? pair.textContent : "EUR/USD"} · ${time ? time.textContent : "1 мин"}`;
+    directionEl.className =
+        'result-direction ' +
+        (
+            direction === 'CALL'
+                ? 'call'
+                : 'put'
+        );
 
-    result.classList.add("show");
 
-  }
+    document
+        .getElementById('resultPair')
+        .textContent =
+        state.selectedPair;
+
+
+    document
+        .getElementById('resultExpiry')
+        .textContent =
+        state.expiry + ' мин';
+
+
+    document
+        .getElementById('resultMarket')
+        .textContent =
+        state.market;
+
+
+    document
+        .getElementById('resultTime')
+        .textContent =
+        new Date().toLocaleTimeString(
+            'ru-RU',
+            {
+                hour:'2-digit',
+                minute:'2-digit'
+            }
+        );
+
+
+    result.classList.add('show');
+
+
+    state.signals++;
+
+    saveState();
+
+    updateUI();
+
+    result.scrollIntoView({
+        behavior:'smooth',
+        block:'center'
+    });
+
+}
+
+
+/* =========================================================
+   SAVE STATE
+========================================================= */
+
+function saveState(){
+
+    localStorage.setItem(
+        'ava_xp',
+        state.xp
+    );
+
+    localStorage.setItem(
+        'ava_streak',
+        state.streak
+    );
+
+    localStorage.setItem(
+        'ava_signals',
+        state.signals
+    );
+
+    localStorage.setItem(
+        'ava_games',
+        state.games
+    );
+
+}
+
+
+/* =========================================================
+   LEVEL
+========================================================= */
+
+function getLevel(){
+
+    return Math.floor(
+        state.xp / 100
+    ) + 1;
+
+}
+
+
+/* =========================================================
+   ADD XP
+========================================================= */
+
+function addXP(amount){
+
+    state.xp += amount;
+
+    saveState();
+
+    updateUI();
+
+    showToast(
+        `+${amount} XP ⚡`
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE UI
+========================================================= */
+
+function updateUI(){
+
+    const level =
+        getLevel();
+
+    const currentLevelXP =
+        state.xp % 100;
+
+
+    const ids = {
+
+        homeXP:
+            state.xp,
+
+        homeStreak:
+            state.streak,
+
+        homeLevel:
+            level,
+
+        rankXP:
+            state.xp,
+
+        profileLevel:
+            level,
+
+        profileXP:
+            currentLevelXP,
+
+        profileStreak:
+            state.streak,
+
+        profileSignals:
+            state.signals,
+
+        profileGames:
+            state.games
+
+    };
+
+
+    Object.entries(ids).forEach(
+        ([id,value]) => {
+
+            const el =
+                document.getElementById(id);
+
+            if(el){
+                el.textContent = value;
+            }
+
+        }
+    );
+
+
+    const progress =
+        document.getElementById(
+            'profileProgress'
+        );
+
+    if(progress){
+
+        progress.style.width =
+            currentLevelXP + '%';
+
+    }
+
+}
+
+
+/* =========================================================
+   LESSON
+========================================================= */
+
+function openLesson(number){
+
+    const lessons = {
+
+        1:{
+            title:'Основы свечей',
+            text:'Японская свеча показывает движение цены за определённый период. В ней есть цена открытия, закрытия, максимум и минимум.'
+        },
+
+        2:{
+            title:'График цены',
+            text:'График помогает увидеть, как цена двигалась во времени и где формировались движения вверх, вниз или боковые участки.'
+        },
+
+        3:{
+            title:'Тренд',
+            text:'Тренд — это направление движения рынка. В обучении мы разберём восходящий, нисходящий и боковой рынок.'
+        },
+
+        4:{
+            title:'Уровни',
+            text:'Поддержка и сопротивление — области, где цена исторически могла реагировать.'
+        },
+
+        5:{
+            title:'Импульс',
+            text:'Импульс — заметное ускорение движения цены. Его важно рассматривать вместе с контекстом графика.'
+        },
+
+        6:{
+            title:'Риск-менеджмент',
+            text:'Риск-менеджмент помогает ограничивать потенциальные потери и не принимать решения только из-за эмоций.'
+        }
+
+    };
+
+
+    const lesson =
+        lessons[number];
+
+
+    openModal(
+        lesson.title,
+        `
+            <div class="large-card">
+
+                <div class="large-icon">
+                    📖
+                </div>
+
+                <h3>
+                    ${lesson.title}
+                </h3>
+
+                <p>
+                    ${lesson.text}
+                </p>
+
+                <button
+                    class="primary-btn"
+                    style="margin-top:17px;"
+                    onclick="completeLesson(${number})">
+
+                    Завершить урок +20 XP
+
+                </button>
+
+            </div>
+        `
+    );
+
+}
+
+
+/* =========================================================
+   COMPLETE LESSON
+========================================================= */
+
+function completeLesson(number){
+
+    closeModal();
+
+    addXP(20);
+
+    showToast(
+        `Урок ${number} завершён 🎓`
+    );
+
+}
+
+
+/* =========================================================
+   PRACTICE ANSWER
+========================================================= */
+
+function answerQuestion(button, correct){
+
+    document
+        .querySelectorAll('.answer')
+        .forEach(el => {
+
+            el.style.pointerEvents =
+                'none';
+
+        });
+
+
+    if(correct){
+
+        button.style.borderColor =
+            'rgba(34,197,94,.5)';
+
+        button.style.background =
+            'rgba(34,197,94,.1)';
+
+        addXP(15);
+
+        showToast(
+            'Правильно! +15 XP'
+        );
+
+    }else{
+
+        button.style.borderColor =
+            'rgba(239,68,68,.5)';
+
+        button.style.background =
+            'rgba(239,68,68,.1)';
+
+        showToast(
+            'Попробуй ещё раз'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GAMES
+========================================================= */
+
+function startGame(type){
+
+    state.games++;
+
+    saveState();
+
+    addXP(10);
+
+    const titles = {
+
+        memory:'🧠 Memory',
+
+        direction:'📈 Направление',
+
+        speed:'⚡ Speed',
+
+        risk:'🎲 Risk'
+
+    };
+
+
+    const descriptions = {
+
+        memory:
+            'Запоминай последовательность элементов и проверяй свою память.',
+
+        direction:
+            'В следующих версиях здесь появятся интерактивные рыночные сценарии.',
+
+        speed:
+            'Отвечай максимально быстро и собирай серию правильных ответов.',
+
+        risk:
+            'Выбирай между потенциальной наградой и уровнем риска.'
+
+    };
+
+
+    openModal(
+        titles[type],
+        `
+            <div class="large-card">
+
+                <div class="large-icon">
+                    🎮
+                </div>
+
+                <h3>
+                    ${titles[type]}
+                </h3>
+
+                <p>
+                    ${descriptions[type]}
+                </p>
+
+                <button
+                    class="primary-btn"
+                    style="margin-top:16px;"
+                    onclick="closeModal();showToast('Игра запущена')">
+
+                    Начать
+
+                </button>
+
+            </div>
+        `
+    );
+
+}
+
+
+/* =========================================================
+   DAILY REWARD
+========================================================= */
+
+function dailyReward(){
+
+    const today =
+        new Date()
+        .toISOString()
+        .slice(0,10);
+
+
+    if(state.dailyReward === today){
+
+        showToast(
+            'Ты уже получил награду сегодня 🔥'
+        );
+
+        return;
+
+    }
+
+
+    state.dailyReward =
+        today;
+
+    localStorage.setItem(
+        'ava_daily',
+        today
+    );
+
+
+    addXP(25);
+
+}
+
+
+/* =========================================================
+   TELEGRAM
+========================================================= */
+
+function openTelegram(){
+
+    window.open(
+        'https://t.me/+lBX7Ib-fFYg3OGFi',
+        '_blank'
+    );
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function openNotifications(){
+
+    openModal(
+        'Уведомления',
+        `
+            <div class="large-card">
+
+                <div class="large-icon">
+                    🔔
+                </div>
+
+                <h3>
+                    Пока уведомлений нет
+                </h3>
+
+                <p>
+                    Здесь будут появляться новости,
+                    события команды, задания и
+                    другие уведомления AVA TEAM.
+                </p>
+
+            </div>
+        `
+    );
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(title,content){
+
+    document
+        .getElementById('modalTitle')
+        .textContent = title;
+
+    document
+        .getElementById('modalContent')
+        .innerHTML = content;
+
+    document
+        .getElementById('modal')
+        .classList.add('show');
+
+}
+
+
+function closeModal(event){
+
+    if(
+        event &&
+        event.target &&
+        event.target.id !== 'modal'
+    ){
+        return;
+    }
+
+    document
+        .getElementById('modal')
+        .classList.remove('show');
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById('toast');
+
+    toast.textContent =
+        message;
+
+    toast.classList.add('show');
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove('show');
+
+        },2200);
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+function init(){
+
+    renderPairs();
+
+    updateUI();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+init();
 
 </script>
 
