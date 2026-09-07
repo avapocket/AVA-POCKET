@@ -2,3053 +2,1077 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0b0715">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#08080d">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>AVA — Trading Academy</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    -webkit-tap-highlight-color:transparent;
-}
-
 :root{
-    --bg:#08060f;
-    --bg2:#100b1d;
-    --card:rgba(25,17,43,.72);
-    --card2:rgba(34,22,58,.75);
-    --border:rgba(255,255,255,.09);
-    --text:#fff;
-    --muted:#9f97ae;
-    --purple:#9b5cff;
-    --purple2:#6d35e8;
-    --pink:#ec4899;
-    --cyan:#22d3ee;
-    --green:#22c55e;
-    --orange:#f59e0b;
-    --red:#ef4444;
+  --bg:#07070b;
+  --card:#111118;
+  --card2:#171720;
+  --line:#252530;
+  --text:#fff;
+  --muted:#8f8f9e;
+  --purple:#8b5cf6;
+  --purple2:#a78bfa;
+  --green:#35d07f;
+  --red:#ff5b6e;
+  --gold:#f5c451;
 }
-
-html,body{
-    min-height:100%;
-    background:var(--bg);
-    color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif}
+body{min-height:100vh;overflow-x:hidden}
+button,input{font:inherit}
+button{border:0;color:inherit;cursor:pointer}
+.app{max-width:760px;margin:auto;min-height:100vh;padding-bottom:90px}
+header{
+  position:sticky;top:0;z-index:20;
+  padding:18px 18px 14px;
+  background:rgba(7,7,11,.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.05)
 }
-
-body{
-    overflow-x:hidden;
-    padding-bottom:105px;
-}
-
-button{
-    font:inherit;
-    color:inherit;
-}
-
-button,
-.lesson-card,
-.module-card,
-.dictionary-item{
-    user-select:none;
-}
-
-/* BACKGROUND */
-
-body:before{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-5;
-    background:
-        radial-gradient(circle at 15% 10%,rgba(141,70,255,.19),transparent 30%),
-        radial-gradient(circle at 90% 25%,rgba(236,72,153,.12),transparent 28%),
-        radial-gradient(circle at 50% 100%,rgba(34,211,238,.08),transparent 30%),
-        linear-gradient(180deg,#0a0711 0%,#08060f 100%);
-}
-
-body:after{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-4;
-    opacity:.13;
-    background-image:
-        linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
-    background-size:45px 45px;
-    mask-image:linear-gradient(to bottom,black,transparent 90%);
-    pointer-events:none;
-}
-
-/* APP */
-
-.app{
-    width:min(100%,760px);
-    margin:auto;
-    min-height:100vh;
-    padding:18px 15px 25px;
-}
-
-/* HEADER */
-
-.header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:22px;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:11px;
-}
-
-.logo-mark{
-    width:43px;
-    height:43px;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:900;
-    font-size:16px;
-    background:linear-gradient(135deg,#b66cff,#6b36df);
-    box-shadow:0 8px 25px rgba(143,75,255,.35);
-}
-
-.logo-text{
-    line-height:1;
-}
-
-.logo-title{
-    font-size:17px;
-    font-weight:900;
-    letter-spacing:.7px;
-}
-
-.logo-sub{
-    color:#958ba6;
-    font-size:9px;
-    letter-spacing:2px;
-    margin-top:5px;
-    font-weight:700;
-}
-
-.profile-mini{
-    width:44px;
-    height:44px;
-    border-radius:15px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.05);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    cursor:pointer;
-}
-
-.profile-mini img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.profile-mini span{
-    font-size:20px;
-}
-
-/* VIEWS */
-
-.view{
-    display:none;
-    animation:fadeIn .28s ease;
-}
-
-.view.active{
-    display:block;
-}
-
-@keyframes fadeIn{
-    from{opacity:0;transform:translateY(8px)}
-    to{opacity:1;transform:translateY(0)}
-}
-
-/* HERO */
+.brand{display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:900;font-size:23px;letter-spacing:-1px}
+.logo span{color:var(--purple2)}
+.status{font-size:12px;color:var(--muted)}
+main{padding:18px}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 .hero{
-    position:relative;
-    overflow:hidden;
-    padding:26px 22px;
-    border:1px solid var(--border);
-    border-radius:28px;
-    background:
-        linear-gradient(135deg,rgba(39,23,66,.9),rgba(15,10,27,.88));
-    box-shadow:0 25px 70px rgba(0,0,0,.28);
-    margin-bottom:15px;
+  padding:25px 22px;
+  border:1px solid #2b2440;
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 85% 15%,rgba(139,92,246,.3),transparent 35%),
+    linear-gradient(145deg,#171320,#0e0e14);
+  box-shadow:0 15px 50px rgba(0,0,0,.25);
 }
-
-.hero:before{
-    content:"AVA";
-    position:absolute;
-    right:-18px;
-    top:-28px;
-    font-size:105px;
-    font-weight:1000;
-    color:rgba(166,94,255,.045);
-    transform:rotate(-10deg);
-    pointer-events:none;
-}
-
-.hero-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-    padding:7px 11px;
-    border-radius:999px;
-    background:rgba(155,92,255,.11);
-    border:1px solid rgba(155,92,255,.18);
-    color:#c79cff;
-    font-size:11px;
-    font-weight:800;
-    margin-bottom:15px;
-}
-
-.hero h1{
-    font-size:32px;
-    line-height:1.08;
-    letter-spacing:-1.2px;
-    margin-bottom:12px;
-}
-
-.gradient{
-    background:linear-gradient(90deg,#fff,#c18cff,#ec72bd);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-}
-
-.hero p{
-    color:#aaa1b8;
-    line-height:1.55;
-    font-size:14px;
-    max-width:570px;
-}
-
-.hero-buttons{
-    display:flex;
-    gap:9px;
-    margin-top:20px;
-}
-
+.eyebrow{color:var(--purple2);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px}
+h1{font-size:34px;line-height:1.02;margin:10px 0}
+h2{font-size:24px;margin:5px 0 16px}
+h3{margin:0 0 7px;font-size:17px}
+p{color:var(--muted);line-height:1.55;margin:8px 0}
+.hero p{max-width:600px}
 .btn{
-    border:0;
-    border-radius:15px;
-    padding:13px 16px;
-    font-weight:800;
-    font-size:13px;
-    cursor:pointer;
-    transition:.2s;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  min-height:48px;padding:0 18px;border-radius:15px;
+  font-weight:800;margin-top:17px;
+  transition:.2s
 }
-
-.btn:active{
-    transform:scale(.96);
-}
-
-.btn-primary{
-    background:linear-gradient(135deg,#a965ff,#7135e5);
-    box-shadow:0 10px 25px rgba(130,55,230,.3);
-}
-
-.btn-secondary{
-    background:rgba(255,255,255,.055);
-    border:1px solid var(--border);
-}
-
-/* STATS */
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,#8b5cf6,#6d3de0);box-shadow:0 10px 30px rgba(139,92,246,.25)}
+.btn-dark{background:#1a1a23;border:1px solid var(--line)}
+.btn-google{background:#fff;color:#111}
+.googleMark{width:20px;height:20px}
 
 .stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-bottom:15px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px
 }
+.stat{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px}
+.stat b{font-size:21px;display:block}
+.stat span{font-size:11px;color:var(--muted)}
 
-.stat{
-    padding:15px 12px;
-    border:1px solid var(--border);
-    border-radius:20px;
-    background:rgba(255,255,255,.035);
+.section-title{display:flex;align-items:end;justify-content:space-between;margin:27px 0 12px}
+.section-title small{color:var(--muted)}
+
+.modules{display:grid;gap:10px}
+.module{
+  display:flex;gap:13px;align-items:center;
+  padding:15px;border-radius:19px;background:var(--card);
+  border:1px solid var(--line);transition:.2s
 }
-
-.stat-icon{
-    font-size:20px;
-    margin-bottom:8px;
-}
-
-.stat-value{
-    font-size:20px;
-    font-weight:900;
-}
-
-.stat-label{
-    color:var(--muted);
-    font-size:10px;
-    margin-top:3px;
-}
-
-/* SECTION */
-
-.section-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-    margin:24px 3px 12px;
-}
-
-.section-title h2{
-    font-size:20px;
-    font-weight:900;
-}
-
-.section-title span{
-    color:#8e849e;
-    font-size:11px;
-}
-
-/* PROGRESS */
-
-.progress-card{
-    padding:18px;
-    border:1px solid var(--border);
-    border-radius:22px;
-    background:linear-gradient(135deg,rgba(46,26,75,.7),rgba(18,12,30,.72));
-    margin-bottom:15px;
-}
-
-.progress-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:12px;
-}
-
-.progress-top strong{
-    font-size:14px;
-}
-
-.progress-number{
-    color:#c58eff;
-    font-weight:900;
-}
-
-.progress-track{
-    width:100%;
-    height:8px;
-    background:rgba(255,255,255,.07);
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.progress-fill{
-    height:100%;
-    width:0%;
-    border-radius:20px;
-    background:linear-gradient(90deg,#7135e5,#b96cff,#ec4899);
-    box-shadow:0 0 15px rgba(164,91,255,.5);
-    transition:width .5s ease;
-}
-
-/* MODULES */
-
-.module-card{
-    position:relative;
-    overflow:hidden;
-    padding:19px;
-    margin-bottom:11px;
-    border:1px solid var(--border);
-    border-radius:22px;
-    background:rgba(255,255,255,.035);
-    cursor:pointer;
-    transition:.2s;
-}
-
-.module-card:active{
-    transform:scale(.985);
-}
-
-.module-card:before{
-    content:"";
-    position:absolute;
-    width:130px;
-    height:130px;
-    right:-55px;
-    top:-60px;
-    border-radius:50%;
-    background:var(--module-color,#8b5cf6);
-    opacity:.1;
-    filter:blur(5px);
-}
-
-.module-head{
-    display:flex;
-    align-items:center;
-    gap:14px;
-}
-
+.module:active{transform:scale(.985)}
 .module-icon{
-    width:49px;
-    height:49px;
-    border-radius:16px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:23px;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.08);
-    flex-shrink:0;
+  width:48px;height:48px;flex:none;border-radius:15px;
+  display:grid;place-items:center;background:#211b31;color:var(--purple2)
 }
-
-.module-info{
-    flex:1;
-}
-
-.module-info h3{
-    font-size:15px;
-    margin-bottom:5px;
-}
-
-.module-info p{
-    color:var(--muted);
-    font-size:11px;
-    line-height:1.4;
-}
-
-.module-percent{
-    font-size:11px;
-    color:#b999df;
-    font-weight:800;
-}
-
-.module-progress{
-    height:4px;
-    background:rgba(255,255,255,.06);
-    border-radius:10px;
-    margin-top:14px;
-    overflow:hidden;
-}
-
-.module-progress div{
-    height:100%;
-    background:linear-gradient(90deg,#8b5cf6,#ec4899);
-    border-radius:10px;
-}
-
-/* LESSON LIST */
-
-.lesson-card{
-    padding:16px;
-    border:1px solid var(--border);
-    border-radius:20px;
-    background:rgba(255,255,255,.035);
-    margin-bottom:10px;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.lesson-card:active{
-    transform:scale(.985);
-}
-
-.lesson-row{
-    display:flex;
-    align-items:center;
-    gap:13px;
-}
-
-.lesson-number{
-    width:40px;
-    height:40px;
-    border-radius:13px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:12px;
-    font-weight:900;
-    background:linear-gradient(135deg,rgba(155,92,255,.22),rgba(236,72,153,.1));
-    color:#c79cff;
-    border:1px solid rgba(155,92,255,.15);
-    flex-shrink:0;
-}
-
-.lesson-card.completed .lesson-number{
-    background:linear-gradient(135deg,#7c3aed,#a855f7);
-    color:white;
-}
-
-.lesson-info{
-    flex:1;
-    min-width:0;
-}
-
-.lesson-info h3{
-    font-size:14px;
-    margin-bottom:4px;
-}
-
-.lesson-info p{
-    color:var(--muted);
-    font-size:11px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.lesson-status{
-    font-size:17px;
-}
-
-/* LESSON VIEW */
-
-.lesson-header{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:17px;
-}
-
-.back-btn{
-    width:42px;
-    height:42px;
-    border-radius:14px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.05);
-    cursor:pointer;
-    font-size:19px;
-}
-
-.lesson-head-info{
-    flex:1;
-}
-
-.lesson-head-info small{
-    color:#a98bc8;
-    font-size:10px;
-    font-weight:800;
-}
-
-.lesson-head-info h1{
-    font-size:19px;
-    margin-top:4px;
-}
-
-.lesson-content{
-    padding:21px;
-    border:1px solid var(--border);
-    border-radius:25px;
-    background:rgba(255,255,255,.035);
-}
-
-.lesson-hero{
-    min-height:135px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    overflow:hidden;
-    border-radius:20px;
-    background:
-        radial-gradient(circle at 50% 50%,rgba(155,92,255,.2),transparent 60%),
-        linear-gradient(135deg,rgba(39,23,65,.8),rgba(13,9,22,.8));
-    margin-bottom:20px;
-}
-
-.candles{
-    display:flex;
-    align-items:end;
-    gap:10px;
-    height:70px;
-}
-
-.candle{
-    position:relative;
-    width:11px;
-    border-radius:3px;
-}
-
-.candle:before{
-    content:"";
-    position:absolute;
-    left:50%;
-    top:-17px;
-    width:1px;
-    height:18px;
-    background:currentColor;
-    transform:translateX(-50%);
-}
-
-.candle.up{
-    height:46px;
-    background:#22c55e;
-    color:#22c55e;
-}
-
-.candle.down{
-    height:31px;
-    background:#ef4444;
-    color:#ef4444;
-}
-
-.candle:nth-child(2){height:57px}
-.candle:nth-child(3){height:38px}
-.candle:nth-child(4){height:63px}
-.candle:nth-child(5){height:44px}
-.candle:nth-child(6){height:52px}
-.candle:nth-child(7){height:35px}
-
-.lesson-content h2{
-    font-size:18px;
-    margin:22px 0 9px;
-}
-
-.lesson-content h2:first-of-type{
-    margin-top:0;
-}
-
-.lesson-content p{
-    color:#b4acbe;
-    font-size:14px;
-    line-height:1.7;
-    margin-bottom:12px;
-}
-
-.lesson-content ul{
-    padding-left:20px;
-    margin-bottom:15px;
-}
-
-.lesson-content li{
-    color:#b4acbe;
-    font-size:13px;
-    line-height:1.65;
-    margin-bottom:7px;
-}
-
-.tip{
-    margin:17px 0;
-    padding:15px;
-    border-radius:17px;
-    background:rgba(155,92,255,.09);
-    border:1px solid rgba(155,92,255,.16);
-}
-
-.tip-title{
-    color:#c89bff;
-    font-weight:900;
-    font-size:12px;
-    margin-bottom:6px;
-}
-
-.practice{
-    padding:17px;
-    border-radius:18px;
-    background:rgba(34,211,238,.055);
-    border:1px solid rgba(34,211,238,.1);
-    margin-top:18px;
-}
-
-.practice strong{
-    display:block;
-    color:#67e8f9;
-    font-size:12px;
-    margin-bottom:7px;
-}
-
-.complete-btn{
-    width:100%;
-    margin-top:20px;
-    padding:16px;
-    border:0;
-    border-radius:17px;
-    background:linear-gradient(135deg,#8b5cf6,#ec4899);
-    font-weight:900;
-    cursor:pointer;
-    box-shadow:0 12px 30px rgba(139,92,246,.2);
-}
-
-.complete-btn.completed{
-    background:rgba(34,197,94,.14);
-    color:#86efac;
-    border:1px solid rgba(34,197,94,.2);
-    box-shadow:none;
-}
-
-/* TEST */
-
-.test-card{
-    padding:21px;
-    border:1px solid var(--border);
-    border-radius:24px;
-    background:rgba(255,255,255,.035);
-}
-
-.question-number{
-    color:#b78cff;
-    font-size:11px;
-    font-weight:900;
-    margin-bottom:9px;
-}
-
-.question{
-    font-size:19px;
-    line-height:1.35;
-    font-weight:800;
-    margin-bottom:18px;
-}
-
-.answers{
-    display:grid;
-    gap:9px;
-}
-
-.answer{
-    text-align:left;
-    width:100%;
-    padding:14px;
-    border-radius:15px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.035);
-    cursor:pointer;
-    color:#c6bfce;
-    font-size:13px;
-    transition:.2s;
-}
-
-.answer:hover{
-    background:rgba(155,92,255,.08);
-}
-
-.answer.selected{
-    border-color:#9b5cff;
-    background:rgba(155,92,255,.12);
-    color:#fff;
-}
-
-.answer.correct{
-    border-color:#22c55e;
-    background:rgba(34,197,94,.12);
-    color:#86efac;
-}
-
-.answer.wrong{
-    border-color:#ef4444;
-    background:rgba(239,68,68,.1);
-    color:#fca5a5;
-}
-
-.test-controls{
-    display:flex;
-    gap:9px;
-    margin-top:17px;
-}
-
-.test-controls button{
-    flex:1;
-}
-
-.test-result{
-    text-align:center;
-    padding:30px 10px;
-}
-
-.result-icon{
-    font-size:55px;
-    margin-bottom:15px;
-}
-
-.result-score{
-    font-size:43px;
-    font-weight:1000;
-    background:linear-gradient(90deg,#a855f7,#ec4899);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    margin:8px;
-}
-
-/* DICTIONARY */
+.module-icon svg{width:25px;height:25px}
+.module-info{flex:1;min-width:0}
+.module-info b{display:block;margin-bottom:5px}
+.module-info span{font-size:12px;color:var(--muted)}
+.progress{height:5px;background:#292933;border-radius:10px;margin-top:9px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,#8b5cf6,#b08cff);border-radius:10px}
+.chev{color:#5e5e6d}
 
 .search{
-    width:100%;
-    padding:14px 16px;
-    border-radius:17px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.045);
-    color:white;
-    outline:none;
-    font-size:13px;
-    margin-bottom:12px;
+  width:100%;height:48px;background:var(--card);
+  border:1px solid var(--line);border-radius:15px;
+  color:#fff;padding:0 15px;outline:none;margin-bottom:12px
 }
+.search:focus{border-color:#7049c6}
 
-.search:focus{
-    border-color:rgba(155,92,255,.5);
+.lesson-list{display:grid;gap:9px}
+.lesson{
+  display:flex;align-items:center;gap:12px;padding:14px;
+  background:var(--card);border:1px solid var(--line);border-radius:17px
 }
-
-.dictionary-item{
-    padding:17px;
-    border:1px solid var(--border);
-    border-radius:18px;
-    background:rgba(255,255,255,.035);
-    margin-bottom:9px;
+.lesson-num{
+  width:39px;height:39px;border-radius:12px;
+  display:grid;place-items:center;background:#201b2e;color:var(--purple2);
+  font-size:12px;font-weight:900;flex:none
 }
+.lesson.done .lesson-num{background:rgba(53,208,127,.14);color:var(--green)}
+.lesson-info{flex:1;min-width:0}
+.lesson-info b{font-size:14px;display:block}
+.lesson-info span{font-size:11px;color:var(--muted)}
+.lesson-arrow{color:#5b5b68}
 
-.dictionary-item h3{
-    font-size:14px;
-    margin-bottom:7px;
+.lesson-page{display:none}
+.lesson-page.active{display:block}
+.back{display:flex;align-items:center;gap:7px;color:var(--purple2);font-weight:800;background:none;padding:0;margin-bottom:18px}
+.lesson-card{
+  background:var(--card);border:1px solid var(--line);border-radius:23px;padding:20px
 }
-
-.dictionary-item p{
-    color:#aaa1b4;
-    font-size:12px;
-    line-height:1.55;
+.lesson-card .big-number{font-size:12px;color:var(--purple2);font-weight:900;text-transform:uppercase}
+.lesson-card h2{font-size:28px;line-height:1.1;margin:8px 0 20px}
+.lesson-card h3{margin-top:22px}
+.lesson-card ul{padding-left:20px;color:#c4c4cf;line-height:1.65}
+.lesson-card li{margin:7px 0}
+.tip{
+  margin-top:18px;padding:15px;border-radius:15px;
+  background:#1b1730;border:1px solid #302452
 }
-
-/* PROFILE */
-
-.profile-card{
-    padding:24px;
-    border-radius:25px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.035);
-    text-align:center;
+.tip b{color:var(--purple2)}
+.complete{
+  width:100%;margin-top:18px;height:52px;border-radius:16px;
+  background:var(--green);color:#06140c;font-weight:900
 }
+.complete.done{background:#183b29;color:#72e7a6}
 
+.test-card{
+  padding:19px;background:var(--card);border:1px solid var(--line);border-radius:21px;margin-bottom:12px
+}
+.question{font-weight:800;line-height:1.4;margin-bottom:14px}
+.answers{display:grid;gap:8px}
+.answer{
+  text-align:left;padding:13px 14px;border-radius:13px;
+  background:#1a1a22;border:1px solid #292934
+}
+.answer.correct{border-color:var(--green);background:rgba(53,208,127,.12)}
+.answer.wrong{border-color:var(--red);background:rgba(255,91,110,.1)}
+
+.dictionary{display:grid;gap:9px}
+.term{padding:15px;background:var(--card);border:1px solid var(--line);border-radius:17px}
+.term b{font-size:16px}
+.term span{display:block;color:var(--muted);font-size:13px;margin-top:5px;line-height:1.45}
+
+.profile{
+  text-align:center;padding:25px 18px;background:var(--card);
+  border:1px solid var(--line);border-radius:25px
+}
 .avatar{
-    width:80px;
-    height:80px;
-    border-radius:26px;
-    margin:0 auto 13px;
-    background:linear-gradient(135deg,#9b5cff,#ec4899);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    font-size:32px;
-    font-weight:900;
+  width:86px;height:86px;border-radius:50%;margin:auto;
+  display:grid;place-items:center;font-size:26px;font-weight:900;
+  background:linear-gradient(145deg,#8b5cf6,#39206e);
+  overflow:hidden
 }
+.avatar img{width:100%;height:100%;object-fit:cover}
+.profile h2{margin:13px 0 3px}
+.profile-email{color:var(--muted);font-size:13px}
+.profile-actions{display:grid;gap:9px;margin-top:20px}
 
-.avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.bottom{
+  position:fixed;z-index:50;bottom:10px;left:50%;transform:translateX(-50%);
+  width:min(720px,calc(100% - 20px));
+  height:70px;padding:7px;
+  display:grid;grid-template-columns:repeat(5,1fr);
+  background:rgba(19,19,27,.92);backdrop-filter:blur(22px);
+  border:1px solid #2b2b37;border-radius:24px;
+  box-shadow:0 15px 50px rgba(0,0,0,.45)
 }
-
-.profile-name{
-    font-size:21px;
-    font-weight:900;
+.nav{
+  background:transparent;color:#777784;border-radius:18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;transition:.2s;position:relative
 }
-
-.profile-email{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:5px;
-    word-break:break-word;
-}
-
-.login-btn{
-    width:100%;
-    padding:15px;
-    margin-top:19px;
-    border-radius:16px;
-    border:1px solid var(--border);
-    background:white;
-    color:#18131d;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-}
-
-.google-icon{
-    width:19px;
-    height:19px;
-}
-
-.profile-stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
-    margin-top:16px;
-}
-
-.profile-stat{
-    padding:13px 5px;
-    border-radius:16px;
-    background:rgba(255,255,255,.035);
-}
-
-.profile-stat strong{
-    display:block;
-    font-size:17px;
-}
-
-.profile-stat span{
-    color:var(--muted);
-    font-size:9px;
-}
-
-.logout-btn,
-.reset-btn{
-    width:100%;
-    margin-top:10px;
-    padding:13px;
-    border-radius:15px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.04);
-    cursor:pointer;
-    font-size:12px;
-    font-weight:800;
-}
-
-.logout-btn{
-    color:#fca5a5;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-    position:fixed;
-    left:50%;
-    bottom:11px;
-    transform:translateX(-50%);
-    width:min(calc(100% - 20px),540px);
-    height:76px;
-    padding:6px 7px;
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-    border-radius:25px;
-    background:linear-gradient(135deg,rgba(27,17,45,.97),rgba(11,8,20,.98));
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:
-        0 20px 55px rgba(0,0,0,.55),
-        0 0 35px rgba(125,65,220,.12);
-    backdrop-filter:blur(25px);
-    -webkit-backdrop-filter:blur(25px);
-    z-index:9999;
-}
-
-.nav-item{
-    position:relative;
-    width:20%;
-    height:64px;
-    border:0;
-    background:transparent;
-    border-radius:19px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:3px;
-    cursor:pointer;
-    color:#777083;
-    transition:.25s;
-}
-
-.nav-icon{
-    width:29px;
-    height:29px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:.25s;
-}
-
-.nav-icon svg{
-    width:26px;
-    height:26px;
-    stroke:currentColor;
-    fill:none;
-    stroke-width:1.9;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-}
-
-.nav-label{
-    font-size:9px;
-    font-weight:800;
-    transition:.25s;
-}
-
-.nav-item:nth-child(1){--nav:#a855f7}
-.nav-item:nth-child(2){--nav:#8b5cf6}
-.nav-item:nth-child(3){--nav:#ec4899}
-.nav-item:nth-child(4){--nav:#f59e0b}
-.nav-item:nth-child(5){--nav:#22d3ee}
-
-.nav-item.active{
-    color:var(--nav);
-    background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.02));
-}
-
-.nav-item.active .nav-icon{
-    transform:translateY(-2px) scale(1.08);
-    filter:drop-shadow(0 0 8px var(--nav));
-}
-
-.nav-item.active .nav-label{
-    color:#fff;
-}
-
-.nav-item.active:after{
-    content:"";
-    position:absolute;
-    bottom:3px;
-    left:50%;
-    transform:translateX(-50%);
-    width:18px;
-    height:3px;
-    border-radius:10px;
-    background:var(--nav);
-    box-shadow:0 0 10px var(--nav);
-}
-
-.nav-item:active{
-    transform:scale(.9);
-}
-
-/* TOAST */
+.nav svg{width:23px;height:23px;transition:.2s}
+.nav span{font-size:9px;font-weight:700}
+.nav.active{color:#b494ff;background:#241b36}
+.nav.active svg{filter:drop-shadow(0 0 7px rgba(139,92,246,.7));transform:translateY(-1px)}
 
 .toast{
-    position:fixed;
-    left:50%;
-    top:18px;
-    transform:translate(-50%,-20px);
-    z-index:10000;
-    padding:12px 17px;
-    border-radius:14px;
-    background:rgba(30,20,43,.96);
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 15px 40px rgba(0,0,0,.4);
-    font-size:12px;
-    font-weight:700;
-    opacity:0;
-    pointer-events:none;
-    transition:.3s;
-    white-space:nowrap;
+  position:fixed;z-index:100;left:50%;bottom:94px;transform:translate(-50%,20px);
+  opacity:0;pointer-events:none;max-width:90%;padding:13px 17px;
+  border-radius:14px;background:#22222c;border:1px solid #383844;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);font-size:13px;text-align:center;
+  transition:.25s
 }
+.toast.show{opacity:1;transform:translate(-50%,0)}
 
-.toast.show{
-    opacity:1;
-    transform:translate(-50%,0);
-}
-
-/* EMPTY */
-
-.empty{
-    text-align:center;
-    padding:35px 15px;
-    color:var(--muted);
-}
-
-.empty-icon{
-    font-size:40px;
-    margin-bottom:10px;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:430px){
-    .app{
-        padding:14px 12px 20px;
-    }
-
-    .hero h1{
-        font-size:28px;
-    }
-
-    .stats{
-        gap:7px;
-    }
-
-    .stat{
-        padding:13px 9px;
-    }
-
-    .stat-value{
-        font-size:18px;
-    }
-
-    .nav-label{
-        font-size:8px;
-    }
+.empty{padding:30px;text-align:center;color:var(--muted)}
+.badge{display:inline-flex;padding:5px 8px;border-radius:8px;background:#211b31;color:var(--purple2);font-size:10px;font-weight:800}
+@media(min-width:650px){
+  .modules{grid-template-columns:1fr 1fr}
+  .lesson-list{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
-<header class="header">
-    <div class="logo">
-        <div class="logo-mark">AVA</div>
-        <div class="logo-text">
-            <div class="logo-title">TRADING ACADEMY</div>
-            <div class="logo-sub">LEARN • ANALYZE • PRACTICE</div>
-        </div>
-    </div>
-
-    <button class="profile-mini" onclick="showView('profile')">
-        <span id="miniAvatar">◉</span>
-    </button>
+<header>
+  <div class="brand">
+    <div class="logo">AVA <span>ACADEMY</span></div>
+    <div class="status" id="headerStatus">TRADING EDUCATION</div>
+  </div>
 </header>
 
+<main>
 
-<!-- ================= HOME ================= -->
-
+<!-- HOME -->
 <section id="home" class="view active">
+  <div class="hero">
+    <div class="eyebrow">AVA Trading Academy</div>
+    <h1>Научись торговать<br>системно.</h1>
+    <p>100 уроков от основ рынка до полноценной торговой системы. Изучай материал, проходи тесты и сохраняй свой прогресс.</p>
+    <button class="btn btn-primary" onclick="openAcademy()">Начать обучение →</button>
+  </div>
 
-    <div class="hero">
-        <div class="hero-badge">✦ AVA EDUCATION</div>
+  <div class="stats">
+    <div class="stat"><b id="homeCompleted">0</b><span>уроков пройдено</span></div>
+    <div class="stat"><b>100</b><span>уроков всего</span></div>
+    <div class="stat"><b id="homePercent">0%</b><span>прогресс</span></div>
+  </div>
 
-        <h1>
-            Научись понимать<br>
-            <span class="gradient">рынок, а не угадывать.</span>
-        </h1>
-
-        <p>
-            100 последовательных уроков от основ свечей и трендов
-            до риск-менеджмента, психологии и полноценного анализа рынка.
-        </p>
-
-        <div class="hero-buttons">
-            <button class="btn btn-primary" onclick="continueLearning()">
-                Продолжить обучение →
-            </button>
-
-            <button class="btn btn-secondary" onclick="showView('academy')">
-                Все уроки
-            </button>
-        </div>
-    </div>
-
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="stat-icon">📚</div>
-            <div class="stat-value" id="statLessons">0</div>
-            <div class="stat-label">Уроков пройдено</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-value" id="statPercent">0%</div>
-            <div class="stat-label">Прогресс</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-icon">⭐</div>
-            <div class="stat-value" id="statScore">0</div>
-            <div class="stat-label">Баллов</div>
-        </div>
-
-    </div>
-
-
-    <div class="progress-card">
-        <div class="progress-top">
-            <strong>Твой прогресс</strong>
-            <span class="progress-number" id="progressText">0 / 100</span>
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-    </div>
-
-
-    <div class="section-title">
-        <h2>Программа</h2>
-        <span>10 модулей</span>
-    </div>
-
-    <div id="homeModules"></div>
-
+  <div class="section-title">
+    <h2>Академия</h2><small>5 модулей</small>
+  </div>
+  <div class="modules" id="moduleList"></div>
 </section>
 
-
-<!-- ================= ACADEMY ================= -->
-
+<!-- ACADEMY -->
 <section id="academy" class="view">
-
-    <div class="section-title" style="margin-top:4px">
-        <h2>Академия</h2>
-        <span id="academyCount">0 / 100</span>
-    </div>
-
-    <div class="progress-card">
-        <div class="progress-top">
-            <strong>Общий прогресс</strong>
-            <span class="progress-number" id="academyPercent">0%</span>
-        </div>
-
-        <div class="progress-track">
-            <div class="progress-fill" id="academyFill"></div>
-        </div>
-    </div>
-
-    <div id="academyModules"></div>
-
+  <div class="section-title">
+    <div><div class="eyebrow">Обучение</div><h2>100 уроков</h2></div>
+    <span class="badge" id="academyProgress">0%</span>
+  </div>
+  <input class="search" id="lessonSearch" placeholder="🔎  Найти урок..." oninput="renderLessons()">
+  <div class="lesson-list" id="lessonList"></div>
 </section>
 
-
-<!-- ================= LESSON LIST ================= -->
-
-<section id="module" class="view">
-
-    <div class="lesson-header">
-        <button class="back-btn" onclick="showView('academy')">‹</button>
-
-        <div class="lesson-head-info">
-            <small id="moduleNumber"></small>
-            <h1 id="moduleTitle"></h1>
-        </div>
-    </div>
-
-    <div id="moduleLessons"></div>
-
+<!-- LESSON -->
+<section id="lessonPage" class="view">
+  <div id="lessonContent"></div>
 </section>
 
-
-<!-- ================= LESSON ================= -->
-
-<section id="lesson" class="view">
-
-    <div class="lesson-header">
-
-        <button class="back-btn" id="lessonBack">‹</button>
-
-        <div class="lesson-head-info">
-            <small id="lessonModule"></small>
-            <h1 id="lessonTitleHeader"></h1>
-        </div>
-
-    </div>
-
-    <div class="lesson-content">
-
-        <div class="lesson-hero">
-            <div class="candles">
-                <div class="candle up"></div>
-                <div class="candle down"></div>
-                <div class="candle up"></div>
-                <div class="candle up"></div>
-                <div class="candle down"></div>
-                <div class="candle up"></div>
-                <div class="candle down"></div>
-            </div>
-        </div>
-
-        <div id="lessonBody"></div>
-
-        <button class="complete-btn" id="completeLessonBtn">
-            ✓ Отметить урок пройденным
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- ================= TEST ================= -->
-
+<!-- TEST -->
 <section id="test" class="view">
-
-    <div class="section-title" style="margin-top:4px">
-        <h2>Проверка знаний</h2>
-        <span>15 вопросов</span>
-    </div>
-
-    <div class="test-card" id="testContainer"></div>
-
+  <div class="eyebrow">Проверка знаний</div>
+  <h2>Тесты</h2>
+  <p>Проверь, насколько хорошо ты усвоил основные принципы торговли.</p>
+  <div id="testArea"></div>
 </section>
 
-
-<!-- ================= DICTIONARY ================= -->
-
+<!-- DICTIONARY -->
 <section id="dictionary" class="view">
-
-    <div class="section-title" style="margin-top:4px">
-        <h2>Словарь трейдера</h2>
-        <span id="dictionaryCount"></span>
-    </div>
-
-    <input
-        class="search"
-        id="dictionarySearch"
-        placeholder="🔎  Поиск термина..."
-        oninput="renderDictionary()"
-    >
-
-    <div id="dictionaryList"></div>
-
+  <div class="eyebrow">Термины</div>
+  <h2>Словарь трейдера</h2>
+  <input class="search" id="dictSearch" placeholder="🔎  Найти термин..." oninput="renderDictionary()">
+  <div class="dictionary" id="dictionaryList"></div>
 </section>
 
-
-<!-- ================= PROFILE ================= -->
-
+<!-- PROFILE -->
 <section id="profile" class="view">
+  <div class="profile">
+    <div class="avatar" id="avatar">AVA</div>
+    <h2 id="profileName">Гость</h2>
+    <div class="profile-email" id="profileEmail">Войди через Google, чтобы сохранить прогресс</div>
 
-    <div class="section-title" style="margin-top:4px">
-        <h2>Профиль</h2>
+    <button class="btn btn-google" id="loginButton" onclick="loginWithGoogle()">
+      <svg class="googleMark" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.56-.2-2.3H12v4.35h6.44a5.5 5.5 0 0 1-2.39 3.61v3h3.87c2.27-2.09 3.57-5.17 3.57-8.66z"/>
+        <path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.95-2.9l-3.87-3c-1.07.72-2.44 1.15-4.08 1.15-3.13 0-5.78-2.11-6.73-4.95H1.27v3.09A12 12 0 0 0 12 24z"/>
+        <path fill="#FBBC05" d="M5.27 14.3A7.22 7.22 0 0 1 4.9 12c0-.8.14-1.58.37-2.3V6.61H1.27A12 12 0 0 0 0 12c0 1.94.46 3.78 1.27 5.39l4-3.09z"/>
+        <path fill="#EA4335" d="M12 4.75c1.76 0 3.34.61 4.59 1.81l3.44-3.44C17.95 1.02 15.24 0 12 0A12 12 0 0 0 1.27 6.61l4 3.09C6.22 6.86 8.87 4.75 12 4.75z"/>
+      </svg>
+      Войти через Google
+    </button>
+
+    <div id="profileActions" class="profile-actions" style="display:none">
+      <button class="btn btn-dark" onclick="logout()">Выйти из аккаунта</button>
     </div>
+  </div>
 
-    <div class="profile-card">
-
-        <div class="avatar" id="profileAvatar">
-            AVA
-        </div>
-
-        <div class="profile-name" id="profileName">
-            Гость
-        </div>
-
-        <div class="profile-email" id="profileEmail">
-            Войди через Google, чтобы сохранить прогресс
-        </div>
-
-        <button class="login-btn" id="loginButton" onclick="loginWithGoogle()">
-
-            <svg class="google-icon" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M21.35 12.2c0-.7-.06-1.37-.18-2H12v3.79h5.24a4.47 4.47 0 0 1-1.94 2.93v2.44h3.14c1.84-1.69 2.91-4.18 2.91-7.16z"/>
-                <path fill="#34A853" d="M12 21.7c2.63 0 4.84-.87 6.45-2.34l-3.14-2.44c-.87.58-1.98.92-3.31.92-2.55 0-4.7-1.72-5.47-4.03H3.28v2.52A9.75 9.75 0 0 0 12 21.7z"/>
-                <path fill="#FBBC05" d="M6.53 13.81A5.86 5.86 0 0 1 6.22 12c0-.63.11-1.25.31-1.81V7.67H3.28A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.05 1.03 4.33l3.25-2.52z"/>
-                <path fill="#EA4335" d="M12 6.16c1.43 0 2.71.49 3.72 1.46l2.79-2.79C16.83 3.17 14.63 2.3 12 2.3a9.75 9.75 0 0 0-8.72 5.37l3.25 2.52c.77-2.31 2.92-4.03 5.47-4.03z"/>
-            </svg>
-
-            Войти через Google
-
-        </button>
-
-        <div id="profileStats" style="display:none">
-
-            <div class="profile-stats">
-
-                <div class="profile-stat">
-                    <strong id="profileLessons">0</strong>
-                    <span>Уроков</span>
-                </div>
-
-                <div class="profile-stat">
-                    <strong id="profileProgress">0%</strong>
-                    <span>Прогресс</span>
-                </div>
-
-                <div class="profile-stat">
-                    <strong id="profileScore">0</strong>
-                    <span>Баллов</span>
-                </div>
-
-            </div>
-
-            <button class="logout-btn" onclick="logout()">
-                Выйти из аккаунта
-            </button>
-
-        </div>
-
-        <button class="reset-btn" onclick="resetProgress()">
-            Сбросить прогресс обучения
-        </button>
-
-    </div>
-
-
-    <div class="tip" style="margin-top:14px">
-
-        <div class="tip-title">🔐 СОХРАНЕНИЕ ПРОГРЕССА</div>
-
-        <p style="margin:0;color:#aaa1b4;font-size:12px;line-height:1.6">
-            После входа через Google прогресс привязывается к твоему аккаунту.
-            Можно продолжить обучение с другого устройства.
-        </p>
-
-    </div>
-
+  <div class="stats" style="margin-top:12px">
+    <div class="stat"><b id="profileCompleted">0</b><span>уроков</span></div>
+    <div class="stat"><b id="profilePercent">0%</b><span>прогресс</span></div>
+    <div class="stat"><b id="profileTest">—</b><span>тест</span></div>
+  </div>
 </section>
 
-</div>
+</main>
 
+<nav class="bottom">
+  <button class="nav active" data-view="home" onclick="showView('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 10.8 12 3l9 7.8"/><path d="M5.5 9.8V21h13V9.8"/><path d="M9.5 21v-6h5v6"/>
+    </svg>
+    <span>Главная</span>
+  </button>
 
-<!-- BOTTOM NAV -->
+  <button class="nav" data-view="academy" onclick="showView('academy')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 9.5 12 5l9 4.5-9 4.5L3 9.5Z"/><path d="M6 11.2V16c3.2 2.6 8.8 2.6 12 0v-4.8"/><path d="M21 10v5"/>
+    </svg>
+    <span>Академия</span>
+  </button>
 
-<nav class="bottom-nav">
+  <button class="nav" data-view="test" onclick="showView('test')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="5" y="3" width="14" height="18" rx="2"/>
+      <path d="M8 8h8M8 12h4M8 16l1.5 1.5L13 14"/>
+    </svg>
+    <span>Тест</span>
+  </button>
 
-    <button class="nav-item active" data-view="home" onclick="showView('home',this)">
-        <div class="nav-icon">
-            <svg viewBox="0 0 24 24">
-                <path d="M3 10.5 12 3l9 7.5"/>
-                <path d="M5 9.5V21h14V9.5"/>
-                <path d="M9 21v-6h6v6"/>
-            </svg>
-        </div>
-        <div class="nav-label">Главное</div>
-    </button>
+  <button class="nav" data-view="dictionary" onclick="showView('dictionary')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
+      <path d="M4 5.5V22M8 7h8M8 11h8"/>
+    </svg>
+    <span>Словарь</span>
+  </button>
 
-
-    <button class="nav-item" data-view="academy" onclick="showView('academy',this)">
-        <div class="nav-icon">
-            <svg viewBox="0 0 24 24">
-                <path d="M3 7.5 12 3l9 4.5-9 4.5L3 7.5Z"/>
-                <path d="M6 9v5.2c0 1.5 2.7 3.8 6 3.8s6-2.3 6-3.8V9"/>
-                <path d="M21 8v6"/>
-            </svg>
-        </div>
-        <div class="nav-label">Академия</div>
-    </button>
-
-
-    <button class="nav-item" data-view="test" onclick="showView('test',this)">
-        <div class="nav-icon">
-            <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="9"/>
-                <path d="m8 12 2.5 2.5L16 9"/>
-            </svg>
-        </div>
-        <div class="nav-label">Проверка</div>
-    </button>
-
-
-    <button class="nav-item" data-view="dictionary" onclick="showView('dictionary',this)">
-        <div class="nav-icon">
-            <svg viewBox="0 0 24 24">
-                <path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Z"/>
-                <path d="M8 20V7a3 3 0 0 1 3-3"/>
-                <path d="M9 9h7M9 12h7M9 15h5"/>
-            </svg>
-        </div>
-        <div class="nav-label">Словарь</div>
-    </button>
-
-
-    <button class="nav-item" data-view="profile" onclick="showView('profile',this)">
-        <div class="nav-icon">
-            <svg viewBox="0 0 24 24">
-                <circle cx="12" cy="8" r="3.5"/>
-                <path d="M5 21c.7-4 3-6 7-6s6.3 2 7 6"/>
-            </svg>
-        </div>
-        <div class="nav-label">Профиль</div>
-    </button>
-
+  <button class="nav" data-view="profile" onclick="showView('profile')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="8" r="4"/><path d="M4 21c.7-4 3.3-6 8-6s7.3 2 8 6"/>
+    </svg>
+    <span>Профиль</span>
+  </button>
 </nav>
 
-
 <div class="toast" id="toast"></div>
+</div>
 
+<script>
+/* =========================
+   APP DATA
+========================= */
 
-<!-- FIREBASE + APP -->
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithPopup,
-    signOut,
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-import {
-    getFirestore,
-    doc,
-    getDoc,
-    setDoc
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-
-/* =========================================================
-   FIREBASE
-   ========================================================= */
-
-const firebaseConfig = {
-    apiKey: "AIzaSyCzOIrNkrotTmop5c3oF0rU9ilk9bpP4F7Y5NA",
-    authDomain: "ava-akademy.firebaseapp.com",
-    projectId: "ava-akademy",
-    storageBucket: "ava-akademy.firebasestorage.app",
-    messagingSenderId: "556423094388",
-    appId: "1:556423094388:web:f96bedf87aea5c39d1f121",
-    measurementId: "G-1Z4LWBZG31"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
-
-provider.setCustomParameters({
-    prompt:"select_account"
-});
-
-
-/* =========================================================
-   100 LESSONS
-   ========================================================= */
-
-const moduleData = [
-
-{
-    title:"Фундамент рынка",
-    icon:"🌐",
-    color:"#8b5cf6",
-    description:"Как устроен рынок, кто участвует и почему цена вообще движется.",
-    lessons:[
-        ["Что такое финансовый рынок","Разберём, что такое финансовый рынок, какие активы существуют и почему цена постоянно меняется."],
-        ["Участники рынка","Кто такие покупатели, продавцы, инвесторы, трейдеры, банки и крупные участники."],
-        ["Цена и баланс спроса и предложения","Почему цена растёт, когда появляется давление покупателей, и падает при доминировании продавцов."],
-        ["Ликвидность простыми словами","Что такое ликвидность, почему она важна и почему один и тот же ордер может по-разному исполняться."],
-        ["Bid, Ask и Spread","Разберём цену покупки, цену продажи и разницу между ними."],
-        ["Рыночный и лимитный ордер","Чем отличается исполнение по текущей цене от заранее установленной цены."],
-        ["Что двигает цену","Новости, ожидания, ликвидность, крупные заявки и психология участников."],
-        ["Время работы рынка","Почему разные торговые сессии отличаются активностью и волатильностью."],
-        ["Рынок как аукцион","Посмотрим на график как на постоянный аукцион между покупателями и продавцами."],
-        ["Как правильно смотреть на график","Базовый алгоритм: сначала контекст, затем структура, зона и только потом решение."]
-    ]
-},
-
-{
-    title:"Японские свечи",
-    icon:"🕯️",
-    color:"#ec4899",
-    description:"Читаем свечи и понимаем, что происходило между покупателями и продавцами.",
-    lessons:[
-        ["Строение японской свечи","Open, High, Low, Close и что каждая часть свечи рассказывает о движении цены."],
-        ["Бычья и медвежья свеча","Как визуально определить направление движения внутри выбранного периода."],
-        ["Тело свечи","Что показывает размер тела и почему большая свеча не всегда означает продолжение."],
-        ["Верхняя и нижняя тень","Как тени показывают отвержение определённых цен."],
-        ["Сила свечи","Как оценивать свечу относительно предыдущих свечей и текущего контекста."],
-        ["Доджи","Что означает почти равный Open и Close и почему доджи сам по себе не является сигналом."],
-        ["Пин-бар","Как выглядит сильное отвержение уровня и почему место появления важнее самой формы."],
-        ["Поглощение","Как одна свеча может показать смену краткосрочного контроля между сторонами."],
-        ["Последовательность свечей","Как читать не одну свечу, а несколько свечей как единую историю."],
-        ["Практика чтения свечей","Разберём алгоритм анализа свечей без попытки угадывать каждое движение."]
-    ]
-},
-
-{
-    title:"Тренд и структура",
-    icon:"📈",
-    color:"#22c55e",
-    description:"Учимся отличать рост, падение и изменение структуры рынка.",
-    lessons:[
-        ["Что такое тренд","Почему тренд — это не просто несколько зелёных или красных свечей."],
-        ["Восходящий тренд","Higher High и Higher Low на понятных примерах."],
-        ["Нисходящий тренд","Lower High и Lower Low и признаки давления продавцов."],
-        ["Рыночная структура","Как находить последовательность максимумов и минимумов."],
-        ["Импульс и коррекция","Почему рынок редко движется по прямой линии."],
-        ["Break of Structure","Что такое пробой структуры и как не путать его с обычным проколом."],
-        ["Change of Character","Как может выглядеть ранний признак изменения поведения цены."],
-        ["Сильный и слабый тренд","Как оценивать скорость, глубину откатов и реакцию от уровней."],
-        ["Трендовые линии","Когда линии действительно помогают, а когда превращаются в субъективное рисование."],
-        ["Практика определения тренда","Пошаговый алгоритм определения структуры перед поиском входа."]
-    ]
-},
-
-{
-    title:"Флэт и боковой рынок",
-    icon:"↔️",
-    color:"#06b6d4",
-    description:"Что делать, когда цена перестаёт двигаться направленно.",
-    lessons:[
-        ["Что такое флэт","Почему цена может долго двигаться между двумя зонами."],
-        ["Границы диапазона","Как находить верхнюю и нижнюю область бокового движения."],
-        ["Центр диапазона","Почему середина флэта часто даёт плохое соотношение риска и потенциальной прибыли."],
-        ["Отбой от диапазона","Как оценивать реакцию цены возле границ."],
-        ["Пробой диапазона","Какие признаки делают выход из диапазона более значимым."],
-        ["Ложный выход","Почему цена может выйти за границу и быстро вернуться обратно."],
-        ["Сжатие волатильности","Что происходит, когда диапазон постепенно становится уже."],
-        ["Флэт после сильного движения","Почему рынок часто делает паузу после импульса."],
-        ["Когда не стоит торговать флэт","Ситуации, где лучше дождаться более понятной структуры."],
-        ["Практика диапазона","Учимся отмечать диапазон и составлять два сценария его развития."]
-    ]
-},
-
-{
-    title:"Поддержка и сопротивление",
-    icon:"🧱",
-    color:"#f59e0b",
-    description:"Работа с ценовыми зонами без механического рисования десятков линий.",
-    lessons:[
-        ["Что такое поддержка","Почему определённая область может привлекать покупателей."],
-        ["Что такое сопротивление","Почему определённая область может встречать продавцов."],
-        ["Уровень или зона","Почему цена редко реагирует идеально на одну конкретную точку."],
-        ["Сила уровня","Как оценивать количество и качество предыдущих реакций."],
-        ["Свежие зоны","Почему недавняя реакция иногда важнее старой."],
-        ["Многократные касания","Когда повторные тесты усиливают значение зоны, а когда наоборот."],
-        ["Роль контекста","Почему одна и та же зона может работать по-разному в тренде и флэте."],
-        ["Переворот уровня","Как сопротивление может стать поддержкой после подтверждённого пробоя."],
-        ["Плохие уровни","Типичные ошибки при разметке графика."],
-        ["Практика зон","Создаём минимальный набор ключевых зон перед анализом."]
-    ]
-},
-
-{
-    title:"Пробои и ложные пробои",
-    icon:"💥",
-    color:"#ef4444",
-    description:"Разбираем один из самых сложных моментов — выход цены из важной зоны.",
-    lessons:[
-        ["Что такое пробой","Разница между проколом и реальным изменением положения цены."],
-        ["Закрепление за уровнем","Почему закрытие свечи может иметь значение."],
-        ["Объём при пробое","Как объём может дополнить анализ, но не гарантирует продолжение."],
-        ["Импульсный пробой","Признаки сильного движения через область."],
-        ["Пробой после накопления","Почему длительное сжатие иногда приводит к резкому движению."],
-        ["Ложный пробой","Как цена забирает ликвидность за очевидным уровнем и возвращается."],
-        ["Возврат к уровню","Что такое retest и почему повторная реакция может быть важна."],
-        ["Пробой без подтверждения","Почему нельзя автоматически входить после первого прокола."],
-        ["Новости и резкие пробои","Почему фундаментальное событие может полностью изменить техническую картину."],
-        ["Практика пробоев","Составляем чек-лист подтверждения пробоя."]
-    ]
-},
-
-{
-    title:"Таймфреймы и мультифрейм",
-    icon:"⏱️",
-    color:"#a855f7",
-    description:"Как не запутаться между M1, M5, M15, H1 и старшими периодами.",
-    lessons:[
-        ["Что такое таймфрейм","Как одна и та же цена выглядит по-разному на разных периодах."],
-        ["Младшие таймфреймы","Плюсы и минусы M1, M3, M5 и других коротких периодов."],
-        ["Старшие таймфреймы","Почему H1, H4 и дневной график помогают видеть общий контекст."],
-        ["Шум рынка","Почему на маленьком периоде возникает больше случайных колебаний."],
-        ["Мультитаймфрейм анализ","Как соединять старший контекст и младший сценарий."],
-        ["Согласование таймфреймов","Что делать, когда старший и младший графики показывают разное."],
-        ["Таймфрейм и стиль","Почему выбранный период должен соответствовать торговому плану."],
-        ["Смена таймфрейма","Почему постоянное переключение может ухудшить принятие решений."],
-        ["Лучший таймфрейм","Почему универсального идеального периода не существует."],
-        ["Практика мультифрейма","Разбираем порядок просмотра графика от старшего периода к младшему."]
-    ]
-},
-
-{
-    title:"Индикаторы и объём",
-    icon:"📊",
-    color:"#3b82f6",
-    description:"Используем индикаторы как вспомогательные инструменты, а не как магические сигналы.",
-    lessons:[
-        ["Зачем нужны индикаторы","Какие задачи индикаторы действительно могут решать."],
-        ["Скользящая средняя","Что показывает Moving Average и почему она запаздывает."],
-        ["RSI","Как читать относительную силу движения без мифа о гарантированном развороте."],
-        ["MACD","Из чего состоит MACD и какую информацию он пытается показать."],
-        ["ATR","Как оценивать текущую волатильность через Average True Range."],
-        ["Bollinger Bands","Как полосы помогают видеть расширение и сжатие волатильности."],
-        ["Объём","Почему объём может подтверждать интерес участников."],
-        ["Дивергенция","Что такое расхождение цены и индикатора и почему оно не гарантирует разворот."],
-        ["Слишком много индикаторов","Почему десять сигналов часто создают больше путаницы."],
-        ["Создание простой системы","Как выбрать несколько инструментов, каждый из которых выполняет свою функцию."]
-    ]
-},
-
-{
-    title:"Риск-менеджмент",
-    icon:"🛡️",
-    color:"#14b8a6",
-    description:"Самый важный модуль: как контролировать риск и не разрушить депозит одной ошибкой.",
-    lessons:[
-        ["Что такое риск","Почему прибыль начинается с контроля возможного убытка."],
-        ["Риск на одну сделку","Как заранее определить допустимый размер потери."],
-        ["Размер позиции","Почему размер позиции должен зависеть от риска, а не от эмоций."],
-        ["Stop Loss","Зачем нужен стоп и почему его нельзя воспринимать как наказание."],
-        ["Take Profit","Как заранее определить область выхода при благоприятном сценарии."],
-        ["Risk/Reward","Что означает соотношение потенциальной прибыли и риска."],
-        ["Серия убытков","Почему несколько неудачных сделок подряд являются нормальной частью системы."],
-        ["Просадка","Что такое drawdown и почему его необходимо учитывать заранее."],
-        ["Управление капиталом","Как не увеличивать риск только потому, что предыдущая сделка была прибыльной."],
-        ["Антикризисный план","Что делать после крупной ошибки или серии неудач."]
-    ]
-},
-
-{
-    title:"Психология и система",
-    icon:"🧠",
-    color:"#ec4899",
-    description:"Дисциплина, журнал, торговый план и способность следовать собственным правилам.",
-    lessons:[
-        ["Эмоции трейдера","Почему страх и жадность влияют на решения."],
-        ["FOMO","Почему желание успеть за уже ушедшим движением приводит к плохим входам."],
-        ["Месть рынку","Почему попытка быстро вернуть убыток увеличивает риск."],
-        ["Overtrading","Как чрезмерное количество сделок ухудшает качество решений."],
-        ["Дисциплина","Почему система работает только тогда, когда ей следуют."],
-        ["Торговый план","Что должно быть записано до начала торговой сессии."],
-        ["Чек-лист сделки","Как создать короткую проверку перед входом."],
-        ["Торговый журнал","Какие данные записывать после каждой сделки."],
-        ["Разбор ошибок","Как анализировать ошибку без эмоционального самобичевания."],
-        ["Создание собственной системы","Как соединить контекст, сетап, риск, вход и управление в единый процесс."]
-    ]
-},
-
-{
-    title:"Практический анализ",
-    icon:"🎯",
-    color:"#8b5cf6",
-    description:"Собираем всё изученное в единый алгоритм анализа рынка.",
-    lessons:[
-        ["Подготовка к торговой сессии","Как подготовить график, отметить контекст и убрать лишний шум."],
-        ["Определение контекста","Сначала отвечаем на вопрос: тренд, диапазон или переходное состояние."],
-        ["Поиск ключевых зон","Как выбрать несколько действительно важных областей."],
-        ["Сценарий продолжения","Что должно произойти, чтобы рассматривать продолжение движения."],
-        ["Сценарий разворота","Какие признаки нужны перед предположением о смене направления."],
-        ["Сценарий пробоя","Как заранее определить подтверждение и отмену сценария."],
-        ["План B","Почему хороший трейдер заранее знает, что будет делать при ошибке сценария."],
-        ["Разбор исторического графика","Как тренироваться без необходимости постоянно открывать реальные сделки."],
-        ["Полный торговый алгоритм","Собираем последовательность: контекст → зона → сигнал → риск → сделка → журнал."],
-        ["Финальная практика","Итоговый урок: самостоятельно составляем полный анализ и проверяем себя по чек-листу."]
-    ]
-}
-
+const modules=[
+ {name:"Фундамент трейдинга",from:1,to:20,icon:"📚",desc:"Рынок, графики, свечи, ордера и базовые понятия"},
+ {name:"Технический анализ",from:21,to:40,icon:"📈",desc:"Тренды, уровни, индикаторы и структура цены"},
+ {name:"Стратегии",from:41,to:60,icon:"🎯",desc:"Системы входа, подтверждения и торговые сценарии"},
+ {name:"Риск-менеджмент",from:61,to:80,icon:"🛡️",desc:"Риск, депозит, психология и дисциплина"},
+ {name:"Продвинутый трейдинг",from:81,to:100,icon:"⚡",desc:"Продвинутый анализ и создание своей системы"}
 ];
 
+const lessonTitles=[
+"Что такое трейдинг и как работает рынок",
+"Участники финансового рынка",
+"Почему меняется цена",
+"Ликвидность простыми словами",
+"Bid, Ask и спред",
+"Типы финансовых инструментов",
+"Таймфреймы",
+"Как читать график",
+"Японские свечи",
+"Тело и тени свечи",
+"Бычий и медвежий рынок",
+"Волатильность",
+"Торговая сессия",
+"Ордер Market",
+"Ордер Limit",
+"Stop Loss и Take Profit",
+"Лонг и шорт",
+"Комиссия и проскальзывание",
+"Торговый терминал",
+"Главные ошибки новичка",
 
-/* =========================================================
-   BUILD 100 LESSON OBJECTS
-   ========================================================= */
+"Что такое тренд",
+"Восходящий тренд",
+"Нисходящий тренд",
+"Флэт и консолидация",
+"Импульс и коррекция",
+"Локальные максимумы и минимумы",
+"Поддержка",
+"Сопротивление",
+"Пробой уровня",
+"Ложный пробой",
+"Ретест уровня",
+"Линии тренда",
+"Каналы",
+"Зоны интереса",
+"Объём",
+"Как читать структуру рынка",
+"HH, HL, LH, LL",
+"Изменение структуры",
+"Тренд против флэта",
+"Практика анализа графика",
 
-const lessons = [];
+"Что такое торговая стратегия",
+"Точка входа",
+"Точка выхода",
+"Подтверждение сигнала",
+"Мультифрейм-анализ",
+"Скользящие средние",
+"RSI",
+"MACD",
+"Stochastic",
+"Bollinger Bands",
+"Индикаторы: как не перегрузить график",
+"Свечной анализ",
+"Паттерн поглощение",
+"Пин-бар",
+"Двойная вершина",
+"Двойное дно",
+"Треугольник",
+"Флаг",
+"Торговля от уровня",
+"Торговля на пробой",
 
-let lessonCounter = 1;
+"Что такое риск-менеджмент",
+"Риск на одну сделку",
+"Размер позиции",
+"Стоп как защита",
+"Соотношение риск/прибыль",
+"Серия убыточных сделок",
+"Дневной лимит потерь",
+"Недельный лимит",
+"Почему нельзя удваивать ставку",
+"Мартингейл и его риски",
+"Эмоции трейдера",
+"Страх входа",
+"Жадность",
+"FOMO",
+"Тильт",
+"Дисциплина",
+"Торговый план",
+"Чек-лист перед входом",
+"Дневник трейдера",
+"Разбор своих ошибок",
 
-moduleData.forEach((module,moduleIndex)=>{
+"Как проводить полный анализ",
+"Контекст старшего таймфрейма",
+"Поиск ключевого уровня",
+"Оценка импульса",
+"Поиск подтверждения",
+"Сценарий A и сценарий B",
+"Когда нельзя входить",
+"Ликвидность и стопы",
+"Работа с несколькими уровнями",
+"Сильные и слабые сигналы",
+"Комбинация цены и объёма",
+"Комбинация структуры и индикатора",
+"Как фильтровать сделки",
+"Backtest стратегии",
+"Forward test",
+"Статистика стратегии",
+"Win Rate",
+"Expectancy",
+"Создание собственной системы",
+"Финальный торговый план"
+];
 
-    module.lessons.forEach((item,localIndex)=>{
+const baseTexts=[
+"В этом уроке разбираем основу, которую необходимо понимать до перехода к практике. Трейдинг — это работа с вероятностями, а не способ гарантированно получать прибыль.",
+"Главная задача трейдера — не угадывать каждое движение цены, а находить ситуации, где его торговый план имеет статистическое преимущество.",
+"Перед каждой сделкой необходимо понимать контекст рынка, возможный сценарий движения и точку, где первоначальная идея перестаёт быть актуальной."
+];
 
-        lessons.push({
-            id:lessonCounter,
-            module:moduleIndex,
-            moduleTitle:module.title,
-            title:item[0],
-            short:item[1],
-            icon:module.icon,
-            color:module.color,
-            indexInModule:localIndex
-        });
+const lessons=lessonTitles.map((title,i)=>({
+ id:i+1,
+ title,
+ module:modules.find(m=>i+1>=m.from&&i+1<=m.to)?.name||"Академия",
+ text:baseTexts[i%baseTexts.length],
+ points:[
+  "Определи контекст рынка перед принятием решения.",
+  "Заранее сформулируй условия входа и выхода.",
+  "Не принимай решение только из-за одной свечи или одного индикатора.",
+  "Риск сделки должен быть известен до открытия позиции."
+ ],
+ practice:"Открой график любого инструмента и попробуй самостоятельно отметить ситуацию, описанную в уроке. Запиши, почему ты считаешь её подходящей или неподходящей для сделки.",
+ tip:"Хороший трейдер сначала защищает капитал, а уже потом думает о прибыли."
+}));
 
-        lessonCounter++;
-
-    });
-
-});
-
-
-/* =========================================================
-   DICTIONARY
-   ========================================================= */
-
-const dictionary = [
-
-["Ask","Цена, по которой участник может купить актив у продавца."],
-["ATR","Индикатор средней величины движения цены и оценки волатильности."],
-["Bid","Цена, по которой рынок готов купить актив."],
-["Break of Structure","Пробой значимого элемента рыночной структуры."],
-["Candlestick","Японская свеча, показывающая движение цены за выбранный период."],
-["Drawdown","Снижение капитала от предыдущего максимума до последующего минимума."],
-["EMA","Экспоненциальная скользящая средняя, сильнее учитывающая последние значения."],
-["FOMO","Страх упустить движение, который может заставить войти слишком поздно."],
-["Higher High","Новый максимум выше предыдущего максимума."],
-["Higher Low","Минимум выше предыдущего минимума."],
-["Lower High","Максимум ниже предыдущего максимума."],
-["Lower Low","Новый минимум ниже предыдущего минимума."],
-["Liquidity","Способность рынка исполнять сделки без значительного изменения цены."],
-["MACD","Индикатор, основанный на разнице экспоненциальных скользящих средних."],
-["Market Order","Заявка на исполнение по доступной текущей рыночной цене."],
-["Moving Average","Скользящая средняя, сглаживающая данные цены."],
-["OHLC","Open, High, Low, Close — открытие, максимум, минимум и закрытие свечи."],
-["Overtrading","Чрезмерное количество сделок относительно торгового плана."],
-["Pullback","Коррекционное движение против предыдущего импульса."],
-["Range","Диапазон, в котором цена движется между относительно определёнными границами."],
-["Retest","Повторное тестирование области после её пробоя."],
-["Risk/Reward","Соотношение потенциального риска к потенциальному результату сделки."],
-["RSI","Индикатор относительной силы движения цены."],
-["Scalping","Стиль торговли с большим количеством относительно коротких сделок."],
-["Setup","Набор условий, при которых торговый план допускает сделку."],
-["Spread","Разница между Bid и Ask."],
-["Stop Loss","Заранее определённый уровень, при достижении которого позиция закрывается с ограничением убытка."],
-["Support","Область, возле которой цена ранее находила повышенный интерес покупателей."],
-["Take Profit","Заранее определённая область фиксации результата сделки."],
-["Trend","Устойчивое направленное движение рынка."],
-["Volatility","Интенсивность и величина колебаний цены."],
-["Volume","Количество проторгованного объёма за определённый период, если данные доступны."],
-["Whipsaw","Резкое движение с быстрым возвратом, способное создавать ложные сигналы."],
-["Дивергенция","Расхождение направления цены и показаний индикатора."],
+const terms=[
+["Тренд","Направленное движение цены вверх или вниз."],
+["Флэт","Период, когда цена движется преимущественно в диапазоне."],
+["Поддержка","Зона, где цена исторически получала спрос."],
+["Сопротивление","Зона, где цена исторически встречала предложение."],
 ["Импульс","Быстрое направленное движение цены."],
 ["Коррекция","Временное движение против основного направления."],
-["Ложный пробой","Выход цены за область с последующим возвратом обратно."],
-["Поддержка","Ценовая область, где ранее появлялся спрос."],
-["Пробой","Выход цены за важную область с потенциальным изменением структуры."],
-["Сопротивление","Ценовая область, где ранее появлялось предложение."],
-["Таймфрейм","Период, который представляет одна свеча на графике."],
-["Флэт","Боковое движение без выраженного устойчивого направления."],
-["Чек-лист","Короткий список условий, которые нужно проверить перед решением."],
-["Экспирация","Заранее установленный момент окончания контракта в некоторых видах торговых инструментов."]
+["Ликвидность","Возможность совершать сделки без сильного влияния на цену."],
+["Спред","Разница между ценой покупки и продажи."],
+["Stop Loss","Уровень ограничения потенциального убытка."],
+["Take Profit","Уровень заранее запланированной фиксации прибыли."],
+["Risk/Reward","Соотношение потенциального риска и потенциальной прибыли."],
+["Win Rate","Процент прибыльных сделок."],
+["Backtest","Проверка стратегии на исторических данных."],
+["FOMO","Страх пропустить движение рынка."],
+["Тильт","Эмоциональное состояние, из-за которого трейдер нарушает план."],
+["Ретест","Возвращение цены к пробитому уровню."],
+["Пробой","Выход цены за пределы значимой зоны."],
+["Волатильность","Степень и скорость изменения цены."],
+["RSI","Индикатор относительной силы движения."],
+["MACD","Индикатор, основанный на разнице скользящих средних."]
 ];
 
+const questions=[
+ ["Что в первую очередь должен определить трейдер перед сделкой?",["Только размер прибыли","Сценарий и риск","Цвет свечи","Количество индикаторов"],1],
+ ["Что такое Stop Loss?",["Гарантия прибыли","Ограничение потенциального убытка","Комиссия","Тип графика"],1],
+ ["Что такое поддержка?",["Случайная свеча","Зона потенциального спроса","Индикатор","Таймфрейм"],1],
+ ["Что означает FOMO?",["Страх пропустить движение","Вид ордера","Тип свечи","Размер позиции"],0],
+ ["Зачем нужен торговый дневник?",["Чтобы увеличить количество сделок","Чтобы анализировать свои решения","Чтобы убрать стопы","Чтобы угадывать рынок"],1],
+ ["Что такое Backtest?",["Проверка стратегии на истории","Выход из сделки","Покупка актива","Расчёт комиссии"],0],
+ ["Что такое флэт?",["Сильный импульс","Движение в диапазоне","Только падение","Только рост"],1],
+ ["Что показывает Win Rate?",["Размер депозита","Процент прибыльных сделок","Комиссию","Размер стопа"],1],
+ ["Что правильнее сделать после серии убытков?",["Удвоить ставку","Игнорировать риск","Остановиться и провести анализ","Открыть больше сделок"],2],
+ ["Что важнее для системного трейдера?",["Одна удачная сделка","Соблюдение торгового плана","Угадывание каждой свечи","Максимальное количество сделок"],1]
+];
 
-/* =========================================================
+/* =========================
    STATE
-   ========================================================= */
+========================= */
 
-let state = JSON.parse(localStorage.getItem("ava_state_v2") || "null") || {
-    completed:[],
-    score:0,
-    testScore:null
+let state={
+ completed:JSON.parse(localStorage.getItem("ava_completed")||"[]"),
+ testScore:localStorage.getItem("ava_test")?Number(localStorage.getItem("ava_test")):null
 };
 
-let currentUser = null;
-let currentLesson = null;
-let currentModule = 0;
-
-let testIndex = 0;
-let testAnswers = [];
-let testFinished = false;
-
-
-/* =========================================================
-   TEST QUESTIONS
-   ========================================================= */
-
-const testQuestions = [
-
-{
-    q:"Что показывает тело японской свечи?",
-    a:["Только максимальную цену","Разницу между открытием и закрытием","Только объём","Количество сделок"],
-    c:1
-},
-
-{
-    q:"Что характерно для восходящей структуры?",
-    a:["Higher High и Higher Low","Только Lower Low","Отсутствие движения","Только равные максимумы"],
-    c:0
-},
-
-{
-    q:"Что такое флэт?",
-    a:["Всегда сильный рост","Боковой диапазон движения","Только падение","Ошибка брокера"],
-    c:1
-},
-
-{
-    q:"Что означает Spread?",
-    a:["Размер депозита","Разницу между Bid и Ask","Количество свечей","Размер стопа"],
-    c:1
-},
-
-{
-    q:"Что является основной задачей риск-менеджмента?",
-    a:["Гарантировать прибыль","Увеличить количество сделок","Контролировать возможные потери","Убрать все убытки"],
-    c:2
-},
-
-{
-    q:"Что такое FOMO?",
-    a:["Индикатор объёма","Страх упустить движение","Тип свечи","Таймфрейм"],
-    c:1
-},
-
-{
-    q:"Что показывает Higher Low?",
-    a:["Новый максимум","Минимум выше предыдущего минимума","Случайную свечу","Размер спреда"],
-    c:1
-},
-
-{
-    q:"Зачем нужен торговый план?",
-    a:["Чтобы принимать решения заранее по понятным правилам","Чтобы гарантировать прибыль","Чтобы не использовать график","Чтобы делать больше сделок"],
-    c:0
-},
-
-{
-    q:"Что такое ложный пробой?",
-    a:["Любая зелёная свеча","Выход за область с последующим возвратом","Рост объёма","Смена таймфрейма"],
-    c:1
-},
-
-{
-    q:"Почему один индикатор не гарантирует результат?",
-    a:["Индикаторы не существуют","Рынок содержит неопределённость и множество факторов","Индикаторы всегда ошибаются","Потому что свечи важнее"],
-    c:1
-},
-
-{
-    q:"Что такое Drawdown?",
-    a:["Максимальная прибыль","Просадка от максимума капитала","Размер позиции","Цена открытия"],
-    c:1
-},
-
-{
-    q:"Что такое Retest?",
-    a:["Повторное тестирование области после пробоя","Новый депозит","Тип брокера","Закрытие аккаунта"],
-    c:0
-},
-
-{
-    q:"Что правильнее сделать перед потенциальной сделкой?",
-    a:["Войти сразу","Проверить условия торгового плана и риск","Увеличить размер позиции","Сделать несколько случайных входов"],
-    c:1
-},
-
-{
-    q:"Что обычно означает большой верхний фитиль?",
-    a:["Цена не двигалась","Цена побывала выше и встретила отвержение","Гарантированное падение","Гарантированный рост"],
-    c:1
-},
-
-{
-    q:"Какой подход наиболее здоровый для обучения трейдингу?",
-    a:["Искать гарантированный сигнал","Понимать риск, тестировать идеи и вести журнал","Увеличивать риск после убытка","Открывать сделку на каждой свече"],
-    c:1
-}
-
-];
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
+let currentUser=null;
 
 function saveLocal(){
-
-    localStorage.setItem(
-        "ava_state_v2",
-        JSON.stringify(state)
-    );
-
+ localStorage.setItem("ava_completed",JSON.stringify(state.completed));
+ if(state.testScore!==null)localStorage.setItem("ava_test",state.testScore);
+ updateUI();
+ if(currentUser) saveCloud();
 }
 
-
-function showToast(message){
-
-    const toast=document.getElementById("toast");
-
-    toast.textContent=message;
-    toast.classList.add("show");
-
-    clearTimeout(window.toastTimer);
-
-    window.toastTimer=setTimeout(()=>{
-        toast.classList.remove("show");
-    },2500);
-
+function showToast(text){
+ const el=document.getElementById("toast");
+ el.textContent=text;
+ el.classList.add("show");
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>el.classList.remove("show"),3000);
 }
 
+function showView(view){
+ document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
+ const target=document.getElementById(view);
+ if(target)target.classList.add("active");
 
-function isCompleted(id){
+ document.querySelectorAll(".nav").forEach(x=>{
+   x.classList.toggle("active",x.dataset.view===view);
+ });
 
-    return state.completed.includes(id);
+ window.scrollTo({top:0,behavior:"smooth"});
 
+ if(view==="academy")renderLessons();
+ if(view==="dictionary")renderDictionary();
+ if(view==="test")renderTest();
+ if(view==="profile")updateProfile();
 }
 
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-window.showView=function(view,button=null){
-
-    document.querySelectorAll(".view").forEach(v=>{
-        v.classList.remove("active");
-    });
-
-    const target=document.getElementById(view);
-
-    if(target){
-        target.classList.add("active");
-    }
-
-    document.querySelectorAll(".nav-item").forEach(item=>{
-        item.classList.remove("active");
-    });
-
-    if(button){
-        button.classList.add("active");
-    }else{
-
-        const nav=document.querySelector(
-            `.nav-item[data-view="${view}"]`
-        );
-
-        if(nav) nav.classList.add("active");
-    }
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-    updateUI();
-
-};
-
-
-window.openModule=function(index){
-
-    currentModule=index;
-
-    const module=moduleData[index];
-
-    document.getElementById("moduleNumber").textContent=
-        `МОДУЛЬ ${index+1} / 10`;
-
-    document.getElementById("moduleTitle").textContent=
-        module.title;
-
-    renderModuleLessons(index);
-
-    showView("module");
-
-};
-
-
-window.openLesson=function(id){
-
-    const lesson=lessons.find(x=>x.id===id);
-
-    if(!lesson) return;
-
-    currentLesson=lesson;
-
-    document.getElementById("lessonModule").textContent=
-        `МОДУЛЬ ${lesson.module+1} • УРОК ${lesson.id}`;
-
-    document.getElementById("lessonTitleHeader").textContent=
-        lesson.title;
-
-    renderLesson(lesson);
-
-    showView("lesson");
-
-};
-
-
-document.getElementById("lessonBack").onclick=function(){
-
-    showView("module");
-
-};
-
-
-/* =========================================================
-   LESSON CONTENT
-   ========================================================= */
-
-function renderLesson(lesson){
-
-    const body=document.getElementById("lessonBody");
-
-    const topics=lessonTopics(lesson);
-
-    body.innerHTML=`
-
-        <h2>Что нужно понять</h2>
-
-        <p>
-            ${lesson.short}
-        </p>
-
-        <p>
-            Главная задача этого урока — не запомнить отдельный
-            термин или красивую формацию, а научиться связывать
-            происходящее на графике с поведением участников рынка.
-            Любой торговый сценарий должен рассматриваться в контексте,
-            а не изолированно.
-        </p>
-
-        <h2>Ключевые моменты</h2>
-
-        <ul>
-            ${topics.map(x=>`<li>${x}</li>`).join("")}
-        </ul>
-
-        <div class="tip">
-            <div class="tip-title">💡 ГЛАВНАЯ МЫСЛЬ</div>
-
-            <p style="margin:0">
-                ${lessonMainIdea(lesson)}
-            </p>
-        </div>
-
-        <h2>Как применять</h2>
-
-        <p>
-            Сначала посмотри на старший контекст, затем определи
-            структуру рынка и только после этого оцени конкретную
-            область цены. Не принимай решение только потому, что
-            одна свеча или один индикатор показали знакомую картинку.
-        </p>
-
-        <div class="practice">
-            <strong>🎯 ПРАКТИКА</strong>
-
-            <p style="margin:0">
-                ${practiceText(lesson)}
-            </p>
-        </div>
-
-        <h2>Типичная ошибка</h2>
-
-        <p>
-            Самая распространённая ошибка — воспринимать изучаемый
-            элемент как самостоятельный сигнал. В реальной работе
-            важны одновременно контекст, структура, уровень,
-            подтверждение и заранее определённый риск.
-        </p>
-
-        <h2>Итог</h2>
-
-        <p>
-            После этого урока ты должен уметь объяснить своими словами,
-            что происходит на графике, какие есть альтернативные
-            сценарии и какое событие отменит первоначальную идею.
-        </p>
-    `;
-
-    updateCompleteButton();
-
+function openAcademy(){
+ showView("academy");
 }
 
+/* =========================
+   MODULES
+========================= */
 
-function lessonTopics(lesson){
-
-    const m=lesson.module;
-
-    const common=[
-        "Сначала определяй контекст, а затем рассматривай конкретную точку на графике.",
-        "Сравнивай текущую ситуацию с предыдущим поведением цены.",
-        "Заранее определяй условия, при которых твой сценарий перестаёт быть актуальным.",
-        "Не путай вероятность сценария с гарантией результата."
-    ];
-
-    const specific=[
-
-        [
-            "Цена постоянно меняется под влиянием встречного спроса и предложения.",
-            "Ликвидность влияет на качество исполнения сделок.",
-            "Разные участники имеют разные цели и горизонты."
-        ],
-
-        [
-            "Свеча содержит информацию об открытии, максимуме, минимуме и закрытии.",
-            "Размер тела и теней нужно рассматривать вместе.",
-            "Форма свечи имеет смысл только в определённом контексте."
-        ],
-
-        [
-            "Структура состоит из последовательности максимумов и минимумов.",
-            "Импульс и коррекция являются разными фазами движения.",
-            "Пробой структуры не всегда означает полноценный разворот."
-        ],
-
-        [
-            "Диапазон имеет условные верхнюю и нижнюю границы.",
-            "Середина диапазона часто даёт менее понятный сценарий.",
-            "Выход из диапазона требует оценки подтверждения."
-        ],
-
-        [
-            "Зоны лучше рассматривать как области, а не как идеальные линии.",
-            "Предыдущие реакции помогают определить значимость области.",
-            "Одна зона может менять роль после подтверждённого пробоя."
-        ],
-
-        [
-            "Пробой нужно оценивать относительно важности области.",
-            "Закрытие свечи и дальнейшее поведение могут дать дополнительный контекст.",
-            "Ложные пробои часто связаны с быстрым возвратом в диапазон."
-        ],
-
-        [
-            "Старший период помогает увидеть общий контекст.",
-            "Младший период показывает более детальную структуру.",
-            "Несогласованность таймфреймов требует осторожности."
-        ],
-
-        [
-            "Индикатор обрабатывает уже существующие данные цены.",
-            "Разные индикаторы решают разные задачи.",
-            "Несколько одинаковых по смыслу индикаторов не обязательно улучшают анализ."
-        ],
-
-        [
-            "Размер риска нужно определять до сделки.",
-            "Серия убытков возможна даже у рабочей системы.",
-            "Главная цель риск-менеджмента — сохранить возможность продолжать работу."
-        ],
-
-        [
-            "Эмоции влияют на восприятие вероятностей.",
-            "Торговый план превращает решения в последовательный процесс.",
-            "Журнал помогает находить повторяющиеся ошибки."
-        ]
-
-    ];
-
-    return [
-        ...(specific[m] || []),
-        ...common
-    ];
-
+function renderModules(){
+ const box=document.getElementById("moduleList");
+ box.innerHTML=modules.map((m,i)=>{
+   const count=m.to-m.from+1;
+   const done=state.completed.filter(x=>x>=m.from&&x<=m.to).length;
+   const pct=Math.round(done/count*100);
+   return `
+   <button class="module" onclick="openModule(${m.from})">
+     <div class="module-icon">
+       <span style="font-size:24px">${m.icon}</span>
+     </div>
+     <div class="module-info">
+       <b>${i+1}. ${m.name}</b>
+       <span>${m.desc}</span>
+       <div class="progress"><i style="width:${pct}%"></i></div>
+       <span>${done}/${count} уроков · ${pct}%</span>
+     </div>
+     <div class="chev">›</div>
+   </button>`;
+ }).join("");
 }
 
-
-function lessonMainIdea(lesson){
-
-    const ideas=[
-        "Рынок не обязан делать то, что мы ожидаем. Поэтому хороший анализ всегда содержит сценарий и условия его отмены.",
-        "Отдельная свеча редко является достаточным основанием для решения. Значение имеет место, структура и реакция цены.",
-        "Структура помогает перейти от попытки угадать направление к наблюдению за фактическим поведением цены.",
-        "Во флэте особенно важно понимать границы диапазона и не принимать каждое движение внутри него за новый тренд.",
-        "Зона имеет значение не сама по себе, а из-за поведения участников вокруг неё.",
-        "Хороший пробой — это не просто выход цены за линию, а изменение поведения рынка относительно важной области.",
-        "Таймфреймы не противоречат друг другу — они показывают разные масштабы одного и того же движения.",
-        "Индикаторы полезны как дополнительные инструменты анализа, но не заменяют понимание цены.",
-        "Даже хороший сценарий может закончиться убытком. Поэтому риск должен быть определён до входа.",
-        "Профессиональный подход — это не поиск идеального входа, а повторяемый процесс принятия решений."
-    ];
-
-    return ideas[lesson.module];
-
+function openModule(from){
+ showView("academy");
+ setTimeout(()=>{
+   const el=document.querySelector(`[data-lesson="${from}"]`);
+   if(el)el.scrollIntoView({behavior:"smooth",block:"center"});
+ },100);
 }
 
+/* =========================
+   LESSONS
+========================= */
 
-function practiceText(lesson){
+function renderLessons(){
+ const query=(document.getElementById("lessonSearch")?.value||"").toLowerCase().trim();
+ const box=document.getElementById("lessonList");
 
-    return `Открой любой исторический график и найди минимум три примера,
-    связанные с темой «${lesson.title}». Для каждого примера запиши:
-    что произошло, какой был контекст, где находилась важная область,
-    какой сценарий ты бы рассматривал и что подтвердило или отменило бы его.`;
+ const filtered=lessons.filter(l=>
+   !query ||
+   l.title.toLowerCase().includes(query) ||
+   l.module.toLowerCase().includes(query) ||
+   String(l.id).includes(query)
+ );
 
+ if(!filtered.length){
+   box.innerHTML='<div class="empty">Ничего не найдено</div>';
+   return;
+ }
+
+ box.innerHTML=filtered.map(l=>{
+   const done=state.completed.includes(l.id);
+   return `
+   <button class="lesson ${done?"done":""}" data-lesson="${l.id}" onclick="openLesson(${l.id})">
+     <div class="lesson-num">${done?"✓":String(l.id).padStart(2,"0")}</div>
+     <div class="lesson-info">
+       <b>${l.title}</b>
+       <span>${l.module}</span>
+     </div>
+     <div class="lesson-arrow">›</div>
+   </button>`;
+ }).join("");
 }
 
+function openLesson(id){
+ const l=lessons.find(x=>x.id===id);
+ if(!l)return;
 
-/* =========================================================
-   COMPLETE LESSON
-   ========================================================= */
+ showView("lessonPage");
 
-function updateCompleteButton(){
+ document.getElementById("lessonContent").innerHTML=`
+   <button class="back" onclick="showView('academy')">‹ Назад к урокам</button>
+   <div class="lesson-card">
+     <div class="big-number">Урок ${String(l.id).padStart(2,"0")} · ${l.module}</div>
+     <h2>${l.title}</h2>
 
-    const btn=document.getElementById("completeLessonBtn");
+     <p>${l.text}</p>
 
-    if(!currentLesson) return;
+     <h3>Что нужно понять</h3>
+     <ul>${l.points.map(x=>`<li>${x}</li>`).join("")}</ul>
 
-    if(isCompleted(currentLesson.id)){
+     <h3>Практика</h3>
+     <p>${l.practice}</p>
 
-        btn.classList.add("completed");
-        btn.textContent="✓ Урок пройден";
+     <div class="tip">
+       <b>💡 AVA TIP</b>
+       <p>${l.tip}</p>
+     </div>
 
-    }else{
-
-        btn.classList.remove("completed");
-        btn.textContent="✓ Отметить урок пройденным";
-
-    }
-
+     <button class="complete ${state.completed.includes(id)?"done":""}" onclick="completeLesson(${id})">
+       ${state.completed.includes(id)?"✓ Урок пройден":"Отметить урок как пройденный"}
+     </button>
+   </div>`;
 }
 
-
-document.getElementById("completeLessonBtn").onclick=function(){
-
-    if(!currentLesson) return;
-
-    if(!isCompleted(currentLesson.id)){
-
-        state.completed.push(currentLesson.id);
-
-        state.score += 10;
-
-        saveLocal();
-
-        syncProgress();
-
-        showToast("Урок отмечен как пройденный ✓");
-
-    }else{
-
-        showToast("Этот урок уже пройден");
-
-    }
-
-    updateCompleteButton();
-    updateUI();
-
-};
-
-
-/* =========================================================
-   MODULE RENDER
-   ========================================================= */
-
-function moduleProgress(index){
-
-    const ids=lessons
-        .filter(x=>x.module===index)
-        .map(x=>x.id);
-
-    const done=ids.filter(id=>isCompleted(id)).length;
-
-    return Math.round(done/ids.length*100);
-
+function completeLesson(id){
+ if(!state.completed.includes(id)){
+   state.completed.push(id);
+   state.completed.sort((a,b)=>a-b);
+   saveLocal();
+   showToast("Урок добавлен в прогресс ✓");
+ }else{
+   state.completed=state.completed.filter(x=>x!==id);
+   saveLocal();
+ }
+ openLesson(id);
 }
 
-
-function renderModuleCards(containerId){
-
-    const container=document.getElementById(containerId);
-
-    container.innerHTML="";
-
-    moduleData.forEach((module,index)=>{
-
-        const percent=moduleProgress(index);
-
-        const card=document.createElement("div");
-
-        card.className="module-card";
-
-        card.style.setProperty("--module-color",module.color);
-
-        card.onclick=()=>openModule(index);
-
-        card.innerHTML=`
-
-            <div class="module-head">
-
-                <div class="module-icon"
-                     style="color:${module.color}">
-                    ${module.icon}
-                </div>
-
-                <div class="module-info">
-
-                    <h3>
-                        ${index+1}. ${module.title}
-                    </h3>
-
-                    <p>
-                        ${module.description}
-                    </p>
-
-                </div>
-
-                <div class="module-percent">
-                    ${percent}%
-                </div>
-
-            </div>
-
-            <div class="module-progress">
-                <div style="width:${percent}%"></div>
-            </div>
-
-        `;
-
-        container.appendChild(card);
-
-    });
-
+function renderLessonsProgress(){
+ const pct=Math.round(state.completed.length/100*100);
+ document.getElementById("academyProgress").textContent=pct+"%";
 }
 
-
-function renderModuleLessons(index){
-
-    const container=document.getElementById("moduleLessons");
-
-    const moduleLessons=lessons.filter(
-        x=>x.module===index
-    );
-
-    container.innerHTML=moduleLessons.map(lesson=>`
-
-        <div
-            class="lesson-card ${isCompleted(lesson.id)?"completed":""}"
-            onclick="openLesson(${lesson.id})"
-        >
-
-            <div class="lesson-row">
-
-                <div class="lesson-number">
-                    ${lesson.id}
-                </div>
-
-                <div class="lesson-info">
-
-                    <h3>${lesson.title}</h3>
-
-                    <p>${lesson.short}</p>
-
-                </div>
-
-                <div class="lesson-status">
-                    ${isCompleted(lesson.id)?"✓":"›"}
-                </div>
-
-            </div>
-
-        </div>
-
-    `).join("");
-
-}
-
-
-/* =========================================================
-   UI
-   ========================================================= */
-
-function updateUI(){
-
-    const done=state.completed.length;
-
-    const percent=Math.round(done/100*100);
-
-    document.getElementById("statLessons").textContent=done;
-    document.getElementById("statPercent").textContent=percent+"%";
-    document.getElementById("statScore").textContent=state.score;
-
-    document.getElementById("progressText").textContent=
-        `${done} / 100`;
-
-    document.getElementById("progressFill").style.width=
-        percent+"%";
-
-    document.getElementById("academyCount").textContent=
-        `${done} / 100`;
-
-    document.getElementById("academyPercent").textContent=
-        percent+"%";
-
-    document.getElementById("academyFill").style.width=
-        percent+"%";
-
-    document.getElementById("profileLessons").textContent=done;
-    document.getElementById("profileProgress").textContent=percent+"%";
-    document.getElementById("profileScore").textContent=state.score;
-
-    renderModuleCards("homeModules");
-    renderModuleCards("academyModules");
-
-    if(document.getElementById("module").classList.contains("active")){
-        renderModuleLessons(currentModule);
-    }
-
-    if(currentLesson){
-        updateCompleteButton();
-    }
-
-}
-
-
-window.continueLearning=function(){
-
-    const next=lessons.find(
-        lesson=>!isCompleted(lesson.id)
-    );
-
-    if(next){
-
-        openLesson(next.id);
-
-    }else{
-
-        showToast("Все 100 уроков пройдены 🎉");
-
-        showView("test");
-
-    }
-
-};
-
-
-/* =========================================================
-   DICTIONARY
-   ========================================================= */
-
-window.renderDictionary=function(){
-
-    const search=(
-        document.getElementById("dictionarySearch").value || ""
-    ).toLowerCase().trim();
-
-    const list=dictionary.filter(item=>
-        item[0].toLowerCase().includes(search) ||
-        item[1].toLowerCase().includes(search)
-    );
-
-    document.getElementById("dictionaryCount").textContent=
-        `${list.length} терминов`;
-
-    const container=document.getElementById("dictionaryList");
-
-    if(!list.length){
-
-        container.innerHTML=`
-            <div class="empty">
-                <div class="empty-icon">🔎</div>
-                Ничего не найдено
-            </div>
-        `;
-
-        return;
-    }
-
-    container.innerHTML=list.map(item=>`
-
-        <div class="dictionary-item">
-
-            <h3>${item[0]}</h3>
-
-            <p>${item[1]}</p>
-
-        </div>
-
-    `).join("");
-
-};
-
-
-/* =========================================================
+/* =========================
    TEST
-   ========================================================= */
+========================= */
 
 function renderTest(){
+ const box=document.getElementById("testArea");
 
-    const container=document.getElementById("testContainer");
-
-    if(testFinished){
-
-        const correct=testAnswers.filter(
-            (answer,index)=>
-                answer===testQuestions[index].c
-        ).length;
-
-        const percent=Math.round(
-            correct/testQuestions.length*100
-        );
-
-        container.innerHTML=`
-
-            <div class="test-result">
-
-                <div class="result-icon">
-                    ${percent>=70?"🏆":"📚"}
-                </div>
-
-                <h2>
-                    ${percent>=70?"Отличный результат!":"Есть что повторить"}
-                </h2>
-
-                <div class="result-score">
-                    ${correct}/${testQuestions.length}
-                </div>
-
-                <p style="color:#aaa1b4;line-height:1.6;font-size:13px">
-                    Ты ответил правильно на ${correct}
-                    из ${testQuestions.length} вопросов.
-                    Результат: ${percent}%.
-                </p>
-
-                <button
-                    class="complete-btn"
-                    onclick="restartTest()"
-                >
-                    Пройти тест заново
-                </button>
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-    const question=testQuestions[testIndex];
-
-    const selected=testAnswers[testIndex];
-
-    container.innerHTML=`
-
-        <div class="question-number">
-            ВОПРОС ${testIndex+1} / ${testQuestions.length}
-        </div>
-
-        <div class="question">
-            ${question.q}
-        </div>
-
-        <div class="answers">
-
-            ${question.a.map((answer,index)=>`
-
-                <button
-                    class="answer ${selected===index?"selected":""}"
-                    onclick="selectAnswer(${index})"
-                >
-                    ${String.fromCharCode(65+index)}. ${answer}
-                </button>
-
-            `).join("")}
-
-        </div>
-
-        <div class="test-controls">
-
-            <button
-                class="btn btn-secondary"
-                onclick="previousQuestion()"
-                ${testIndex===0?"disabled":""}
-            >
-                ← Назад
-            </button>
-
-            <button
-                class="btn btn-primary"
-                onclick="nextQuestion()"
-            >
-                ${testIndex===testQuestions.length-1?"Завершить":"Далее →"}
-            </button>
-
-        </div>
-
-    `;
-
+ box.innerHTML=questions.map((q,i)=>`
+   <div class="test-card">
+     <div class="question">${i+1}. ${q[0]}</div>
+     <div class="answers">
+       ${q[1].map((a,j)=>`
+         <button class="answer" id="q${i}_${j}" onclick="answerQuestion(${i},${j})">${a}</button>
+       `).join("")}
+     </div>
+   </div>
+ `).join("")+
+ `<button class="btn btn-primary" style="width:100%" onclick="finishTest()">Завершить тест</button>`;
 }
 
+let testAnswers={};
 
-window.selectAnswer=function(index){
-
-    testAnswers[testIndex]=index;
-
-    renderTest();
-
-};
-
-
-window.previousQuestion=function(){
-
-    if(testIndex>0){
-
-        testIndex--;
-
-        renderTest();
-
-    }
-
-};
-
-
-window.nextQuestion=function(){
-
-    if(testAnswers[testIndex]===undefined){
-
-        showToast("Сначала выбери ответ");
-
-        return;
-
-    }
-
-    if(testIndex<testQuestions.length-1){
-
-        testIndex++;
-
-        renderTest();
-
-    }else{
-
-        finishTest();
-
-    }
-
-};
-
+function answerQuestion(q,a){
+ testAnswers[q]=a;
+ document.querySelectorAll(`[id^="q${q}_"]`).forEach(x=>x.style.borderColor="#292934");
+ const el=document.getElementById(`q${q}_${a}`);
+ if(el)el.style.borderColor="#8b5cf6";
+}
 
 function finishTest(){
+ let score=0;
+ questions.forEach((q,i)=>{
+   if(testAnswers[i]===q[2])score++;
+ });
+ state.testScore=score;
+ saveLocal();
 
-    const correct=testAnswers.filter(
-        (answer,index)=>
-            answer===testQuestions[index].c
-    ).length;
+ document.querySelectorAll(".answer").forEach(x=>x.disabled=true);
 
-    const score=correct*10;
+ showToast(`Результат: ${score}/${questions.length}`);
 
-    state.testScore=score;
-    state.score += score;
-
-    saveLocal();
-    syncProgress();
-
-    testFinished=true;
-
-    renderTest();
-    updateUI();
-
+ setTimeout(()=>{
+   const box=document.getElementById("testArea");
+   box.insertAdjacentHTML("afterbegin",`
+     <div class="hero" style="margin-bottom:12px">
+       <div class="eyebrow">Результат</div>
+       <h1>${score}/${questions.length}</h1>
+       <p>${score>=8?"Отличный результат. Можно двигаться дальше.":score>=5?"Неплохо. Повтори слабые темы и попробуй ещё раз.":"Лучше ещё раз пройти базовые уроки."}</p>
+     </div>
+   `);
+ },100);
 }
 
-
-window.restartTest=function(){
-
-    testIndex=0;
-    testAnswers=[];
-    testFinished=false;
-
-    renderTest();
-
-};
-
-
-renderTest();
-
-
-/* =========================================================
-   FIREBASE AUTH
-   ========================================================= */
-
-window.loginWithGoogle=async function(){
-
-    try{
-
-        showToast("Открываем вход Google...");
-
-        const result=await signInWithPopup(
-            auth,
-            provider
-        );
-
-        currentUser=result.user;
-
-        await loadCloudProgress(currentUser);
-
-        showToast(
-            `Добро пожаловать, ${currentUser.displayName || "трейдер"}!`
-        );
-
-        updateProfile();
-
-        showView("profile");
-
-    }catch(error){
-
-        console.error(error);
-
-        if(error.code==="auth/popup-closed-by-user"){
-
-            showToast("Окно входа закрыто");
-
-        }else if(error.code==="auth/unauthorized-domain"){
-
-            showToast("Добавь этот домен в Authorized domains Firebase");
-
-        }else if(error.code==="auth/popup-blocked"){
-
-            showToast("Браузер заблокировал окно Google");
-
-        }else{
-
-            showToast("Ошибка входа Google");
-
-        }
-
-    }
-
-};
-
-
-window.logout=async function(){
-
-    try{
-
-        await signOut(auth);
-
-        currentUser=null;
-
-        showToast("Ты вышел из аккаунта");
-
-        updateProfile();
-
-        showView("home");
-
-    }catch(error){
-
-        console.error(error);
-
-        showToast("Не удалось выйти");
-
-    }
-
-};
-
-
-/* =========================================================
-   CLOUD PROGRESS
-   ========================================================= */
-
-async function loadCloudProgress(user){
-
-    try{
-
-        const ref=doc(
-            db,
-            "users",
-            user.uid
-        );
-
-        const snapshot=await getDoc(ref);
-
-        if(snapshot.exists()){
-
-            const cloud=snapshot.data();
-
-            if(Array.isArray(cloud.completed)){
-                state.completed=cloud.completed;
-            }
-
-            if(typeof cloud.score==="number"){
-                state.score=cloud.score;
-            }
-
-            if(
-                cloud.testScore===null ||
-                typeof cloud.testScore==="number"
-            ){
-                state.testScore=cloud.testScore;
-            }
-
-            saveLocal();
-
-            updateUI();
-
-        }else{
-
-            await saveCloudProgress();
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "Ошибка загрузки Firestore:",
-            error
-        );
-
-        /*
-         * Если Firestore ещё не настроен,
-         * приложение продолжает работать через LocalStorage.
-         */
-
-    }
-
+/* =========================
+   DICTIONARY
+========================= */
+
+function renderDictionary(){
+ const q=(document.getElementById("dictSearch")?.value||"").toLowerCase().trim();
+ const data=terms.filter(x=>!q||x[0].toLowerCase().includes(q)||x[1].toLowerCase().includes(q));
+ document.getElementById("dictionaryList").innerHTML=data.map(x=>`
+   <div class="term">
+     <b>${x[0]}</b>
+     <span>${x[1]}</span>
+   </div>
+ `).join("")||'<div class="empty">Термин не найден</div>';
 }
 
+/* =========================
+   UI
+========================= */
 
-async function saveCloudProgress(){
+function updateUI(){
+ const done=state.completed.length;
+ const pct=Math.round(done/100*100);
 
-    if(!currentUser) return;
+ document.getElementById("homeCompleted").textContent=done;
+ document.getElementById("homePercent").textContent=pct+"%";
+ document.getElementById("profileCompleted").textContent=done;
+ document.getElementById("profilePercent").textContent=pct;
+ document.getElementById("profileTest").textContent=state.testScore===null?"—":state.testScore+"/10";
 
-    try{
-
-        const ref=doc(
-            db,
-            "users",
-            currentUser.uid
-        );
-
-        await setDoc(
-            ref,
-            {
-                completed:state.completed,
-                score:state.score,
-                testScore:state.testScore,
-                updatedAt:new Date().toISOString(),
-                displayName:currentUser.displayName || "",
-                email:currentUser.email || ""
-            },
-            {
-                merge:true
-            }
-        );
-
-    }catch(error){
-
-        console.error(
-            "Ошибка сохранения Firestore:",
-            error
-        );
-
-    }
-
+ renderModules();
+ renderLessonsProgress();
 }
-
-
-async function syncProgress(){
-
-    saveLocal();
-
-    if(currentUser){
-
-        await saveCloudProgress();
-
-    }
-
-}
-
-
-/* =========================================================
-   PROFILE
-   ========================================================= */
 
 function updateProfile(){
+ const avatar=document.getElementById("avatar");
+ const name=document.getElementById("profileName");
+ const email=document.getElementById("profileEmail");
+ const login=document.getElementById("loginButton");
+ const actions=document.getElementById("profileActions");
 
-    const avatar=document.getElementById("profileAvatar");
-    const mini=document.getElementById("miniAvatar");
-    const name=document.getElementById("profileName");
-    const email=document.getElementById("profileEmail");
-    const login=document.getElementById("loginButton");
-    const stats=document.getElementById("profileStats");
+ if(currentUser){
+   name.textContent=currentUser.displayName||"AVA Trader";
+   email.textContent=currentUser.email||"Google account";
+   login.style.display="none";
+   actions.style.display="grid";
 
-    if(currentUser){
-
-        name.textContent=
-            currentUser.displayName || "Пользователь";
-
-        email.textContent=
-            currentUser.email || "";
-
-        if(currentUser.photoURL){
-
-            avatar.innerHTML=
-                `<img src="${currentUser.photoURL}" alt="">`;
-
-            mini.innerHTML=
-                `<img src="${currentUser.photoURL}" alt="">`;
-
-        }else{
-
-            const letter=
-                (currentUser.displayName || "U")
-                .charAt(0)
-                .toUpperCase();
-
-            avatar.textContent=letter;
-            mini.textContent=letter;
-
-        }
-
-        login.style.display="none";
-        stats.style.display="block";
-
-    }else{
-
-        avatar.textContent="AVA";
-        mini.textContent="◉";
-
-        name.textContent="Гость";
-
-        email.textContent=
-            "Войди через Google, чтобы сохранить прогресс";
-
-        login.style.display="flex";
-        stats.style.display="none";
-
-    }
-
+   if(currentUser.photoURL){
+     avatar.innerHTML=`<img src="${currentUser.photoURL}" alt="Avatar" referrerpolicy="no-referrer">`;
+   }else{
+     avatar.textContent=(currentUser.displayName||"A").charAt(0).toUpperCase();
+   }
+ }else{
+   name.textContent="Гость";
+   email.textContent="Войди через Google, чтобы сохранить прогресс";
+   avatar.textContent="AVA";
+   login.style.display="flex";
+   actions.style.display="none";
+ }
 }
 
+/* =========================
+   INITIAL
+========================= */
 
-/* =========================================================
-   RESET
-   ========================================================= */
-
-window.resetProgress=function(){
-
-    const ok=confirm(
-        "Точно сбросить весь прогресс обучения?"
-    );
-
-    if(!ok) return;
-
-    state={
-        completed:[],
-        score:0,
-        testScore:null
-    };
-
-    saveLocal();
-
-    syncProgress();
-
-    showToast("Прогресс сброшен");
-
-    updateUI();
-
-};
-
-
-/* =========================================================
-   AUTH STATE
-   ========================================================= */
-
-onAuthStateChanged(auth,async(user)=>{
-
-    currentUser=user;
-
-    updateProfile();
-
-    if(user){
-
-        await loadCloudProgress(user);
-
-    }
-
-    updateUI();
-
-});
-
-
-/* =========================================================
-   INITIALIZE
-   ========================================================= */
-
-renderModuleCards("homeModules");
-renderModuleCards("academyModules");
+renderModules();
+renderLessons();
 renderDictionary();
 renderTest();
-updateProfile();
 updateUI();
-
-
-/*
-=============================================================
-AVA TRADING ACADEMY
-=============================================================
-
-100 УРОКОВ
-10 МОДУЛЕЙ
-GOOGLE AUTH
-FIRESTORE PROGRESS
-RESPONSIVE MOBILE UI
-COLOR SVG NAVIGATION
-TEST
-DICTIONARY
-
-=============================================================
-*/
-
 </script>
 
+<!-- FIREBASE -->
+<script type="module">
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+import {
+ getAuth,
+ GoogleAuthProvider,
+ signInWithPopup,
+ signInWithRedirect,
+ getRedirectResult,
+ signOut,
+ onAuthStateChanged,
+ browserLocalPersistence,
+ setPersistence
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+import {
+ getFirestore,
+ doc,
+ getDoc,
+ setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+const firebaseConfig={
+ apiKey:"AIzaSyCzOIrNkrotTmop5c3oF0rU9ilk9bpP4F7Y5NA",
+ authDomain:"ava-akademy.firebaseapp.com",
+ projectId:"ava-akademy",
+ storageBucket:"ava-akademy.firebasestorage.app",
+ messagingSenderId:"556423094388",
+ appId:"1:556423094388:web:f96bedf87aea5c39d1f121",
+ measurementId:"G-1Z4LWBZG31"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const provider=new GoogleAuthProvider();
+
+provider.setCustomParameters({
+ prompt:"select_account"
+});
+
+try{
+ await setPersistence(auth,browserLocalPersistence);
+}catch(e){
+ console.warn("Persistence:",e);
+}
+
+window.loginWithGoogle=async function(){
+ try{
+   showToast("Открываем Google...");
+
+   /*
+    * Сначала используем popup.
+    * Это специально сделано так, чтобы не зависеть
+    * от third-party storage redirect-механизма.
+    */
+   const result=await signInWithPopup(auth,provider);
+
+   if(result?.user){
+     await handleUser(result.user);
+   }
+
+ }catch(error){
+
+   console.error("Google Auth:",error);
+
+   /*
+    * Если popup заблокирован браузером,
+    * используем redirect как запасной вариант.
+    */
+   if(
+     error.code==="auth/popup-blocked" ||
+     error.code==="auth/popup-cancelled" ||
+     error.code==="auth/cancelled-popup-request"
+   ){
+     try{
+       sessionStorage.setItem("ava_login_redirect","1");
+       await signInWithRedirect(auth,provider);
+       return;
+     }catch(redirectError){
+       console.error("Redirect:",redirectError);
+       showAuthError(redirectError);
+     }
+   }else{
+     showAuthError(error);
+   }
+ }
+};
+
+async function handleUser(user){
+ window.currentUser=user;
+
+ document.getElementById("headerStatus").textContent=
+   user.displayName ? user.displayName : "GOOGLE ACCOUNT";
+
+ await loadCloud(user);
+
+ updateProfile();
+ updateUI();
+
+ showToast("Добро пожаловать в AVA Academy ✓");
+}
+
+async function loadCloud(user){
+ try{
+   const ref=doc(db,"users",user.uid);
+   const snap=await getDoc(ref);
+
+   if(snap.exists()){
+     const data=snap.data();
+
+     if(Array.isArray(data.completed)){
+       state.completed=data.completed;
+       localStorage.setItem(
+         "ava_completed",
+         JSON.stringify(state.completed)
+       );
+     }
+
+     if(typeof data.testScore==="number"){
+       state.testScore=data.testScore;
+       localStorage.setItem("ava_test",String(state.testScore));
+     }
+
+     updateUI();
+   }else{
+     await saveCloud(user);
+   }
+
+ }catch(e){
+   console.error("Cloud load:",e);
+ }
+}
+
+window.saveCloud=async function(){
+ if(!window.currentUser)return;
+
+ try{
+   await setDoc(
+     doc(db,"users",window.currentUser.uid),
+     {
+       completed:state.completed,
+       testScore:state.testScore,
+       displayName:window.currentUser.displayName||"",
+       email:window.currentUser.email||"",
+       photoURL:window.currentUser.photoURL||"",
+       updatedAt:new Date().toISOString()
+     },
+     {merge:true}
+   );
+ }catch(e){
+   console.error("Cloud save:",e);
+ }
+};
+
+async function saveCloud(user){
+ if(!user)return;
+
+ try{
+   await setDoc(
+     doc(db,"users",user.uid),
+     {
+       completed:state.completed,
+       testScore:state.testScore,
+       displayName:user.displayName||"",
+       email:user.email||"",
+       photoURL:user.photoURL||"",
+       updatedAt:new Date().toISOString()
+     },
+     {merge:true}
+   );
+ }catch(e){
+   console.error(e);
+ }
+}
+
+window.logout=async function(){
+ try{
+   await signOut(auth);
+
+   window.currentUser=null;
+
+   document.getElementById("headerStatus").textContent=
+     "TRADING EDUCATION";
+
+   updateProfile();
+   showToast("Ты вышел из аккаунта");
+
+ }catch(e){
+   console.error(e);
+   showToast("Не удалось выйти из аккаунта");
+ }
+};
+
+function showAuthError(error){
+ let message="Ошибка входа через Google.";
+
+ switch(error?.code){
+   case "auth/unauthorized-domain":
+     message="Домен сайта не добавлен в Firebase Authorized domains.";
+     break;
+
+   case "auth/popup-blocked":
+     message="Браузер заблокировал окно Google.";
+     break;
+
+   case "auth/popup-closed-by-user":
+     message="Окно Google было закрыто.";
+     break;
+
+   case "auth/network-request-failed":
+     message="Проблема с интернет-соединением.";
+     break;
+
+   case "auth/operation-not-allowed":
+     message="Google-вход не включён в Firebase.";
+     break;
+
+   case "auth/invalid-api-key":
+     message="Ошибка Firebase API key.";
+     break;
+
+   case "auth/web-storage-unsupported":
+     message="Браузер заблокировал хранилище.";
+     break;
+ }
+
+ showToast(message);
+}
+
+onAuthStateChanged(auth,async user=>{
+ if(user){
+   await handleUser(user);
+ }else{
+   window.currentUser=null;
+   updateProfile();
+ }
+});
+
+/*
+ * Если вход пошёл через redirect,
+ * Firebase вернёт пользователя сюда.
+ */
+try{
+ const result=await getRedirectResult(auth);
+
+ if(result?.user){
+   await handleUser(result.user);
+ }
+}catch(error){
+ console.error("Redirect result:",error);
+ showAuthError(error);
+}
+
+</script>
 </body>
 </html>
