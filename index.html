@@ -1,583 +1,910 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>AVA TEAM — Академия трейдинга</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#08050f">
+<title>AVA — Trading Academy</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root{
-  --bg:#08070d;
-  --card:#12101b;
-  --card2:#181426;
-  --line:#29223b;
+  --bg:#08050f;
+  --bg2:#0e0919;
+  --card:rgba(255,255,255,.055);
+  --card2:rgba(255,255,255,.085);
+  --border:rgba(255,255,255,.11);
   --purple:#8b5cf6;
   --purple2:#a855f7;
-  --pink:#ec4899;
-  --cyan:#22d3ee;
-  --green:#22c55e;
-  --red:#ef4444;
-  --text:#f8f7ff;
-  --muted:#9b96ad;
-  --gold:#fbbf24;
+  --pink:#d946ef;
+  --text:#fff;
+  --muted:#aaa4b8;
+  --green:#35d69a;
+  --red:#ff647c;
+  --gold:#f6c85f;
 }
 
 *{
   box-sizing:border-box;
-}
-
-html,body{
   margin:0;
-  min-height:100%;
-  background:
-    radial-gradient(circle at 20% 0%,#241044 0,#08070d 38%),
-    #08070d;
-  color:var(--text);
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-}
-
-body{
-  min-height:100vh;
-}
-
-button,
-select{
-  font:inherit;
-}
-
-button{
+  padding:0;
   -webkit-tap-highlight-color:transparent;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 20% 0%,rgba(139,92,246,.20),transparent 30%),
+    radial-gradient(circle at 90% 20%,rgba(217,70,239,.13),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+button,input{
+  font-family:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* BACKGROUND */
+
+.bg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:-2;
+}
+
+.grid{
+  position:absolute;
+  inset:0;
+  opacity:.18;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:linear-gradient(to bottom,black,transparent 90%);
+}
+
+.glow{
+  position:absolute;
+  width:450px;
+  height:450px;
+  border-radius:50%;
+  filter:blur(100px);
+  opacity:.18;
+}
+
+.g1{
+  background:#7c3aed;
+  top:-180px;
+  left:-150px;
+}
+
+.g2{
+  background:#c026d3;
+  right:-200px;
+  top:25%;
+}
+
+.candles{
+  position:absolute;
+  inset:0;
+  opacity:.10;
+}
+
+.candle{
+  position:absolute;
+  width:8px;
+  border-radius:3px;
+  animation:float 7s ease-in-out infinite;
+}
+
+.candle:before{
+  content:"";
+  position:absolute;
+  left:3px;
+  width:2px;
+  height:140%;
+  top:-20%;
+  background:currentColor;
+}
+
+.up{
+  background:#35d69a;
+  color:#35d69a;
+}
+
+.down{
+  background:#ff647c;
+  color:#ff647c;
+}
+
+.c1{left:8%;top:18%;height:45px}
+.c2{left:16%;top:55%;height:70px;animation-delay:1s}
+.c3{left:29%;top:27%;height:60px;animation-delay:2s}
+.c4{left:72%;top:18%;height:75px;animation-delay:1.4s}
+.c5{left:81%;top:50%;height:42px;animation-delay:2.5s}
+.c6{left:91%;top:30%;height:65px;animation-delay:3s}
+.c7{left:62%;top:70%;height:55px;animation-delay:1.7s}
+.c8{left:38%;top:75%;height:40px;animation-delay:2.2s}
+
+@keyframes float{
+  50%{transform:translateY(-15px)}
+}
+
+/* APP */
+
 .app{
-  max-width:720px;
+  width:100%;
+  max-width:1200px;
   margin:auto;
-  padding-bottom:95px;
+  padding:18px 18px 100px;
 }
 
 .top{
-  padding:22px 18px 12px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  position:sticky;
-  top:0;
-  z-index:5;
-  background:rgba(8,7,13,.82);
-  backdrop-filter:blur(18px);
-}
-
-.brand{
-  display:flex;
-  gap:10px;
   align-items:center;
+  margin-bottom:20px;
 }
 
 .logo{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-weight:800;
+  letter-spacing:-.5px;
+}
+
+.logoMark{
   width:42px;
   height:42px;
   border-radius:14px;
-  background:linear-gradient(
-    135deg,
-    var(--purple),
-    var(--pink)
-  );
   display:grid;
   place-items:center;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  box-shadow:0 10px 35px rgba(139,92,246,.35);
+}
+
+.logoMark span{
+  font-size:21px;
   font-weight:900;
-  box-shadow:0 10px 35px #8b5cf655;
 }
 
-.brand b{
-  font-size:17px;
-}
-
-.brand small{
+.logo small{
   display:block;
   color:var(--muted);
-  font-size:11px;
+  font-size:9px;
+  letter-spacing:2px;
   margin-top:2px;
 }
 
-.avatar{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:#211a31;
-  border:1px solid var(--line);
-  display:grid;
-  place-items:center;
+.profileBtn{
+  width:44px;
+  height:44px;
+  border-radius:15px;
+  background:var(--card);
+  border:1px solid var(--border);
+  color:white;
+  font-size:18px;
+  backdrop-filter:blur(15px);
 }
 
-.screen{
+/* VIEWS */
+
+.view{
   display:none;
-  padding:8px 16px;
+  animation:fade .35s ease;
 }
 
-.screen.active{
+.view.active{
   display:block;
 }
 
+@keyframes fade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* HERO */
+
 .hero{
-  padding:20px;
-  border:1px solid #342752;
-  border-radius:26px;
-  background:
-    linear-gradient(
-      145deg,
-      #21143d,
-      #11101a 65%
-    );
-  box-shadow:0 20px 70px #0008;
-  overflow:hidden;
+  min-height:470px;
+  border:1px solid var(--border);
+  border-radius:32px;
+  padding:35px;
   position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,rgba(139,92,246,.17),rgba(255,255,255,.025)),
+    rgba(255,255,255,.035);
+  backdrop-filter:blur(25px);
+  display:flex;
+  align-items:center;
 }
 
 .hero:after{
   content:"";
   position:absolute;
-  width:180px;
-  height:180px;
-  background:#a855f733;
-  filter:blur(50px);
-  right:-60px;
-  top:-70px;
+  width:400px;
+  height:400px;
+  right:-170px;
+  top:-180px;
+  border-radius:50%;
+  background:rgba(168,85,247,.22);
+  filter:blur(80px);
 }
 
-.eyebrow{
-  color:#c4b5fd;
+.heroText{
+  position:relative;
+  z-index:2;
+  max-width:650px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 12px;
+  border-radius:100px;
+  border:1px solid rgba(168,85,247,.35);
+  background:rgba(139,92,246,.10);
+  color:#d9c7ff;
   font-size:12px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:1px;
+  margin-bottom:18px;
 }
 
 .hero h1{
-  font-size:31px;
-  line-height:1.05;
-  margin:9px 0;
+  font-size:clamp(42px,7vw,78px);
+  line-height:.95;
+  letter-spacing:-4px;
+  margin-bottom:20px;
+}
+
+.hero h1 span{
+  background:linear-gradient(90deg,#fff,#b98cff,#ed8cff);
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
 .hero p{
-  color:#b6afc7;
-  line-height:1.5;
-  margin:0 0 18px;
+  color:#bdb6cb;
+  line-height:1.7;
+  max-width:600px;
+}
+
+.heroBtns{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:28px;
 }
 
 .btn{
-  border:0;
+  padding:15px 20px;
+  border-radius:15px;
+  font-weight:700;
   color:white;
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--pink)
-    );
-  padding:13px 16px;
-  border-radius:14px;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 10px 25px #8b5cf633;
-  transition:.18s;
-}
-
-.btn:active{
-  transform:scale(.97);
-}
-
-.btn:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
-
-.btn.secondary{
-  background:#211b2e;
-  border:1px solid var(--line);
-  box-shadow:none;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:14px;
-}
-
-.card{
-  background:
-    linear-gradient(
-      145deg,
-      #161321,
-      #100e17
-    );
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:16px;
-}
-
-.card.click{
-  cursor:pointer;
   transition:.2s;
 }
 
-.card.click:active{
-  transform:scale(.98);
+.btn:hover{
+  transform:translateY(-2px);
 }
 
-.icon{
-  font-size:25px;
-  margin-bottom:10px;
+.primary{
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  box-shadow:0 12px 30px rgba(139,92,246,.25);
 }
 
-.card h3{
-  margin:0 0 5px;
-  font-size:15px;
+.secondary{
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
 }
 
-.card p{
-  margin:0;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.4;
-}
-
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:22px 2px 10px;
-}
-
-.section-title h2{
-  margin:0;
-  font-size:20px;
-}
-
-.muted{
-  color:var(--muted);
-}
+/* STATS */
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:14px 0;
 }
 
 .stat{
-  background:#12101b;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:13px;
-  text-align:center;
+  padding:18px;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:20px;
+  backdrop-filter:blur(18px);
 }
 
 .stat b{
-  font-size:20px;
-  display:block;
+  font-size:24px;
 }
 
 .stat span{
-  font-size:10px;
+  display:block;
   color:var(--muted);
+  font-size:11px;
+  margin-top:6px;
 }
 
-.progress{
-  height:7px;
-  background:#252032;
-  border-radius:20px;
+/* SECTIONS */
+
+.sectionTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin:30px 0 14px;
+}
+
+.sectionTitle h2{
+  font-size:24px;
+}
+
+.sectionTitle p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* COURSE */
+
+.courseGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.course{
+  position:relative;
+  padding:20px;
+  min-height:190px;
+  border-radius:22px;
+  border:1px solid var(--border);
+  background:var(--card);
+  backdrop-filter:blur(18px);
+  transition:.25s;
   overflow:hidden;
 }
 
-.progress i{
-  display:block;
-  height:100%;
-  background:
-    linear-gradient(
-      90deg,
-      var(--purple),
-      var(--pink)
-    );
-  border-radius:20px;
+.course:hover{
+  transform:translateY(-4px);
+  border-color:rgba(168,85,247,.4);
 }
 
-.nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  margin:auto;
-  max-width:720px;
-  height:78px;
-  padding:8px 10px calc(8px + env(safe-area-inset-bottom));
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  background:rgba(10,8,15,.94);
-  border-top:1px solid var(--line);
-  backdrop-filter:blur(20px);
-  z-index:10;
-}
-
-.nav button{
-  border:0;
-  background:none;
-  color:#777183;
-  font-size:10px;
-  font-weight:700;
-}
-
-.nav button span{
-  display:block;
-  font-size:21px;
-  margin-bottom:3px;
-}
-
-.nav button.active{
-  color:#c4b5fd;
-}
-
-.pill{
-  display:inline-flex;
-  padding:6px 9px;
-  border-radius:999px;
-  background:#251b3b;
-  color:#c4b5fd;
-  font-size:11px;
-  font-weight:800;
-}
-
-.select{
-  width:100%;
-  background:#0f0d16;
-  border:1px solid var(--line);
-  color:white;
-  padding:14px;
+.courseIcon{
+  width:45px;
+  height:45px;
   border-radius:14px;
-  margin-top:8px;
-  outline:none;
+  display:grid;
+  place-items:center;
+  background:rgba(139,92,246,.14);
+  font-size:21px;
+  margin-bottom:18px;
 }
 
-.signal-box{
-  margin-top:14px;
-  border:1px solid #3c2a62;
+.course h3{
+  font-size:16px;
+  margin-bottom:7px;
+}
+
+.course p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.55;
+}
+
+.course .num{
+  position:absolute;
+  right:17px;
+  top:17px;
+  color:#6e687a;
+  font-size:11px;
+}
+
+.course .done{
+  position:absolute;
+  right:17px;
+  bottom:17px;
+  color:var(--green);
+  font-size:12px;
+}
+
+/* LESSON */
+
+.lessonHead{
+  padding:25px;
   border-radius:24px;
-  padding:22px;
-  text-align:center;
-  background:
-    radial-gradient(
-      circle at 50% 0,
-      #29174d,
-      #100e17 65%
-    );
+  border:1px solid var(--border);
+  background:var(--card);
+  margin-bottom:15px;
 }
 
-.signal-direction{
-  font-size:35px;
-  font-weight:950;
-  margin:12px;
+.back{
+  color:#cbb9ff;
+  font-size:12px;
+  margin-bottom:20px;
+  background:none;
 }
 
-.call{
-  color:#4ade80;
-}
-
-.put{
-  color:#fb7185;
-}
-
-.loading{
-  font-size:34px;
-  font-weight:900;
-  letter-spacing:6px;
-}
-
-.lesson{
+.lessonHead h1{
+  font-size:32px;
   margin-bottom:10px;
 }
 
-.lesson-head{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  cursor:pointer;
+.lessonHead p{
+  color:var(--muted);
+  line-height:1.7;
 }
 
-.num{
-  width:36px;
-  height:36px;
-  border-radius:12px;
-  background:#251a3b;
+.lessonBody{
   display:grid;
-  place-items:center;
-  color:#c4b5fd;
-  font-weight:900;
-  flex:none;
+  grid-template-columns:1.6fr .8fr;
+  gap:15px;
 }
 
-.lesson.done .num{
-  background:#123b25;
-  color:#4ade80;
+.article{
+  padding:28px;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:24px;
 }
 
-.lesson-content{
-  display:none;
-  margin-top:14px;
-  color:#c1bbcc;
+.article h2{
+  margin:25px 0 10px;
+}
+
+.article h2:first-child{
+  margin-top:0;
+}
+
+.article p,.article li{
+  color:#bcb5c9;
+  line-height:1.8;
   font-size:14px;
-  line-height:1.65;
 }
 
-.lesson.open .lesson-content{
-  display:block;
+.article ul{
+  padding-left:20px;
 }
 
-.lesson-content h4{
-  color:white;
-  margin:16px 0 7px;
-}
-
-.task{
-  background:#14111d;
-  border:1px solid var(--line);
-  border-radius:20px;
+.note{
   padding:17px;
-  margin:10px 0;
+  border-radius:17px;
+  margin:17px 0;
+  background:rgba(139,92,246,.08);
+  border:1px solid rgba(139,92,246,.2);
+}
+
+.chart{
+  min-height:220px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.20);
+  border-radius:20px;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  margin:20px 0;
+}
+
+.chartGrid{
+  position:absolute;
+  inset:0;
+  background-image:
+   linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+
+.chart svg{
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:190px;
+}
+
+/* QUIZ */
+
+.quiz{
+  padding:25px;
+  border-radius:24px;
+  border:1px solid var(--border);
+  background:linear-gradient(145deg,rgba(139,92,246,.11),rgba(255,255,255,.035));
+}
+
+.quizLabel{
+  color:#bfa6ff;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  margin-bottom:15px;
+}
+
+.quiz h2{
+  font-size:21px;
+  line-height:1.4;
+  margin-bottom:20px;
 }
 
 .answers{
   display:grid;
-  gap:8px;
-  margin-top:12px;
+  gap:10px;
 }
 
 .answer{
-  background:#211b2d;
-  border:1px solid #332a43;
-  color:white;
-  border-radius:13px;
-  padding:13px;
+  width:100%;
+  padding:16px;
+  border-radius:15px;
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--border);
+  color:#ddd8e5;
   text-align:left;
-  cursor:pointer;
+  transition:.2s;
+}
+
+.answer:hover{
+  background:rgba(139,92,246,.12);
+  border-color:rgba(168,85,247,.45);
 }
 
 .answer.correct{
-  border-color:#22c55e;
-  background:#11351f;
+  border-color:var(--green);
+  background:rgba(53,214,154,.10);
 }
 
 .answer.wrong{
-  border-color:#ef4444;
-  background:#3b171d;
+  border-color:var(--red);
+  background:rgba(255,100,124,.10);
 }
 
-.tag{
-  font-size:10px;
-  color:var(--muted);
-  text-transform:uppercase;
-  letter-spacing:1px;
+.feedback{
+  margin-top:15px;
+  padding:15px;
+  border-radius:14px;
+  display:none;
+  line-height:1.6;
+  font-size:13px;
 }
 
-.chart{
-  height:190px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:#0d0b13;
-  position:relative;
-  overflow:hidden;
-  margin:12px 0;
+.feedback.show{
+  display:block;
 }
 
-.chart svg{
-  width:100%;
-  height:100%;
-}
+/* FINAL TEST */
 
-.profile-head{
+.testTop{
   display:flex;
-  align-items:center;
-  gap:14px;
+  justify-content:space-between;
+  margin-bottom:15px;
 }
 
-.big-avatar{
-  width:70px;
-  height:70px;
-  border-radius:22px;
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #ec4899
-    );
+.progressBar{
+  height:6px;
+  border-radius:10px;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.progressBar div{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--purple),var(--pink));
+  transition:.4s;
+}
+
+/* DICTIONARY */
+
+.search{
+  width:100%;
+  padding:16px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:white;
+  outline:none;
+  margin-bottom:15px;
+}
+
+.termGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.term{
+  padding:20px;
+  border-radius:20px;
+  background:var(--card);
+  border:1px solid var(--border);
+}
+
+.term b{
+  color:#d5bdff;
+}
+
+.term p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin-top:8px;
+}
+
+/* PROFILE */
+
+.profile{
+  max-width:700px;
+  margin:auto;
+}
+
+.profileCard{
+  padding:28px;
+  border-radius:28px;
+  border:1px solid var(--border);
+  background:var(--card);
+  text-align:center;
+}
+
+.avatar{
+  width:75px;
+  height:75px;
+  border-radius:25px;
+  margin:auto auto 15px;
   display:grid;
   place-items:center;
-  font-size:28px;
-  font-weight:900;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  font-size:30px;
+  font-weight:800;
 }
 
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:92px;
-  transform:translateX(-50%) translateY(20px);
-  background:#20192c;
-  border:1px solid #3b3150;
-  padding:12px 16px;
-  border-radius:14px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-  z-index:30;
+.profileCard h1{
+  margin-bottom:5px;
+}
+
+.profileCard p{
+  color:var(--muted);
+}
+
+.profileStats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.profileStat{
+  padding:15px;
+  background:rgba(255,255,255,.04);
+  border-radius:16px;
+}
+
+.profileStat b{
+  display:block;
+  font-size:21px;
+}
+
+.profileStat span{
+  color:var(--muted);
+  font-size:10px;
+}
+
+/* CTA */
+
+.cta{
+  margin-top:20px;
+  padding:26px;
+  border-radius:26px;
+  border:1px solid rgba(168,85,247,.25);
+  background:linear-gradient(135deg,rgba(139,92,246,.16),rgba(217,70,239,.06));
+}
+
+.cta h2{
+  margin-bottom:8px;
+}
+
+.cta p{
+  color:var(--muted);
   font-size:13px;
-  box-shadow:0 15px 40px #0009;
+  line-height:1.6;
 }
 
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+.ctaBtns{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
 }
+
+/* BOTTOM NAV */
+
+.nav{
+  position:fixed;
+  z-index:50;
+  bottom:15px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(680px,calc(100% - 24px));
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding:7px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  background:rgba(12,8,21,.82);
+  backdrop-filter:blur(25px);
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.nav button{
+  padding:10px 4px;
+  background:none;
+  color:#777180;
+  border-radius:16px;
+  font-size:10px;
+}
+
+.nav button span{
+  display:block;
+  font-size:19px;
+  margin-bottom:4px;
+}
+
+.nav button.active{
+  color:white;
+  background:rgba(139,92,246,.18);
+}
+
+/* MODAL */
 
 .modal{
   position:fixed;
   inset:0;
-  background:#0009;
+  z-index:100;
   display:none;
-  align-items:end;
-  justify-content:center;
-  z-index:20;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(8px);
 }
 
 .modal.show{
-  display:flex;
+  display:grid;
 }
 
-.sheet{
-  width:min(720px,100%);
-  background:#12101a;
-  border:1px solid var(--line);
-  border-radius:26px 26px 0 0;
-  padding:20px;
-  max-height:85vh;
-  overflow:auto;
+.modalBox{
+  width:min(480px,100%);
+  padding:28px;
+  border-radius:28px;
+  border:1px solid var(--border);
+  background:#120c1d;
+  box-shadow:0 30px 100px rgba(0,0,0,.6);
 }
 
 .close{
   float:right;
-  background:#251f31;
-  color:white;
-  border:0;
-  border-radius:10px;
-  padding:8px;
-  cursor:pointer;
+  background:none;
+  color:#999;
+  font-size:20px;
 }
 
-@media(min-width:600px){
-  .grid{
-    grid-template-columns:repeat(3,1fr);
+.loginIcon{
+  width:65px;
+  height:65px;
+  border-radius:20px;
+  display:grid;
+  place-items:center;
+  background:white;
+  color:#111;
+  font-size:25px;
+  margin-bottom:20px;
+}
+
+.modalBox h2{
+  margin-bottom:8px;
+}
+
+.modalBox p{
+  color:var(--muted);
+  line-height:1.6;
+  font-size:13px;
+  margin-bottom:20px;
+}
+
+.google{
+  width:100%;
+  padding:15px;
+  border-radius:15px;
+  background:white;
+  color:#111;
+  font-weight:700;
+}
+
+.disclaimer{
+  margin-top:20px;
+  padding:15px;
+  border-radius:15px;
+  background:rgba(255,255,255,.035);
+  color:#817b8c;
+  font-size:10px;
+  line-height:1.6;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+  .app{
+    padding:12px 12px 100px;
+  }
+
+  .hero{
+    min-height:500px;
+    padding:25px;
+    border-radius:25px;
+  }
+
+  .hero h1{
+    font-size:47px;
+    letter-spacing:-3px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .courseGrid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .lessonBody{
+    grid-template-columns:1fr;
+  }
+
+  .termGrid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:500px){
+  .courseGrid{
+    grid-template-columns:1fr;
+  }
+
+  .course{
+    min-height:155px;
+  }
+
+  .heroBtns .btn{
+    width:100%;
+    text-align:center;
+  }
+
+  .lessonHead h1{
+    font-size:26px;
+  }
+
+  .article{
+    padding:20px;
+  }
+
+  .profileStats{
+    grid-template-columns:1fr 1fr 1fr;
   }
 }
 </style>
@@ -585,1777 +912,1775 @@ button{
 
 <body>
 
+<div class="bg">
+  <div class="grid"></div>
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+
+  <div class="candles">
+    <i class="candle up c1"></i>
+    <i class="candle down c2"></i>
+    <i class="candle up c3"></i>
+    <i class="candle down c4"></i>
+    <i class="candle up c5"></i>
+    <i class="candle down c6"></i>
+    <i class="candle up c7"></i>
+    <i class="candle down c8"></i>
+  </div>
+</div>
+
 <div class="app">
 
 <header class="top">
+  <div class="logo">
+    <div class="logoMark"><span>A</span></div>
+    <div>
+      AVA
+      <small>TRADING ACADEMY</small>
+    </div>
+  </div>
 
-<div class="brand">
-
-<div class="logo">
-A
-</div>
-
-<div>
-<b>AVA TEAM</b>
-<small>Академия трейдинга</small>
-</div>
-
-</div>
-
-<div class="avatar" id="userAvatar">
-👤
-</div>
-
+  <button class="profileBtn" onclick="openProfile()">◉</button>
 </header>
 
+<!-- HOME -->
 
-<main>
+<section id="home" class="view active">
 
+  <div class="hero">
+    <div class="heroText">
 
-<!-- ГЛАВНАЯ -->
+      <div class="badge">✦ ОБУЧЕНИЕ ТРЕЙДИНГУ С НУЛЯ</div>
 
-<section id="home" class="screen active">
+      <h1>
+        Понимай рынок.<br>
+        <span>Действуй осознанно.</span>
+      </h1>
 
-<div class="hero">
+      <p>
+        Не набор случайных сигналов и не обещание лёгких денег.
+        Здесь ты последовательно разберёшь устройство рынка,
+        свечи, тренды, уровни, пробои, риск, психологию и
+        научишься самостоятельно читать график.
+      </p>
 
-<span class="eyebrow">
-Добро пожаловать
-</span>
+      <div class="heroBtns">
+        <button class="btn primary" onclick="showView('academy')">
+          Начать обучение →
+        </button>
 
-<h1>
-Учись. Анализируй. Практикуйся.
-</h1>
+        <button class="btn secondary" onclick="showView('test')">
+          Проверить знания
+        </button>
+      </div>
 
-<p>
-Большая интерактивная академия для тех,
-кто хочет разобраться в графиках,
-свечах, паттернах и риск-менеджменте.
-</p>
+    </div>
+  </div>
 
-<button
-class="btn"
-data-go="academy"
->
-Начать обучение →
-</button>
+  <div class="stats">
+    <div class="stat">
+      <b id="statLessons">0/20</b>
+      <span>уроков пройдено</span>
+    </div>
 
-</div>
+    <div class="stat">
+      <b id="statScore">0</b>
+      <span>баллов</span>
+    </div>
 
+    <div class="stat">
+      <b id="statTest">—</b>
+      <span>итоговый результат</span>
+    </div>
 
-<div class="section-title">
+    <div class="stat">
+      <b>20+</b>
+      <span>тем академии</span>
+    </div>
+  </div>
 
-<h2>
-Твой прогресс
-</h2>
+  <div class="sectionTitle">
+    <div>
+      <h2>Твоя траектория</h2>
+      <p>От базовых понятий до анализа</p>
+    </div>
+  </div>
 
-<span
-class="pill"
-id="levelPill"
->
-Уровень 1
-</span>
+  <div class="courseGrid" id="homeCourses"></div>
 
-</div>
+  <div class="cta">
+    <h2>AVA — это не кнопка «заработать»</h2>
+    <p>
+      Главная задача обучения — научиться принимать решения,
+      понимать риск и не действовать на эмоциях.
+    </p>
 
+    <div class="ctaBtns">
+      <a class="btn primary" href="https://t.me/+D1kxbrvyGSViZWFi" target="_blank">
+        Telegram канал
+      </a>
 
-<div class="card">
-
-<div
-style="
-display:flex;
-justify-content:space-between;
-"
->
-
-<b id="xpText">
-0 / 100 XP
-</b>
-
-<span class="muted">
-До следующего уровня
-</span>
-
-</div>
-
-<div
-class="progress"
-style="margin-top:10px"
->
-
-<i
-id="xpBar"
-style="width:0%"
-></i>
-
-</div>
-
-</div>
-
-
-<div class="grid">
-
-
-<div
-class="card click"
-data-go="signals"
->
-
-<div class="icon">
-📡
-</div>
-
-<h3>
-Сигналы
-</h3>
-
-<p>
-Выбери пару и получи DEMO-сигнал.
-</p>
-
-</div>
-
-
-<div
-class="card click"
-data-go="practice"
->
-
-<div class="icon">
-🧠
-</div>
-
-<h3>
-Практика
-</h3>
-
-<p>
-Определи паттерн и направление.
-</p>
-
-</div>
-
-
-<div
-class="card click"
-data-go="academy"
->
-
-<div class="icon">
-🎓
-</div>
-
-<h3>
-Академия
-</h3>
-
-<p>
-Большой учебник по трейдингу.
-</p>
-
-</div>
-
-
-<div
-class="card click"
-data-go="profile"
->
-
-<div class="icon">
-🏆
-</div>
-
-<h3>
-Профиль
-</h3>
-
-<p>
-XP, достижения и статистика.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="section-title">
-<h2>
-Что изучим
-</h2>
-</div>
-
-
-<div class="grid">
-
-<div class="card">
-<div class="icon">🕯️</div>
-<h3>Японские свечи</h3>
-<p>
-Тело, тени, OHLC и чтение движения цены.
-</p>
-</div>
-
-<div class="card">
-<div class="icon">📐</div>
-<h3>Технический анализ</h3>
-<p>
-Уровни, тренды, пробои, ретесты.
-</p>
-</div>
-
-<div class="card">
-<div class="icon">📊</div>
-<h3>Индикаторы</h3>
-<p>
-RSI, MACD, EMA, Bollinger Bands и ATR.
-</p>
-</div>
-
-<div class="card">
-<div class="icon">🛡️</div>
-<h3>Риск-менеджмент</h3>
-<p>
-Как контролировать риск и не торговать на эмоциях.
-</p>
-</div>
-
-</div>
+      <a class="btn secondary" href="https://t.me/m/OsDQxjCLNTUy" target="_blank">
+        Связаться с AVA
+      </a>
+    </div>
+  </div>
 
 </section>
 
 
-<!-- СИГНАЛЫ -->
+<!-- ACADEMY -->
 
-<section id="signals" class="screen">
+<section id="academy" class="view">
 
-<div class="section-title">
+  <div class="sectionTitle">
+    <div>
+      <h2>Академия</h2>
+      <p>20 последовательных уровней</p>
+    </div>
+  </div>
 
-<h2>
-📡 Сигналы
-</h2>
-
-<span class="pill">
-DEMO
-</span>
-
-</div>
-
-
-<div class="card">
-
-<div class="tag">
-Валютная пара
-</div>
-
-<select
-class="select"
-id="pair"
->
-
-<option>EUR/USD</option>
-<option>GBP/USD</option>
-<option>USD/JPY</option>
-<option>EUR/JPY</option>
-<option>AUD/USD</option>
-<option>USD/CAD</option>
-<option>USD/CHF</option>
-<option>EUR/GBP</option>
-<option>NZD/USD</option>
-<option>GBP/JPY</option>
-<option>EUR/CHF</option>
-<option>AUD/JPY</option>
-<option>EUR/HUF</option>
-<option>USD/SGD</option>
-<option>USD/CNH</option>
-
-</select>
-
-
-<div
-class="tag"
-style="display:block;margin-top:14px"
->
-Экспирация
-</div>
-
-
-<select
-class="select"
-id="expiry"
->
-
-<option value="1">
-1 минута
-</option>
-
-<option value="2">
-2 минуты
-</option>
-
-<option value="3">
-3 минуты
-</option>
-
-<option value="5">
-5 минут
-</option>
-
-<option value="10">
-10 минут
-</option>
-
-<option value="15">
-15 минут
-</option>
-
-</select>
-
-
-<button
-class="btn"
-id="generate"
-style="width:100%;margin-top:14px"
->
-⚡ Сгенерировать сигнал
-</button>
-
-</div>
-
-
-<div id="signalResult">
-</div>
-
-
-<div class="section-title">
-<h2>
-История
-</h2>
-</div>
-
-
-<div id="signalHistory">
-</div>
+  <div class="courseGrid" id="academyCourses"></div>
 
 </section>
 
 
-<!-- АКАДЕМИЯ -->
+<!-- LESSON -->
 
-<section id="academy" class="screen">
+<section id="lesson" class="view">
 
-<div class="section-title">
+  <div class="lessonHead">
 
-<h2>
-🎓 Академия
-</h2>
+    <button class="back" onclick="showView('academy')">
+      ← Назад к академии
+    </button>
 
-<span
-class="pill"
-id="lessonCount"
->
-0 / 24
-</span>
+    <h1 id="lessonTitle"></h1>
+    <p id="lessonIntro"></p>
 
-</div>
+  </div>
 
-<div id="lessons">
-</div>
+  <div class="lessonBody">
 
-</section>
+    <article class="article" id="lessonContent"></article>
 
+    <aside>
 
-<!-- ПРАКТИКА -->
+      <div class="quiz">
 
-<section id="practice" class="screen">
+        <div class="quizLabel">
+          Проверка понимания
+        </div>
 
-<div class="section-title">
+        <h2 id="lessonQuestion"></h2>
 
-<h2>
-🧠 Практика
-</h2>
+        <div class="answers" id="lessonAnswers"></div>
 
-<span class="pill">
-+10 XP
-</span>
+        <div class="feedback" id="lessonFeedback"></div>
 
-</div>
+      </div>
 
+    </aside>
 
-<div class="card">
-
-<span class="tag">
-Тренажёр свечей
-</span>
-
-<h2 id="practiceTitle">
-Какая свеча показана?
-</h2>
-
-
-<div
-class="chart"
-id="candleChart"
->
-</div>
-
-
-<div
-class="answers"
-id="answers"
->
-</div>
-
-</div>
-
-
-<button
-class="btn"
-id="nextQuestion"
-style="width:100%;margin-top:10px"
->
-Следующее задание →
-</button>
+  </div>
 
 </section>
 
 
-<!-- ПРОФИЛЬ -->
+<!-- TEST -->
 
-<section id="profile" class="screen">
+<section id="test" class="view">
 
-<div class="card">
+  <div class="sectionTitle">
+    <div>
+      <h2>Финальная проверка</h2>
+      <p>15 вопросов повышенной сложности</p>
+    </div>
+  </div>
 
-<div class="profile-head">
+  <div class="quiz">
 
-<div
-class="big-avatar"
-id="bigAvatar"
->
-A
-</div>
+    <div class="testTop">
+      <span id="testNumber">Вопрос 1/15</span>
+      <span id="testPoints">0 баллов</span>
+    </div>
 
-<div>
+    <div class="progressBar">
+      <div id="testProgress"></div>
+    </div>
 
-<h2
-style="margin:0"
-id="profileName"
->
-AVA Trader
-</h2>
+    <h2 id="testQuestion"></h2>
 
-<p
-class="muted"
-style="margin:5px 0"
->
-Ученик AVA TEAM
-</p>
+    <div class="answers" id="testAnswers"></div>
 
-</div>
+    <div class="feedback" id="testFeedback"></div>
 
-</div>
+    <button
+      id="nextQuestion"
+      class="btn primary"
+      style="margin-top:15px;display:none"
+      onclick="nextTestQuestion()">
+      Следующий вопрос →
+    </button>
 
-</div>
-
-
-<div
-class="stats"
-style="margin-top:12px"
->
-
-<div class="stat">
-<b id="statXp">0</b>
-<span>XP</span>
-</div>
-
-<div class="stat">
-<b id="statLessons">0</b>
-<span>Уроков</span>
-</div>
-
-<div class="stat">
-<b id="statSignals">0</b>
-<span>Сигналов</span>
-</div>
-
-</div>
-
-
-<div class="section-title">
-<h2>
-🏆 Достижения
-</h2>
-</div>
-
-
-<div
-class="grid"
-id="achievements"
->
-</div>
-
-
-<div class="section-title">
-<h2>
-🔐 Telegram
-</h2>
-</div>
-
-
-<div class="card">
-
-<p>
-В рабочей версии вход будет проходить
-через Telegram Mini App.
-Проверка участия в закрытом сообществе
-выполняется на сервере, чтобы её нельзя
-было обойти через браузер.
-</p>
-
-<button
-class="btn secondary"
-id="telegramInfo"
->
-Как будет работать вход
-</button>
-
-</div>
+  </div>
 
 </section>
 
-</main>
 
+<!-- DICTIONARY -->
+
+<section id="dictionary" class="view">
+
+  <div class="sectionTitle">
+    <div>
+      <h2>Словарь трейдера</h2>
+      <p>Основные термины в одном месте</p>
+    </div>
+  </div>
+
+  <input
+    class="search"
+    id="termSearch"
+    placeholder="🔎 Поиск термина..."
+    oninput="renderTerms()">
+
+  <div class="termGrid" id="terms"></div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="view">
+
+  <div class="profile">
+
+    <div class="profileCard">
+
+      <div class="avatar" id="avatar">A</div>
+
+      <h1 id="profileName">AVA Trader</h1>
+
+      <p>Локальный профиль</p>
+
+      <div class="profileStats">
+
+        <div class="profileStat">
+          <b id="pLessons">0</b>
+          <span>уроков</span>
+        </div>
+
+        <div class="profileStat">
+          <b id="pScore">0</b>
+          <span>баллов</span>
+        </div>
+
+        <div class="profileStat">
+          <b id="pTest">—</b>
+          <span>экзамен</span>
+        </div>
+
+      </div>
+
+      <button
+        class="btn primary"
+        style="width:100%;margin-top:20px"
+        onclick="openLogin()">
+        Войти через Google
+      </button>
+
+      <div class="disclaimer">
+        Сейчас профиль хранится на этом устройстве через LocalStorage.
+        Для настоящей синхронизации между устройствами необходимо
+        подключить Firebase или Supabase и OAuth Google.
+      </div>
+
+      <button
+        class="btn secondary"
+        style="width:100%;margin-top:10px"
+        onclick="resetProgress()">
+        Сбросить прогресс
+      </button>
+
+    </div>
+
+    <div class="cta">
+
+      <h2>Нужна связь?</h2>
+
+      <p>
+        Если есть вопросы по обучению или хочешь связаться с AVA,
+        используй Telegram.
+      </p>
+
+      <div class="ctaBtns">
+
+        <a
+          class="btn primary"
+          href="https://t.me/m/OsDQxjCLNTUy"
+          target="_blank">
+          💬 Написать AVA
+        </a>
+
+        <a
+          class="btn secondary"
+          href="https://t.me/+D1kxbrvyGSViZWFi"
+          target="_blank">
+          ✈️ Telegram
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+
+
+<!-- NAV -->
 
 <nav class="nav">
 
-<button
-class="active"
-data-go="home"
->
-<span>⌂</span>
-Главная
-</button>
+  <button class="active" onclick="showView('home',this)">
+    <span>⌂</span>
+    Главная
+  </button>
 
-<button data-go="signals">
-<span>◈</span>
-Сигналы
-</button>
+  <button onclick="showView('academy',this)">
+    <span>▣</span>
+    Академия
+  </button>
 
-<button data-go="academy">
-<span>▤</span>
-Академия
-</button>
+  <button onclick="showView('test',this)">
+    <span>◈</span>
+    Проверка
+  </button>
 
-<button data-go="practice">
-<span>◇</span>
-Практика
-</button>
+  <button onclick="showView('dictionary',this)">
+    <span>⌕</span>
+    Словарь
+  </button>
 
-<button data-go="profile">
-<span>◎</span>
-Профиль
-</button>
+  <button onclick="openProfile()">
+    <span>◉</span>
+    Профиль
+  </button>
 
 </nav>
 
-</div>
 
+<!-- LOGIN MODAL -->
 
-<div
-class="toast"
-id="toast"
->
-</div>
+<div class="modal" id="loginModal">
 
+  <div class="modalBox">
 
-<div
-class="modal"
-id="modal"
->
+    <button class="close" onclick="closeLogin()">×</button>
 
-<div class="sheet">
+    <div class="loginIcon">G</div>
 
-<button
-class="close"
-id="closeModal"
->
-✕
-</button>
+    <h2>Войти в AVA</h2>
 
-<div id="modalBody">
-</div>
+    <p>
+      После подключения Firebase этот экран сможет использовать
+      настоящий Google OAuth и сохранять прогресс пользователя
+      в облаке.
+    </p>
 
-</div>
+    <button class="google" onclick="googlePlaceholder()">
+      Продолжить с Google
+    </button>
+
+    <div class="disclaimer">
+      Демо-интерфейс авторизации. Настоящая авторизация не должна
+      реализовываться только клиентским HTML без настройки
+      OAuth-провайдера и backend/cloud authentication.
+    </div>
+
+  </div>
 
 </div>
 
 
 <script>
 
+/* =========================
+   DATA
+========================= */
+
 const lessons = [
 
-[
-"Что такое трейдинг",
-"Трейдинг — это работа с изменением цены финансового инструмента. Цель обучения — не угадывать каждую свечу, а понимать контекст, риск и вероятность сценария.",
-"Начинай с наблюдения за рынком. Не открывай сделку только потому, что свеча кажется красивой."
-],
-
-[
-"Валютные пары",
-"EUR/USD означает стоимость евро относительно доллара. Первая валюта называется базовой, вторая — котируемой.",
-"Всегда смотри, что именно означает рост цены пары."
-],
-
-[
-"Японская свеча",
-"Свеча содержит четыре значения: Open, High, Low и Close. Тело показывает расстояние между открытием и закрытием, тени — экстремумы периода.",
-"Большое тело обычно показывает сильное движение, но само по себе не является сигналом."
-],
-
-[
-"Бычья и медвежья свеча",
-"Если закрытие выше открытия, свеча бычья. Если ниже — медвежья. Цвет на разных графиках может отличаться, поэтому ориентируйся на OHLC.",
-"Сначала научись видеть направление, затем изучай контекст."
-],
-
-[
-"Doji",
-"Doji — свеча с близкими ценами открытия и закрытия. Она показывает неопределённость, но не гарантирует разворот.",
-"Смотри на Doji рядом с уровнями и после сильного движения."
-],
-
-[
-"Hammer",
-"Молот имеет небольшое тело и длинную нижнюю тень. В правильном контексте он может показывать отказ от более низких цен.",
-"Контекст важнее названия паттерна."
-],
-
-[
-"Shooting Star",
-"Shooting Star имеет небольшое тело и длинную верхнюю тень после роста. Это предупреждение о возможном сопротивлении продавцов.",
-"Не входи только по одной свече — ищи подтверждение."
-],
-
-[
-"Engulfing",
-"Поглощение — ситуация, когда тело новой свечи перекрывает тело предыдущей. Оно может быть бычьим или медвежьим.",
-"Чем сильнее контекст уровня, тем интереснее паттерн для изучения."
-],
-
-[
-"Тренд",
-"Восходящий тренд характеризуется повышающимися максимумами и минимумами; нисходящий — понижающимися.",
-"Не называй трендом несколько случайных свечей."
-],
-
-[
-"Флэт",
-"Флэт — движение цены внутри относительно ограниченного диапазона. В нём пробои могут оказаться ложными.",
-"Научись отличать импульс от консолидации."
-],
-
-[
-"Поддержка",
-"Поддержка — зона, где цена ранее находила спрос. Это область, а не магическая линия.",
-"Уровни лучше рассматривать как зоны реакции."
-],
-
-[
-"Сопротивление",
-"Сопротивление — область, где ранее появлялось предложение. Оно может быть пробито и превратиться в поддержку.",
-"Ищи реакцию цены, а не просто касание линии."
-],
-
-[
-"Пробой",
-"Пробой — выход цены за важную область. Сильный пробой обычно сопровождается импульсом, но подтверждение зависит от стратегии.",
-"Не каждый прокол уровня является настоящим пробоем."
-],
-
-[
-"Ретест",
-"После пробоя цена иногда возвращается к зоне и проверяет её. Такой возврат называют ретестом.",
-"Ретест помогает не преследовать цену после резкого движения."
-],
-
-[
-"EMA и SMA",
-"Скользящие средние сглаживают цену. EMA сильнее учитывает последние значения, SMA даёт равный вес наблюдениям.",
-"Индикатор помогает структурировать график, но не предсказывает будущее."
-],
-
-[
-"RSI",
-"RSI измеряет относительную силу движения в заданном периоде. Значения около крайних зон требуют контекста, а не автоматического входа.",
-"Перекупленность не означает обязательный разворот вниз."
-],
-
-[
-"MACD",
-"MACD сравнивает скользящие средние и помогает оценивать импульс. Полезно смотреть на пересечения и изменение гистограммы.",
-"Сигнал индикатора лучше сочетать с ценовым контекстом."
-],
-
-[
-"Bollinger Bands",
-"Полосы Боллинджера состоят из средней и динамических границ на основе волатильности.",
-"Выход за полосу не означает автоматический возврат."
-],
-
-[
-"ATR",
-"ATR оценивает средний диапазон движения и помогает понимать текущую волатильность.",
-"ATR не показывает направление."
-],
-
-[
-"Риск на сделку",
-"Риск нужно ограничивать заранее. Размер позиции должен учитывать допустимый убыток, а не желание быстро заработать.",
-"Сначала выживаем на рынке, потом думаем о доходности."
-],
-
-[
-"Мартингейл",
-"Увеличение ставки после убытка резко повышает риск. Серия неудачных сделок может быстро увеличить потери.",
-"Не используй увеличение ставки как способ гарантировать восстановление."
-],
-
-[
-"Эмоции",
-"Страх, жадность и желание отыграться ухудшают качество решений. Торговый план нужен до входа, а не после убытка.",
-"Если ты нарушил собственные правила — остановись и разберись почему."
-],
-
-[
-"Торговый дневник",
-"Записывай причину входа, контекст, результат и эмоции. Через десятки сделок дневник помогает увидеть повторяющиеся ошибки.",
-"Статистика полезнее воспоминаний."
-],
-
-[
-"Финальный разбор",
-"Хороший трейдер не обязан угадывать рынок. Его задача — иметь понятный сценарий, контролировать риск и принимать результат серии сделок.",
-"Перед реальной торговлей используй демо и проверяй любую стратегию на истории."
-]
-
-];
-
-
-const state = {
-
-xp:Number(
-localStorage.getItem("ava_xp") || 0
-),
-
-done:JSON.parse(
-localStorage.getItem("ava_done") || "[]"
-),
-
-signals:JSON.parse(
-localStorage.getItem("ava_signals") || "[]"
-)
-
-};
-
-
-const $ = s =>
-document.querySelector(s);
-
-const $$ = s =>
-[...document.querySelectorAll(s)];
-
-
-function toast(text){
-
-const e = $("#toast");
-
-e.textContent = text;
-
-e.classList.add("show");
-
-setTimeout(
-() => e.classList.remove("show"),
-2200
-);
-
-}
-
-
-function save(){
-
-localStorage.setItem(
-"ava_xp",
-state.xp
-);
-
-localStorage.setItem(
-"ava_done",
-JSON.stringify(state.done)
-);
-
-localStorage.setItem(
-"ava_signals",
-JSON.stringify(state.signals)
-);
-
-renderStats();
-
-}
-
-
-function addXP(n){
-
-state.xp += n;
-
-save();
-
-toast(
-"+" + n + " XP получено ⚡"
-);
-
-}
-
-
-function level(){
-
-return Math.floor(
-state.xp / 100
-) + 1;
-
-}
-
-
-function renderStats(){
-
-const l = level();
-
-const p = state.xp % 100;
-
-$("#levelPill").textContent =
-"Уровень " + l;
-
-$("#xpText").textContent =
-p + " / 100 XP";
-
-$("#xpBar").style.width =
-p + "%";
-
-$("#statXp").textContent =
-state.xp;
-
-$("#statLessons").textContent =
-state.done.length;
-
-$("#statSignals").textContent =
-state.signals.length;
-
-$("#lessonCount").textContent =
-state.done.length +
-" / " +
-lessons.length;
-
-
-$("#achievements").innerHTML = [
-
-[
-"🔥",
-"Первый XP",
-state.xp >= 10
-],
-
-[
-"🎓",
-"Первый урок",
-state.done.length >= 1
-],
-
-[
-"📡",
-"Первый сигнал",
-state.signals.length >= 1
-],
-
-[
-"🏆",
-"10 уроков",
-state.done.length >= 10
-],
-
-[
-"💎",
-"100 XP",
-state.xp >= 100
-],
-
-[
-"🚀",
-"500 XP",
-state.xp >= 500
-]
-
-].map(a => `
-
-<div class="card">
-
-<div class="icon">
-${a[0]}
-</div>
-
-<h3>
-${a[1]}
-</h3>
-
+{
+title:"Основы рынка",
+icon:"◌",
+intro:"Перед тем как открывать график, нужно понимать, что именно происходит с ценой.",
+content:`
+<h2>Что такое рынок?</h2>
 <p>
-${a[2] ? "Получено" : "Ещё впереди"}
+Финансовый рынок — это место, где участники постоянно
+совершают сделки. Цена формируется не потому, что график
+«хочет» пойти вверх или вниз, а из-за взаимодействия
+спроса и предложения.
 </p>
 
-</div>
-
-`).join("");
-
-}
-
-
-function nav(id){
-
-$$(".screen").forEach(
-x =>
-x.classList.toggle(
-"active",
-x.id === id
-)
-);
-
-$$(".nav button").forEach(
-x =>
-x.classList.toggle(
-"active",
-x.dataset.go === id
-)
-);
-
-scrollTo(0,0);
-
-}
-
-
-document.addEventListener(
-"click",
-e => {
-
-const b =
-e.target.closest("[data-go]");
-
-if(b){
-
-nav(
-b.dataset.go
-);
-
-}
-
-}
-);
-
-
-function renderLessons(){
-
-const box =
-$("#lessons");
-
-box.innerHTML =
-lessons.map(
-(x,i) => `
-
-<div
-class="card lesson
-${state.done.includes(i) ? "done" : ""}"
-data-lesson="${i}"
->
-
-<div class="lesson-head">
-
-<div class="num">
-
-${
-state.done.includes(i)
-? "✓"
-: i + 1
-}
-
-</div>
-
-<div>
-
-<b>
-${x[0]}
-</b>
-
-<div
-class="muted"
-style="font-size:11px;margin-top:3px"
->
-
-Урок ${i+1} ·
-
-${
-i < 4
-? "Основы"
-: i < 9
-? "Свечи и график"
-: i < 15
-? "Анализ"
-: "Продвинутый уровень"
-}
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="lesson-content">
-
+<h2>Почему цена движется?</h2>
 <p>
-${x[1]}
+Когда агрессивных покупателей становится больше,
+цена может двигаться вверх. Когда продавцы получают
+преимущество — вниз. Но движение никогда не означает
+гарантированного продолжения.
 </p>
 
-<h4>
-Главная мысль
-</h4>
+<div class="note">
+<b>Главная мысль:</b><br>
+График показывает уже произошедшее изменение цены.
+Трейдер пытается оценить возможные сценарии, а не узнать будущее.
+</div>
 
+<h2>Что важно запомнить</h2>
+<ul>
+<li>Цена не обязана продолжать движение.</li>
+<li>Любая идея имеет вероятность ошибки.</li>
+<li>Риск должен учитываться до сделки.</li>
+</ul>
+`,
+question:"Что лучше всего описывает движение цены?",
+answers:[
+"Цена заранее знает направление движения",
+"Цена меняется под влиянием взаимодействия участников рынка",
+"Цена всегда движется по индикатору",
+"Цена обязана продолжать текущий тренд"
+],
+correct:1,
+explain:"Цена формируется взаимодействием спроса и предложения, поэтому сценарий никогда не является гарантией."
+},
+
+{
+title:"Японские свечи",
+icon:"▥",
+intro:"Свеча — один из главных элементов технического анализа.",
+content:`
+<h2>Что показывает свеча?</h2>
 <p>
-${x[2]}
+Одна свеча отображает изменение цены за выбранный период.
+В зависимости от таймфрейма это может быть минута, пять минут,
+час, день или другой интервал.
 </p>
 
+<div class="chart">
+<div class="chartGrid"></div>
+<svg viewBox="0 0 500 190">
+<line x1="100" y1="25" x2="100" y2="165" stroke="#fff" opacity=".5"/>
+<rect x="75" y="65" width="50" height="70" rx="5" fill="#35d69a"/>
+<line x1="220" y1="40" x2="220" y2="170" stroke="#fff" opacity=".5"/>
+<rect x="195" y="55" width="50" height="90" rx="5" fill="#ff647c"/>
+<line x1="340" y1="30" x2="340" y2="160" stroke="#fff" opacity=".5"/>
+<rect x="315" y="75" width="50" height="50" rx="5" fill="#35d69a"/>
+</svg>
+</div>
 
-${
-i === 2
-? `
-<div class="task">
-
-<b>
-OHLC
-</b>
-
+<h2>OHLC</h2>
 <p>
-Open — открытие,
-High — максимум,
-Low — минимум,
+Свеча содержит четыре ключевые цены:
+Open — открытие, High — максимум, Low — минимум,
 Close — закрытие.
 </p>
 
-</div>
-`
-: ""
-}
-
-
-${
-i === 19
-? `
-<div class="task">
-
-<b>
-Правило
-</b>
-
+<h2>Тело и тени</h2>
 <p>
-Никогда не увеличивай риск
-только ради того, чтобы вернуть
-предыдущий убыток.
+Тело показывает расстояние между открытием и закрытием.
+Тени показывают экстремумы, которых цена достигала внутри периода.
 </p>
-
-</div>
-`
-: ""
-}
-
-
-<button
-class="btn
-${state.done.includes(i) ? "secondary" : ""}"
-data-complete="${i}"
->
-
-${
-state.done.includes(i)
-? "Урок пройден"
-: "Отметить урок пройденным"
-}
-
-</button>
-
-</div>
-
-</div>
-
-`
-).join("");
-
-}
-
-
-$("#lessons").addEventListener(
-"click",
-e => {
-
-const c =
-e.target.closest(
-"[data-complete]"
-);
-
-if(c){
-
-const i =
-Number(
-c.dataset.complete
-);
-
-if(
-!state.done.includes(i)
-){
-
-state.done.push(i);
-
-addXP(20);
-
-}
-
-renderLessons();
-
-renderStats();
-
-return;
-
-}
-
-
-const l =
-e.target.closest(
-"[data-lesson]"
-);
-
-if(l){
-
-l.classList.toggle(
-"open"
-);
-
-}
-
-}
-);
-
-
-function generateSignal(){
-
-const result =
-$("#signalResult");
-
-const pair =
-$("#pair").value;
-
-const minutes =
-Number(
-$("#expiry").value
-);
-
-const btn =
-$("#generate");
-
-btn.disabled = true;
-
-btn.textContent =
-"Анализируем рынок…";
-
-
-let n = 3;
-
-
-result.innerHTML = `
-
-<div class="signal-box">
-
-<div
-class="loading"
-id="count"
->
-${n}
-</div>
-
-<p class="muted">
-Подготавливаем DEMO-сценарий
-</p>
-
-</div>
-
-`;
-
-
-const timer =
-setInterval(
-() => {
-
-n--;
-
-$("#count").textContent =
-n;
-
-
-if(n <= 0){
-
-clearInterval(timer);
-
-
-const up =
-Math.random() > .5;
-
-
-const now =
-new Date();
-
-
-const end =
-new Date(
-now.getTime() +
-minutes * 60000
-);
-
-
-const item = {
-
-pair,
-
-minutes,
-
-direction:
-up ? "CALL" : "PUT",
-
-time:
-now.toLocaleTimeString(
-"ru-RU",
-{
-hour:"2-digit",
-minute:"2-digit"
-}
-),
-
-end:
-end.toLocaleTimeString(
-"ru-RU",
-{
-hour:"2-digit",
-minute:"2-digit"
-}
-)
-
-};
-
-
-state.signals.unshift(
-item
-);
-
-state.signals =
-state.signals.slice(0,12);
-
-
-save();
-
-
-result.innerHTML = `
-
-<div class="signal-box">
-
-<span class="pill">
-DEMO-СИГНАЛ
-</span>
-
-<div
-class="signal-direction
-${up ? "call" : "put"}"
->
-
-${
-up
-? "↑ НА ПОВЫШЕНИЕ"
-: "↓ НА ПОНИЖЕНИЕ"
-}
-
-</div>
-
-
-<h2>
-${pair}
-</h2>
-
-
-<p class="muted">
-
-Экспирация:
-${minutes} мин
-
-· до ${item.end}
-
-</p>
-
-
-<p
-style="
-font-size:12px;
-color:#aaa
-"
->
-
-Сигнал создан в
-${item.time}.
-
-Это демонстрационная механика,
-не финансовая рекомендация.
-
-</p>
-
-</div>
-
-`;
-
-
-btn.disabled = false;
-
-btn.textContent =
-"⚡ Сгенерировать сигнал";
-
-
-renderHistory();
-
-addXP(3);
-
-}
-
+`,
+question:"Цена закрылась выше открытия. Что это означает непосредственно для свечи?",
+answers:[
+"Свеча имеет бычье тело",
+"Следующая свеча обязательно будет вверх",
+"Рынок гарантированно продолжит рост",
+"Покупатели полностью контролируют следующий период"
+],
+correct:0,
+explain:"Закрытие выше открытия означает бычью свечу. Само по себе это не гарантирует следующего движения."
 },
-1000
-);
 
-}
-
-
-$("#generate").onclick =
-generateSignal;
-
-
-function renderHistory(){
-
-$("#signalHistory").innerHTML =
-state.signals.length
-
-?
-
-state.signals.map(
-x => `
-
-<div
-class="card"
-style="
-margin:8px 0;
-display:flex;
-justify-content:space-between;
-align-items:center
-"
->
-
-<div>
-
-<b>
-${x.pair}
-</b>
-
-<div
-class="muted"
-style="font-size:11px"
->
-
-${x.time}
-·
-${x.minutes} мин
-
-</div>
-
-</div>
-
-
-<b
-class="${x.direction === "CALL"
-? "call"
-: "put"}"
->
-
-${
-x.direction === "CALL"
-? "↑ CALL"
-: "↓ PUT"
-}
-
-</b>
-
-</div>
-
-`
-).join("")
-
-:
-
-`
-
-<div class="card">
-
-<p class="muted">
-История пока пустая.
+{
+title:"Бычье и медвежье движение",
+icon:"↕",
+intro:"Направление движения нельзя определять только по одной свече.",
+content:`
+<h2>Бычий рынок</h2>
+<p>
+Бычье движение связано с последовательностью более высоких
+максимумов и минимумов. Однако одна зелёная свеча ещё не делает
+рынок полноценным восходящим трендом.
 </p>
 
+<h2>Медвежье движение</h2>
+<p>
+Для нисходящего движения характерны более низкие максимумы
+и минимумы.
+</p>
+
+<div class="note">
+<b>Ошибка новичка:</b> увидеть одну большую зелёную свечу
+и назвать весь рынок восходящим.
 </div>
 
-`;
-
-}
-
-
-const qs = [
-
-[
-"Hammer",
-"🕯️",
-"Маленькое тело и длинная нижняя тень",
-"Hammer"
+<h2>Контекст важнее цвета</h2>
+<p>
+Цвет отдельной свечи — только один элемент информации.
+Всегда смотри, где она появилась и что происходило до неё.
+</p>
+`,
+question:"Какой признак сильнее всего помогает определить структуру восходящего тренда?",
+answers:[
+"Наличие только зелёных свечей",
+"Каждая свеча должна быть больше предыдущей",
+"Последовательность повышающихся максимумов и минимумов",
+"Любая свеча возле верхней границы графика"
 ],
+correct:2,
+explain:"Структуру тренда определяют последовательные экстремумы, а не просто количество зелёных свечей."
+},
 
-[
-"Shooting Star",
-"🌠",
-"Маленькое тело и длинная верхняя тень",
-"Shooting Star"
+{
+title:"Тренд",
+icon:"╱",
+intro:"Тренд показывает структуру движения, но не является гарантией.",
+content:`
+<h2>Восходящий тренд</h2>
+<p>
+Цена формирует повышающиеся максимумы и минимумы.
+</p>
+
+<h2>Нисходящий тренд</h2>
+<p>
+Цена формирует понижающиеся максимумы и минимумы.
+</p>
+
+<h2>Что такое смена структуры?</h2>
+<p>
+Когда рынок перестаёт поддерживать прежнюю последовательность
+экстремумов, появляется вероятность изменения характера движения.
+Это ещё не означает, что разворот уже произошёл.
+</p>
+
+<div class="note">
+Не путай <b>изменение структуры</b> с гарантированным разворотом.
+Рынок может сформировать ложный сигнал.
+</div>
+`,
+question:"Цена находилась в восходящем тренде, но впервые сформировала более низкий минимум. Что корректнее сказать?",
+answers:[
+"Разворот гарантирован",
+"Тренд автоматически становится медвежьим",
+"Структура изменилась и требует дальнейшего подтверждения",
+"Теперь можно входить без дополнительного анализа"
 ],
+correct:2,
+explain:"Изменение структуры — важный сигнал, но одного факта недостаточно для гарантированного разворота."
+},
 
-[
-"Doji",
-"✦",
-"Открытие и закрытие находятся близко",
-"Doji"
+{
+title:"Флэт",
+icon:"═",
+intro:"Не каждый участок графика является трендом.",
+content:`
+<h2>Что такое флэт?</h2>
+<p>
+Флэт — состояние, при котором цена некоторое время движется
+в относительно ограниченном диапазоне без выраженного направления.
+</p>
+
+<h2>Почему он важен?</h2>
+<p>
+Торговая логика, работающая в тренде, может вести себя иначе
+в боковом диапазоне. Поэтому сначала важно определить состояние рынка.
+</p>
+
+<div class="note">
+Вопрос не только «куда идёт цена?», но и
+«есть ли вообще сейчас устойчивое направление?»
+</div>
+`,
+question:"Что наиболее характерно для флэта?",
+answers:[
+"Устойчивые повышающиеся максимумы и минимумы",
+"Длительное движение внутри относительно ограниченного диапазона",
+"Обязательное резкое падение",
+"Наличие одной большой свечи"
 ],
+correct:1,
+explain:"Во флэте цена преимущественно колеблется внутри диапазона."
+},
 
-[
-"Engulfing",
-"🕯️🕯️",
-"Тело новой свечи перекрывает предыдущее",
-"Engulfing"
-]
+{
+title:"Поддержка",
+icon:"↓",
+intro:"Поддержка — зона, где цена ранее находила интерес покупателей.",
+content:`
+<h2>Поддержка — это зона, а не магическая линия</h2>
+<p>
+Цена может реагировать рядом с определённым уровнем,
+но не обязана остановиться точно на одной цифре.
+</p>
+
+<h2>Почему возникают реакции?</h2>
+<p>
+В определённых областях рынка может появляться повышенный
+интерес участников. Но сила зоны зависит от контекста.
+</p>
+
+<div class="note">
+Не следует автоматически покупать только потому,
+что цена подошла к поддержке.
+</div>
+`,
+question:"Почему поддержку правильнее рассматривать как зону?",
+answers:[
+"Потому что цена всегда проходит через неё",
+"Потому что реакция может происходить в диапазоне цен",
+"Потому что поддержка работает только на минутном графике",
+"Потому что возле неё всегда начинается рост"
+],
+correct:1,
+explain:"Реакция рынка не обязана происходить на одной конкретной цене."
+},
+
+{
+title:"Сопротивление",
+icon:"↑",
+intro:"Сопротивление — область, где цена ранее встречала продавцов.",
+content:`
+<h2>Смысл сопротивления</h2>
+<p>
+Сопротивление обозначает область, в которой движение вверх
+ранее сталкивалось с продавцами или фиксацией позиций.
+</p>
+
+<h2>Главная ошибка</h2>
+<p>
+Считать, что сопротивление обязательно остановит цену.
+Сильный импульс может привести к пробою.
+</p>
+
+<div class="note">
+Уровень — это область вероятной реакции, а не гарантия.
+</div>
+`,
+question:"Цена подошла к сопротивлению. Какой вывод наиболее корректен?",
+answers:[
+"Цена обязательно развернётся вниз",
+"Пробой невозможен",
+"Зона может вызвать реакцию, но необходимо оценивать контекст",
+"Нужно немедленно открывать сделку"
+],
+correct:2,
+explain:"Уровень повышает вероятность реакции, но не определяет её заранее."
+},
+
+{
+title:"Пробой",
+icon:"↗",
+intro:"Пробой происходит, когда цена выходит за пределы важной области.",
+content:`
+<h2>Пробой уровня</h2>
+<p>
+Пробой — выход цены за пределы ранее наблюдаемой зоны.
+Но сам факт выхода ещё не гарантирует продолжения.
+</p>
+
+<h2>Почему возникают ложные пробои?</h2>
+<p>
+Цена может временно выйти за уровень, собрать ликвидность,
+а затем вернуться обратно.
+</p>
+
+<div class="note">
+После пробоя важно смотреть не только на сам выход,
+но и на реакцию цены после него.
+</div>
+`,
+question:"Что чаще всего отличает качественный анализ пробоя от простого наблюдения за пересечением уровня?",
+answers:[
+"Только цвет свечи",
+"Контекст, характер выхода и последующая реакция цены",
+"Размер экрана",
+"Количество индикаторов"
+],
+correct:1,
+explain:"Само пересечение уровня — лишь факт. Важен контекст и поведение цены после выхода."
+},
+
+{
+title:"Ложный пробой",
+icon:"↩",
+intro:"Ложные пробои особенно часто заставляют новичков входить слишком поздно.",
+content:`
+<h2>Как выглядит ложный пробой?</h2>
+<p>
+Цена выходит за важную область, но не получает устойчивого
+продолжения и возвращается обратно.
+</p>
+
+<h2>Почему это опасно?</h2>
+<p>
+Трейдер может принять временный выход за уровень за настоящий
+пробой и открыть позицию в момент, когда преимущество уже исчезает.
+</p>
+`,
+question:"Цена пробила сопротивление, но следующими свечами быстро вернулась под уровень. Что это может означать?",
+answers:[
+"Гарантированный новый восходящий тренд",
+"Возможный ложный пробой",
+"Уровень перестал существовать навсегда",
+"Гарантированный обвал"
+],
+correct:1,
+explain:"Возврат под сопротивление после пробоя может быть признаком ложного выхода."
+},
+
+{
+title:"Таймфреймы",
+icon:"◷",
+intro:"Одна и та же цена выглядит совершенно по-разному на разных масштабах.",
+content:`
+<h2>Что такое таймфрейм?</h2>
+<p>
+Таймфрейм определяет, какой промежуток времени представляет
+одна свеча.
+</p>
+
+<h2>Большой и маленький масштаб</h2>
+<p>
+На маленьком таймфрейме будет больше рыночного шума.
+Больший масштаб позволяет увидеть более крупную структуру.
+</p>
+
+<div class="note">
+Не стоит считать, что маленький таймфрейм автоматически
+даёт более точный прогноз.
+</div>
+`,
+question:"Почему одна и та же свеча может выглядеть по-разному при смене таймфрейма?",
+answers:[
+"Цена физически меняется",
+"На разных масштабах объединяются разные промежутки движения",
+"График становится неправильным",
+"Индикатор меняет прошлые цены"
+],
+correct:1,
+explain:"Каждый таймфрейм агрегирует данные за свой временной интервал."
+},
+
+{
+title:"Волатильность",
+icon:"≈",
+intro:"Волатильность показывает характер и амплитуду движения цены.",
+content:`
+<h2>Высокая волатильность</h2>
+<p>
+Цена может двигаться резко и быстро, увеличивая неопределённость
+и потенциальный размер движения.
+</p>
+
+<h2>Низкая волатильность</h2>
+<p>
+Движение становится более сжатым, а рынок может готовиться
+к расширению диапазона — но направление заранее неизвестно.
+</p>
+`,
+question:"Что означает высокая волатильность?",
+answers:[
+"Цена гарантированно будет расти",
+"Цена гарантированно будет падать",
+"Цена совершает относительно большие движения за выбранный период",
+"Рынок становится полностью предсказуемым"
+],
+correct:2,
+explain:"Волатильность описывает величину и интенсивность движения, а не его направление."
+},
+
+{
+title:"Объём",
+icon:"▥",
+intro:"Объём может дополнять анализ, но не является машиной предсказания.",
+content:`
+<h2>Что показывает объём?</h2>
+<p>
+Объём отражает активность торговли согласно данным конкретного
+рынка или инструмента.
+</p>
+
+<h2>Почему его используют?</h2>
+<p>
+Резкое изменение активности может помочь оценить силу движения
+вместе с другими факторами.
+</p>
+`,
+question:"Как правильнее использовать объём?",
+answers:[
+"Как самостоятельную гарантию направления",
+"Как дополнительную информацию в контексте движения цены",
+"Как замену управлению риском",
+"Как способ узнать будущую цену"
+],
+correct:1,
+explain:"Объём полезен как дополнительный контекст, но не гарантирует направление."
+},
+
+{
+title:"Паттерны",
+icon:"◇",
+intro:"Паттерн — это наблюдаемая структура цены, а не команда открыть сделку.",
+content:`
+<h2>Почему паттерны работают не всегда?</h2>
+<p>
+Любая формация возникает внутри определённого рыночного контекста.
+Одинаковая форма может иметь разное значение в разных условиях.
+</p>
+
+<h2>Как смотреть на паттерн?</h2>
+<p>
+Важно учитывать место формирования, структуру рынка,
+уровни и реакцию цены.
+</p>
+`,
+question:"Почему одинаковый паттерн не должен автоматически приводить к одинаковой сделке?",
+answers:[
+"Потому что паттерны всегда случайны",
+"Потому что контекст и условия формирования могут отличаться",
+"Потому что графики не показывают цену",
+"Потому что свечи не имеют значения"
+],
+correct:1,
+explain:"Одинаковая форма может появляться в совершенно разных рыночных условиях."
+},
+
+{
+title:"Индикаторы",
+icon:"∿",
+intro:"Индикатор перерабатывает уже существующие данные цены.",
+content:`
+<h2>Что делает индикатор?</h2>
+<p>
+Большинство технических индикаторов рассчитывается на основе
+цены, объёма или производных от них данных.
+</p>
+
+<h2>Главная ошибка</h2>
+<p>
+Использовать десятки индикаторов одновременно и считать,
+что больше сигналов означает больше точности.
+</p>
+
+<div class="note">
+Индикатор — инструмент анализа, а не предсказатель будущего.
+</div>
+`,
+question:"Почему добавление большого количества индикаторов не гарантирует лучший результат?",
+answers:[
+"Индикаторы запрещены",
+"Они могут давать дублирующуюся информацию и создавать конфликт сигналов",
+"Они всегда показывают противоположное",
+"Индикаторы работают только на телефоне"
+],
+correct:1,
+explain:"Много индикаторов может усложнить принятие решения вместо повышения качества анализа."
+},
+
+{
+title:"Риск",
+icon:"⚠",
+intro:"Управление риском — одна из самых важных частей трейдинга.",
+content:`
+<h2>Риск существует всегда</h2>
+<p>
+Даже хорошо обоснованная идея может оказаться ошибочной.
+Поэтому до открытия позиции важно понимать, сколько ты готов потерять.
+</p>
+
+<h2>Почему размер позиции важен?</h2>
+<p>
+Слишком большая позиция может привести к эмоциональным решениям
+и быстрому увеличению потерь.
+</p>
+
+<div class="note">
+Сначала определяется допустимый риск.
+Только потом рассматривается потенциальная сделка.
+</div>
+`,
+question:"Какой принцип наиболее здравый?",
+answers:[
+"Рискнуть всем ради максимальной прибыли",
+"Увеличивать размер позиции после каждой ошибки",
+"Определить допустимый риск до открытия сделки",
+"Не учитывать размер позиции"
+],
+correct:2,
+explain:"Размер риска должен быть известен заранее, а не определяться эмоциями после входа."
+},
+
+{
+title:"Психология",
+icon:"◉",
+intro:"Даже хорошая стратегия может разрушаться из-за поведения трейдера.",
+content:`
+<h2>Основные психологические ловушки</h2>
+<ul>
+<li>страх упустить движение;</li>
+<li>желание отыграться;</li>
+<li>перевышение размера позиции;</li>
+<li>серия импульсивных решений;</li>
+<li>попытка доказать рынку свою правоту.</li>
+</ul>
+
+<h2>Что такое FOMO?</h2>
+<p>
+Это страх пропустить возможность, из-за которого человек
+может входить без полноценного анализа.
+</p>
+`,
+question:"Трейдер пропустил движение и решил немедленно войти только потому, что цена уже сильно выросла. Что это похоже?",
+answers:[
+"Дисциплину",
+"FOMO",
+"Хеджирование",
+"Диверсификацию"
+],
+correct:1,
+explain:"FOMO — страх упустить движение, который часто приводит к импульсивным решениям."
+},
+
+{
+title:"Дисциплина",
+icon:"✓",
+intro:"Дисциплина превращает набор правил в повторяемый процесс.",
+content:`
+<h2>Что такое торговый план?</h2>
+<p>
+Это заранее определённые правила: условия входа,
+условия отказа от сделки, допустимый риск и действия
+при изменении сценария.
+</p>
+
+<h2>Зачем он нужен?</h2>
+<p>
+Чтобы решение принималось до эмоционального момента,
+а не придумывалось после открытия позиции.
+</p>
+`,
+question:"Когда лучше всего определить правила риска?",
+answers:[
+"После убытка",
+"Когда цена уже резко движется",
+"До открытия сделки",
+"Только после серии побед"
+],
+correct:2,
+explain:"Правила должны быть определены заранее."
+},
+
+{
+title:"Торговый план",
+icon:"☷",
+intro:"План помогает превратить хаотичные действия в систему.",
+content:`
+<h2>Минимальная структура плана</h2>
+<ul>
+<li>Что я анализирую?</li>
+<li>Какой сценарий считаю основным?</li>
+<li>Что должно произойти для входа?</li>
+<li>Когда я НЕ вхожу?</li>
+<li>Какой допустимый риск?</li>
+<li>Что делаю, если сценарий ломается?</li>
+</ul>
+
+<div class="note">
+Хороший план должен быть настолько понятным,
+чтобы его можно было проверить после завершения сделки.
+</div>
+`,
+question:"Что делает торговый план полезным?",
+answers:[
+"Он обещает прибыль",
+"Он заранее описывает условия и действия трейдера",
+"Он исключает все убытки",
+"Он заменяет анализ рынка"
+],
+correct:1,
+explain:"План структурирует процесс, но не способен убрать неопределённость рынка."
+},
+
+{
+title:"Журнал сделок",
+icon:"▤",
+intro:"Записи позволяют анализировать не только рынок, но и собственное поведение.",
+content:`
+<h2>Что записывать?</h2>
+<ul>
+<li>контекст рынка;</li>
+<li>причину входа;</li>
+<li>риск;</li>
+<li>результат;</li>
+<li>эмоциональное состояние;</li>
+<li>ошибки и нарушения плана.</li>
+</ul>
+
+<h2>Зачем?</h2>
+<p>
+Без журнала легко запомнить отдельные яркие сделки и забыть
+реальную статистику.
+</p>
+`,
+question:"Какая запись наиболее полезна для последующего анализа?",
+answers:[
+"Только сумма прибыли",
+"Только время входа",
+"Причина входа, контекст, риск и соблюдение плана",
+"Только название актива"
+],
+correct:2,
+explain:"Нужно фиксировать процесс, чтобы понимать, почему был получен конкретный результат."
+},
+
+{
+title:"Сценарии рынка",
+icon:"⌁",
+intro:"Профессиональный подход — не угадывать одно будущее, а рассматривать сценарии.",
+content:`
+<h2>Основной сценарий</h2>
+<p>
+Что должно произойти, если твоя гипотеза окажется верной?
+</p>
+
+<h2>Альтернативный сценарий</h2>
+<p>
+Что покажет, что первоначальная идея больше не актуальна?
+</p>
+
+<h2>Нет сделки</h2>
+<p>
+Иногда лучший сценарий — ничего не делать, если условия
+не дают достаточного преимущества.
+</p>
+`,
+question:"Почему вариант «не входить» должен существовать в торговом плане?",
+answers:[
+"Потому что трейдинг запрещает сделки",
+"Потому что отсутствие преимущества тоже является информацией",
+"Потому что рынок всегда плохой",
+"Потому что прибыль невозможна"
+],
+correct:1,
+explain:"Отсутствие подходящих условий — полноценный результат анализа."
+},
+
+{
+title:"Практический анализ",
+icon:"⌁",
+intro:"Финальный этап — объединить структуру, уровни, таймфрейм и риск.",
+content:`
+<h2>Алгоритм анализа</h2>
+
+<ol>
+<li>Определи состояние рынка.</li>
+<li>Посмотри старший контекст.</li>
+<li>Отметь важные зоны.</li>
+<li>Изучи реакцию цены.</li>
+<li>Определи возможные сценарии.</li>
+<li>Оцени риск.</li>
+<li>Только после этого рассматривай сделку.</li>
+</ol>
+
+<div class="note">
+Главная цель анализа — не найти сделку любой ценой.
+Цель — найти ситуацию, в которой ты понимаешь,
+что именно делаешь и какой риск принимаешь.
+</div>
+`,
+question:"Какой порядок действий выглядит наиболее рациональным?",
+answers:[
+"Сначала открыть сделку, потом придумать объяснение",
+"Сначала определить риск и контекст, затем оценить сценарий",
+"Сначала выбрать максимальный размер позиции",
+"Сначала найти самый быстрый таймфрейм"
+],
+correct:1,
+explain:"Анализ должен предшествовать решению, а риск необходимо учитывать заранее."
+}
 
 ];
 
 
-let qi = 0;
+/* =========================
+   STATE
+========================= */
 
-
-function drawCandle(type){
-
-const colors = [
-"#22c55e",
-"#ef4444",
-"#22c55e",
-"#ef4444"
-];
-
-const c =
-colors[
-qi % colors.length
-];
-
-
-$("#candleChart").innerHTML = `
-
-<svg
-viewBox="0 0 500 190"
-preserveAspectRatio="none"
->
-
-<path
-d="
-M0 145
-Q80 100 150 125
-T300 75
-T500 55
-"
-fill="none"
-stroke="#6d5a8f"
-stroke-width="3"
-opacity=".45"
-/>
-
-<line
-x1="250"
-y1="35"
-x2="250"
-y2="160"
-stroke="#bbb"
-stroke-width="5"
-/>
-
-<rect
-x="220"
-y="72"
-width="60"
-height="45"
-rx="6"
-fill="${c}"
-/>
-
-</svg>
-
-`;
-
-}
-
-
-function renderQuestion(){
-
-const q =
-qs[
-qi % qs.length
-];
-
-
-$("#practiceTitle").textContent =
-"Как называется этот паттерн?";
-
-
-drawCandle(
-q[0]
-);
-
-
-const opts = [
-
-q[0],
-
-...qs
-.filter(
-x => x[0] !== q[0]
-)
-.slice(0,3)
-.map(
-x => x[0]
-)
-
-].sort(
-() => Math.random() - .5
-);
-
-
-$("#answers").innerHTML =
-opts.map(
-o => `
-
-<button
-class="answer"
-data-answer="${o}"
-data-correct="${q[0]}"
->
-
-${o}
-
-</button>
-
-`
-).join("");
-
-}
-
-
-$("#answers").addEventListener(
-"click",
-e => {
-
-const b =
-e.target.closest(
-".answer"
-);
-
-if(!b)return;
-
-
-if(
-b.dataset.answer ===
-b.dataset.correct
-){
-
-b.classList.add(
-"correct"
-);
-
-addXP(10);
-
-toast(
-"Правильно! Хороший анализ 🧠"
-);
-
-$$(".answer").forEach(
-x => x.disabled = true
-);
-
-}else{
-
-b.classList.add(
-"wrong"
-);
-
-toast(
-"Не угадал. Изучи описание и попробуй снова."
-);
-
-}
-
-}
-);
-
-
-$("#nextQuestion").onclick =
-() => {
-
-qi++;
-
-renderQuestion();
-
+let state = JSON.parse(localStorage.getItem("ava_state") || "null") || {
+  completed:[],
+  score:0,
+  testScore:null
 };
 
-
-$("#telegramInfo").onclick =
-() => {
-
-$("#modalBody").innerHTML = `
-
-<h2>
-🔐 Вход через Telegram
-</h2>
-
-<p
-class="muted"
-style="line-height:1.6"
->
-
-В рабочей версии пользователь
-открывает Mini App внутри Telegram.
-
-Сервер проверяет Telegram initData,
-получает Telegram ID и через Bot API
-проверяет членство в закрытом сообществе.
-
-Только после успешной проверки
-создаётся профиль.
-
-</p>
+let currentLesson=0;
+let testIndex=0;
+let testScore=0;
+let testAnswered=false;
 
 
-<p
-class="muted"
-style="line-height:1.6"
->
+/* =========================
+   NAVIGATION
+========================= */
 
-Токен бота хранится только
-на сервере.
+function showView(id,btn){
 
-В HTML его размещать нельзя.
+  document.querySelectorAll(".view")
+    .forEach(v=>v.classList.remove("active"));
 
-</p>
+  document.getElementById(id).classList.add("active");
 
+  document.querySelectorAll(".nav button")
+    .forEach(b=>b.classList.remove("active"));
 
-<button
-class="btn"
-id="modalOk"
->
-Понятно
-</button>
+  if(btn) btn.classList.add("active");
 
-`;
+  window.scrollTo({top:0,behavior:"smooth"});
 
+  updateStats();
 
-$("#modal").classList.add(
-"show"
-);
-
-
-$("#modalOk").onclick =
-() =>
-$("#modal").classList.remove(
-"show"
-);
-
-};
-
-
-$("#closeModal").onclick =
-() =>
-$("#modal").classList.remove(
-"show"
-);
-
-
-function telegram(){
-
-try{
-
-const tg =
-window.Telegram?.WebApp;
-
-if(tg){
-
-tg.ready();
-
-tg.expand();
-
-
-const u =
-tg.initDataUnsafe?.user;
-
-
-if(u){
-
-$("#profileName").textContent =
-u.first_name +
-(
-u.last_name
-? " " + u.last_name
-: ""
-);
-
-
-$("#userAvatar").textContent =
-(
-u.first_name || "A"
-)[0].toUpperCase();
-
-
-$("#bigAvatar").textContent =
-(
-u.first_name || "A"
-)[0].toUpperCase();
-
-}
-
-}
-
-}catch(e){}
-
+  if(id==="academy") renderCourses();
+  if(id==="home") renderHome();
+  if(id==="dictionary") renderTerms();
+  if(id==="profile") renderProfile();
+  if(id==="test" && !testAnswered) startTest();
 }
 
 
-renderLessons();
+function openProfile(){
+  showView("profile");
+}
 
-renderHistory();
 
-renderQuestion();
+/* =========================
+   COURSES
+========================= */
 
-renderStats();
+function renderCourses(){
 
-telegram();
+  const html=lessons.map((l,i)=>{
+
+    const done=state.completed.includes(i);
+
+    return `
+      <button class="course" onclick="openLesson(${i})">
+
+        <span class="num">${String(i+1).padStart(2,"0")}</span>
+
+        <div class="courseIcon">${l.icon}</div>
+
+        <h3>${l.title}</h3>
+
+        <p>${l.intro}</p>
+
+        ${done ? `<div class="done">✓ Пройдено</div>` : ""}
+
+      </button>
+    `;
+
+  }).join("");
+
+  document.getElementById("academyCourses").innerHTML=html;
+}
+
+
+function renderHome(){
+
+  const html=lessons.slice(0,6).map((l,i)=>{
+
+    const done=state.completed.includes(i);
+
+    return `
+      <button class="course" onclick="openLesson(${i})">
+
+        <span class="num">${String(i+1).padStart(2,"0")}</span>
+
+        <div class="courseIcon">${l.icon}</div>
+
+        <h3>${l.title}</h3>
+
+        <p>${l.intro}</p>
+
+        ${done ? `<div class="done">✓ Пройдено</div>` : ""}
+
+      </button>
+    `;
+
+  }).join("");
+
+  document.getElementById("homeCourses").innerHTML=html;
+}
+
+
+/* =========================
+   LESSON
+========================= */
+
+function openLesson(i){
+
+  currentLesson=i;
+
+  const l=lessons[i];
+
+  document.getElementById("lessonTitle").textContent=
+    `${i+1}. ${l.title}`;
+
+  document.getElementById("lessonIntro").textContent=l.intro;
+
+  document.getElementById("lessonContent").innerHTML=l.content;
+
+  document.getElementById("lessonQuestion").textContent=l.question;
+
+  const answers=document.getElementById("lessonAnswers");
+
+  answers.innerHTML=l.answers.map((a,n)=>`
+    <button class="answer" onclick="answerLesson(${n},this)">
+      ${String.fromCharCode(65+n)}. ${a}
+    </button>
+  `).join("");
+
+  const feedback=document.getElementById("lessonFeedback");
+
+  feedback.className="feedback";
+  feedback.innerHTML="";
+
+  showView("lesson");
+
+}
+
+
+function answerLesson(index,button){
+
+  const l=lessons[currentLesson];
+
+  document
+    .querySelectorAll("#lessonAnswers .answer")
+    .forEach(b=>b.disabled=true);
+
+  if(index===l.correct){
+
+    button.classList.add("correct");
+
+    if(!state.completed.includes(currentLesson)){
+
+      state.completed.push(currentLesson);
+      state.score+=10;
+
+      saveState();
+
+    }
+
+    document.getElementById("lessonFeedback").className=
+      "feedback show";
+
+    document.getElementById("lessonFeedback").style.color=
+      "var(--green)";
+
+    document.getElementById("lessonFeedback").innerHTML=
+      `✓ Верно.<br>${l.explain}`;
+
+  }else{
+
+    button.classList.add("wrong");
+
+    document.getElementById("lessonFeedback").className=
+      "feedback show";
+
+    document.getElementById("lessonFeedback").style.color=
+      "var(--red)";
+
+    document.getElementById("lessonFeedback").innerHTML=
+      `✕ Не совсем.<br>${l.explain}`;
+
+    setTimeout(()=>{
+
+      document
+        .querySelectorAll("#lessonAnswers .answer")
+        .forEach(b=>b.disabled=false);
+
+      button.classList.remove("wrong");
+
+    },1100);
+
+  }
+
+  updateStats();
+
+}
+
+
+/* =========================
+   FINAL TEST
+========================= */
+
+const finalQuestions=[
+
+{
+q:"Цена находится в восходящей структуре. Она пробивает максимум, но следующая свеча быстро возвращается ниже уровня. Какой вывод наиболее осторожный?",
+a:[
+"Продолжение роста гарантировано",
+"Возможен ложный пробой, требуется оценка реакции",
+"Тренд автоматически стал нисходящим",
+"Нужно увеличить размер позиции"
+],
+c:1
+},
+
+{
+q:"На старшем таймфрейме выраженный рост, на младшем — несколько красных свечей. Что логичнее?",
+a:[
+"Старший тренд автоматически отменён",
+"Красные свечи ничего не значат",
+"Нужно учитывать оба масштаба и не путать коррекцию со сменой структуры",
+"Нужно сразу открывать продажу"
+],
+c:2
+},
+
+{
+q:"Цена находится возле сопротивления. Покупательская свеча закрылась выше уровня, но объём и продолжение движения отсутствуют. Что делать с таким наблюдением?",
+a:[
+"Считать пробой гарантированным",
+"Рассматривать его как один из сценариев и ждать дополнительного подтверждения",
+"Игнорировать уровень",
+"Увеличить риск"
+],
+c:1
+},
+
+{
+q:"Трейдер получил три убытка подряд и решил увеличить следующую позицию в четыре раза, чтобы вернуть деньги. Какую ошибку он совершает?",
+a:[
+"Диверсификацию",
+"Мартингейл/отыгрывание убытка",
+"Хеджирование",
+"Мультитаймфрейм анализ"
+],
+c:1
+},
+
+{
+q:"Почему одна зелёная свеча не является достаточным доказательством восходящего тренда?",
+a:[
+"Потому что зелёных свечей не бывает",
+"Потому что тренд определяется структурой движения, а не одной свечой",
+"Потому что свечи не показывают цену",
+"Потому что зелёная свеча всегда ложная"
+],
+c:1
+},
+
+{
+q:"Если риск на сделку заранее не определён, что становится особенно опасным?",
+a:[
+"Размер позиции может определяться эмоциями",
+"График перестаёт работать",
+"Таймфрейм исчезает",
+"Поддержка превращается в сопротивление"
+],
+c:0
+},
+
+{
+q:"Рынок долго находится в диапазоне, а трейдер использует стратегию, рассчитанную на сильный тренд. Какой риск возникает?",
+a:[
+"Стратегия автоматически станет лучше",
+"Сигналы могут чаще терять преимущество из-за неподходящего рыночного режима",
+"Прибыль гарантирована",
+"Риск становится нулевым"
+],
+c:1
+},
+
+{
+q:"Что наиболее точно описывает роль технического индикатора?",
+a:[
+"Он гарантирует будущее движение",
+"Он перерабатывает данные и помогает анализировать рынок",
+"Он знает действия крупных участников",
+"Он отменяет необходимость риск-менеджмента"
+],
+c:1
+},
+
+{
+q:"Цена пробивает поддержку и закрывается ниже, но затем возвращается выше уровня. Какой сценарий стоит рассмотреть?",
+a:[
+"Ложный пробой",
+"Гарантированный обвал",
+"Гарантированный рост",
+"Полное отсутствие информации"
+],
+c:0
+},
+
+{
+q:"Почему уровень лучше воспринимать как область?",
+a:[
+"Потому что цена может реагировать в некотором диапазоне",
+"Потому что точных цен не существует",
+"Потому что уровень всегда неправильный",
+"Потому что все сделки происходят случайно"
+],
+c:0
+},
+
+{
+q:"Какой вопрос наиболее полезно задать перед входом?",
+a:[
+"Сколько я заработаю гарантированно?",
+"Что должно произойти, чтобы моя гипотеза оказалась ошибочной?",
+"Какой индикатор самый красивый?",
+"Можно ли поставить максимальный размер?"
+],
+c:1
+},
+
+{
+q:"Что такое FOMO в контексте торговли?",
+a:[
+"Системное управление риском",
+"Страх упустить движение, приводящий к импульсивному входу",
+"Тип таймфрейма",
+"Вид свечи"
+],
+c:1
+},
+
+{
+q:"Что является самым слабым основанием для сделки?",
+a:[
+"Полный сценарий с условиями",
+"Контекст рынка",
+"Желание отыграть предыдущий убыток",
+"Определённый заранее риск"
+],
+c:2
+},
+
+{
+q:"Почему отсутствие сделки иногда является правильным решением?",
+a:[
+"Потому что трейдинг невозможен",
+"Потому что рынок всегда плох",
+"Потому что подходящие условия могут отсутствовать",
+"Потому что прибыль запрещена"
+],
+c:2
+},
+
+{
+q:"Какой подход наиболее близок к системному анализу?",
+a:[
+"Угадать направление по одной свече",
+"Определить контекст, структуру, зоны, сценарии и риск",
+"Использовать как можно больше индикаторов",
+"После входа придумать причину сделки"
+],
+c:1
+}
+
+];
+
+
+function startTest(){
+
+  testIndex=0;
+  testScore=0;
+  testAnswered=false;
+
+  renderTest();
+
+}
+
+
+function renderTest(){
+
+  const q=finalQuestions[testIndex];
+
+  document.getElementById("testNumber").textContent=
+    `Вопрос ${testIndex+1}/${finalQuestions.length}`;
+
+  document.getElementById("testPoints").textContent=
+    `${testScore} баллов`;
+
+  document.getElementById("testProgress").style.width=
+    `${(testIndex/finalQuestions.length)*100}%`;
+
+  document.getElementById("testQuestion").textContent=q.q;
+
+  document.getElementById("testAnswers").innerHTML=
+    q.a.map((a,n)=>`
+      <button class="answer" onclick="answerTest(${n},this)">
+        ${String.fromCharCode(65+n)}. ${a}
+      </button>
+    `).join("");
+
+  const feedback=document.getElementById("testFeedback");
+
+  feedback.className="feedback";
+
+  feedback.innerHTML="";
+
+  document.getElementById("nextQuestion").style.display="none";
+
+}
+
+
+function answerTest(index,button){
+
+  if(testAnswered)return;
+
+  testAnswered=true;
+
+  const q=finalQuestions[testIndex];
+
+  document
+    .querySelectorAll("#testAnswers .answer")
+    .forEach(b=>b.disabled=true);
+
+  if(index===q.c){
+
+    button.classList.add("correct");
+    testScore+=10;
+
+  }else{
+
+    button.classList.add("wrong");
+
+    document
+      .querySelectorAll("#testAnswers .answer")[q.c]
+      .classList.add("correct");
+
+  }
+
+  const feedback=document.getElementById("testFeedback");
+
+  feedback.className="feedback show";
+
+  feedback.style.color=
+    index===q.c ? "var(--green)" : "var(--red)";
+
+  feedback.innerHTML=
+    index===q.c
+      ? "✓ Верно. Хороший анализ."
+      : "✕ Неверно. Обрати внимание на правильный вариант.";
+
+  document.getElementById("nextQuestion").style.display="inline-block";
+
+}
+
+
+function nextTestQuestion(){
+
+  if(testIndex<finalQuestions.length-1){
+
+    testIndex++;
+    testAnswered=false;
+    renderTest();
+
+  }else{
+
+    state.testScore=testScore;
+    state.score+=testScore;
+    saveState();
+
+    document.getElementById("testQuestion").innerHTML=
+      `Экзамен завершён 🎓`;
+
+    document.getElementById("testAnswers").innerHTML=`
+      <div class="note">
+        <h2>${testScore}/150</h2>
+        <p>
+          ${getGrade(testScore)}
+        </p>
+      </div>
+    `;
+
+    document.getElementById("nextQuestion").style.display="none";
+
+    document.getElementById("testProgress").style.width="100%";
+
+    updateStats();
+
+  }
+
+}
+
+
+function getGrade(score){
+
+  if(score>=140)
+    return "Отличный результат. Ты хорошо ориентируешься в материале.";
+
+  if(score>=110)
+    return "Хороший результат. Основы усвоены, но есть темы для повторения.";
+
+  if(score>=80)
+    return "Средний результат. Рекомендуется ещё раз пройти ключевые разделы.";
+
+  return "Материал стоит повторить. Не спеши переходить к реальной торговле.";
+
+}
+
+
+/* =========================
+   DICTIONARY
+========================= */
+
+const terms=[
+
+["Ask","Цена, по которой можно купить актив."],
+["Bid","Цена, по которой можно продать актив."],
+["Таймфрейм","Период времени, представленный одной свечой."],
+["Волатильность","Интенсивность и амплитуда изменения цены."],
+["Тренд","Устойчивое направленное движение рынка."],
+["Флэт","Движение цены внутри относительно ограниченного диапазона."],
+["Поддержка","Зона, где ранее появлялся интерес покупателей."],
+["Сопротивление","Зона, где ранее появлялся интерес продавцов."],
+["Пробой","Выход цены за пределы важной области."],
+["Ложный пробой","Выход за уровень с последующим возвратом."],
+["Коррекция","Движение против основного направления."],
+["Ликвидность","Способность рынка проводить сделки с относительно небольшим влиянием на цену."],
+["Спред","Разница между ценами Bid и Ask."],
+["Риск","Размер потенциальной потери, которую трейдер принимает."],
+["FOMO","Страх упустить движение, способный привести к импульсивному решению."],
+["Торговый план","Заранее определённые правила анализа и действий."],
+["Паттерн","Наблюдаемая повторяющаяся структура движения цены."],
+["Индикатор","Расчётный инструмент для анализа рыночных данных."],
+["Дисциплина","Способность соблюдать заранее определённые правила."],
+["Журнал сделок","Записи, позволяющие анализировать решения и результаты."]
+];
+
+
+function renderTerms(){
+
+  const search=(document.getElementById("termSearch")?.value || "")
+    .toLowerCase();
+
+  const list=terms.filter(t=>
+    t[0].toLowerCase().includes(search) ||
+    t[1].toLowerCase().includes(search)
+  );
+
+  document.getElementById("terms").innerHTML=
+    list.map(t=>`
+      <div class="term">
+        <b>${t[0]}</b>
+        <p>${t[1]}</p>
+      </div>
+    `).join("");
+
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function renderProfile(){
+
+  document.getElementById("pLessons").textContent=
+    state.completed.length;
+
+  document.getElementById("pScore").textContent=
+    state.score;
+
+  document.getElementById("pTest").textContent=
+    state.testScore===null ? "—" : state.testScore;
+
+}
+
+
+function openLogin(){
+  document.getElementById("loginModal").classList.add("show");
+}
+
+function closeLogin(){
+  document.getElementById("loginModal").classList.remove("show");
+}
+
+function googlePlaceholder(){
+
+  alert(
+    "Google Sign-In готовится к подключению. " +
+    "Для настоящего входа необходимо подключить Firebase Authentication или Supabase Auth."
+  );
+
+}
+
+
+/* =========================
+   STATE
+========================= */
+
+function saveState(){
+
+  localStorage.setItem(
+    "ava_state",
+    JSON.stringify(state)
+  );
+
+}
+
+
+function resetProgress(){
+
+  if(!confirm("Сбросить весь прогресс?"))return;
+
+  state={
+    completed:[],
+    score:0,
+    testScore:null
+  };
+
+  saveState();
+
+  updateStats();
+  renderProfile();
+  renderCourses();
+  renderHome();
+
+  alert("Прогресс сброшен.");
+
+}
+
+
+function updateStats(){
+
+  document.getElementById("statLessons").textContent=
+    `${state.completed.length}/${lessons.length}`;
+
+  document.getElementById("statScore").textContent=
+    state.score;
+
+  document.getElementById("statTest").textContent=
+    state.testScore===null ? "—" : `${state.testScore}/150`;
+
+}
+
+
+/* INIT */
+
+renderHome();
+renderCourses();
+renderTerms();
+updateStats();
 
 </script>
 
