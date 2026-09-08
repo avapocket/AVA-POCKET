@@ -1,540 +1,163 @@
-<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#080b15"><title>AVA ACADEMY — Академия трейдинга</title><style>/* ============================================================
-   AVA ACADEMY — V5
-   Полностью самостоятельное приложение
-   ============================================================ */
-:root{--bg:#080b15;--panel:#101522;--panel2:#151b2b;--text:#f4f7ff;--muted:#8993aa;--line:#252d40;--blue:#4d8dff;--green:#28d17c;--red:#ff5364;--gold:#ffca4d;--purple:#8d6cff;--cyan:#27d9ff}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-body{overflow-x:hidden}
-button,input{font:inherit}
-button{border:0;color:inherit;cursor:pointer}
-.app{min-height:100vh}
-.auth{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 50% 10%,#17264a 0,#0b1020 38%,#05070e 100%);display:flex;align-items:center;justify-content:center;padding:20px}
-.auth.hidden{display:none}
-.auth-card{width:min(430px,100%);background:rgba(15,21,36,.96);border:1px solid #28334e;border-radius:28px;padding:32px;box-shadow:0 30px 90px #0009}
-.logo{font-weight:900;letter-spacing:-1px}
-.logo span{color:var(--blue)}
-.auth-logo{text-align:center;font-size:34px;margin-bottom:8px}
-.auth-sub{text-align:center;color:var(--muted);margin-bottom:28px}
-.field{margin-bottom:15px}
-.field label{display:block;font-size:13px;color:#aeb7c9;margin:0 0 7px 3px}
-.field input{width:100%;background:#0b101d;border:1px solid #29344b;border-radius:14px;padding:14px 15px;color:#fff;outline:0}
-.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #4d8dff18}
-.primary{width:100%;background:linear-gradient(135deg,#4d8dff,#735bff);padding:15px;border-radius:15px;font-weight:800;box-shadow:0 10px 30px #4d8dff28}
-.auth-note{font-size:11px;color:#68748b;line-height:1.5;text-align:center;margin-top:14px}
-.app-shell{display:none;min-height:100vh}
-.app-shell.active{display:block}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:#0c111e;border-right:1px solid var(--line);padding:25px 15px;z-index:100}
-.side-logo{font-size:24px;padding:0 12px 30px}
-.side-user{background:#111827;border:1px solid #232d42;border-radius:18px;padding:15px;margin-bottom:22px}
-.side-user-name{font-weight:800}
-.side-user-level{font-size:12px;color:var(--muted);margin-top:4px}
-.side-nav{display:flex;flex-direction:column;gap:6px}
-.side-nav button{background:transparent;text-align:left;padding:13px 14px;border-radius:13px;color:#9ba5b9;display:flex;align-items:center;gap:11px}
-.side-nav button.active{background:#18233a;color:#fff}
-.side-nav svg{width:20px;height:20px}
-.main{margin-left:240px;padding:28px 32px 100px;max-width:1500px}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
-.page-title{font-size:30px;font-weight:900;letter-spacing:-1px}
-.page-sub{color:var(--muted);font-size:14px;margin-top:5px}
-.top-coins{background:#141c2e;border:1px solid #27334b;padding:9px 14px;border-radius:13px;color:#ffd96a;font-weight:800}
-.page{display:none}
-.page.active{display:block}
-.grid{display:grid;gap:18px}
-.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.card{background:linear-gradient(145deg,#111827,#0e1421);border:1px solid var(--line);border-radius:21px;padding:20px}
-.card-title{font-weight:800;font-size:17px;margin-bottom:7px}
-.muted{color:var(--muted)}
-.hero{padding:28px;background:radial-gradient(circle at 90% 0,#243c70 0,#141c2d 35%,#101522 75%);border:1px solid #293958;border-radius:25px;position:relative;overflow:hidden}
-.hero h1{font-size:38px;line-height:1.02;max-width:650px;letter-spacing:-1.8px}
-.hero p{max-width:620px;color:#aab4c7;margin:12px 0 20px;line-height:1.55}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
-.btn{padding:12px 17px;border-radius:13px;background:#192236;font-weight:750}
-.btn.blue{background:linear-gradient(135deg,#4d8dff,#765fff)}
-.btn.green{background:#153c2c;color:#6effb0}
-.btn.red{background:#401b25;color:#ff8c98}
-.stat{min-height:120px}
-.stat-value{font-size:30px;font-weight:900;margin-top:12px}
-.stat-label{font-size:13px;color:var(--muted)}
-.progress{height:8px;border-radius:20px;background:#20283a;overflow:hidden;margin-top:12px}
-.progress>i{display:block;height:100%;background:linear-gradient(90deg,#4d8dff,#9a69ff);border-radius:20px}
-.section-title{font-size:21px;font-weight:850;margin:30px 0 14px}
-.lesson-list{display:grid;gap:10px}
-.lesson{background:#111827;border:1px solid #252e42;border-radius:17px;padding:16px;display:flex;gap:14px;align-items:center}
-.lesson-num{width:40px;height:40px;border-radius:12px;background:#19253c;display:flex;align-items:center;justify-content:center;color:#76a8ff;font-weight:900;flex:none}
-.lesson-info{min-width:0;flex:1}
-.lesson-title{font-weight:800}
-.lesson-desc{font-size:12px;color:var(--muted);margin-top:4px}
-.lesson-status{font-size:11px;color:#6e7a90}
-.lesson.done .lesson-num{background:#143a2a;color:#53e99a}
-.lesson button{background:#1a2943;padding:9px 12px;border-radius:10px;font-size:12px}
-.education-wrap{background:#f4f0e8;color:#25221e;border-radius:25px;padding:25px;min-height:500px}
-.education-toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
-.education-search{background:#fff;border:1px solid #d9d0c3;color:#222;border-radius:12px;padding:11px 13px}
-.paper{background:#fffdf8;border:1px solid #ded6ca;border-radius:18px;padding:30px;box-shadow:0 10px 30px #5c4b3212}
-.paper h2{font-family:Georgia,serif;font-size:30px;margin-bottom:10px}
-.paper h3{font-family:Georgia,serif;font-size:19px;margin:24px 0 10px}
-.paper p,.paper li{font-family:Georgia,serif;line-height:1.75;color:#403a32}
-.paper ul{padding-left:23px}
-.paper-figure{margin:20px 0;padding:18px;background:#f1ece3;border-radius:15px;border:1px solid #ddd2c2}
-.signal-card{background:linear-gradient(145deg,#101827,#0d1320);border:1px solid #28354d;border-radius:24px;padding:22px}
-.market-toggle{display:flex;background:#090e18;border:1px solid #263149;padding:4px;border-radius:13px;width:max-content}
-.market-toggle button{padding:10px 17px;border-radius:9px;background:transparent;color:#8792a8;font-weight:800}
-.market-toggle button.active{background:#263b63;color:#fff}
-.pair-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:15px}
-.pair-btn{padding:12px 7px;background:#141c2b;border:1px solid #253047;border-radius:11px;font-size:12px}
-.pair-btn.active{border-color:#4d8dff;background:#182a4b;color:#80adff}
-.time-row{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
-.time-btn{background:#141c2b;padding:10px 14px;border-radius:10px;color:#9ca7bb}
-.time-btn.active{background:#273c63;color:#fff}
-.generate{width:100%;padding:17px;border-radius:14px;background:linear-gradient(135deg,#4d8dff,#765fff);font-size:16px;font-weight:900;margin-top:4px}
-.signal-result{margin-top:20px;display:none}
-.signal-result.show{display:block}
-.signal-direction{font-size:40px;font-weight:950;text-align:center;padding:25px;border-radius:18px}
-.signal-up{background:#103d2b;color:#50efa0;border:1px solid #1f8159}
-.signal-down{background:#451d28;color:#ff7787;border:1px solid #8b3040}
-.signal-reason{margin-top:14px;background:#141d2d;border-radius:15px;padding:15px;color:#aeb9cc;line-height:1.55}
-.signal-chart{height:180px;margin-top:16px;border:1px solid #273148;border-radius:15px;background:linear-gradient(#111a29,#0b111d);position:relative;overflow:hidden}
-.signal-chart svg{width:100%;height:100%}
-#signalLoading{display:none;margin-top:16px;background:#0b1220;border:1px solid #263653;border-radius:18px;padding:17px;overflow:hidden}
-#signalLoading.show{display:block}
-.scan-line{height:2px;background:#51a1ff;box-shadow:0 0 18px #51a1ff;animation:scan 1.2s linear infinite}
-@keyframes scan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-.analysis-step{font-size:12px;color:#9da9bd;margin-top:9px}
-#signalTopBanner{display:none;position:relative;margin-bottom:18px;border-radius:22px;padding:20px;border:1px solid #31405b;background:linear-gradient(145deg,#131d30,#0e1523);box-shadow:0 15px 40px #0004}
-#signalTopBanner.show{display:block}
-.signal-top-label{font-size:11px;color:#8ea0bb;letter-spacing:1.2px;font-weight:900}
-.signal-top-direction{font-size:44px;line-height:1;margin:8px 0;font-weight:950}
-.signal-top-reason{color:#adb8cb;font-size:13px;line-height:1.5;max-width:800px}
-.profile-head{display:flex;gap:20px;align-items:center;background:linear-gradient(145deg,#151e31,#101622);border:1px solid #2a354b;border-radius:23px;padding:22px}
-.avatar{width:78px;height:78px;border-radius:22px;background:linear-gradient(135deg,#4d8dff,#875dff);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:950}
-.profile-name{font-size:25px;font-weight:900}
-.profile-meta{font-size:12px;color:#8490a6;margin-top:5px}
-.profile-level{margin-top:12px}
-.xpbar{height:9px;background:#202a3d;border-radius:20px;overflow:hidden;margin-top:8px}
-.xpbar i{height:100%;display:block;background:linear-gradient(90deg,#43a5ff,#a05fff)}
-.achievement-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.achievement{padding:16px;background:#111827;border:1px solid #273047;border-radius:16px;text-align:center}
-.achievement-icon{font-size:27px}
-.achievement-title{font-size:12px;font-weight:800;margin-top:7px}
-.mobile-nav{display:none}
-.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%) translateY(100px);background:#192238;border:1px solid #34415b;color:#fff;padding:12px 18px;border-radius:13px;z-index:10000;transition:.25s;box-shadow:0 15px 40px #0007}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.community-list{display:grid;gap:10px}
-.community-item{display:flex;align-items:center;gap:12px;padding:14px;background:#111827;border:1px solid #252e42;border-radius:15px}
-.community-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#4d8dff,#7e5cff);display:flex;align-items:center;justify-content:center;font-weight:900}
-.practice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-.question{font-size:19px;font-weight:850;line-height:1.45}
-.answers{display:grid;gap:9px;margin-top:18px}
-.answer{padding:13px 15px;text-align:left;background:#141d2d;border:1px solid #29344b;border-radius:12px}
-.answer.correct{border-color:#31d984;background:#123728}
-.answer.wrong{border-color:#ff5668;background:#421d27}
-@media(max-width:900px){
-.sidebar{display:none}
-.main{margin-left:0;padding:18px 14px 95px}
-.page-title{font-size:25px}
-.hero h1{font-size:31px}
-.grid-3,.grid-2,.practice-grid{grid-template-columns:1fr}
-.pair-grid{grid-template-columns:repeat(2,1fr)}
-.achievement-grid{grid-template-columns:repeat(2,1fr)}
-.mobile-nav{position:fixed;display:flex;left:8px;right:8px;bottom:8px;height:68px;background:rgba(12,17,30,.96);backdrop-filter:blur(15px);border:1px solid #28334b;border-radius:20px;z-index:500;justify-content:space-around;padding:7px}
-.mobile-nav button{flex:1;background:transparent;color:#69758d;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;font-weight:800}
-.mobile-nav button.active{background:#1a2944;color:#fff;transform:translateY(-2px)}
-.mobile-nav button:nth-child(1) svg{stroke:#4d8dff}
-.mobile-nav button:nth-child(2) svg{stroke:#b66cff}
-.mobile-nav button:nth-child(3) svg{stroke:#2ee8a0}
-.mobile-nav button:nth-child(4) svg{stroke:#ffbf43}
-.mobile-nav button:nth-child(5) svg{stroke:#ff6480}
-.mobile-nav svg{width:23px;height:23px;stroke-width:2.3}
-#signalTopBanner.show{position:sticky;top:8px;z-index:50}
-#signalLoading.show{position:sticky;top:8px;z-index:49}
-.paper{padding:20px}
-.paper h2{font-size:25px}
-}
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#080b15"><title>AVA ACADEMY — Академия трейдинга</title><style>
+/* AVA ACADEMY — полный интерфейс на базе исходной версии */
+:root{--bg:#080b15;--bg2:#0e1424;--panel:#111827;--panel2:#151d30;--purple:#8b5cf6;--purple-light:#c4b5fd;--blue:#3b82f6;--cyan:#22d3ee;--teal:#14b8a6;--green:#22c55e;--red:#ef4444;--orange:#f97316;--amber:#f59e0b;--yellow:#facc15;--pink:#ec4899;--text:#f8fafc;--muted:#7f8aa1;--paper:#f7f2e8;--ink:#24202d;--radius:26px;--shadow:0 30px 90px rgba(0,0,0,.28)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;overflow-x:hidden}button,input,textarea{font:inherit}button{border:0;cursor:pointer}a{text-decoration:none;color:inherit}svg{display:block}.hidden{display:none!important}
+.background-orbs{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}.background-orbs span{position:absolute;border-radius:50%;filter:blur(2px);opacity:.16;animation:orbFloat 12s ease-in-out infinite}.background-orbs span:nth-child(1){width:280px;height:280px;background:#7c3aed;left:-120px;top:10%}.background-orbs span:nth-child(2){width:220px;height:220px;background:#0891b2;right:-80px;top:35%;animation-delay:2s}.background-orbs span:nth-child(3){width:190px;height:190px;background:#2563eb;left:35%;bottom:-100px;animation-delay:5s}@keyframes orbFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(20px,-30px,0)}}
+.market-watermark{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.065;overflow:hidden}.market-watermark svg{width:100%;height:100%}
+#loader{position:fixed;inset:0;z-index:99999;background:#080b15;display:flex;align-items:center;justify-content:center;transition:.6s ease}.loader-box{text-align:center}.loader-logo{width:86px;height:86px;margin:auto;border-radius:27px;display:grid;place-items:center;background:linear-gradient(145deg,#9f7aea,#5b21b6);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 25px 70px rgba(124,58,237,.4);animation:loaderPulse 1.5s ease-in-out infinite}.loader-logo svg{width:49px}.loader-name{margin-top:20px;font-size:24px;font-weight:950;letter-spacing:3px}.loader-caption{color:#69758b;font-size:10px;margin-top:6px;letter-spacing:2px}.loader-progress{width:190px;height:3px;border-radius:10px;overflow:hidden;background:#182136;margin:24px auto 0}.loader-progress i{display:block;height:100%;width:35%;background:linear-gradient(90deg,#8b5cf6,#22d3ee,#22c55e);animation:loaderMove 1.1s infinite}@keyframes loaderMove{from{transform:translateX(-150%)}to{transform:translateX(450%)}}@keyframes loaderPulse{50%{transform:translateY(-5px) scale(1.04)}}
+#authScreen{min-height:100vh;position:relative;overflow:hidden;background:radial-gradient(circle at 15% 15%,rgba(124,58,237,.28),transparent 28%),radial-gradient(circle at 85% 80%,rgba(14,165,233,.14),transparent 28%),#080b15}.auth-grid{position:absolute;inset:0;opacity:.12;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:50px 50px;mask-image:linear-gradient(to bottom,black,transparent 90%)}.auth-container{position:relative;z-index:2;min-height:100vh;width:min(1240px,94%);margin:auto;display:grid;grid-template-columns:1fr 430px;gap:70px;align-items:center;padding:45px 0}.auth-brand{display:flex;align-items:center;gap:13px;margin-bottom:35px}.auth-brand-icon{width:53px;height:53px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(145deg,#a78bfa,#5b21b6);animation:brandPulse 3s infinite}.auth-brand-icon svg{width:33px}@keyframes brandPulse{50%{box-shadow:0 0 35px #8b5cf655;transform:translateY(-3px)}}.auth-brand-title{font-weight:950;font-size:17px;letter-spacing:2px}.auth-brand-sub{color:#69758a;font-size:9px;margin-top:3px;letter-spacing:1.4px}.auth-heading{font-size:clamp(44px,6vw,80px);font-weight:950;line-height:.93;letter-spacing:-4px}.auth-heading span{color:transparent;background:linear-gradient(90deg,#c4b5fd,#38bdf8,#4ade80);-webkit-background-clip:text;background-clip:text}.auth-text{max-width:580px;color:#8994a9;line-height:1.7;margin-top:23px;font-size:14px}.auth-features{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}.auth-feature{padding:9px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#b8c0d1;font-size:10px;font-weight:800}.auth-chart{margin-top:32px;max-width:650px;height:210px;border-radius:27px;overflow:hidden;background:linear-gradient(145deg,#111a2e,#090e1a);border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}.auth-chart svg{width:100%;height:100%}.auth-card{padding:36px;border-radius:31px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.1);box-shadow:0 35px 100px rgba(0,0,0,.42);animation:authCardIn .7s ease}@keyframes authCardIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}.auth-card h2{font-size:29px;letter-spacing:-1px}.auth-card-description{color:#7d889d;font-size:12px;line-height:1.6;margin-top:7px}.auth-form{margin-top:28px}.auth-field{margin-bottom:16px}.auth-field label{display:block;color:#abb4c6;font-size:10px;font-weight:900;margin-bottom:8px}.auth-field input{width:100%;height:55px;border-radius:15px;border:1px solid rgba(255,255,255,.09);outline:none;padding:0 15px;color:white;background:#0b1120;transition:.3s}.auth-field input:focus{border-color:#8b5cf6;box-shadow:0 0 0 4px rgba(139,92,246,.1);transform:translateY(-1px)}.auth-error{min-height:18px;color:#fb7185;font-size:10px;margin-bottom:6px}.auth-submit{width:100%;min-height:57px;border-radius:16px;color:white;font-size:12px;font-weight:950;background:linear-gradient(100deg,#7c3aed,#4f46e5,#2563eb);box-shadow:0 17px 40px rgba(79,70,229,.28);transition:.35s}.auth-submit:hover{transform:translateY(-3px);box-shadow:0 22px 50px #4f46e54d}.auth-small{color:#59657a;font-size:9px;line-height:1.55;text-align:center;margin-top:15px}
+#app{min-height:100vh;position:relative;z-index:1}.app-shell{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.sidebar{position:fixed;top:0;left:0;bottom:0;width:250px;z-index:100;padding:22px 15px;display:flex;flex-direction:column;background:linear-gradient(180deg,#090d19,#0b101d);border-right:1px solid rgba(255,255,255,.07);backdrop-filter:blur(20px)}.sidebar-brand{display:flex;align-items:center;gap:12px;padding:4px 8px 26px}.sidebar-logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#9b7bea,#5b21b6);box-shadow:0 10px 35px rgba(124,58,237,.3);animation:brandPulse 4s infinite}.sidebar-logo svg{width:27px}.sidebar-brand strong{display:block;font-size:13px;letter-spacing:1.5px}.sidebar-brand small{display:block;color:#59657a;font-size:8px;margin-top:3px}.sidebar-label{padding:8px 11px;color:#4e5a71;font-size:8px;text-transform:uppercase;letter-spacing:2px;font-weight:950}.sidebar-nav{display:grid;gap:5px}.sidebar-button{min-height:52px;border-radius:15px;background:transparent;color:#727e95;display:flex;align-items:center;gap:12px;padding:0 12px;font-size:12px;font-weight:850;text-align:left;transition:.3s cubic-bezier(.2,.8,.2,1);position:relative}.sidebar-button svg{width:21px;height:21px;flex:none;transition:.3s}.sidebar-button:nth-child(1) svg{color:#6ca8ff}.sidebar-button:nth-child(2) svg{color:#b47aff}.sidebar-button:nth-child(3) svg{color:#35e69b}.sidebar-button:nth-child(4) svg{color:#ffc84d}.sidebar-button:nth-child(5) svg{color:#ff6d8a}.sidebar-button:nth-child(6) svg{color:#49d8ff}.sidebar-button:hover{color:#dce2ed;background:rgba(255,255,255,.035);transform:translateX(3px)}.sidebar-button.active{color:white;background:linear-gradient(100deg,rgba(139,92,246,.2),rgba(59,130,246,.06));box-shadow:inset 3px 0 #8b5cf6,0 10px 25px #0002}.sidebar-button.active svg{transform:scale(1.13) rotate(-2deg);filter:drop-shadow(0 0 8px currentColor)}.sidebar-bottom{margin-top:auto}.sidebar-wallet{padding:16px;border-radius:20px;background:radial-gradient(circle at 90% 10%,rgba(250,204,21,.12),transparent 35%),#111827;border:1px solid rgba(255,255,255,.07);transition:.3s}.sidebar-wallet:hover{transform:translateY(-2px)}.sidebar-wallet-label{color:#657188;font-size:8px;font-weight:900;letter-spacing:1px}.sidebar-wallet-value{color:#facc15;font-size:23px;font-weight:950;margin-top:6px}.sidebar-wallet-value span{color:#756f64;font-size:8px}.sidebar-user{margin-top:9px;display:flex;align-items:center;gap:9px;padding:11px;border-radius:16px;background:#0f1626}.user-avatar{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;color:white;font-weight:950;font-size:10px;background:linear-gradient(145deg,#8b5cf6,#2563eb)}.user-info{min-width:0}.user-info strong{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.user-info small{display:block;color:#5d6980;font-size:8px;margin-top:2px}
+.main{grid-column:2;min-width:0}.topbar{height:74px;position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:0 35px;background:rgba(8,11,21,.94);border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(18px)}.top-title{font-size:16px;font-weight:950}.top-subtitle{color:#5f6b81;font-size:9px;margin-top:3px}.top-right{display:flex;align-items:center;gap:10px}.top-coins{display:flex;align-items:center;gap:7px;padding:9px 12px;border-radius:999px;color:#facc15;background:#101827;border:1px solid rgba(255,255,255,.07);font-size:11px;font-weight:950}.top-profile{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:white;background:linear-gradient(145deg,#8b5cf6,#2563eb);font-size:10px;font-weight:950;cursor:pointer;transition:.25s}.top-profile:hover{transform:translateY(-2px) scale(1.04)}.content{max-width:1650px;padding:28px 35px 100px}.screen{display:none;animation:pageEnter .45s cubic-bezier(.2,.8,.2,1)}.screen.active{display:block}@keyframes pageEnter{from{opacity:0;transform:translateY(12px) scale(.992)}to{opacity:1;transform:none}}
+.home{border-radius:31px;padding:5px;background:radial-gradient(circle at 75% 0%,rgba(59,130,246,.13),transparent 28%),radial-gradient(circle at 15% 65%,rgba(139,92,246,.1),transparent 30%)}.home-hero{display:grid;grid-template-columns:.8fr 1.2fr;gap:20px;min-height:480px}.home-copy{padding:38px 18px 35px 20px;display:flex;flex-direction:column;justify-content:center}.badge{width:max-content;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;color:#bda9ff;background:rgba(139,92,246,.09);border:1px solid rgba(139,92,246,.18);font-size:8px;font-weight:950;letter-spacing:1.3px}.badge-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 12px #22c55e;animation:dotPulse 1.5s infinite}@keyframes dotPulse{50%{transform:scale(1.5);opacity:.55}}.home-copy h1{margin-top:23px;font-size:clamp(40px,5vw,72px);line-height:.95;letter-spacing:-4px;font-weight:950}.home-copy h1 span{display:block;color:transparent;background:linear-gradient(90deg,#c4b5fd,#38bdf8);-webkit-background-clip:text;background-clip:text}.home-copy p{max-width:550px;color:#8792a7;font-size:13px;line-height:1.65;margin-top:20px}.home-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:25px}.primary-button,.secondary-button{min-height:48px;padding:0 18px;border-radius:14px;font-size:10px;font-weight:950;transition:.3s cubic-bezier(.2,.8,.2,1)}.primary-button{color:white;background:linear-gradient(100deg,#7c3aed,#4f46e5);box-shadow:0 14px 35px rgba(79,70,229,.25)}.primary-button:hover{transform:translateY(-3px) scale(1.01)}.secondary-button{color:#b9c2d3;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}.secondary-button:hover{background:rgba(255,255,255,.07);transform:translateY(-2px)}
+.market-scene{position:relative;min-height:480px;border-radius:30px;overflow:hidden;background:radial-gradient(circle at 70% 20%,rgba(34,211,238,.14),transparent 28%),linear-gradient(145deg,#121b30,#080e1a);border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}.market-grid{position:absolute;inset:0;opacity:.13;background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:42px 42px}.market-chart{position:absolute;inset:40px 25px 70px}.market-chart svg{width:100%;height:100%}.market-floating{position:absolute;z-index:3;padding:12px 15px;border-radius:15px;background:rgba(8,13,25,.94);border:1px solid rgba(255,255,255,.1);box-shadow:0 15px 45px rgba(0,0,0,.3);animation:floatCard 4.5s ease-in-out infinite}.market-floating small{color:#647087;font-size:8px;display:block}.market-floating strong{display:block;font-size:14px;margin-top:3px}.market-floating.one{top:25px;left:22px}.market-floating.two{bottom:22px;right:22px;animation-delay:1.2s}.market-floating.three{right:20px;top:35px;animation-delay:2.2s}@keyframes floatCard{50%{transform:translateY(-8px) rotate(.4deg)}}
+.home-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:17px}.home-stat{min-height:125px;border-radius:21px;padding:18px;border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;transition:.3s}.home-stat:hover{transform:translateY(-4px);border-color:#ffffff16}.home-stat:nth-child(1){background:radial-gradient(circle at 90% 10%,rgba(139,92,246,.16),transparent 30%),#15112a}.home-stat:nth-child(2){background:radial-gradient(circle at 90% 10%,rgba(34,211,238,.13),transparent 30%),#0f202b}.home-stat:nth-child(3){background:radial-gradient(circle at 90% 10%,rgba(250,204,21,.13),transparent 30%),#272019}.home-stat:nth-child(4){background:radial-gradient(circle at 90% 10%,rgba(34,197,94,.13),transparent 30%),#10251d}.stat-icon{font-size:21px}.stat-label{color:#66728a;font-size:9px;margin-top:8px}.stat-value{font-size:28px;font-weight:950;margin-top:5px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:27px 0 13px}.section-title{font-size:18px;font-weight:950}.section-caption{font-size:9px;color:#5e6a80}
+.card{background:linear-gradient(145deg,#111827,#0d1320);border:1px solid rgba(255,255,255,.07);border-radius:23px;padding:20px;transition:.3s}.card:hover{border-color:#ffffff12;transform:translateY(-2px)}.grid{display:grid;gap:13px}.grid-3{grid-template-columns:repeat(3,1fr)}
+.ai-widget{position:relative;overflow:hidden;background:linear-gradient(145deg,#15142a,#101827);border:1px solid #312b55}.ai-widget:after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:#8b5cf622;filter:blur(35px);right:-60px;top:-70px;animation:aiGlow 4s infinite}@keyframes aiGlow{50%{transform:scale(1.35);opacity:.5}}.ai-head{display:flex;align-items:center;gap:12px;position:relative;z-index:1}.ai-avatar{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#8b5cf6,#2563eb);box-shadow:0 0 28px #704de34d;animation:aiFloat 3s infinite}.ai-avatar svg{width:29px}@keyframes aiFloat{50%{transform:translateY(-4px) rotate(2deg)}}.ai-name{font-weight:950}.ai-status{font-size:9px;color:#49e39a;margin-top:3px}.ai-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#22c55e;margin-right:5px;box-shadow:0 0 9px #22c55e}.ai-message{margin-top:15px;color:#9aa5b8;font-size:12px;line-height:1.6;position:relative;z-index:1}.ai-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px;position:relative;z-index:1}.ai-action{padding:9px 11px;border-radius:11px;background:#1a2033;color:#c2c9d6;font-size:9px;font-weight:850;border:1px solid #293148;transition:.25s}.ai-action:hover{background:#252f4b;transform:translateY(-2px)}
+.education-shell{background:var(--paper);color:var(--ink);border-radius:29px;padding:20px;box-shadow:0 20px 70px #0002}.education-top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:16px}.education-title{font:950 25px Georgia,serif}.education-sub{font-size:10px;color:#756d62;margin-top:4px}.lesson-track{height:7px;background:#ded5c7;border-radius:99px;overflow:hidden;margin:15px 0}.lesson-track i{height:100%;display:block;background:linear-gradient(90deg,#7c3aed,#2563eb,#14b8a6);transition:width .7s}.lesson-list{display:grid;gap:9px}.lesson{display:flex;align-items:center;gap:13px;padding:13px;border:1px solid #ddd4c6;background:#fffdf8;border-radius:17px;transition:.3s}.lesson:hover{transform:translateX(4px);box-shadow:0 8px 25px #4d3d2510}.lesson-number{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#e8ddff,#dbeafe);display:grid;place-items:center;font:900 11px Arial;color:#5b21b6;flex:none}.lesson.completed .lesson-number{background:#d7f8e6;color:#15803d}.lesson-info{min-width:0;flex:1}.lesson-title{font:800 14px Georgia,serif}.lesson-description{font:11px Georgia,serif;color:#81796e;margin-top:4px}.lesson-open{padding:9px 11px;border-radius:10px;background:#eee7dc;color:#40382f;font-size:9px;font-weight:900}.lesson-reader{margin-bottom:15px;padding:28px;background:#fffdf8;border:1px solid #ded6ca;border-radius:20px;box-shadow:0 10px 35px #5c4b3212}.lesson-reader h2{font:950 30px Georgia,serif;margin:17px 0 10px}.lesson-reader h3{font:800 18px Georgia,serif;margin:23px 0 9px}.lesson-reader p,.lesson-reader li{font:15px Georgia,serif;line-height:1.8;color:#403a32}.lesson-reader ul{padding-left:22px}.lesson-figure{margin:20px 0;padding:17px;background:#f0e9dd;border:1px solid #ddd2c2;border-radius:16px}.candle-diagram{height:150px;display:flex;align-items:center;justify-content:space-around;margin-top:12px}.candle{height:110px;width:18px;position:relative}.candle:before{content:"";position:absolute;left:8px;top:0;width:2px;height:100%;background:#665d53}.candle b{position:absolute;left:0;width:18px;border-radius:4px}.candle.up b{top:38px;height:46px;background:#22a06b}.candle.down b{top:48px;height:45px;background:#df5965}
+.signal-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:15px}.signal-main{background:linear-gradient(145deg,#111b2e,#0b111d);border:1px solid #28354d;border-radius:25px;padding:21px;position:relative;overflow:hidden}.signal-main:before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 180deg,transparent,#8b5cf610,transparent 35%);animation:signalAura 8s linear infinite}@keyframes signalAura{to{transform:rotate(360deg)}}.signal-content{position:relative;z-index:2}.bot-header{display:flex;align-items:center;justify-content:space-between;gap:15px}.bot-brand{display:flex;align-items:center;gap:12px}.bot-icon{width:58px;height:58px;border-radius:19px;background:linear-gradient(145deg,#8b5cf6,#2563eb);display:grid;place-items:center;box-shadow:0 0 35px #5d4de54d;animation:botIdle 2.8s infinite}.bot-icon svg{width:34px}@keyframes botIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px) rotate(-2deg)}}.bot-title{font-size:21px;font-weight:950}.bot-subtitle{font-size:10px;color:#6f7c94;margin-top:4px}.bot-online{font-size:9px;color:#4ee69b;padding:8px 10px;border-radius:999px;background:#123526;border:1px solid #245a42}.bot-online:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#22c55e;margin-right:5px;box-shadow:0 0 10px #22c55e}.market-switch{display:flex;gap:5px;padding:4px;background:#080e19;border:1px solid #253149;border-radius:14px;width:max-content;margin-top:20px}.market-switch button{padding:10px 18px;border-radius:10px;color:#748096;background:transparent;font-size:10px;font-weight:950;transition:.3s}.market-switch button.active{background:linear-gradient(135deg,#273e67,#392d62);color:white;box-shadow:0 5px 18px #0003}.pair-scroll{display:flex;gap:8px;overflow-x:auto;padding:13px 2px 8px;scrollbar-width:none;cursor:grab}.pair-scroll::-webkit-scrollbar{display:none}.pair-chip{flex:none;padding:11px 15px;border-radius:12px;background:#121b2b;border:1px solid #263149;color:#8c98ad;font-size:10px;font-weight:900;transition:.25s}.pair-chip:hover{transform:translateY(-2px);color:#dbe5f7}.pair-chip.active{color:#fff;background:linear-gradient(135deg,#244574,#382a65);border-color:#628eff;box-shadow:0 5px 20px #355bd533}.time-buttons{display:flex;gap:7px;margin-top:8px}.time-button{padding:9px 12px;border-radius:10px;background:#121b2b;color:#778399;font-size:9px;font-weight:900}.time-button.active{background:#263e67;color:#fff}.bot-generate{width:100%;margin-top:17px;min-height:55px;border-radius:16px;background:linear-gradient(100deg,#7c3aed,#4f46e5,#2563eb);color:white;font-size:11px;font-weight:950;box-shadow:0 15px 35px #4f46e53b;position:relative;overflow:hidden;transition:.3s}.bot-generate:before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,#ffffff18,transparent);transform:translateX(-100%);animation:buttonShine 3s infinite}@keyframes buttonShine{55%,100%{transform:translateX(100%)}}.bot-generate:hover{transform:translateY(-2px);box-shadow:0 20px 45px #4f46e54d}.signal-loading{display:none;margin-top:16px;padding:18px;border-radius:18px;background:#080f1c;border:1px solid #293752}.signal-loading.show{display:block;animation:fadeIn .3s}.scan{height:2px;background:linear-gradient(90deg,transparent,#54a8ff,#8b5cf6,transparent);box-shadow:0 0 20px #4d8dff;animation:scanMove 1.1s linear infinite}@keyframes scanMove{from{transform:translateX(-100%)}to{transform:translateX(100%)}}.analysis-line{font-size:11px;color:#9aa7bc;margin-top:11px;display:flex;align-items:center;gap:7px}.analysis-line:before{content:"";width:7px;height:7px;border-radius:50%;background:#3b82f6;box-shadow:0 0 10px #3b82f6;animation:dotPulse .7s infinite}.signal-result{display:none;margin-top:17px}.signal-result.show{display:block;animation:resultIn .65s cubic-bezier(.2,.8,.2,1)}@keyframes resultIn{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}.signal-top{padding:20px;border-radius:20px;background:#0a111e;border:1px solid #2b3850;margin-bottom:12px}.signal-top-label{font-size:8px;letter-spacing:1.5px;color:#68758c;font-weight:950}.signal-direction{font-size:48px;line-height:1;margin:9px 0;font-weight:950}.signal-direction.up{color:#4ff0a0;text-shadow:0 0 30px #22c55e44}.signal-direction.down{color:#ff687b;text-shadow:0 0 30px #ef444444}.signal-meta{font-size:10px;color:#7f8ba1}.signal-reason{padding:16px;border-radius:16px;background:#111a29;border:1px solid #263149;color:#aeb8c9;font-size:11px;line-height:1.65}.signal-chart{height:190px;margin-top:12px;border:1px solid #263149;border-radius:17px;background:#0a111c;overflow:hidden}.signal-chart svg{width:100%;height:100%}
+.bot-side{display:grid;gap:13px}.bot-side-card{padding:17px;border-radius:20px;background:#111827;border:1px solid #273249}.bot-side-title{font-size:12px;font-weight:950}.bot-side-text{font-size:10px;color:#758197;line-height:1.6;margin-top:8px}.confidence{margin-top:12px}.confidence-top{display:flex;justify-content:space-between;font-size:9px;color:#758197}.confidence-bar{height:7px;border-radius:20px;background:#202a3d;overflow:hidden;margin-top:6px}.confidence-bar i{display:block;height:100%;background:linear-gradient(90deg,#8b5cf6,#22d3ee,#22c55e);width:82%;animation:confidence 1.2s}.ai-chat{position:fixed;right:25px;bottom:25px;width:360px;z-index:500;display:none;border-radius:24px;background:rgba(13,18,31,.97);border:1px solid #303b56;box-shadow:0 30px 80px #0008;overflow:hidden;animation:chatIn .4s cubic-bezier(.2,.8,.2,1)}.ai-chat.open{display:block}@keyframes chatIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}.ai-chat-head{display:flex;align-items:center;gap:10px;padding:15px;border-bottom:1px solid #252e43;background:linear-gradient(100deg,#17132d,#111a2b)}.ai-chat-avatar{width:37px;height:37px;border-radius:12px;background:linear-gradient(145deg,#8b5cf6,#2563eb);display:grid;place-items:center}.ai-chat-avatar svg{width:22px}.ai-chat-close{margin-left:auto;background:#20293b;border-radius:9px;width:30px;height:30px;color:#aeb8c8}.ai-chat-body{height:260px;overflow:auto;padding:14px}.chat-bubble{max-width:85%;padding:10px 12px;border-radius:14px;font-size:10px;line-height:1.55;margin-bottom:8px}.chat-bubble.ai{background:#192238;color:#aeb9cc}.chat-bubble.user{margin-left:auto;background:#403078;color:#fff}.ai-chat-form{display:flex;gap:7px;padding:11px;border-top:1px solid #252e43}.ai-chat-form input{min-width:0;flex:1;background:#0a101c;border:1px solid #29344b;color:#fff;border-radius:11px;padding:10px;font-size:10px;outline:none}.ai-chat-form button{width:40px;border-radius:11px;background:#6543c7;color:#fff}
+.contact-card{display:grid;grid-template-columns:1.2fr .8fr;gap:15px}.contact-hero{padding:28px;border-radius:25px;background:radial-gradient(circle at 90% 10%,#2563eb22,transparent 35%),linear-gradient(145deg,#15122b,#0f1828);border:1px solid #302b50}.contact-hero h2{font-size:30px;font-weight:950}.contact-hero p{color:#7f8ca2;font-size:12px;line-height:1.7;margin-top:10px;max-width:650px}.contact-buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:19px}.contact-button{padding:12px 15px;border-radius:13px;font-size:10px;font-weight:950;background:#19243a;color:#d5dceb;transition:.3s}.contact-button.primary{background:linear-gradient(100deg,#7c3aed,#2563eb)}.contact-button:hover{transform:translateY(-3px)}
+.profile-hero{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:25px;border-radius:25px;background:radial-gradient(circle at 100% 0,#8b5cf620,transparent 30%),linear-gradient(145deg,#151b2d,#0d1421);border:1px solid #29354d}.profile-avatar{width:84px;height:84px;border-radius:25px;display:grid;place-items:center;font-size:28px;font-weight:950;background:linear-gradient(145deg,#8b5cf6,#2563eb);box-shadow:0 15px 40px #4f46e533}.profile-name{font-size:25px;font-weight:950}.profile-id{font-size:10px;color:#66738a;margin-top:6px}.level-line{display:flex;justify-content:space-between;font-size:9px;color:#7d899d;margin-top:14px}.xpbar{height:8px;background:#202a3d;border-radius:20px;overflow:hidden;margin-top:7px}.xpbar i{display:block;height:100%;background:linear-gradient(90deg,#8b5cf6,#3b82f6,#22d3ee);transition:width .8s}.profile-coin{padding:15px 18px;border-radius:18px;background:#211d13;border:1px solid #50411e;text-align:center}.profile-coin b{display:block;color:#facc15;font-size:24px}.profile-coin span{font-size:8px;color:#827657}.profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.profile-stat{padding:17px;border-radius:18px;background:#111827;border:1px solid #263148}.profile-stat small{font-size:9px;color:#69758c}.profile-stat strong{display:block;font-size:23px;margin-top:6px}.achievements{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.achievement{padding:17px;border-radius:18px;background:#111827;border:1px solid #273149;text-align:center;transition:.3s}.achievement:hover{transform:translateY(-4px);background:#151e31}.achievement-icon{font-size:27px}.achievement b{display:block;font-size:10px;margin-top:8px}.achievement small{display:block;font-size:8px;color:#66738a;margin-top:4px}
+.practice-card{padding:23px;border-radius:24px;background:linear-gradient(145deg,#121b2d,#0d1421);border:1px solid #29364f}.question-number{font-size:9px;color:#6e7b92;letter-spacing:1px;font-weight:900}.question-title{font-size:22px;font-weight:950;line-height:1.35;margin-top:8px}.answers{display:grid;gap:9px;margin-top:20px}.answer{padding:14px 15px;border-radius:14px;background:#141e30;border:1px solid #29354c;color:#aab5c8;text-align:left;font-size:11px;transition:.25s}.answer:hover{border-color:#5877ac;transform:translateX(3px)}.answer.correct{background:#123a2a;border-color:#27c979;color:#7affb4}.answer.wrong{background:#421d27;border-color:#e95368;color:#ff9aa7}
+.mobile-navigation{display:none}.floating-ai{position:fixed;right:22px;bottom:22px;z-index:450;width:58px;height:58px;border-radius:20px;background:linear-gradient(145deg,#8b5cf6,#2563eb);display:grid;place-items:center;box-shadow:0 15px 40px #4f46e55c;animation:aiButton 3s infinite}.floating-ai svg{width:30px}.floating-ai:after{content:"";position:absolute;inset:-5px;border:1px solid #8b5cf655;border-radius:23px;animation:aiRing 2s infinite}@keyframes aiButton{50%{transform:translateY(-5px)}}@keyframes aiRing{0%{opacity:.8;transform:scale(.95)}100%{opacity:0;transform:scale(1.35)}}
+.toast{position:fixed;left:50%;bottom:28px;z-index:10001;transform:translate(-50%,100px);padding:12px 17px;border-radius:13px;background:#172238;border:1px solid #34425e;color:white;font-size:10px;font-weight:800;box-shadow:0 20px 50px #0007;transition:.4s}.toast.show{transform:translate(-50%,0)}
+@media(max-width:1000px){.auth-container{grid-template-columns:1fr 400px;gap:30px}.home-hero{grid-template-columns:1fr}.market-scene{min-height:380px}.signal-layout{grid-template-columns:1fr}.bot-side{grid-template-columns:repeat(2,1fr)}.profile-hero{grid-template-columns:auto 1fr}.profile-coin{grid-column:1/-1;width:max-content}.profile-stats{grid-template-columns:repeat(2,1fr)}.achievements{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.sidebar{display:none}.app-shell{display:block}.main{grid-column:1}.topbar{height:68px;padding:0 15px}.content{padding:16px 12px 105px}.top-title{font-size:15px}.home-copy{padding:30px 12px}.home-copy h1{font-size:45px;letter-spacing:-2.5px}.market-scene{min-height:330px}.market-chart{inset:35px 12px 55px}.home-stats{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr}.auth-container{display:block;padding:25px 0}.auth-left{display:none}.auth-container{width:min(430px,92%)}.auth-card{padding:25px}.education-shell{padding:11px;border-radius:21px}.lesson{padding:11px}.lesson-description{font-size:10px}.lesson-open{padding:8px}.signal-layout{display:block}.bot-side{display:grid;grid-template-columns:1fr 1fr;margin-top:12px}.signal-direction{font-size:40px}.contact-card{grid-template-columns:1fr}.profile-hero{grid-template-columns:auto 1fr}.profile-name{font-size:21px}.profile-coin{grid-column:1/-1}.mobile-navigation{position:fixed;display:flex;left:8px;right:8px;bottom:8px;height:70px;background:rgba(10,15,27,.94);backdrop-filter:blur(22px);border:1px solid #28334b;border-radius:22px;z-index:400;padding:7px;box-shadow:0 20px 50px #0007}.mobile-navigation button{flex:1;background:transparent;color:#66738b;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:7px;font-weight:900;transition:.3s}.mobile-navigation button svg{width:22px;height:22px;transition:.3s}.mobile-navigation button:nth-child(1) svg{color:#65a7ff}.mobile-navigation button:nth-child(2) svg{color:#b17aff}.mobile-navigation button:nth-child(3) svg{color:#36e6a0}.mobile-navigation button:nth-child(4) svg{color:#ffc94c}.mobile-navigation button:nth-child(5) svg{color:#ff6885}.mobile-navigation button.active{color:#fff;background:#1a2943;transform:translateY(-3px)}.mobile-navigation button.active svg{transform:scale(1.18);filter:drop-shadow(0 0 8px currentColor)}.floating-ai{right:13px;bottom:90px;width:53px;height:53px}.ai-chat{left:10px;right:10px;bottom:82px;width:auto}.ai-chat-body{height:235px}.auth-heading{font-size:48px}.auth-card h2{font-size:25px}}
 </style></head><body>
-<div class="auth" id="authScreen">
+<div class="background-orbs"><span></span><span></span><span></span></div>
+<div class="market-watermark"><svg viewBox="0 0 1200 900" preserveAspectRatio="none"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M0 700L100 620 160 665 240 500 320 560 410 420 500 480 590 300 690 370 770 250 860 320 950 170 1050 250 1200 80"/><path d="M0 760L120 690 210 720 300 620 380 650 470 520 570 570 650 420 760 500 840 390 930 430 1040 320 1200 360"/></g><g opacity=".8"><path d="M90 660v-120M75 585h30v65H75z"/><path d="M180 600v-180M165 490h30v70h-30z"/><path d="M270 530v-140M255 450h30v60h-30z"/><path d="M360 580v-220M345 470h30v75h-30z"/><path d="M450 430v-170M435 330h30v75h-30z"/><path d="M540 470v-240M525 350h30v75h-30z"/><path d="M630 350v-190M615 235h30v85h-30z"/><path d="M720 410v-240M705 285h30v90h-30z"/><path d="M810 300v-180M795 190h30v80h-30z"/></g></svg></div>
+
+<div id="loader"><div class="loader-box"><div class="loader-logo"><svg viewBox="0 0 60 60" fill="none"><path d="M30 7 51 19v22L30 53 9 41V19L30 7Z" stroke="white" stroke-width="4"/><path d="M18 38 30 18l12 20" stroke="white" stroke-width="4"/><path d="M23 31h14" stroke="white" stroke-width="4"/></svg></div><div class="loader-name">AVA ACADEMY</div><div class="loader-caption">СИСТЕМА ОБУЧЕНИЯ ТРЕЙДИНГУ</div><div class="loader-progress"><i></i></div></div></div>
+
+<div id="authScreen">
+<div class="auth-grid"></div>
+<div class="auth-container">
+<div class="auth-left">
+<div class="auth-brand"><div class="auth-brand-icon"><svg viewBox="0 0 60 60" fill="none"><path d="M30 7 51 19v22L30 53 9 41V19L30 7Z" stroke="white" stroke-width="4"/><path d="M18 38 30 18l12 20" stroke="white" stroke-width="4"/><path d="M23 31h14" stroke="white" stroke-width="4"/></svg></div><div><div class="auth-brand-title">AVA ACADEMY</div><div class="auth-brand-sub">ТРЕЙДИНГ · ОБУЧЕНИЕ · ПРАКТИКА</div></div></div>
+<div class="auth-heading">Стань<br><span>сильнее</span><br>рынка.</div>
+<div class="auth-text">Единая академия, где ты изучаешь графики, тренируешь анализ, проходишь 160 уроков и используешь AVA AI как персонального помощника.</div>
+<div class="auth-features"><div class="auth-feature">✦ 160 уроков</div><div class="auth-feature">◈ AVA AI</div><div class="auth-feature">◉ AVA BOT</div><div class="auth-feature">◆ AVA Coins</div></div>
+<div class="auth-chart"><svg viewBox="0 0 700 210" preserveAspectRatio="none"><defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".25"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient></defs><g stroke="#ffffff" opacity=".06"><path d="M0 40H700M0 90H700M0 140H700M0 190H700"/><path d="M80 0V210M180 0V210M280 0V210M380 0V210M480 0V210M580 0V210M680 0V210"/></g><path d="M0 175 C60 170 70 130 120 145 S170 115 220 130 S260 80 320 95 S370 55 420 70 S470 95 520 55 S590 60 640 28 S675 45 700 18 V210H0Z" fill="url(#chartFill)"/><path d="M0 175 C60 170 70 130 120 145 S170 115 220 130 S260 80 320 95 S370 55 420 70 S470 95 520 55 S590 60 640 28 S675 45 700 18" fill="none" stroke="#67a8ff" stroke-width="3"/><g><path d="M90 155V105" stroke="#35df91" stroke-width="2"/><rect x="83" y="118" width="14" height="25" rx="2" fill="#35df91"/><path d="M190 138V78" stroke="#ff6376" stroke-width="2"/><rect x="183" y="91" width="14" height="34" rx="2" fill="#ff6376"/><path d="M290 112V52" stroke="#35df91" stroke-width="2"/><rect x="283" y="70" width="14" height="32" rx="2" fill="#35df91"/><path d="M390 84V35" stroke="#35df91" stroke-width="2"/><rect x="383" y="45" width="14" height="29" rx="2" fill="#35df91"/><path d="M500 72V25" stroke="#ff6376" stroke-width="2"/><rect x="493" y="37" width="14" height="27" rx="2" fill="#ff6376"/></g></svg></div>
+</div>
 <div class="auth-card">
-<div class="auth-logo logo">AVA <span>ACADEMY</span></div>
-<div class="auth-sub">Твоя академия трейдинга</div>
-<form id="registerForm">
-<div class="field"><label>Имя</label><input id="nameInput" type="text" placeholder="Как тебя зовут?" autocomplete="name" required></div>
-<div class="field"><label>Google Email</label><input id="emailInput" type="email" placeholder="example@gmail.com" autocomplete="email" required></div>
-<button class="primary" type="submit">Войти в AVA ACADEMY</button>
+<h2>Вход в AVA</h2><div class="auth-card-description">Создай профиль и получи персональный AVA ID.</div>
+<form class="auth-form" id="authForm">
+<div class="auth-field"><label>ТВОЁ ИМЯ</label><input id="authName" placeholder="Например, Вадим" autocomplete="name"></div>
+<div class="auth-field"><label>GOOGLE EMAIL</label><input id="authEmail" type="email" placeholder="example@gmail.com" autocomplete="email"></div>
+<div class="auth-error" id="authError"></div>
+<button class="auth-submit">ВОЙТИ В AVA ACADEMY →</button>
 </form>
-<div class="auth-note">Для регистрации используется Gmail. Реальная авторизация Google OAuth подключается через backend/API. В этой версии email проверяется по формату.</div>
+<div class="auth-small">Регистрация создаёт локальный профиль. Настоящая авторизация Google требует подключения OAuth/backend.</div>
+</div>
 </div></div>
 
-<div class="app-shell" id="appShell">
+<div id="app" class="hidden">
+<div class="app-shell">
 <aside class="sidebar">
-<div class="side-logo logo">AVA <span>ACADEMY</span></div>
-<div class="side-user"><div class="side-user-name" id="sideUserName">Ученик</div><div class="side-user-level" id="sideUserLevel">Уровень 1 · 0 XP</div></div>
-<nav class="side-nav">
-<button class="active" data-page="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>Главная</button>
-<button data-page="education"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16M8 7h8M8 11h8"/></svg>Обучение</button>
-<button data-page="signal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17 8 12l4 4 8-9"/><path d="M16 7h4v4"/></svg>AVA BOT</button>
-<button data-page="practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 4h14v16H5z"/><path d="m8 12 2 2 5-5"/></svg>Практика</button>
-<button data-page="community"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3.5 20c.5-4 2.3-6 5.5-6s5 2 5.5 6M14 15c3.5-.2 5.6 1.5 6.5 5"/></svg>Сообщество</button>
-<button data-page="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4.4 3.4-6.5 8-6.5s7.2 2.1 8 6.5"/></svg>Профиль</button>
-</nav></aside>
-
+<div class="sidebar-brand"><div class="sidebar-logo"><svg viewBox="0 0 60 60" fill="none"><path d="M30 7 51 19v22L30 53 9 41V19L30 7Z" stroke="white" stroke-width="4"/><path d="M18 38 30 18l12 20" stroke="white" stroke-width="4"/><path d="M23 31h14" stroke="white" stroke-width="4"/></svg></div><div><strong>AVA ACADEMY</strong><small>ACADEMY OF TRADING</small></div></div>
+<div class="sidebar-label">Навигация</div><nav class="sidebar-nav">
+<button class="sidebar-button active" data-page="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>Главная</button>
+<button class="sidebar-button" data-page="education"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>Обучение</button>
+<button class="sidebar-button" data-page="signal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17 8 12l4 4 8-9"/><path d="M16 7h4v4"/></svg>AVA BOT</button>
+<button class="sidebar-button" data-page="practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 4h14v16H5z"/><path d="m8 12 2 2 5-5"/></svg>Практика</button>
+<button class="sidebar-button" data-page="community"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3.5 20c.5-4 2.3-6 5.5-6s5 2 5.5 6M14 15c3.5-.2 5.6 1.5 6.5 5"/></svg>Связь</button>
+<button class="sidebar-button" data-page="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4.4 3.4-6.5 8-6.5s7.2 2.1 8 6.5"/></svg>Профиль</button>
+</nav>
+<div class="sidebar-bottom"><div class="sidebar-wallet"><div class="sidebar-wallet-label">ТВОЙ БАЛАНС</div><div class="sidebar-wallet-value">🪙 <span id="sidebarCoins">0</span> <span>AVA COINS</span></div></div><div class="sidebar-user"><div class="user-avatar" id="sidebarAvatar">A</div><div class="user-info"><strong id="sidebarName">Студент</strong><small id="sidebarLevel">Уровень 1</small></div></div></div>
+</aside>
 <main class="main">
-<div class="topbar"><div><div class="page-title" id="pageTitle">Главная</div><div class="page-sub" id="pageSub">Развивай навык каждый день</div></div><div class="top-coins">🪙 <span id="coinsTop">0</span> AVA</div></div>
+<header class="topbar"><div><div class="top-title" id="topTitle">Главная</div><div class="top-subtitle" id="topSubtitle">Твоя академия трейдинга</div></div><div class="top-right"><div class="top-coins">🪙 <span id="topCoins">0</span> AVA</div><div class="top-profile" id="topProfile" onclick="navigate('profile')">A</div></div></header>
+<div class="content">
 
-<section class="page active" id="page-home">
-<div class="hero">
-<h1>Добро пожаловать в <span style="color:#70a7ff">AVA ACADEMY</span></h1>
-<p>Изучай технический анализ, тренируй насмотренность, проходи тесты и развивай торговую дисциплину.</p>
-<div class="hero-actions"><button class="btn blue" onclick="openPage('education')">Продолжить обучение</button><button class="btn" onclick="openPage('signal')">Открыть AVA BOT</button></div>
+<section class="screen active" id="screen-home">
+<div class="home"><div class="home-hero"><div class="home-copy">
+<div class="badge"><i class="badge-dot"></i> AVA ACADEMY · СИСТЕМА АКТИВНА</div>
+<h1>Учись.<span>Анализируй.</span>Расти.</h1>
+<p>Твоя персональная академия трейдинга с 160 уроками, AVA AI, практикой, AVA BOT и системой прогресса.</p>
+<div class="home-actions"><button class="primary-button" onclick="navigate('education')">Начать обучение →</button><button class="secondary-button" onclick="navigate('signal')">Открыть AVA BOT</button></div>
 </div>
-<div class="section-title">Твой прогресс</div>
-<div class="grid grid-3">
-<div class="card stat"><div class="stat-label">Пройдено уроков</div><div class="stat-value"><span id="homeLessons">0</span><small style="font-size:15px;color:#78849a"> / 160</small></div><div class="progress"><i id="homeLessonBar" style="width:0%"></i></div></div>
-<div class="card stat"><div class="stat-label">XP</div><div class="stat-value" id="homeXp">0</div><div class="stat-label">До следующего уровня: <span id="homeNext">100</span></div></div>
-<div class="card stat"><div class="stat-label">AVA Coins</div><div class="stat-value" id="homeCoins">0</div><div class="stat-label">За обучение и активность</div></div>
-</div>
-<div class="section-title">Что сегодня?</div>
-<div class="grid grid-3">
-<div class="card"><div class="card-title">📚 Урок дня</div><div class="muted" style="font-size:13px;line-height:1.5;margin:10px 0 15px">Разбери следующий урок и закрепи материал.</div><button class="btn blue" onclick="openPage('education')">Учиться</button></div>
-<div class="card"><div class="card-title">🤖 AVA BOT</div><div class="muted" style="font-size:13px;line-height:1.5;margin:10px 0 15px">Сгенерируй учебный торговый сценарий.</div><button class="btn" onclick="openPage('signal')">Анализ</button></div>
-<div class="card"><div class="card-title">🧠 Практика</div><div class="muted" style="font-size:13px;line-height:1.5;margin:10px 0 15px">Проверь, насколько хорошо ты усвоил материал.</div><button class="btn" onclick="openPage('practice')">Тест</button></div>
-</div>
+<div class="market-scene"><div class="market-grid"></div><div class="market-chart"><svg viewBox="0 0 700 380" preserveAspectRatio="none"><g stroke="#fff" opacity=".07"><path d="M0 80H700M0 160H700M0 240H700M0 320H700"/><path d="M70 0V380M170 0V380M270 0V380M370 0V380M470 0V380M570 0V380M670 0V380"/></g><path d="M0 310 C50 295 70 280 105 295 S155 230 205 245 S255 170 300 190 S345 120 390 145 S440 180 480 105 S540 120 575 80 S640 100 700 35" fill="none" stroke="#5ca6ff" stroke-width="4"/><path d="M0 310 C50 295 70 280 105 295 S155 230 205 245 S255 170 300 190 S345 120 390 145 S440 180 480 105 S540 120 575 80 S640 100 700 35V380H0Z" fill="#3b82f6" opacity=".06"/><g stroke-linecap="round"><g stroke="#35df91"><path d="M85 290V225" stroke-width="2"/><rect x="77" y="245" width="16" height="34" rx="3" fill="#35df91"/></g><g stroke="#ff6174"><path d="M160 260V185" stroke-width="2"/><rect x="152" y="200" width="16" height="42" rx="3" fill="#ff6174"/></g><g stroke="#35df91"><path d="M245 220V135" stroke-width="2"/><rect x="237" y="155" width="16" height="48" rx="3" fill="#35df91"/></g><g stroke="#35df91"><path d="M335 175V90" stroke-width="2"/><rect x="327" y="112" width="16" height="45" rx="3" fill="#35df91"/></g><g stroke="#ff6174"><path d="M430 170V90" stroke-width="2"/><rect x="422" y="105" width="16" height="48" rx="3" fill="#ff6174"/></g><g stroke="#35df91"><path d="M520 125V45" stroke-width="2"/><rect x="512" y="62" width="16" height="48" rx="3" fill="#35df91"/></g><g stroke="#35df91"><path d="M620 105V20" stroke-width="2"/><rect x="612" y="35" width="16" height="52" rx="3" fill="#35df91"/></g></g></svg></div><div class="market-floating one"><small>EUR/USD</small><strong style="color:#4ff0a0">+1.84%</strong></div><div class="market-floating two"><small>AVA BOT</small><strong>▲ ВВЕРХ</strong></div><div class="market-floating three"><small>AVA AI</small><strong>Онлайн ●</strong></div></div></div>
+<div class="home-stats"><div class="home-stat"><div class="stat-icon">📚</div><div class="stat-label">ПРОЙДЕНО УРОКОВ</div><div class="stat-value" id="homeLessons">0 / 160</div></div><div class="home-stat"><div class="stat-icon">⚡</div><div class="stat-label">ТВОЙ XP</div><div class="stat-value" id="homeXP">0</div></div><div class="home-stat"><div class="stat-icon">🪙</div><div class="stat-label">AVA COINS</div><div class="stat-value" id="homeCoins">0</div></div><div class="home-stat"><div class="stat-icon">🔥</div><div class="stat-label">СЕРИЯ ДНЕЙ</div><div class="stat-value" id="homeStreak">0</div></div></div></div>
+
+<div class="section-head"><div><div class="section-title">Твой AVA AI</div><div class="section-caption">Персональный помощник академии</div></div></div>
+<div class="card ai-widget"><div class="ai-head"><div class="ai-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="4" y="6" width="16" height="13" rx="4"/><path d="M8 12h.01M16 12h.01M9 16c1.8 1.4 4.2 1.4 6 0M12 3v3M3 10H1M23 10h-2"/></svg></div><div><div class="ai-name">AVA AI</div><div class="ai-status"><i></i>Помощник онлайн</div></div></div><div class="ai-message">Привет! Я AVA. Могу объяснить любой урок, разобрать индикатор, помочь понять свечу, подсказать по навигации или подготовить тебя к тесту.</div><div class="ai-actions"><button class="ai-action" onclick="openAI('Объясни мне RSI простыми словами')">Объясни RSI</button><button class="ai-action" onclick="openAI('Что такое EMA?')">Что такое EMA?</button><button class="ai-action" onclick="openAI('Помоги с обучением')">Помоги с обучением</button><button class="ai-action" onclick="openAI('Как читать свечи?')">Свечи</button></div></div>
+<div class="section-head"><div><div class="section-title">Связь с AVA</div><div class="section-caption">Твой канал всегда рядом</div></div></div>
+<div class="contact-hero"><h2>AVA рядом с тобой</h2><p>Новости, материалы, обновления академии и личная связь — всё в одном месте.</p><div class="contact-buttons"><button class="contact-button primary" onclick="window.open('https://t.me/+D1kxbrvyGSViZWFi','_blank')">✈ Открыть мой Telegram-канал</button><button class="contact-button" onclick="window.open('https://t.me/m/OsDQxjCLNTUy','_blank')">💬 Написать мне лично</button></div></div>
 </section>
 
-<section class="page" id="page-education">
-<div class="education-wrap">
-<div class="education-toolbar"><div><strong style="font-size:22px">Курс AVA ACADEMY</strong><div style="font-size:13px;color:#756d62;margin-top:4px">160 уроков · от основ до продвинутого анализа</div></div><input class="education-search" id="lessonSearch" placeholder="Поиск урока..."></div>
-<div id="lessonReader" class="paper" style="display:none"></div>
-<div id="lessonList" class="lesson-list"></div>
-</div>
-</section>
+<section class="screen" id="screen-education"><div class="education-shell"><div class="education-top"><div><div class="education-title">Обучение AVA ACADEMY</div><div class="education-sub">160 уроков · последовательное развитие навыков</div></div><input id="lessonSearch" placeholder="Поиск урока..." style="border:1px solid #d7cebf;background:#fffdf8;border-radius:12px;padding:10px 13px;outline:none;color:#342f29"></div><div class="lesson-track"><i id="educationProgress" style="width:0%"></i></div><div id="lessonReader" class="lesson-reader hidden"></div><div id="lessonList" class="lesson-list"></div></div></section>
 
-<section class="page" id="page-signal">
-<div id="signalTopBanner">
-<div class="signal-top-label">AVA BOT · ГОТОВЫЙ СЦЕНАРИЙ</div>
-<div class="signal-top-direction" id="signalTopDirection">—</div>
-<div class="signal-top-reason" id="signalTopReason"></div>
-</div>
-<div id="signalLoading">
-<div class="scan-line"></div>
-<div class="analysis-step" id="analysisStep">Подготовка анализа…</div>
-</div>
-<div class="signal-card">
-<div class="card-title">🤖 AVA BOT</div>
-<div class="muted" style="font-size:13px;line-height:1.5;margin-bottom:18px">Учебный генератор торгового сценария. Выбери рынок, актив и время экспирации.</div>
-<div class="market-toggle" id="marketToggle"><button class="active" data-market="exchange">БИРЖА</button><button data-market="otc">OTC</button></div>
-<div class="pair-grid" id="pairGrid"></div>
-<div class="time-row" id="timeRow"><button class="time-btn active" data-time="1">1 мин</button><button class="time-btn" data-time="3">3 мин</button><button class="time-btn" data-time="5">5 мин</button><button class="time-btn" data-time="15">15 мин</button></div>
-<button class="generate" id="generateSignal">⚡ СГЕНЕРИРОВАТЬ СЦЕНАРИЙ</button>
-<div class="signal-result" id="signalResult">
-<div class="signal-direction" id="signalDirection"></div>
-<div class="signal-reason" id="signalReason"></div>
-<div class="signal-chart" id="signalChart"></div>
-</div>
-</div>
-</section>
-
-<section class="page" id="page-practice">
-<div class="card">
-<div class="card-title">🧠 Практика</div>
-<div class="muted" style="font-size:13px;margin-top:5px">Ответь на вопросы и получай XP + AVA Coins.</div>
-<div id="practiceBox" style="margin-top:20px"></div>
-</div>
-</section>
-
-<section class="page" id="page-community">
-<div class="card"><div class="card-title">👥 Сообщество AVA</div><div class="muted" style="font-size:13px;margin-top:4px">Общайся, делись результатами и развивайся вместе с другими учениками.</div><div class="community-list" style="margin-top:18px">
-<div class="community-item"><div class="community-avatar">A</div><div><b>AVA Community</b><div class="muted" style="font-size:12px">Главный чат академии</div></div></div>
-<div class="community-item"><div class="community-avatar">T</div><div><b>Telegram</b><div class="muted" style="font-size:12px">Новости и материалы</div></div><button class="btn" style="margin-left:auto" onclick="window.open('https://t.me/+D1kxbrvyGSViZWFi','_blank')">Открыть</button></div>
-<div class="community-item"><div class="community-avatar">V</div><div><b>Связаться с AVA</b><div class="muted" style="font-size:12px">Личные сообщения</div></div><button class="btn" style="margin-left:auto" onclick="window.open('https://t.me/m/OsDQxjCLNTUy','_blank')">Написать</button></div>
+<section class="screen" id="screen-signal">
+<div class="signal-layout"><div class="signal-main"><div class="signal-content">
+<div class="bot-header"><div class="bot-brand"><div class="bot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7"><rect x="4" y="6" width="16" height="13" rx="4"/><path d="M8 12h.01M16 12h.01M9 16c1.8 1.4 4.2 1.4 6 0M12 3v3M3 10H1M23 10h-2"/></svg></div><div><div class="bot-title">AVA BOT</div><div class="bot-subtitle">ИНТЕЛЛЕКТУАЛЬНЫЙ АНАЛИЗ СЦЕНАРИЯ</div></div></div><div class="bot-online">ОНЛАЙН</div></div>
+<div class="market-switch" id="marketSwitch"><button class="active" data-market="exchange">БИРЖА</button><button data-market="otc">OTC</button></div>
+<div class="pair-scroll" id="pairScroll"></div>
+<div class="time-buttons" id="timeButtons"><button class="time-button active" data-time="1">1 мин</button><button class="time-button" data-time="3">3 мин</button><button class="time-button" data-time="5">5 мин</button><button class="time-button" data-time="15">15 мин</button></div>
+<button class="bot-generate" id="generateSignal">⚡ ЗАПУСТИТЬ AVA BOT И ПРОАНАЛИЗИРОВАТЬ</button>
+<div class="signal-loading" id="signalLoading"><div class="scan"></div><div class="analysis-line" id="analysisLine">AVA сканирует рынок…</div></div>
+<div class="signal-result" id="signalResult"><div class="signal-top"><div class="signal-top-label">AVA BOT · СЦЕНАРИЙ ГОТОВ</div><div class="signal-direction" id="signalDirection"></div><div class="signal-meta" id="signalMeta"></div></div><div class="signal-reason" id="signalReason"></div><div class="signal-chart" id="signalChart"></div></div>
 </div></div>
-</section>
+<div class="bot-side"><div class="bot-side-card"><div class="bot-side-title">🧠 Что проверяет AVA?</div><div class="bot-side-text">EMA · RSI · MACD · импульс · структура · уровни · направление движения.</div><div class="confidence"><div class="confidence-top"><span>Согласованность сценария</span><b id="confidenceValue">—</b></div><div class="confidence-bar"><i id="confidenceBar" style="width:0"></i></div></div></div><div class="bot-side-card"><div class="bot-side-title">⚠ Учебный режим</div><div class="bot-side-text">AVA BOT в этой HTML-версии создаёт учебный сценарий. Он не получает приватные котировки брокера в реальном времени.</div></div><div class="bot-side-card"><div class="bot-side-title">📌 Текущий актив</div><div class="bot-side-text" id="selectedPairInfo">EUR/USD · 1 мин</div></div></div></div></section>
 
-<section class="page" id="page-profile">
-<div class="profile-head"><div class="avatar" id="profileAvatar">A</div><div style="flex:1"><div class="profile-name" id="profileName">Ученик</div><div class="profile-meta" id="profileMeta">AVA ID · — · Google · —</div><div class="profile-level"><b id="profileLevel">Уровень 1</b><span class="muted" style="font-size:12px"> · <span id="profileXp">0</span> XP</span><div class="xpbar"><i id="profileXpBar" style="width:0%"></i></div></div></div></div>
-<div class="section-title">Статистика</div>
-<div class="grid grid-3">
-<div class="card stat"><div class="stat-label">Уроки</div><div class="stat-value" id="profileLessons">0</div></div>
-<div class="card stat"><div class="stat-label">Тесты</div><div class="stat-value" id="profileTests">0</div></div>
-<div class="card stat"><div class="stat-label">Серия дней</div><div class="stat-value" id="profileStreak">0</div></div>
-</div>
-<div class="section-title">Достижения</div>
-<div class="achievement-grid">
-<div class="achievement"><div class="achievement-icon">🌱</div><div class="achievement-title">Первый шаг</div></div>
-<div class="achievement"><div class="achievement-icon">📚</div><div class="achievement-title">10 уроков</div></div>
-<div class="achievement"><div class="achievement-icon">🔥</div><div class="achievement-title">Серия 7 дней</div></div>
-<div class="achievement"><div class="achievement-icon">🏆</div><div class="achievement-title">Мастер AVA</div></div>
-</div>
-<div class="section-title">AVA Coins</div>
-<div class="card"><div style="font-size:30px;font-weight:950">🪙 <span id="profileCoins">0</span></div><div class="muted" style="font-size:13px;margin-top:7px">Получай монеты за уроки, тесты, практику и активность.</div></div>
-</section>
-</main>
+<section class="screen" id="screen-practice"><div class="section-head"><div><div class="section-title">Практика</div><div class="section-caption">Правильный ответ приносит XP и AVA Coins</div></div></div><div class="practice-card" id="practiceBox"></div></section>
 
-<nav class="mobile-nav">
-<button class="active" data-page="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg><span>Главная</span></button>
-<button data-page="education"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M8 7h8M8 11h8"/></svg><span>Учёба</span></button>
-<button data-page="signal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17 8 12l4 4 8-9"/></svg><span>AVA BOT</span></button>
-<button data-page="practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 4h14v16H5z"/><path d="m8 12 2 2 5-5"/></svg><span>Тест</span></button>
-<button data-page="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4.4 3.4-6.5 8-6.5s7.2 2.1 8 6.5"/></svg><span>Профиль</span></button>
-</nav></div>
+<section class="screen" id="screen-community"><div class="contact-card"><div class="contact-hero"><h2>Связь с AVA</h2><p>Все важные обновления, материалы академии и новости — в моём Telegram-канале. Личная связь тоже всегда доступна.</p><div class="contact-buttons"><button class="contact-button primary" onclick="window.open('https://t.me/+D1kxbrvyGSViZWFi','_blank')">✈ Мой Telegram-канал</button><button class="contact-button" onclick="window.open('https://t.me/m/OsDQxjCLNTUy','_blank')">💬 Личная связь</button></div></div><div class="card"><div class="card-title">AVA AI</div><div class="ai-message">Если что-то непонятно в академии — спроси AVA. Я помогу найти урок и объясню материал.</div><button class="primary-button" style="margin-top:15px" onclick="openAI('Мне нужна помощь в академии')">Открыть AVA AI</button></div></div></section>
+
+<section class="screen" id="screen-profile"><div class="profile-hero"><div class="profile-avatar" id="profileAvatar">A</div><div><div class="profile-name" id="profileName">Студент</div><div class="profile-id" id="profileId">AVA ID · — · Google · —</div><div class="level-line"><span id="profileLevel">Уровень 1</span><span id="profileXP">0 XP</span></div><div class="xpbar"><i id="profileXPBar" style="width:0%"></i></div></div><div class="profile-coin"><b id="profileCoins">0</b><span>AVA COINS</span></div></div><div class="profile-stats"><div class="profile-stat"><small>УРОКИ</small><strong id="profileLessons">0</strong></div><div class="profile-stat"><small>ТЕСТЫ</small><strong id="profileTests">0</strong></div><div class="profile-stat"><small>СЕРИЯ</small><strong id="profileStreak">0</strong></div><div class="profile-stat"><small>УРОВЕНЬ</small><strong id="profileLevelStat">1</strong></div></div><div class="section-head"><div><div class="section-title">Достижения</div><div class="section-caption">Твой путь в AVA ACADEMY</div></div></div><div class="achievements"><div class="achievement"><div class="achievement-icon">🌱</div><b>Первый шаг</b><small>Создан профиль</small></div><div class="achievement"><div class="achievement-icon">📚</div><b>Первые 10</b><small>10 уроков</small></div><div class="achievement"><div class="achievement-icon">🔥</div><b>Серия</b><small>7 дней</small></div><div class="achievement"><div class="achievement-icon">🏆</div><b>Мастер AVA</b><small>100 уроков</small></div></div></section>
+
+</div></main></div>
+<nav class="mobile-navigation"><button class="active" data-page="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg><span>Главная</span></button><button data-page="education"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg><span>Учёба</span></button><button data-page="signal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17 8 12l4 4 8-9"/><path d="M16 7h4v4"/></svg><span>AVA BOT</span></button><button data-page="community"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3.5 20c.5-4 2.3-6 5.5-6s5 2 5.5 6M14 15c3.5-.2 5.6 1.5 6.5 5"/></svg><span>Связь</span></button><button data-page="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4.4 3.4-6.5 8-6.5s7.2 2.1 8 6.5"/></svg><span>Профиль</span></button></nav>
+<button class="floating-ai" onclick="toggleAI()"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="4" y="6" width="16" height="13" rx="4"/><path d="M8 12h.01M16 12h.01M9 16c1.8 1.4 4.2 1.4 6 0M12 3v3"/></svg></button>
+<div class="ai-chat" id="aiChat"><div class="ai-chat-head"><div class="ai-chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7"><rect x="4" y="6" width="16" height="13" rx="4"/><path d="M8 12h.01M16 12h.01M9 16c1.8 1.4 4.2 1.4 6 0M12 3v3"/></svg></div><div><b style="font-size:11px">AVA AI</b><div style="font-size:8px;color:#49e39a">Помощник онлайн</div></div><button class="ai-chat-close" onclick="toggleAI()">×</button></div><div class="ai-chat-body" id="aiChatBody"><div class="chat-bubble ai">Привет! Я AVA. Задавай вопрос по академии — постараюсь помочь.</div></div><form class="ai-chat-form" id="aiForm"><input id="aiInput" placeholder="Спроси AVA..."><button>➤</button></form></div>
 <div class="toast" id="toast"></div>
+</div>
 
 <script>
-const STORAGE_KEY="ava_academy_state_v12";
-const pageData={
-education:[
-["Основы трейдинга","Что такое рынок и как устроена торговая операция."],
-["Свечной анализ","Как читать японские свечи и понимать движение цены."],
-["Тренд","Как определять направление движения рынка."],
-["Уровни поддержки и сопротивления","Как находить зоны реакции цены."],
-["Импульс","Как оценивать силу движения."],
-["Консолидация","Как распознавать боковое движение."],
-["Пробой уровня","Что происходит, когда цена выходит из диапазона."],
-["Ложный пробой","Как отличать настоящий пробой от ловушки."],
-["EMA","Как использовать экспоненциальную скользящую среднюю."],
-["RSI","Как читать силу движения через индекс относительной силы."],
-["MACD","Как анализировать импульс и пересечения."],
-["Bollinger Bands","Как оценивать волатильность и диапазон."],
-["Envelopes","Как использовать ценовые оболочки."],
-["Accelerator Oscillator","Как оценивать ускорение импульса."],
-["Комбинация индикаторов","Как не перегружать график сигналами."],
-["Торговый сценарий","Как строить план до входа."],
-["Таймфреймы","Как выбирать масштаб графика."],
-["Экспирация","Как соотносить время сделки и движение цены."],
-["Риск-менеджмент","Как ограничивать размер риска."],
-["Торговый дневник","Как анализировать собственные сделки."]
-]};
-while(pageData.education.length<160){
-const n=pageData.education.length+1;
-pageData.education.push([
-"Урок "+n+" · Практика анализа",
-"Закрепление навыков технического анализа, структуры рынка, импульса, уровней и дисциплины."
-]);
-}
+const KEY="AVA_ACADEMY_MASTER_V1";
+const PAIRS={exchange:["EUR/USD","GBP/USD","USD/JPY","USD/CHF","AUD/USD","USD/CAD","NZD/USD","EUR/GBP","EUR/JPY","GBP/JPY","AUD/JPY","AUD/NZD","AUD/CAD","AUD/CHF","CAD/JPY","CAD/CHF","CHF/JPY","EUR/AUD","EUR/CAD","EUR/CHF","EUR/NZD","GBP/AUD","GBP/CAD","GBP/CHF","GBP/NZD","NZD/CAD","NZD/CHF","USD/TRY","USD/MXN","USD/ZAR","USD/SGD","USD/HKD","USD/NOK","USD/SEK","USD/DKK","USD/PLN","USD/CZK","USD/HUF"],otc:["EUR/USD OTC","GBP/USD OTC","USD/JPY OTC","USD/CHF OTC","AUD/USD OTC","USD/CAD OTC","NZD/USD OTC","EUR/GBP OTC","EUR/JPY OTC","GBP/JPY OTC","AUD/JPY OTC","AUD/NZD OTC","AUD/CAD OTC","AUD/CHF OTC","CAD/JPY OTC","CAD/CHF OTC","CHF/JPY OTC","EUR/AUD OTC","EUR/CAD OTC","EUR/CHF OTC","EUR/NZD OTC","GBP/AUD OTC","GBP/CAD OTC","GBP/CHF OTC","GBP/NZD OTC","NZD/CAD OTC","NZD/CHF OTC","Gold OTC","Silver OTC","BTC/USD OTC","ETH/USD OTC","Apple OTC","Tesla OTC","Amazon OTC","Microsoft OTC","Google OTC"]};
+const lessons=[
+["Основы трейдинга","Что такое рынок, актив, цена и торговый сценарий."],["Свечи","Как читать тело свечи, тени, открытие и закрытие."],["Бычья свеча","Как выглядит движение покупателей."],["Медвежья свеча","Как выглядит движение продавцов."],["Тренд","Как определить направление рынка."],["Флэт","Как распознать боковое движение."],["Импульс","Как оценивать силу движения цены."],["Поддержка","Как находить зоны спроса."],["Сопротивление","Как находить зоны предложения."],["Пробой","Что происходит при выходе из диапазона."],["Ложный пробой","Как распознать возврат цены."],["EMA","Экспоненциальная скользящая средняя."],["RSI","Индекс относительной силы."],["MACD","Импульс и направление."],["Bollinger Bands","Волатильность и диапазон."],["Envelopes","Ценовые оболочки."],["Accelerator Oscillator","Ускорение движения."],["Таймфреймы","Как выбирать масштаб графика."],["Экспирация","Как соотносить время сделки и движение."],["Риск-менеджмент","Контроль размера риска."],["Торговый план","Что определить до сделки."],["Дневник трейдера","Как разбирать свои результаты."]];
+while(lessons.length<160)lessons.push(["Практика анализа · Урок "+(lessons.length+1),"Закрепление навыков чтения графика, уровней, импульса и дисциплины."]);
 
-let state={
-registered:false,name:"",email:"",nickname:"",avaId:"",
-coins:0,xp:0,level:1,lessons:[],tests:0,streak:0,
-lastDay:"",market:"exchange",pair:"EUR/USD",time:"1"
-};
+let state={registered:false,name:"",email:"",nickname:"",avaId:"",coins:0,xp:0,level:1,completedLessons:[],tests:0,streak:0,lastDay:"",market:"exchange",pair:"EUR/USD",time:"1"};
+try{Object.assign(state,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){}
+const $=id=>document.getElementById(id),$$=s=>document.querySelectorAll(s);
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function initials(n){return(n||"A").split(/\s+/).map(x=>x[0]).join("").slice(0,2).toUpperCase()}
+function level(){return Math.max(1,state.level)}
+function toast(t){$("toast").textContent=t;$("toast").classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>$("toast").classList.remove("show"),2300)}
+function reward(x,c){state.xp+=x;state.coins+=c;while(state.xp>=state.level*100){state.xp-=state.level*100;state.level++}save();updateAll()}
+function register(e){e.preventDefault();const n=$("authName").value.trim(),mail=$("authEmail").value.trim().toLowerCase();if(n.length<2){$("authError").textContent="Введите имя";return}if(!/^[^\s@]+@gmail\.com$/.test(mail)){$("authError").textContent="Нужен корректный Gmail";return}state.registered=true;state.name=n;state.email=mail;state.nickname=(n.toLowerCase().replace(/[^a-zа-яё0-9]/gi,"")||"ava")+"_"+Math.floor(100+Math.random()*900);state.avaId=state.avaId||"AVA-"+Math.random().toString(36).slice(2,9).toUpperCase();save();$("authScreen").classList.add("hidden");$("app").classList.remove("hidden");updateAll();toast("Добро пожаловать в AVA ACADEMY")}
+$("authForm").addEventListener("submit",register);
 
-try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");if(saved)state={...state,...saved}}catch(e){}
+const pageData={home:["Главная","Твоя академия трейдинга"],education:["Обучение","160 уроков — от основ до продвинутого анализа"],signal:["AVA BOT","Интеллектуальный учебный анализ"],practice:["Практика","Проверяй знания и получай XP"],community:["Связь","AVA — канал, связь и обновления"],profile:["Профиль","Твой прогресс, уровень и достижения"]};
+function navigate(page){$$(".screen").forEach(x=>x.classList.remove("active"));$("screen-"+page).classList.add("active");$$("[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));$("topTitle").textContent=pageData[page][0];$("topSubtitle").textContent=pageData[page][1];if(page==="education")renderLessons();if(page==="practice")renderPractice();window.scrollTo({top:0,behavior:"smooth"});state.currentPage=page;save()}
+$$("[data-page]").forEach(x=>x.addEventListener("click",()=>navigate(x.dataset.page)));
 
-const $=id=>document.getElementById(id);
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
-function makeUsername(name,email){
-let base=(name||"ava").toLowerCase().replace(/[^a-zа-яё0-9]/gi,"").slice(0,12)||"ava";
-let digits=Math.floor(100+Math.random()*900);
-return base+"_"+digits;
-}
-function makeAvaId(){
-return "AVA-"+Date.now().toString(36).toUpperCase().slice(-7);
-}
-function toast(text){
-$("toast").textContent=text;
-$("toast").classList.add("show");
-clearTimeout(window.toastTimer);
-window.toastTimer=setTimeout(()=>$("toast").classList.remove("show"),2200);
-}
-function addReward(xp,coins){
-state.xp+=xp;state.coins+=coins;
-while(state.xp>=state.level*100){state.xp-=state.level*100;state.level++}
-save();renderAll();
-}
-function register(e){
-e.preventDefault();
-const name=$("nameInput").value.trim();
-const email=$("emailInput").value.trim().toLowerCase();
-if(name.length<2){toast("Введите имя");return}
-if(!/^[^\s@]+@gmail\.com$/.test(email)){toast("Введите корректный Gmail");return}
-state.registered=true;state.name=name;state.email=email;
-state.nickname=makeUsername(name,email);
-state.avaId=state.avaId||makeAvaId();
-save();
-$("authScreen").classList.add("hidden");
-$("appShell").classList.add("active");
-renderAll();
-toast("Добро пожаловать в AVA ACADEMY");
-}
-$("registerForm").addEventListener("submit",register);
-
-if(state.registered&&state.name&&state.email&&state.avaId){
-$("authScreen").classList.add("hidden");$("appShell").classList.add("active");
-}
-
-const pageTitles={
-home:["Главная","Развивай навык каждый день"],
-education:["Обучение","160 уроков AVA ACADEMY"],
-signal:["AVA BOT","Учебный анализ торгового сценария"],
-practice:["Практика","Проверяй знания и получай награды"],
-community:["Сообщество","Развивайся вместе"],
-profile:["Профиль","Твой прогресс и достижения"]
-};
-function openPage(name){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-const page=$("page-"+name);if(page)page.classList.add("active");
-document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
-$("pageTitle").textContent=pageTitles[name][0];
-$("pageSub").textContent=pageTitles[name][1];
-window.scrollTo({top:0,behavior:"smooth"});
-if(name==="education")renderLessons();
-if(name==="practice")renderPractice();
-}
-document.querySelectorAll("[data-page]").forEach(btn=>btn.addEventListener("click",()=>openPage(btn.dataset.page)));
-
-function renderAll(){
-const initial=(state.name||"Ученик")[0].toUpperCase();
-$("sideUserName").textContent=state.name||"Ученик";
-$("sideUserLevel").textContent=`Уровень ${state.level} · ${state.xp} XP`;
-$("coinsTop").textContent=state.coins;
-$("homeLessons").textContent=state.lessons.length;
-$("homeLessonBar").style.width=(state.lessons.length/160*100)+"%";
-$("homeXp").textContent=state.xp;
-$("homeCoins").textContent=state.coins;
-$("homeNext").textContent=Math.max(0,state.level*100-state.xp);
-$("profileAvatar").textContent=initial;
-$("profileName").textContent=state.name||"Ученик";
-$("profileMeta").textContent=`${state.avaId||"AVA ID · —"} · Google · ${state.email||"—"}`;
-$("profileLevel").textContent="Уровень "+state.level;
-$("profileXp").textContent=state.xp;
-$("profileXpBar").style.width=(state.xp/(state.level*100)*100)+"%";
-$("profileLessons").textContent=state.lessons.length;
-$("profileTests").textContent=state.tests;
-$("profileStreak").textContent=state.streak;
-$("profileCoins").textContent=state.coins;
-}
-function renderLessons(){
-const q=($("lessonSearch").value||"").toLowerCase();
-$("lessonList").innerHTML=pageData.education.map((l,i)=>{
-if(q&&!(`${i+1} ${l[0]} ${l[1]}`).toLowerCase().includes(q))return"";
-const done=state.lessons.includes(i+1);
-return `<div class="lesson ${done?"done":""}">
-<div class="lesson-num">${done?"✓":i+1}</div>
-<div class="lesson-info"><div class="lesson-title">${l[0]}</div><div class="lesson-desc">${l[1]}</div></div>
-<div class="lesson-status">${done?"Пройден":"Не начат"}</div>
-<button onclick="openLesson(${i})">${done?"Повторить":"Открыть"}</button>
-</div>`}).join("");
-}
+function updateAll(){const ini=initials(state.name);$("topCoins").textContent=state.coins;$("sidebarCoins").textContent=state.coins;$("homeCoins").textContent=state.coins;$("homeLessons").textContent=state.completedLessons.length+" / 160";$("homeXP").textContent=state.xp;$("homeStreak").textContent=state.streak;$("sidebarName").textContent=state.name||"Студент";$("sidebarLevel").textContent="Уровень "+state.level;$("sidebarAvatar").textContent=ini;$("topProfile").textContent=ini;$("profileAvatar").textContent=ini;$("profileName").textContent=state.name||"Студент";$("profileId").textContent="AVA ID · "+state.avaId+" · Google · "+state.email;$("profileLessons").textContent=state.completedLessons.length;$("profileTests").textContent=state.tests;$("profileStreak").textContent=state.streak;$("profileLevel").textContent="Уровень "+state.level;$("profileLevelStat").textContent=state.level;$("profileXP").textContent=state.xp+" XP";$("profileCoins").textContent=state.coins;$("profileXPBar").style.width=(state.xp/(state.level*100)*100)+"%";$("educationProgress").style.width=(state.completedLessons.length/160*100)+"%"}
+function renderLessons(){const q=($("lessonSearch").value||"").toLowerCase();$("lessonList").innerHTML=lessons.map((l,i)=>{if(q&&!(`${i+1} ${l[0]} ${l[1]}`).toLowerCase().includes(q))return"";const done=state.completedLessons.includes(i+1);return`<div class="lesson ${done?"completed":""}"><div class="lesson-number">${done?"✓":i+1}</div><div class="lesson-info"><div class="lesson-title">${l[0]}</div><div class="lesson-description">${l[1]}</div></div><button class="lesson-open" onclick="openLesson(${i})">${done?"Повторить":"Открыть"}</button></div>`}).join("")}
 $("lessonSearch").addEventListener("input",renderLessons);
+function openLesson(i){const l=lessons[i];$("lessonReader").classList.remove("hidden");$("lessonReader").innerHTML=`<button class="secondary-button" onclick="$('lessonReader').classList.add('hidden')">← Все уроки</button><h2>${i+1}. ${l[0]}</h2><p>${l[1]}</p><div class="lesson-figure"><b>Визуальная схема</b><div class="candle-diagram"><div class="candle up"><b></b></div><div class="candle.up"><b></b></div><div class="candle down"><b></b></div><div class="candle up"><b></b></div><div class="candle down"><b></b></div><div class="candle up"><b></b></div></div><p style="font-size:12px">Цена формируется через последовательность свечей. Сначала смотри на контекст, затем на уровень, импульс и подтверждение.</p></div><h3>Разбор урока</h3><p>В этом уроке важно не просто запомнить определение. Твоя задача — научиться узнавать этот элемент на графике и связывать его с общей структурой рынка.</p><p>Сначала оцени направление движения. Затем найди ближайшую значимую область и посмотри, как цена реагировала на неё раньше.</p><p>После этого сформулируй сценарий и условие, при котором он перестанет быть актуальным. Такой подход помогает не принимать решение на эмоциях.</p><h3>Главное</h3><ul><li>Один сигнал не является гарантией результата.</li><li>Контекст важнее отдельной свечи.</li><li>Перед действием нужен заранее определённый сценарий.</li><li>Риск всегда должен контролироваться.</li></ul><button class="primary-button" style="margin-top:18px" onclick="completeLesson(${i})">✓ Завершить урок · +25 XP · +10 AVA</button>`;$("lessonReader").scrollIntoView({behavior:"smooth",block:"start"})}
+function completeLesson(i){if(!state.completedLessons.includes(i+1)){state.completedLessons.push(i+1);reward(25,10);toast("Урок пройден · +25 XP · +10 AVA")}else toast("Урок уже пройден");renderLessons()}
 
-function openLesson(index){
-const l=pageData.education[index];
-const points=[
-`В этом уроке мы разбираем тему «${l[0]}» и связываем её с практическим чтением графика.`,
-"Сначала определи контекст рынка: направление движения, наличие импульса и ближайшие уровни.",
-"Затем оцени подтверждение. Один индикатор или одна свеча сами по себе не должны быть причиной входа.",
-"После этого сформулируй сценарий: что должно произойти, где идея перестаёт быть актуальной и какое действие ты предпринимаешь.",
-"Главная задача урока — научиться принимать решение по заранее определённым условиям, а не реагировать на случайное движение цены."
-];
-$("lessonReader").style.display="block";
-$("lessonReader").innerHTML=`
-<button class="btn" onclick="$('lessonReader').style.display='none'">← Назад к урокам</button>
-<h2>${index+1}. ${l[0]}</h2>
-<p>${l[1]}</p>
-<div class="paper-figure"><b>Схема мышления трейдера</b><p style="margin-top:8px">Контекст → Уровень → Импульс → Подтверждение → Сценарий → Контроль риска.</p></div>
-<h3>Разбираем тему</h3>
-${points.map(x=>`<p>• ${x}</p>`).join("")}
-<h3>Что важно запомнить</h3>
-<ul><li>Не открывай сделку только потому, что цена быстро изменилась.</li><li>Всегда заранее определяй условие подтверждения.</li><li>Отдельно отмечай сценарий роста и сценарий снижения.</li><li>Соблюдай риск-менеджмент и веди журнал результатов.</li></ul>
-<div class="paper-figure"><b>Практическая задача</b><p style="margin-top:8px">Посмотри на график своего актива и письменно сформулируй: где находится цена, какой контекст, какой уровень важен и какое событие подтвердит твою идею.</p></div>
-<button class="btn blue" onclick="completeLesson(${index})">✓ Отметить урок пройденным</button>`;
-$("lessonReader").scrollIntoView({behavior:"smooth",block:"start"});
-}
-function completeLesson(index){
-const n=index+1;
-if(!state.lessons.includes(n)){
-state.lessons.push(n);
-addReward(25,10);
-toast("Урок пройден · +25 XP · +10 AVA");
-}else toast("Этот урок уже пройден");
-renderLessons();
-}
-const pairs={
-exchange:["EUR/USD","GBP/USD","USD/JPY","USD/CHF","AUD/USD","USD/CAD","NZD/USD","EUR/GBP","EUR/JPY","GBP/JPY","AUD/JPY","EUR/CHF"],
-otc:["EUR/USD OTC","GBP/USD OTC","USD/JPY OTC","USD/CHF OTC","AUD/USD OTC","USD/CAD OTC","NZD/USD OTC","EUR/GBP OTC","EUR/JPY OTC","GBP/JPY OTC","AUD/JPY OTC","EUR/CHF OTC","Gold OTC","BTC/USD OTC","ETH/USD OTC","Apple OTC"]
-};
-function renderPairs(){
-$("pairGrid").innerHTML=pairs[state.market].map(p=>`<button class="pair-btn ${state.pair===p?"active":""}" data-pair="${p}">${p}</button>`).join("");
-document.querySelectorAll(".pair-btn").forEach(b=>b.onclick=()=>{
-state.pair=b.dataset.pair;save();renderPairs();
-});
-}
-document.querySelectorAll("#marketToggle button").forEach(b=>b.onclick=()=>{
-document.querySelectorAll("#marketToggle button").forEach(x=>x.classList.remove("active"));
-b.classList.add("active");state.market=b.dataset.market;
-state.pair=pairs[state.market][0];save();renderPairs();
-});
-document.querySelectorAll(".time-btn").forEach(b=>b.onclick=()=>{
-document.querySelectorAll(".time-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.time=b.dataset.time;save();
-});
+function renderPairs(){const arr=PAIRS[state.market];$("pairScroll").innerHTML=arr.map(p=>`<button class="pair-chip ${state.pair===p?"active":""}" data-pair="${p}">${p}</button>`).join("");$$(".pair-chip").forEach(x=>x.onclick=()=>{state.pair=x.dataset.pair;save();renderPairs();$("selectedPairInfo").textContent=state.pair+" · "+state.time+" мин"})}
+$$("#marketSwitch button").forEach(x=>x.onclick=()=>{$$("#marketSwitch button").forEach(y=>y.classList.remove("active"));x.classList.add("active");state.market=x.dataset.market;state.pair=PAIRS[state.market][0];save();renderPairs()});
+$$(".time-button").forEach(x=>x.onclick=()=>{$$(".time-button").forEach(y=>y.classList.remove("active"));x.classList.add("active");state.time=x.dataset.time;save();$("selectedPairInfo").textContent=state.pair+" · "+state.time+" мин"});
 
-function makeChart(up){
-let pts=[],y=95;
-for(let i=0;i<30;i++){y+=(Math.random()-.5)*22+(up?1.2:-1.2);y=Math.max(20,Math.min(160,y));pts.push(`${i*3.4},${y}`)}
-return `<svg viewBox="0 0 100 180" preserveAspectRatio="none"><polyline points="${pts.map(p=>{let [x,y]=p.split(",");return `${x},${y}`}).join(" ")}" fill="none" stroke="${up?"#35df91":"#ff5e70"}" stroke-width="2.5"/></svg>`.replace('viewBox="0 0 100 180"','viewBox="0 0 100 180"');
-}
-function getSignal(){
-const loading=$("signalLoading");
-const banner=$("signalTopBanner");
-const result=$("signalResult");
-result.classList.remove("show");
-banner.classList.remove("show");
-loading.classList.add("show");
-const steps=["Проверяю EMA…","Сверяю RSI…","Считаю MACD…","Оцениваю импульс…","Проверяю структуру…","Формирую сценарий…"];
-let i=0;
-$("analysisStep").textContent=steps[0];
-const interval=setInterval(()=>{
-i++;
-if(i<steps.length)$("analysisStep").textContent=steps[i];
-},420);
-setTimeout(()=>{
-clearInterval(interval);loading.classList.remove("show");
-const up=Math.random()>.5;
-const direction=up?"▲ ВВЕРХ":"▼ ВНИЗ";
-const reason=up
-?"Цена удерживает импульс, EMA поддерживает сценарий, RSI находится выше нейтральной зоны, MACD положительный."
-:"Цена теряет импульс, EMA не подтверждает рост, RSI слабый, MACD отрицательный.";
-$("signalTopDirection").textContent=direction;
-$("signalTopDirection").style.color=up?"#50efa0":"#ff7181";
-$("signalTopReason").textContent=`${state.pair} · ${state.time} мин · ${state.market==="exchange"?"БИРЖА":"OTC"} — ${reason}`;
-banner.classList.add("show");
-$("signalDirection").textContent=direction;
-$("signalDirection").className="signal-direction "+(up?"signal-up":"signal-down");
-$("signalReason").innerHTML=`<b>Почему сформирован сценарий</b><br>${reason}<br><br><span style="color:#738096">Важно: это учебная симуляция. Данные котировок в этой статической HTML-версии не подключены к реальному брокеру.</span>`;
-$("signalChart").innerHTML=makeChart(up);
-result.classList.add("show");
-addReward(5,2);
-setTimeout(()=>banner.scrollIntoView({behavior:"smooth",block:"start"}),30);
-},2800);
-}
-$("generateSignal").addEventListener("click",getSignal);
+function chart(up){let y=130,p=[];for(let i=0;i<40;i++){y+=(Math.random()-.5)*30+(up?1.9:-1.9);y=Math.max(20,Math.min(175,y));p.push([i*18,y])}return`<svg viewBox="0 0 700 190" preserveAspectRatio="none"><g stroke="#fff" opacity=".055"><path d="M0 40H700M0 90H700M0 140H700"/><path d="M100 0V190M200 0V190M300 0V190M400 0V190M500 0V190M600 0V190"/></g><polyline points="${p.map(x=>x.join(",")).join(" ")}" fill="none" stroke="${up?"#35df91":"#ff6376"}" stroke-width="3"/></svg>`}
+function generateSignal(){const loading=$("signalLoading"),result=$("signalResult");result.classList.remove("show");loading.classList.add("show");const steps=["AVA подключается к анализатору…","Проверяю структуру цены…","Сверяю EMA…","Анализирую RSI и MACD…","Оцениваю импульс…","Проверяю ближайшие уровни…","Формирую итоговый сценарий…"];let i=0;$("analysisLine").textContent=steps[0];const t=setInterval(()=>{i++;if(i<steps.length)$("analysisLine").textContent=steps[i]},390);setTimeout(()=>{clearInterval(t);loading.classList.remove("show");const up=Math.random()>.5,conf=Math.floor(76+Math.random()*21);$("signalDirection").textContent=up?"▲ ВВЕРХ":"▼ ВНИЗ";$("signalDirection").className="signal-direction "+(up?"up":"down");$("signalMeta").textContent=state.pair+" · "+state.time+" мин · "+(state.market==="exchange"?"БИРЖА":"OTC");$("signalReason").innerHTML="<b>Почему AVA сформировала этот сценарий</b><br>"+(up?"Цена сохраняет восходящий импульс, EMA поддерживает движение, RSI выше нейтральной зоны, а MACD указывает на положительный импульс.":"Цена показывает ослабление движения, EMA не подтверждает рост, RSI находится в слабой зоне, а MACD указывает на отрицательный импульс.")+"<br><br><span style='color:#68758c'>Это учебный сценарий, а не гарантия результата и не подключение к реальным котировкам брокера.</span>";$("signalChart").innerHTML=chart(up);$("confidenceValue").textContent=conf+"%";$("confidenceBar").style.width=conf+"%";result.classList.add("show");reward(5,2);setTimeout(()=>result.scrollIntoView({behavior:"smooth",block:"start"}),80)},3000)}
+$("generateSignal").onclick=generateSignal;
 
-const questions=[
-["Что показывает RSI?",["Силу/скорость движения цены","Объём депозита","Размер свечи","Комиссию"],0],
-["Что такое уровень поддержки?",["Зона, где цена может получить спрос","Всегда точная цена разворота","Индикатор объёма","Время экспирации"],0],
-["Что нужно сделать до входа?",["Определить сценарий и условия подтверждения","Сразу открыть сделку","Увеличить ставку","Игнорировать график"],0],
-["Что такое ложный пробой?",["Выход цены за уровень с последующим возвратом","Любое движение на одну свечу","Рост объёма","Изменение таймфрейма"],0],
-["Зачем нужен риск-менеджмент?",["Чтобы контролировать потенциальные потери","Чтобы гарантировать прибыль","Чтобы убрать волатильность","Чтобы предсказать новости"],0]
-];
-let currentQuestion=0;
-function renderPractice(){
-const q=questions[currentQuestion];
-$("practiceBox").innerHTML=`
-<div class="question">${currentQuestion+1}/${questions.length}. ${q[0]}</div>
-<div class="answers">${q[1].map((a,i)=>`<button class="answer" onclick="answerQuestion(${i})">${a}</button>`).join("")}</div>`;
-}
-function answerQuestion(index){
-const q=questions[currentQuestion];
-const buttons=document.querySelectorAll(".answer");
-buttons[index].classList.add(index===q[2]?"correct":"wrong");
-if(index===q[2]){state.tests++;addReward(20,8);toast("Правильно · +20 XP · +8 AVA")}
-else{toast("Неверно. Изучи тему и попробуй ещё раз")}
-setTimeout(()=>{
-currentQuestion=(currentQuestion+1)%questions.length;renderPractice();
-},800);
-save();
-}
+const questions=[["Что показывает RSI?",["Силу движения цены","Баланс счёта","Комиссию","Размер депозита"],0],["Что такое поддержка?",["Зона возможного спроса","Всегда точная цена разворота","Время экспирации","Название индикатора"],0],["Зачем нужен торговый план?",["Чтобы заранее определить условия сценария","Чтобы гарантировать прибыль","Чтобы исключить волатильность","Чтобы заменить анализ"],0],["Что такое ложный пробой?",["Выход за уровень с последующим возвратом","Любая зелёная свеча","Изменение таймфрейма","Рост депозита"],0],["Зачем нужен риск-менеджмент?",["Чтобы контролировать риск","Чтобы гарантировать выигрыш","Чтобы убрать комиссии","Чтобы предсказать новости"],0]];let qi=0;
+function renderPractice(){const q=questions[qi];$("practiceBox").innerHTML=`<div class="question-number">ВОПРОС ${qi+1} ИЗ ${questions.length}</div><div class="question-title">${q[0]}</div><div class="answers">${q[1].map((a,i)=>`<button class="answer" onclick="answer(${i})">${a}</button>`).join("")}</div>`}
+function answer(i){const q=questions[qi],bs=$$(".answer");bs[i].classList.add(i===q[2]?"correct":"wrong");if(i===q[2]){state.tests++;reward(20,8);toast("Правильно · +20 XP · +8 AVA")}else toast("Неверно · попробуй ещё раз");setTimeout(()=>{qi=(qi+1)%questions.length;renderPractice()},700);save()}
 
-renderPairs();
-renderAll();
+function toggleAI(){ $("aiChat").classList.toggle("open");if($("aiChat").classList.contains("open"))setTimeout(()=>$("aiInput").focus(),200)}
+function openAI(text){$("aiChat").classList.add("open");addAIMessage(text,"user");setTimeout(()=>aiAnswer(text),350)}
+function addAIMessage(text,type){const d=document.createElement("div");d.className="chat-bubble "+type;d.textContent=text;$("aiChatBody").appendChild(d);$("aiChatBody").scrollTop=$("aiChatBody").scrollHeight}
+function aiAnswer(text){const q=text.toLowerCase();let a;if(q.includes("rsi"))a="RSI — индикатор относительной силы. Он помогает оценивать импульс и состояние движения. В AVA сначала смотри на контекст и уровень, а RSI используй как подтверждение.";else if(q.includes("ema"))a="EMA — экспоненциальная скользящая средняя. Она сильнее учитывает последние значения цены и помогает увидеть направление движения.";else if(q.includes("свеч"))a="Начни с тела свечи и теней. Затем посмотри на соседние свечи и общий контекст. Отдельная свеча сама по себе не является готовым сигналом.";else if(q.includes("урок")||q.includes("обуч"))a="Открой раздел «Обучение». Там 160 уроков. Лучше идти последовательно: свечи → тренд → уровни → импульс → индикаторы → торговый план → риск-менеджмент.";else if(q.includes("bot")||q.includes("бот")||q.includes("сигнал"))a="Открой AVA BOT, выбери БИРЖА или OTC, затем пролистай ленту валютных пар, выбери актив и время. После запуска AVA покажет учебный сценарий и объяснит, какие факторы его сформировали.";else a="Я AVA AI. Спроси меня про свечи, тренд, поддержку, сопротивление, EMA, RSI, MACD, Envelopes, Accelerator Oscillator, обучение или AVA BOT.";addAIMessage(a,"ai")}
+$("aiForm").addEventListener("submit",e=>{e.preventDefault();const v=$("aiInput").value.trim();if(!v)return;$("aiInput").value="";addAIMessage(v,"user");setTimeout(()=>aiAnswer(v),350)});
+
+window.addEventListener("load",()=>{setTimeout(()=>{$("loader").style.opacity="0";setTimeout(()=>$("loader").remove(),650)},850);if(state.registered){$("authScreen").classList.add("hidden");$("app").classList.remove("hidden");updateAll()}renderPairs();renderLessons();renderPractice()});
 </script></body></html>
