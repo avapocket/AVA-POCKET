@@ -2,28 +2,54 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#090611">
-<title>AVA ACADEMY</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#08070d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>AVA ACADEMY — Учись. Анализируй. Расти.</title>
 
 <style>
+
+/* =========================================================
+   AVA ACADEMY — VISUAL SYSTEM
+   Новый интерфейс с нуля
+========================================================= */
+
 :root{
-  --bg:#08060f;
-  --bg2:#0d0918;
-  --panel:#120d20;
-  --panel2:#171027;
-  --line:rgba(255,255,255,.09);
-  --text:#f7f2ff;
-  --muted:#a69bb8;
+  --bg:#08070d;
+  --bg-soft:#0d0a14;
+  --surface:#12101a;
+  --surface-2:#17131f;
+  --surface-3:#1d1728;
+
   --purple:#9b5cff;
-  --purple2:#6e36d8;
-  --pink:#d15cff;
-  --cyan:#58d7ff;
-  --gold:#ffd76a;
-  --red:#ff547b;
-  --green:#63e6a4;
-  --shadow:0 24px 70px rgba(0,0,0,.42);
-  --radius:24px;
+  --purple-light:#c99cff;
+  --purple-dark:#5423a8;
+  --violet:#723de0;
+  --pink:#e56cff;
+
+  --blue:#5fc7ff;
+  --cyan:#70e7ff;
+  --gold:#ffd66b;
+  --red:#ff5e7c;
+  --green:#61e6a2;
+
+  --white:#faf8ff;
+  --text:#eee9f5;
+  --muted:#92899d;
+  --muted-2:#675f70;
+
+  --border:rgba(255,255,255,.085);
+  --border-bright:rgba(191,126,255,.22);
+
+  --shadow:0 30px 80px rgba(0,0,0,.5);
+  --shadow-purple:0 20px 70px rgba(126,57,222,.25);
+
+  --r-sm:14px;
+  --r-md:20px;
+  --r-lg:28px;
+  --r-xl:36px;
 }
 
 *{
@@ -32,23 +58,31 @@
 }
 
 html{
-  scroll-behavior:auto;
+  background:var(--bg);
 }
 
 body{
   margin:0;
-  background:
-    radial-gradient(circle at 10% 0%,rgba(155,92,255,.17),transparent 30%),
-    radial-gradient(circle at 90% 20%,rgba(209,92,255,.10),transparent 28%),
-    var(--bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif;
   min-height:100vh;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% -5%,rgba(135,65,255,.13),transparent 27%),
+    radial-gradient(circle at 100% 25%,rgba(216,75,255,.07),transparent 24%),
+    var(--bg);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Segoe UI",
+    Arial,
+    sans-serif;
   overflow-x:hidden;
 }
 
 button,
-input{
+input,
+select{
   font:inherit;
 }
 
@@ -57,229 +91,402 @@ button{
   cursor:pointer;
 }
 
-input{
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+input,
+select{
   outline:none;
+}
+
+svg{
+  display:block;
 }
 
 .hidden{
   display:none!important;
 }
 
-/* =========================
-   AUTH
-========================= */
 
-.auth{
+/* =========================================================
+   GLOBAL VISUAL DECOR
+========================================================= */
+
+.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9999;
+  opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+
+.glow{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(70px);
+}
+
+.glow-purple{
+  background:rgba(143,69,255,.18);
+}
+
+.glow-pink{
+  background:rgba(216,73,255,.13);
+}
+
+.glow-blue{
+  background:rgba(70,183,255,.10);
+}
+
+
+/* =========================================================
+   AUTH / ONBOARDING
+========================================================= */
+
+.auth-screen{
+  position:fixed;
+  inset:0;
+  z-index:500;
   min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:22px;
-  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(139,69,255,.17),transparent 38%),
+    #08070d;
+}
+
+.auth-background{
+  position:absolute;
+  inset:0;
   overflow:hidden;
 }
 
-.auth-grid{
+.auth-light{
   position:absolute;
-  inset:0;
-  opacity:.35;
-  background-image:
-    linear-gradient(rgba(155,92,255,.07) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(155,92,255,.07) 1px,transparent 1px);
-  background-size:42px 42px;
-  transform:perspective(600px) rotateX(58deg) scale(1.8);
-  transform-origin:center bottom;
-}
-
-.auth-glow{
-  position:absolute;
-  width:330px;
-  height:330px;
+  width:420px;
+  height:420px;
   border-radius:50%;
-  background:rgba(137,70,255,.20);
-  filter:blur(90px);
+  background:rgba(133,66,255,.13);
+  filter:blur(100px);
+  left:-170px;
+  top:-170px;
 }
 
-.auth-glow.one{
-  top:-100px;
-  left:-80px;
+.auth-light-two{
+  position:absolute;
+  width:340px;
+  height:340px;
+  border-radius:50%;
+  background:rgba(221,70,255,.09);
+  filter:blur(100px);
+  right:-130px;
+  bottom:-100px;
 }
 
-.auth-glow.two{
-  bottom:-120px;
-  right:-80px;
-  background:rgba(213,74,255,.15);
+.market-lines{
+  position:absolute;
+  width:850px;
+  height:450px;
+  right:-180px;
+  bottom:5%;
+  opacity:.28;
+  transform:rotate(-8deg);
+}
+
+.auth-wrap{
+  position:relative;
+  z-index:5;
+  width:min(480px,100%);
+  min-height:100vh;
+  margin:auto;
+  padding:
+    max(30px,env(safe-area-inset-top))
+    20px
+    max(25px,env(safe-area-inset-bottom));
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .auth-card{
-  width:min(470px,100%);
-  position:relative;
-  z-index:2;
-  background:linear-gradient(145deg,rgba(27,17,44,.96),rgba(11,8,19,.97));
-  border:1px solid var(--line);
-  border-radius:34px;
-  padding:30px;
+  width:100%;
+  background:
+    linear-gradient(150deg,rgba(25,19,36,.97),rgba(10,8,14,.98));
+  border:1px solid var(--border);
+  border-radius:38px;
+  padding:28px 24px;
   box-shadow:var(--shadow);
+  animation:authEnter .65s cubic-bezier(.2,.8,.2,1);
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:28px;
+@keyframes authEnter{
+  from{
+    opacity:0;
+    transform:translateY(35px) scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
 
-.brand-mark{
-  width:58px;
-  height:58px;
-  border-radius:19px;
-  background:linear-gradient(145deg,#ad70ff,#6732d0);
-  box-shadow:0 12px 35px rgba(135,68,255,.38);
+.auth-logo{
+  width:76px;
+  height:76px;
+  border-radius:26px;
+  position:relative;
   display:grid;
   place-items:center;
-  font-weight:900;
-  font-size:23px;
-  letter-spacing:-2px;
+  background:
+    linear-gradient(145deg,#bb7cff,#7337d4);
+  box-shadow:
+    0 18px 45px rgba(126,57,218,.36),
+    inset 0 1px 0 rgba(255,255,255,.25);
+  margin-bottom:22px;
 }
 
-.brand-title{
+.auth-logo:before{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border-radius:21px;
+  border:1px solid rgba(255,255,255,.18);
+}
+
+.ava-symbol{
+  font-weight:1000;
   font-size:25px;
-  font-weight:900;
-  letter-spacing:.5px;
+  letter-spacing:-3px;
+  position:relative;
 }
 
-.brand-sub{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:3px;
+.auth-eyebrow{
+  color:#ba8cff;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2.2px;
+  text-transform:uppercase;
 }
 
 .auth-title{
-  font-size:34px;
-  line-height:1.05;
-  margin:0 0 10px;
-  letter-spacing:-1.4px;
+  font-size:42px;
+  line-height:.98;
+  letter-spacing:-2.6px;
+  margin:9px 0 13px;
 }
 
-.auth-description{
-  color:var(--muted);
-  line-height:1.55;
+.auth-title span{
+  color:#b978ff;
+}
+
+.auth-subtitle{
+  color:#968ca0;
   font-size:14px;
+  line-height:1.6;
   margin:0 0 25px;
 }
 
-.field{
-  margin-bottom:14px;
+.auth-field{
+  margin-bottom:13px;
 }
 
-.field label{
+.auth-field label{
   display:block;
-  font-size:12px;
-  color:#bcb0cc;
-  margin:0 0 7px 3px;
-}
-
-.field input{
-  width:100%;
-  height:54px;
-  border-radius:17px;
-  border:1px solid var(--line);
-  background:#0d0917;
-  color:white;
-  padding:0 17px;
-  transition:.2s;
-}
-
-.field input:focus{
-  border-color:rgba(155,92,255,.7);
-  box-shadow:0 0 0 4px rgba(155,92,255,.09);
-}
-
-.primary-btn{
-  width:100%;
-  min-height:56px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#a765ff,#7138dc);
-  color:white;
-  font-weight:800;
-  box-shadow:0 15px 35px rgba(120,55,225,.28);
-  transition:.2s;
-}
-
-.primary-btn:active{
-  transform:scale(.98);
-}
-
-.auth-note{
-  color:#776c87;
-  text-align:center;
+  color:#aaa0b1;
   font-size:11px;
-  margin-top:17px;
+  font-weight:700;
+  margin:0 0 7px 4px;
 }
 
-/* =========================
-   APP SHELL
-========================= */
+.auth-input-wrap{
+  position:relative;
+}
+
+.auth-input{
+  width:100%;
+  height:56px;
+  padding:0 16px;
+  color:white;
+  background:#0d0a13;
+  border:1px solid var(--border);
+  border-radius:17px;
+  transition:.2s;
+}
+
+.auth-input:focus{
+  border-color:rgba(171,103,255,.7);
+  box-shadow:
+    0 0 0 4px rgba(155,92,255,.08),
+    0 10px 30px rgba(112,49,194,.12);
+}
+
+.auth-input::placeholder{
+  color:#514a59;
+}
+
+.nickname-prefix{
+  position:absolute;
+  left:16px;
+  top:18px;
+  color:#8e6fc2;
+  pointer-events:none;
+}
+
+.nickname-input{
+  padding-left:32px;
+}
+
+.auth-error{
+  color:#ff718e;
+  font-size:11px;
+  min-height:16px;
+  margin:5px 3px 0;
+}
+
+.auth-submit{
+  width:100%;
+  height:58px;
+  margin-top:4px;
+  border-radius:18px;
+  color:white;
+  font-size:14px;
+  font-weight:900;
+  background:
+    linear-gradient(135deg,#aa66ff,#7137d5);
+  box-shadow:
+    0 18px 40px rgba(115,50,213,.25),
+    inset 0 1px 0 rgba(255,255,255,.16);
+  transition:.2s;
+}
+
+.auth-submit:active{
+  transform:scale(.975);
+}
+
+.auth-security{
+  display:flex;
+  gap:9px;
+  align-items:center;
+  justify-content:center;
+  margin-top:15px;
+  color:#5f5668;
+  font-size:9px;
+}
+
+.auth-security svg{
+  width:13px;
+}
+
+
+/* =========================================================
+   PROFILE SETUP
+========================================================= */
+
+.setup{
+  text-align:center;
+}
+
+.setup-avatar{
+  width:100px;
+  height:100px;
+  border-radius:32px;
+  margin:0 auto 18px;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 35% 25%,#f0dfff 0 8%,transparent 9%),
+    linear-gradient(145deg,#bd7aff,#6631c9);
+  font-size:38px;
+  font-weight:1000;
+  box-shadow:0 20px 50px rgba(123,52,216,.35);
+}
+
+.setup h2{
+  margin:0;
+  font-size:30px;
+  letter-spacing:-1.2px;
+}
+
+.setup p{
+  color:#8f8598;
+  font-size:13px;
+  line-height:1.55;
+}
+
+
+/* =========================================================
+   MAIN APP
+========================================================= */
 
 .app{
   min-height:100vh;
-  padding-bottom:105px;
+  padding-bottom:108px;
 }
 
 .topbar{
-  height:74px;
+  height:76px;
+  position:sticky;
+  top:0;
+  z-index:100;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:12px 17px;
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(8,6,15,.88);
+  padding:10px 16px;
+  background:rgba(8,7,13,.88);
   border-bottom:1px solid rgba(255,255,255,.045);
-  backdrop-filter:blur(14px);
+  backdrop-filter:blur(18px);
 }
 
 .top-brand{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:11px;
 }
 
-.top-logo{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  background:linear-gradient(145deg,#aa68ff,#6734c9);
-  display:grid;
-  place-items:center;
-  font-size:17px;
-  font-weight:900;
-  letter-spacing:-1px;
-}
-
-.top-name{
-  font-size:15px;
-  font-weight:900;
-}
-
-.top-caption{
-  color:#82788f;
-  font-size:9px;
-  margin-top:2px;
-  letter-spacing:1px;
-}
-
-.profile-button{
+.top-mark{
   width:44px;
   height:44px;
   border-radius:15px;
-  background:#181025;
-  border:1px solid var(--line);
   display:grid;
   place-items:center;
-  color:white;
+  background:linear-gradient(145deg,#ad6aff,#7137d3);
+  box-shadow:0 9px 25px rgba(117,54,211,.25);
+}
+
+.top-mark span{
+  font-size:15px;
+  font-weight:1000;
+  letter-spacing:-2px;
+}
+
+.top-brand-name{
+  font-size:14px;
+  font-weight:950;
+}
+
+.top-brand-sub{
+  color:#6e6577;
+  font-size:8px;
+  letter-spacing:1.5px;
+  margin-top:3px;
+}
+
+.top-profile{
+  width:45px;
+  height:45px;
+  border-radius:16px;
   overflow:hidden;
+  padding:0;
+  border:1px solid var(--border);
+  background:#18121f;
+  transition:.2s;
+}
+
+.top-profile:active{
+  transform:scale(.9);
 }
 
 .avatar{
@@ -287,1506 +494,2558 @@ input{
   height:100%;
   display:grid;
   place-items:center;
-  font-weight:900;
+  color:white;
+  font-size:17px;
+  font-weight:950;
   background:
-    radial-gradient(circle at 35% 25%,#d9b9ff,transparent 18%),
-    linear-gradient(145deg,#7b43df,#271341);
+    radial-gradient(circle at 30% 20%,rgba(255,255,255,.28),transparent 13%),
+    linear-gradient(145deg,#a865f5,#5023a3);
 }
 
-/* =========================
-   SCREENS
-========================= */
+
+/* =========================================================
+   SCREEN ROUTER
+========================================================= */
 
 .screen{
   display:none;
-  max-width:1120px;
+  width:min(1180px,100%);
   margin:auto;
-  padding:18px 17px 30px;
+  padding:18px 16px 35px;
 }
 
 .screen.active{
   display:block;
-  animation:screenIn .22s ease;
+  animation:screenOpen .38s cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes screenIn{
-  from{opacity:0;transform:translateY(7px)}
-  to{opacity:1;transform:none}
+@keyframes screenOpen{
+  from{
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
 
-.section-head{
-  margin:10px 0 18px;
-}
-
-.section-kicker{
-  color:#b779ff;
-  text-transform:uppercase;
-  font-size:10px;
-  font-weight:800;
+.section-label{
+  color:#b57cff;
+  font-size:9px;
+  font-weight:900;
   letter-spacing:2px;
+  text-transform:uppercase;
   margin-bottom:7px;
 }
 
 .section-title{
   margin:0;
-  font-size:31px;
-  letter-spacing:-1.2px;
+  font-size:32px;
+  line-height:1;
+  letter-spacing:-1.5px;
 }
 
-.section-sub{
-  margin:7px 0 0;
-  color:var(--muted);
-  font-size:13px;
+.section-description{
+  color:#8e8497;
+  font-size:12px;
   line-height:1.5;
+  margin:7px 0 0;
 }
 
-/* =========================
-   HOME
-========================= */
+
+/* =========================================================
+   HOME — PREMIUM MARKET SCENE
+========================================================= */
 
 .home-hero{
-  min-height:450px;
-  border-radius:32px;
+  min-height:530px;
+  border-radius:36px;
+  position:relative;
   overflow:hidden;
-  position:relative;
+  border:1px solid var(--border);
   background:
-    linear-gradient(145deg,rgba(36,20,61,.96),rgba(12,8,21,.97));
-  border:1px solid var(--line);
+    linear-gradient(145deg,#211331 0%,#130d1d 48%,#0b0911 100%);
   box-shadow:var(--shadow);
-  padding:27px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
 }
 
-.hero-grid{
-  position:absolute;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(166,98,255,.055) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(166,98,255,.055) 1px,transparent 1px);
-  background-size:38px 38px;
-  mask-image:linear-gradient(to bottom,black,transparent 90%);
-}
-
-.hero-orb{
-  position:absolute;
-  width:280px;
-  height:280px;
-  border-radius:50%;
-  right:-90px;
-  top:-90px;
-  background:rgba(158,83,255,.19);
-  filter:blur(65px);
-}
-
-.hero-content{
+.home-hero-copy{
   position:relative;
-  z-index:2;
-  max-width:620px;
+  z-index:5;
+  width:100%;
+  padding:28px 24px 0;
 }
 
-.hero-badge{
-  display:inline-flex;
-  padding:8px 12px;
-  border-radius:999px;
-  background:rgba(155,92,255,.12);
-  border:1px solid rgba(155,92,255,.24);
-  color:#d5b8ff;
+.home-greeting{
+  color:#bcaec9;
   font-size:11px;
-  font-weight:800;
+  font-weight:700;
 }
 
-.hero-title{
-  font-size:clamp(42px,8vw,75px);
-  line-height:.92;
+.home-heading{
+  margin:10px 0 12px;
+  font-size:clamp(40px,10vw,72px);
+  line-height:.88;
   letter-spacing:-4px;
-  margin:22px 0 17px;
+  max-width:610px;
 }
 
-.hero-title span{
-  color:#b979ff;
+.home-heading span{
+  color:#bc7aff;
 }
 
-.hero-text{
-  color:#aaa0b8;
-  font-size:14px;
-  line-height:1.6;
-  max-width:520px;
+.home-description{
+  max-width:510px;
+  color:#9d93a7;
+  font-size:13px;
+  line-height:1.55;
+  margin:0;
 }
 
-.hero-chart{
+.hero-market-art{
   position:absolute;
+  z-index:1;
   right:0;
-  bottom:0;
-  width:52%;
-  min-width:280px;
-  height:220px;
-  opacity:.85;
+  bottom:105px;
+  width:100%;
+  height:280px;
+  overflow:hidden;
 }
 
-.candle{
+.hero-market-glow{
   position:absolute;
-  bottom:28px;
-  width:9px;
-  border-radius:5px;
-  background:linear-gradient(to top,#7136d5,#ca8aff);
-  box-shadow:0 0 18px rgba(162,91,255,.32);
+  width:390px;
+  height:220px;
+  right:-70px;
+  top:15px;
+  border-radius:50%;
+  background:rgba(156,77,255,.18);
+  filter:blur(70px);
 }
 
-.candle:before{
+.hero-candle-chart{
+  position:absolute;
+  inset:15px 20px 0 90px;
+}
+
+.hero-axis{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:40px;
+  height:1px;
+  background:rgba(255,255,255,.07);
+}
+
+.hero-candles{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:41px;
+  top:30px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-around;
+  gap:10px;
+}
+
+.hero-candle{
+  width:11px;
+  position:relative;
+  border-radius:6px;
+  background:linear-gradient(to top,#6832c5,#d58cff);
+  box-shadow:0 0 16px rgba(174,100,255,.2);
+}
+
+.hero-candle:before{
   content:"";
   position:absolute;
-  left:4px;
-  width:1px;
-  background:#bd91ff;
-  top:-18px;
-  height:calc(100% + 36px);
+  left:50%;
+  transform:translateX(-50%);
+  width:2px;
+  top:-24px;
+  height:calc(100% + 48px);
+  background:#bd8aff;
+  opacity:.8;
 }
 
-.c1{left:8%;height:48px}
-.c2{left:16%;height:75px}
-.c3{left:24%;height:55px}
-.c4{left:32%;height:110px}
-.c5{left:40%;height:86px}
-.c6{left:48%;height:132px}
-.c7{left:56%;height:105px}
-.c8{left:64%;height:152px}
-.c9{left:72%;height:138px}
-.c10{left:80%;height:174px}
-.c11{left:88%;height:194px}
+.hero-candle.down{
+  background:linear-gradient(to top,#a93b64,#ff7c9e);
+}
 
-.hero-bottom{
-  position:relative;
-  z-index:3;
+.hero-candle.down:before{
+  background:#ff7b9c;
+}
+
+.hero-candle:nth-child(1){height:65px}
+.hero-candle:nth-child(2){height:90px}
+.hero-candle:nth-child(3){height:54px}
+.hero-candle:nth-child(4){height:118px}
+.hero-candle:nth-child(5){height:105px}
+.hero-candle:nth-child(6){height:148px}
+.hero-candle:nth-child(7){height:125px}
+.hero-candle:nth-child(8){height:175px}
+.hero-candle:nth-child(9){height:145px}
+.hero-candle:nth-child(10){height:190px}
+.hero-candle:nth-child(11){height:164px}
+.hero-candle:nth-child(12){height:205px}
+
+.hero-line{
+  position:absolute;
+  left:5%;
+  right:2%;
+  bottom:105px;
+  height:125px;
+  opacity:.65;
+}
+
+.hero-line svg{
+  width:100%;
+  height:100%;
+}
+
+.hero-floating{
+  position:absolute;
+  z-index:4;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#181021;
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+  padding:10px 12px;
+}
+
+.hero-floating.one{
+  right:17px;
+  top:22px;
+}
+
+.hero-floating.two{
+  left:18px;
+  bottom:148px;
+}
+
+.float-label{
+  color:#72687a;
+  font-size:8px;
+}
+
+.float-value{
+  margin-top:3px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.float-value.up{
+  color:#c88aff;
+}
+
+.hero-stats{
+  position:absolute;
+  z-index:8;
+  left:15px;
+  right:15px;
+  bottom:15px;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  max-width:600px;
+  grid-template-columns:1.25fr 1fr 1fr;
+  gap:8px;
 }
 
-.hero-stat{
+.home-stat{
+  min-height:88px;
   padding:14px;
-  border-radius:18px;
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.06);
+  border-radius:21px;
+  background:#17101f;
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
 }
 
-.hero-stat strong{
-  display:block;
-  font-size:21px;
+.home-stat:first-child{
+  background:
+    linear-gradient(145deg,rgba(139,67,221,.25),rgba(35,19,48,.95));
 }
 
-.hero-stat span{
-  color:#91869d;
-  font-size:10px;
+.stat-caption{
+  color:#807589;
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
 }
 
-.home-actions{
+.stat-number{
+  margin-top:7px;
+  font-size:22px;
+  font-weight:1000;
+}
+
+.stat-number.coin{
+  color:#d39aff;
+}
+
+.stat-number.xp{
+  color:#71d7ff;
+}
+
+.stat-number.lessons{
+  color:#ffcb6b;
+}
+
+.stat-small{
+  color:#756a7f;
+  font-size:8px;
+  margin-top:2px;
+}
+
+.home-tools{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:14px;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  margin-top:13px;
 }
 
-.big-action{
-  min-height:145px;
-  padding:19px;
-  border-radius:25px;
-  color:white;
-  text-align:left;
+.home-tool{
+  min-height:175px;
+  border-radius:28px;
+  border:1px solid var(--border);
   position:relative;
   overflow:hidden;
-  border:1px solid var(--line);
+  padding:19px;
+  text-align:left;
+  color:white;
+  transition:.2s;
 }
 
-.big-action.education{
-  background:linear-gradient(145deg,#24163b,#120d20);
+.home-tool:active{
+  transform:scale(.975);
 }
 
-.big-action.signal{
-  background:linear-gradient(145deg,#311650,#130c22);
+.home-tool.study{
+  background:
+    linear-gradient(145deg,#29163c,#120d1c);
 }
 
-.big-action .action-icon{
-  width:47px;
-  height:47px;
-  border-radius:16px;
+.home-tool.signal{
+  background:
+    linear-gradient(145deg,#34153d,#130a1b);
+}
+
+.tool-art{
+  position:absolute;
+  right:-15px;
+  bottom:-15px;
+  width:150px;
+  height:120px;
+  opacity:.55;
+}
+
+.tool-icon{
+  width:49px;
+  height:49px;
+  border-radius:17px;
   display:grid;
   place-items:center;
   background:rgba(255,255,255,.08);
-  margin-bottom:20px;
+  margin-bottom:26px;
+  position:relative;
+  z-index:2;
 }
 
-.big-action svg{
-  width:28px;
-  height:28px;
+.tool-icon svg{
+  width:27px;
 }
 
-.big-action strong{
-  display:block;
+.home-tool strong{
+  position:relative;
+  z-index:2;
   font-size:18px;
 }
 
-.big-action span{
-  color:#958a9f;
-  font-size:11px;
-  display:block;
-  margin-top:5px;
+.home-tool p{
+  position:relative;
+  z-index:2;
+  margin:6px 0 0;
+  color:#968b9d;
+  font-size:10px;
+  line-height:1.45;
+  max-width:180px;
 }
 
-/* =========================
+
+/* =========================================================
    EDUCATION
-========================= */
+========================================================= */
 
-.learning-top{
+.learning-header{
   display:flex;
+  align-items:flex-end;
   justify-content:space-between;
-  align-items:end;
-  gap:12px;
+  gap:15px;
+  margin-bottom:17px;
 }
 
-.progress-box{
-  min-width:130px;
-  padding:13px;
-  border:1px solid var(--line);
+.learning-progress{
+  width:145px;
+  flex-shrink:0;
+  padding:12px;
   border-radius:18px;
-  background:#110c1c;
+  background:#14101b;
+  border:1px solid var(--border);
 }
 
-.progress-number{
+.learning-progress strong{
   font-size:20px;
-  font-weight:900;
 }
 
-.progress-label{
-  font-size:9px;
-  color:#81768d;
+.learning-progress span{
+  display:block;
+  color:#71677b;
+  font-size:8px;
+  margin-top:3px;
 }
 
-.progress-track{
+.progress-bar{
   height:5px;
-  border-radius:99px;
-  background:#241a30;
-  overflow:hidden;
   margin-top:8px;
-}
-
-.progress-fill{
-  height:100%;
-  background:linear-gradient(90deg,#7f43e8,#d16cff);
   border-radius:99px;
+  background:#28202e;
+  overflow:hidden;
 }
 
-.search{
-  margin:17px 0;
+.progress-bar i{
+  display:block;
+  height:100%;
+  width:0;
+  border-radius:99px;
+  background:linear-gradient(90deg,#7b3ce0,#d16bff);
+  transition:.4s;
+}
+
+.lesson-search{
+  height:53px;
+  width:100%;
+  border-radius:18px;
+  border:1px solid var(--border);
+  color:white;
+  background:#100c16;
+  padding:0 17px 0 45px;
+  margin-bottom:15px;
+}
+
+.search-wrap{
   position:relative;
 }
 
-.search input{
-  width:100%;
-  height:53px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:#100b19;
-  color:white;
-  padding:0 17px 0 45px;
-}
-
-.search-icon{
+.search-symbol{
   position:absolute;
   left:17px;
-  top:17px;
-  color:#84778f;
+  top:15px;
+  color:#766b81;
+  font-size:20px;
 }
 
-.module{
-  margin-bottom:18px;
-  border:1px solid var(--line);
-  border-radius:25px;
+.module-card{
+  margin-bottom:16px;
+  border-radius:29px;
   overflow:hidden;
-  background:#100b19;
+  border:1px solid var(--border);
+  background:#100c15;
 }
 
-.module-head{
-  padding:18px;
+.module-cover{
+  min-height:175px;
+  position:relative;
+  overflow:hidden;
+  padding:20px;
   background:
-    linear-gradient(100deg,rgba(155,92,255,.12),transparent),
-    #130d20;
+    linear-gradient(105deg,#1d1230,#0f0b15);
+}
+
+.module-cover:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(9,7,12,.65),transparent 70%);
+  pointer-events:none;
 }
 
 .module-number{
-  color:#a66cff;
+  position:relative;
+  z-index:5;
+  color:#c08bff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.7px;
+}
+
+.module-name{
+  position:relative;
+  z-index:5;
+  font-size:24px;
+  font-weight:950;
+  letter-spacing:-.8px;
+  margin-top:7px;
+  max-width:220px;
+}
+
+.module-description{
+  position:relative;
+  z-index:5;
+  color:#92879c;
   font-size:10px;
-  font-weight:900;
-  letter-spacing:1.5px;
-}
-
-.module-title{
   margin-top:5px;
-  font-size:20px;
-  font-weight:900;
+  max-width:220px;
+  line-height:1.45;
 }
 
-.module-sub{
-  color:#877c91;
-  font-size:11px;
-  margin-top:4px;
+.module-visual{
+  position:absolute;
+  z-index:2;
+  right:0;
+  top:0;
+  width:52%;
+  height:100%;
 }
 
-.lesson-list{
+.module-visual svg{
+  width:100%;
+  height:100%;
+}
+
+.module-progress{
+  position:absolute;
+  z-index:8;
+  left:20px;
+  right:20px;
+  bottom:14px;
+}
+
+.module-progress-top{
+  display:flex;
+  justify-content:space-between;
+  color:#81768c;
+  font-size:8px;
+}
+
+.module-progress-bar{
+  height:4px;
+  background:rgba(255,255,255,.08);
+  border-radius:99px;
+  margin-top:5px;
+  overflow:hidden;
+}
+
+.module-progress-bar i{
+  display:block;
+  height:100%;
+  border-radius:99px;
+  background:#b06aff;
+}
+
+.lesson-row{
+  min-height:73px;
+  padding:10px 14px;
   display:grid;
-}
-
-.lesson{
-  display:grid;
-  grid-template-columns:58px 1fr auto;
-  gap:12px;
+  grid-template-columns:48px 1fr 27px;
   align-items:center;
-  padding:13px 15px;
+  gap:12px;
   border-top:1px solid rgba(255,255,255,.045);
   cursor:pointer;
-  transition:.15s;
+  transition:.16s;
 }
 
-.lesson:active{
-  background:#191025;
+.lesson-row:active{
+  background:#191321;
 }
 
 .lesson-number{
-  width:52px;
-  height:52px;
-  border-radius:17px;
-  background:#1b1228;
-  border:1px solid rgba(255,255,255,.06);
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  background:#191321;
+  border:1px solid rgba(255,255,255,.07);
   display:grid;
   place-items:center;
-  color:#bc91ff;
-  font-size:13px;
+  color:#bd86ff;
+  font-size:11px;
   font-weight:900;
 }
 
-.lesson-name{
-  font-size:14px;
+.lesson-row.done .lesson-number{
+  background:rgba(99,230,164,.08);
+  color:#72e5ac;
+  border-color:rgba(99,230,164,.18);
+}
+
+.lesson-title{
+  font-size:13px;
   font-weight:800;
   line-height:1.25;
 }
 
-.lesson-meta{
-  color:#756a80;
-  font-size:10px;
+.lesson-sub{
+  color:#706679;
+  font-size:8px;
   margin-top:4px;
 }
 
-.lesson-status{
-  width:25px;
-  height:25px;
+.lesson-arrow{
+  width:26px;
+  height:26px;
   border-radius:50%;
+  background:#1d1625;
   display:grid;
   place-items:center;
-  background:#21152e;
-  color:#786c82;
-  font-size:12px;
+  color:#756a80;
 }
 
-.lesson.done .lesson-status{
-  background:rgba(99,230,164,.13);
-  color:var(--green);
+.lesson-row.done .lesson-arrow{
+  color:#63e6a4;
 }
 
-/* =========================
-   LESSON READER
-========================= */
 
-.reader{
+/* =========================================================
+   LESSON VIEWER
+========================================================= */
+
+.lesson-viewer{
   position:fixed;
   inset:0;
-  z-index:100;
+  z-index:400;
   display:none;
-  background:#08060f;
-  overflow:auto;
+  background:#09070e;
+  overflow-y:auto;
 }
 
-.reader.open{
+.lesson-viewer.open{
   display:block;
-  animation:screenIn .2s ease;
+  animation:viewerIn .3s ease;
 }
 
-.reader-top{
+@keyframes viewerIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.viewer-top{
+  height:68px;
   position:sticky;
   top:0;
-  z-index:3;
-  height:65px;
+  z-index:20;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  gap:10px;
   padding:10px 15px;
-  background:rgba(8,6,15,.92);
-  border-bottom:1px solid var(--line);
-  backdrop-filter:blur(12px);
+  background:rgba(9,7,14,.94);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(15px);
 }
 
-.reader-close,
-.reader-bookmark{
-  width:42px;
-  height:42px;
+.viewer-button{
+  width:43px;
+  height:43px;
+  flex-shrink:0;
   border-radius:14px;
-  background:#171023;
+  background:#17111f;
   color:white;
-  border:1px solid var(--line);
+  border:1px solid var(--border);
 }
 
-.reader-progress{
+.viewer-progress{
   flex:1;
-  height:4px;
-  background:#21162e;
-  margin:0 13px;
+  height:5px;
   border-radius:99px;
-}
-
-.reader-progress span{
-  display:block;
-  height:100%;
-  background:#a25eff;
-  border-radius:99px;
-}
-
-.reader-content{
-  max-width:850px;
-  margin:auto;
-  padding:25px 18px 120px;
-}
-
-.reader-kicker{
-  color:#ad72ff;
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.reader-title{
-  font-size:clamp(31px,7vw,56px);
-  line-height:1;
-  letter-spacing:-2px;
-  margin:12px 0;
-}
-
-.reader-intro{
-  color:#a49aaa;
-  line-height:1.65;
-  font-size:15px;
-}
-
-.lesson-art{
-  height:250px;
-  border-radius:28px;
-  margin:24px 0;
-  position:relative;
+  background:#241b2c;
   overflow:hidden;
-  border:1px solid var(--line);
-  background:
-    radial-gradient(circle at 70% 20%,rgba(177,94,255,.18),transparent 30%),
-    linear-gradient(145deg,#1b102a,#0e0917);
 }
 
-.art-grid{
-  position:absolute;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(170,100,255,.07) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(170,100,255,.07) 1px,transparent 1px);
-  background-size:30px 30px;
-}
-
-.art-line{
-  position:absolute;
-  left:6%;
-  right:6%;
-  bottom:40px;
-  height:120px;
-}
-
-.art-line svg{
-  width:100%;
+.viewer-progress i{
+  display:block;
+  width:0;
   height:100%;
+  background:linear-gradient(90deg,#8b4eea,#d878ff);
 }
 
-.reader-section{
-  padding:22px 0;
+.viewer-content{
+  width:min(900px,100%);
+  margin:auto;
+  padding:26px 18px 125px;
 }
 
-.reader-section h3{
-  font-size:21px;
-  margin:0 0 10px;
+.viewer-module{
+  color:#b87aff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.8px;
 }
 
-.reader-section p{
-  color:#aaa0b1;
-  line-height:1.7;
+.viewer-title{
+  margin:10px 0 10px;
+  font-size:clamp(32px,7vw,60px);
+  line-height:.96;
+  letter-spacing:-2.5px;
+}
+
+.viewer-description{
+  margin:0;
+  color:#978d9f;
   font-size:14px;
+  line-height:1.65;
 }
 
-.info-grid{
+.lesson-visual{
+  height:300px;
+  margin:25px 0;
+  border-radius:30px;
+  overflow:hidden;
+  position:relative;
+  border:1px solid rgba(255,255,255,.08);
+  background:
+    radial-gradient(circle at 75% 25%,rgba(199,90,255,.25),transparent 28%),
+    linear-gradient(145deg,#241332,#0e0a15);
+}
+
+.lesson-visual:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:100px;
+  background:linear-gradient(to top,#0e0a15,transparent);
+}
+
+.visual-orbit{
+  position:absolute;
+  width:190px;
+  height:190px;
+  right:8%;
+  top:30px;
+  border:1px solid rgba(206,129,255,.24);
+  border-radius:50%;
+  transform:rotate(22deg) scaleY(.42);
+}
+
+.visual-orbit.two{
+  width:230px;
+  height:230px;
+  right:3%;
+  top:10px;
+  transform:rotate(-22deg) scaleY(.42);
+}
+
+.visual-core{
+  position:absolute;
+  right:26%;
+  top:76px;
+  width:76px;
+  height:76px;
+  border-radius:25px;
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  place-items:center;
+  background:linear-gradient(145deg,#b56aff,#6730c7);
+  box-shadow:0 0 60px rgba(170,91,255,.35);
+  font-weight:1000;
+  z-index:4;
+}
+
+.visual-candles{
+  position:absolute;
+  left:7%;
+  right:40%;
+  bottom:35px;
+  height:170px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-around;
+}
+
+.visual-candle{
+  width:10px;
+  border-radius:5px;
+  position:relative;
+  background:linear-gradient(to top,#6833c9,#ce82ff);
+}
+
+.visual-candle:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:2px;
+  top:-24px;
+  height:calc(100% + 48px);
+  background:#c990ff;
+}
+
+.visual-candle:nth-child(1){height:52px}
+.visual-candle:nth-child(2){height:80px}
+.visual-candle:nth-child(3){height:63px}
+.visual-candle:nth-child(4){height:110px}
+.visual-candle:nth-child(5){height:92px}
+.visual-candle:nth-child(6){height:140px}
+.visual-candle:nth-child(7){height:128px}
+
+.viewer-section{
+  margin-top:28px;
+}
+
+.viewer-section h3{
+  margin:0 0 9px;
+  font-size:21px;
+}
+
+.viewer-section p{
+  margin:0;
+  color:#a59aaa;
+  font-size:14px;
+  line-height:1.75;
+}
+
+.knowledge-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:10px;
   margin-top:17px;
 }
 
-.info-card{
+.knowledge-card{
+  min-height:125px;
+  border-radius:22px;
   padding:17px;
-  min-height:115px;
-  border-radius:20px;
-  background:#120d1d;
-  border:1px solid var(--line);
+  background:#130e19;
+  border:1px solid var(--border);
 }
 
-.info-card strong{
+.knowledge-icon{
+  width:35px;
+  height:35px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:rgba(168,92,255,.11);
+  color:#c48bff;
+  margin-bottom:13px;
+}
+
+.knowledge-card strong{
   display:block;
-  font-size:16px;
-  margin-bottom:8px;
+  font-size:12px;
 }
 
-.info-card span{
-  color:#958a9f;
-  font-size:11px;
+.knowledge-card span{
+  display:block;
+  margin-top:5px;
+  color:#766b80;
+  font-size:9px;
   line-height:1.5;
 }
 
-.reader-bottom{
+.viewer-bottom{
   position:fixed;
-  bottom:0;
   left:0;
   right:0;
-  z-index:5;
-  padding:10px 15px calc(10px + env(safe-area-inset-bottom));
-  background:rgba(8,6,15,.94);
-  border-top:1px solid var(--line);
+  bottom:0;
+  z-index:30;
   display:flex;
-  gap:9px;
+  gap:8px;
+  padding:9px 14px calc(9px + env(safe-area-inset-bottom));
+  background:rgba(9,7,14,.95);
+  border-top:1px solid var(--border);
+  backdrop-filter:blur(15px);
 }
 
-.reader-bottom button{
-  flex:1;
-  height:50px;
+.viewer-bottom button{
+  height:51px;
   border-radius:16px;
   color:white;
-  background:#171023;
-  border:1px solid var(--line);
-  font-weight:800;
+  background:#18111f;
+  border:1px solid var(--border);
+  font-size:11px;
+  font-weight:850;
 }
 
-.reader-bottom .complete{
-  background:linear-gradient(135deg,#9b5cff,#6f36d7);
+.viewer-bottom .complete{
+  flex:1.4;
+  background:linear-gradient(135deg,#a35eff,#7035d4);
   border:0;
 }
 
-/* =========================
-   SIGNAL BOT
-========================= */
 
-.bot-shell{
-  min-height:calc(100vh - 150px);
-  border-radius:30px;
-  border:1px solid rgba(180,100,255,.18);
+/* =========================================================
+   SIGNAL TERMINAL
+========================================================= */
+
+.signal-page{
+  padding-top:16px;
+}
+
+.terminal{
+  border-radius:32px;
   overflow:hidden;
+  border:1px solid rgba(192,105,255,.2);
   background:
-    radial-gradient(circle at 85% 5%,rgba(189,87,255,.15),transparent 28%),
-    linear-gradient(145deg,#150d22,#09070e);
+    radial-gradient(circle at 90% 0%,rgba(203,80,255,.16),transparent 28%),
+    linear-gradient(150deg,#1c0d27,#0b080f 72%);
   box-shadow:var(--shadow);
 }
 
-.bot-header{
-  padding:20px;
+.terminal-head{
+  min-height:75px;
+  padding:15px 17px;
   display:flex;
   align-items:center;
-  gap:13px;
-  border-bottom:1px solid var(--line);
+  gap:12px;
+  border-bottom:1px solid rgba(255,255,255,.065);
 }
 
-.bot-avatar{
-  width:49px;
-  height:49px;
+.bot-logo{
+  width:48px;
+  height:48px;
   border-radius:17px;
-  background:linear-gradient(145deg,#a55fff,#5e2bc5);
   display:grid;
   place-items:center;
-  box-shadow:0 10px 30px rgba(139,68,229,.3);
+  background:
+    linear-gradient(145deg,#c56cff,#6731c5);
+  box-shadow:0 0 30px rgba(177,81,255,.25);
 }
 
-.bot-header strong{
+.bot-logo svg{
+  width:28px;
+}
+
+.bot-name strong{
   display:block;
-  font-size:17px;
+  font-size:16px;
+}
+
+.bot-name span{
+  display:block;
+  color:#746a7d;
+  font-size:9px;
+  margin-top:4px;
 }
 
 .bot-status{
-  color:#9e91a8;
-  font-size:10px;
-  margin-top:3px;
-}
-
-.bot-online{
   margin-left:auto;
   display:flex;
   align-items:center;
-  gap:6px;
-  color:#b7a9c0;
-  font-size:9px;
+  gap:5px;
+  color:#927f9d;
+  font-size:8px;
 }
 
-.online-dot{
+.status-dot{
   width:7px;
   height:7px;
   border-radius:50%;
-  background:#bd6aff;
-  box-shadow:0 0 12px #bd6aff;
+  background:#be69ff;
+  box-shadow:0 0 14px #be69ff;
 }
 
-.bot-body{
-  padding:16px;
+.terminal-body{
+  padding:15px;
 }
 
-.bot-step{
-  margin-bottom:14px;
+.terminal-section{
+  margin-bottom:13px;
 }
 
-.bot-label{
-  color:#8f829b;
-  font-size:10px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  margin:0 0 8px 2px;
+.terminal-label{
+  color:#7e7188;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.4px;
+  margin:0 0 7px 2px;
 }
 
-.market-tabs{
+.market-toggle{
   display:grid;
   grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+
+.market-button{
+  height:48px;
+  border-radius:15px;
+  color:#85798d;
+  background:#120c18;
+  border:1px solid var(--border);
+  font-weight:850;
+  font-size:11px;
+}
+
+.market-button.active{
+  color:white;
+  border-color:rgba(182,99,255,.55);
+  background:
+    linear-gradient(135deg,rgba(163,80,255,.25),rgba(109,43,180,.12));
+}
+
+.pair-control{
+  display:flex;
   gap:8px;
 }
 
-.market-tab{
-  min-height:48px;
-  border-radius:15px;
-  background:#120c1c;
-  border:1px solid var(--line);
-  color:#9d91a8;
-  font-weight:800;
-}
-
-.market-tab.active{
-  color:white;
-  border-color:rgba(168,91,255,.5);
-  background:linear-gradient(135deg,rgba(155,92,255,.23),rgba(116,50,208,.16));
-}
-
 .pair-select{
-  width:100%;
-  height:52px;
-  padding:0 14px;
-  border-radius:16px;
+  flex:1;
+  height:50px;
   color:white;
-  background:#100a18;
-  border:1px solid var(--line);
+  background:#100a16;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:0 13px;
+  appearance:auto;
 }
 
-.duration-grid{
+.duration-row{
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  gap:6px;
+  gap:5px;
 }
 
-.duration{
-  min-height:42px;
-  border-radius:13px;
-  background:#120c1c;
-  color:#93879c;
-  border:1px solid var(--line);
-  font-size:11px;
-  font-weight:800;
-}
-
-.duration.active{
-  background:#8143df;
-  color:white;
-  border-color:#a767ff;
-}
-
-.generate{
-  width:100%;
-  min-height:56px;
-  margin-top:3px;
-  border-radius:17px;
-  background:linear-gradient(135deg,#a65eff,#7134d3);
-  color:white;
+.duration-button{
+  height:43px;
+  border-radius:12px;
+  color:#85798d;
+  background:#120c18;
+  border:1px solid var(--border);
+  font-size:9px;
   font-weight:900;
-  box-shadow:0 13px 35px rgba(123,56,220,.25);
+}
+
+.duration-button.active{
+  color:white;
+  background:#8140dc;
+  border-color:#ad69ff;
+}
+
+.scan-button{
+  width:100%;
+  height:58px;
+  border-radius:17px;
+  color:white;
+  font-weight:950;
+  font-size:12px;
+  margin-top:2px;
+  background:
+    linear-gradient(135deg,#a85fff,#6f34d3);
+  box-shadow:0 16px 40px rgba(119,52,214,.25);
+  position:relative;
+  overflow:hidden;
+}
+
+.scan-button:after{
+  content:"";
+  position:absolute;
+  width:80px;
+  height:100%;
+  top:0;
+  left:-100px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+  transform:skewX(-20deg);
+}
+
+.scan-button.scanning:after{
+  animation:scanLight .8s linear infinite;
+}
+
+@keyframes scanLight{
+  from{left:-100px}
+  to{left:120%}
+}
+
+.scan-button.scanning{
+  opacity:.75;
 }
 
 .signal-result{
-  margin-top:15px;
-  min-height:170px;
-  border-radius:22px;
-  padding:18px;
-  background:
-    radial-gradient(circle at 85% 10%,rgba(180,92,255,.17),transparent 28%),
-    #120b1d;
-  border:1px solid rgba(177,91,255,.17);
   display:none;
+  margin-top:13px;
+  border-radius:25px;
+  overflow:hidden;
+  background:#100a16;
+  border:1px solid rgba(190,99,255,.2);
 }
 
 .signal-result.show{
   display:block;
-  animation:signalIn .25s ease;
+  animation:resultIn .35s cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes signalIn{
-  from{opacity:0;transform:scale(.98)}
-  to{opacity:1;transform:none}
+@keyframes resultIn{
+  from{
+    opacity:0;
+    transform:translateY(12px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
 
-.signal-top{
+.signal-result-head{
+  padding:15px 16px;
   display:flex;
   justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.signal-result-pair{
+  font-size:15px;
+  font-weight:950;
+}
+
+.signal-result-type{
+  color:#776b81;
+  font-size:8px;
+  margin-top:3px;
+}
+
+.signal-chart{
+  height:160px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 60%,rgba(161,77,255,.10),transparent 50%);
+}
+
+.signal-chart svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+.signal-candles{
+  position:absolute;
+  inset:25px 16px 25px 16px;
+  display:flex;
   align-items:center;
+  justify-content:space-around;
 }
 
-.signal-pair{
-  font-size:18px;
-  font-weight:900;
+.signal-candle{
+  width:7px;
+  position:relative;
+  border-radius:4px;
+  background:#bd73ff;
+  box-shadow:0 0 10px rgba(188,102,255,.3);
 }
 
-.signal-time{
-  color:#82768c;
-  font-size:10px;
+.signal-candle:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:1px;
+  top:-15px;
+  height:calc(100% + 30px);
+  background:#d29cff;
+}
+
+.signal-candle.red{
+  background:#ff668b;
+  box-shadow:0 0 10px rgba(255,92,129,.22);
+}
+
+.signal-candle.red:before{
+  background:#ff8aa4;
 }
 
 .signal-direction{
-  font-size:42px;
-  line-height:1;
-  font-weight:1000;
-  letter-spacing:-2px;
-  margin:18px 0 6px;
-}
-
-.signal-direction.buy{
-  color:#d08aff;
-}
-
-.signal-direction.sell{
-  color:#ff72a4;
-}
-
-.signal-confidence{
-  color:#9e91a8;
-  font-size:11px;
-}
-
-.signal-bars{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px;
-  margin-top:15px;
-}
-
-.signal-mini{
-  padding:9px;
-  border-radius:12px;
-  background:#1a1126;
+  padding:18px 17px 14px;
   text-align:center;
 }
 
-.signal-mini span{
-  display:block;
-  color:#746a7d;
-  font-size:8px;
-}
-
-.signal-mini strong{
-  font-size:11px;
-}
-
-/* =========================
-   PRACTICE
-========================= */
-
-.challenge{
-  border-radius:29px;
-  padding:24px;
-  background:
-    radial-gradient(circle at 90% 0%,rgba(196,84,255,.2),transparent 30%),
-    linear-gradient(145deg,#241033,#0f0919);
-  border:1px solid var(--line);
-  margin-bottom:15px;
-}
-
-.challenge-title{
-  font-size:29px;
-  font-weight:900;
-  letter-spacing:-1px;
-}
-
-.challenge-text{
-  color:#a69bab;
-  font-size:13px;
-  line-height:1.5;
-  margin-top:7px;
-}
-
-.quiz-card{
-  border-radius:26px;
-  background:#110b19;
-  border:1px solid var(--line);
-  padding:20px;
-}
-
-.quiz-meta{
-  display:flex;
-  justify-content:space-between;
-  color:#887b91;
-  font-size:10px;
-}
-
-.quiz-question{
-  font-size:21px;
-  font-weight:900;
-  line-height:1.25;
-  margin:20px 0;
-}
-
-.options{
-  display:grid;
-  gap:9px;
-}
-
-.option{
-  min-height:56px;
-  padding:13px;
-  border-radius:16px;
-  text-align:left;
-  color:#e8e0ef;
-  background:#171021;
-  border:1px solid var(--line);
-}
-
-.option.correct{
-  border-color:rgba(99,230,164,.55);
-  background:rgba(99,230,164,.08);
-}
-
-.option.wrong{
-  border-color:rgba(255,84,123,.55);
-  background:rgba(255,84,123,.08);
-}
-
-.quiz-feedback{
-  min-height:40px;
-  margin-top:13px;
-  font-size:12px;
-  color:#9c90a7;
-  line-height:1.5;
-}
-
-.next-question{
-  width:100%;
-  min-height:51px;
-  border-radius:16px;
-  background:#21152e;
-  color:white;
-  font-weight:800;
-  margin-top:8px;
-}
-
-/* =========================
-   COMMUNITY
-========================= */
-
-.community-intro{
-  margin-bottom:17px;
-}
-
-.community-grid{
-  display:grid;
-  gap:13px;
-}
-
-.community-card{
-  min-height:180px;
+.direction-arrow{
+  width:80px;
+  height:80px;
   border-radius:27px;
-  border:1px solid var(--line);
-  padding:21px;
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
-}
-
-.community-card.channel{
-  background:
-    radial-gradient(circle at 90% 15%,rgba(75,191,255,.22),transparent 28%),
-    linear-gradient(145deg,#171a35,#100b1c);
-}
-
-.community-card.contact{
-  background:
-    radial-gradient(circle at 90% 15%,rgba(199,91,255,.22),transparent 28%),
-    linear-gradient(145deg,#28143a,#110a1c);
-}
-
-.community-card.updates{
-  background:
-    radial-gradient(circle at 90% 15%,rgba(255,190,90,.16),transparent 28%),
-    linear-gradient(145deg,#291a24,#110b18);
-}
-
-.community-card .card-art{
-  position:absolute;
-  right:-10px;
-  bottom:-35px;
-  width:210px;
-  height:150px;
-  opacity:.45;
-}
-
-.community-icon{
-  width:51px;
-  height:51px;
-  border-radius:17px;
+  margin:auto;
   display:grid;
   place-items:center;
-  background:rgba(255,255,255,.08);
-  margin-bottom:24px;
+  font-size:51px;
+  font-weight:1000;
+  line-height:1;
 }
 
-.community-icon svg{
-  width:28px;
-  height:28px;
+.direction-arrow.up{
+  color:#d194ff;
+  background:rgba(177,87,255,.11);
+  border:1px solid rgba(188,104,255,.18);
+  box-shadow:0 0 45px rgba(164,78,255,.16);
 }
 
-.community-card strong{
-  font-size:21px;
-  display:block;
-  position:relative;
+.direction-arrow.down{
+  color:#ff7d9e;
+  background:rgba(255,75,125,.09);
+  border:1px solid rgba(255,85,125,.16);
 }
 
-.community-card span{
-  display:block;
-  color:#9c90a6;
-  font-size:12px;
-  margin-top:6px;
-  max-width:250px;
-  line-height:1.45;
-  position:relative;
-}
-
-.open-link{
-  display:inline-flex;
-  margin-top:14px;
-  padding:8px 12px;
-  border-radius:11px;
-  background:rgba(255,255,255,.07);
-  color:white;
-  font-size:10px;
-  font-weight:800;
-  position:relative;
-}
-
-/* =========================
-   PROFILE
-========================= */
-
-.profile-hero{
-  border-radius:30px;
-  padding:22px;
-  background:
-    radial-gradient(circle at 100% 0%,rgba(179,88,255,.2),transparent 35%),
-    linear-gradient(145deg,#211232,#0e0917);
-  border:1px solid var(--line);
-  position:relative;
-  overflow:hidden;
-}
-
-.profile-main{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-.profile-avatar{
-  width:78px;
-  height:78px;
-  border-radius:25px;
-  background:linear-gradient(145deg,#bb7aff,#6232c7);
-  display:grid;
-  place-items:center;
-  font-size:28px;
-  font-weight:900;
-  box-shadow:0 15px 40px rgba(126,57,220,.28);
-}
-
-.profile-name{
+.direction-word{
+  margin-top:9px;
   font-size:24px;
-  font-weight:900;
+  font-weight:1000;
 }
 
-.profile-nick{
-  color:#8e8298;
-  font-size:12px;
+.direction-word.up{
+  color:#d194ff;
+}
+
+.direction-word.down{
+  color:#ff7d9e;
+}
+
+.direction-sub{
+  color:#81758b;
+  font-size:9px;
   margin-top:4px;
 }
 
-.level-row{
-  margin-top:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.analysis-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+  padding:0 13px 13px;
 }
 
-.level{
-  font-size:12px;
-  color:#b989ff;
-  font-weight:900;
+.analysis-item{
+  padding:10px 4px;
+  text-align:center;
+  border-radius:13px;
+  background:#17101f;
 }
 
-.xp{
-  color:#81758a;
+.analysis-item span{
+  display:block;
+  color:#685e70;
+  font-size:7px;
+  margin-bottom:4px;
+}
+
+.analysis-item strong{
   font-size:10px;
 }
 
-.profile-progress{
-  height:8px;
-  background:#2a1a36;
+.analysis-item.positive strong{
+  color:#cb8cff;
+}
+
+.analysis-item.negative strong{
+  color:#ff7e9e;
+}
+
+.signal-disclaimer{
+  padding:10px 14px 14px;
+  color:#514857;
+  text-align:center;
+  font-size:7px;
+  line-height:1.5;
+}
+
+
+/* =========================================================
+   PRACTICE
+========================================================= */
+
+.practice-hero{
+  min-height:205px;
+  padding:24px;
+  border-radius:31px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(205,81,255,.2),transparent 35%),
+    linear-gradient(145deg,#281236,#110a18);
+  border:1px solid var(--border);
+}
+
+.practice-hero-art{
+  position:absolute;
+  right:-15px;
+  bottom:-15px;
+  width:220px;
+  height:170px;
+}
+
+.practice-hero h2{
+  position:relative;
+  z-index:3;
+  margin:8px 0 8px;
+  font-size:32px;
+  letter-spacing:-1.5px;
+}
+
+.practice-hero p{
+  position:relative;
+  z-index:3;
+  max-width:250px;
+  margin:0;
+  color:#978c9e;
+  font-size:11px;
+  line-height:1.55;
+}
+
+.practice-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:11px;
+}
+
+.practice-stat{
+  padding:14px;
+  border-radius:19px;
+  background:#130e19;
+  border:1px solid var(--border);
+}
+
+.practice-stat strong{
+  display:block;
+  font-size:20px;
+}
+
+.practice-stat span{
+  display:block;
+  color:#72687c;
+  font-size:8px;
+  margin-top:3px;
+}
+
+.quiz-panel{
+  margin-top:13px;
+  border-radius:28px;
+  padding:20px;
+  background:#110c17;
+  border:1px solid var(--border);
+}
+
+.quiz-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.quiz-counter{
+  color:#b77cff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.quiz-score{
+  color:#776b80;
+  font-size:9px;
+}
+
+.quiz-progress{
+  height:4px;
+  background:#261b2d;
   border-radius:99px;
   overflow:hidden;
   margin-top:9px;
 }
 
-.profile-progress span{
+.quiz-progress i{
+  display:block;
+  width:0;
+  height:100%;
+  background:#b05fff;
+  transition:.3s;
+}
+
+.quiz-question{
+  font-size:23px;
+  font-weight:950;
+  line-height:1.2;
+  letter-spacing:-.5px;
+  margin:23px 0 17px;
+}
+
+.quiz-options{
+  display:grid;
+  gap:8px;
+}
+
+.quiz-option{
+  min-height:58px;
+  border-radius:17px;
+  padding:13px;
+  text-align:left;
+  color:#e9e2ef;
+  background:#17101f;
+  border:1px solid rgba(255,255,255,.07);
+  font-size:11px;
+  transition:.15s;
+}
+
+.quiz-option:active{
+  transform:scale(.985);
+}
+
+.quiz-option.correct{
+  border-color:rgba(99,230,164,.5);
+  background:rgba(99,230,164,.08);
+}
+
+.quiz-option.wrong{
+  border-color:rgba(255,84,123,.5);
+  background:rgba(255,84,123,.08);
+}
+
+.quiz-option .letter{
+  display:inline-grid;
+  place-items:center;
+  width:25px;
+  height:25px;
+  margin-right:8px;
+  border-radius:8px;
+  background:#251a30;
+  color:#b786e9;
+  font-size:9px;
+  font-weight:900;
+}
+
+.quiz-feedback{
+  min-height:45px;
+  padding-top:12px;
+  color:#95899e;
+  font-size:10px;
+  line-height:1.5;
+}
+
+.quiz-next{
+  width:100%;
+  height:51px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#9d59f2,#6e35d0);
+  color:white;
+  font-size:11px;
+  font-weight:900;
+}
+
+
+/* =========================================================
+   COMMUNITY
+========================================================= */
+
+.community-list{
+  display:grid;
+  gap:13px;
+}
+
+.community-card{
+  min-height:205px;
+  border-radius:30px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--border);
+  padding:21px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.community-card:active{
+  transform:scale(.985);
+}
+
+.community-card.telegram{
+  background:
+    linear-gradient(145deg,#101b2b,#0d0b15);
+}
+
+.community-card.contact{
+  background:
+    linear-gradient(145deg,#281238,#100a16);
+}
+
+.community-card.updates{
+  background:
+    linear-gradient(145deg,#2a1a26,#100b15);
+}
+
+.community-content{
+  position:relative;
+  z-index:5;
+}
+
+.community-icon{
+  width:52px;
+  height:52px;
+  border-radius:17px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.08);
+  margin-bottom:25px;
+}
+
+.community-icon svg{
+  width:29px;
+}
+
+.community-card h3{
+  margin:0;
+  font-size:22px;
+}
+
+.community-card p{
+  margin:6px 0 0;
+  color:#958a9e;
+  font-size:11px;
+  line-height:1.5;
+  max-width:270px;
+}
+
+.community-button{
+  display:inline-flex;
+  margin-top:15px;
+  padding:9px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.07);
+  color:white;
+  font-size:9px;
+  font-weight:900;
+}
+
+.community-art{
+  position:absolute;
+  right:-8px;
+  bottom:-15px;
+  width:230px;
+  height:170px;
+  opacity:.72;
+}
+
+.message-bubble{
+  position:absolute;
+  border-radius:15px;
+  padding:9px 12px;
+  background:#162234;
+  border:1px solid rgba(110,197,255,.13);
+  color:#9bdfff;
+  font-size:8px;
+}
+
+.message-bubble.b1{
+  right:20px;
+  top:30px;
+}
+
+.message-bubble.b2{
+  right:58px;
+  top:72px;
+  background:#29163a;
+  color:#d39aff;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-header{
+  border-radius:34px;
+  overflow:hidden;
+  position:relative;
+  padding:24px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(190,82,255,.24),transparent 38%),
+    linear-gradient(145deg,#251335,#0f0917);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+.profile-orbit{
+  position:absolute;
+  right:-40px;
+  top:-65px;
+  width:240px;
+  height:240px;
+  border:1px solid rgba(193,103,255,.14);
+  border-radius:50%;
+  transform:rotate(25deg) scaleY(.55);
+}
+
+.profile-orbit.two{
+  right:-20px;
+  top:-45px;
+  width:200px;
+  height:200px;
+  transform:rotate(-30deg) scaleY(.55);
+}
+
+.profile-person{
+  position:relative;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.profile-avatar-large{
+  width:82px;
+  height:82px;
+  border-radius:28px;
+  display:grid;
+  place-items:center;
+  font-size:29px;
+  font-weight:1000;
+  background:
+    radial-gradient(circle at 28% 20%,rgba(255,255,255,.3),transparent 12%),
+    linear-gradient(145deg,#c17cff,#6933c9);
+  box-shadow:0 18px 45px rgba(111,48,206,.35);
+}
+
+.profile-name{
+  font-size:24px;
+  font-weight:950;
+}
+
+.profile-nick{
+  color:#8b8095;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.profile-level{
+  margin-top:22px;
+  position:relative;
+  z-index:5;
+}
+
+.level-top{
+  display:flex;
+  justify-content:space-between;
+  color:#a990b8;
+  font-size:9px;
+  font-weight:800;
+}
+
+.level-bar{
+  height:8px;
+  margin-top:8px;
+  border-radius:99px;
+  background:#2b1b35;
+  overflow:hidden;
+}
+
+.level-bar i{
   display:block;
   height:100%;
-  background:linear-gradient(90deg,#7940db,#d16bff);
+  width:0;
+  background:linear-gradient(90deg,#7f3ee2,#d270ff);
+  border-radius:99px;
 }
 
-.coins-card{
-  margin-top:14px;
-  border-radius:23px;
-  padding:19px;
-  background:linear-gradient(135deg,#171025,#22102d);
-  border:1px solid rgba(212,113,255,.18);
+.profile-currency{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:8px;
 }
 
-.coins-label{
-  color:#94879c;
-  font-size:10px;
+.currency-card{
+  min-height:91px;
+  padding:14px;
+  border-radius:20px;
+  background:rgba(10,7,14,.46);
+  border:1px solid rgba(255,255,255,.07);
 }
 
-.coins-value{
-  font-size:33px;
-  font-weight:1000;
-  margin-top:3px;
+.currency-card span{
+  display:block;
+  color:#786c81;
+  font-size:8px;
 }
 
-.coins-value span{
-  color:#c88cff;
+.currency-card strong{
+  display:block;
+  margin-top:6px;
+  font-size:22px;
 }
 
-.stats-grid{
+.currency-card:first-child strong{
+  color:#d098ff;
+}
+
+.profile-stat-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:10px;
+  gap:9px;
   margin-top:13px;
 }
 
-.stat-card{
-  min-height:105px;
-  padding:17px;
-  border-radius:21px;
-  background:#110b19;
-  border:1px solid var(--line);
+.profile-stat-card{
+  min-height:115px;
+  padding:16px;
+  border-radius:23px;
+  background:#110c17;
+  border:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
 }
 
-.stat-icon{
-  color:#bb82ff;
-  margin-bottom:12px;
+.profile-stat-icon{
+  width:33px;
+  height:33px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  background:rgba(165,89,255,.1);
+  color:#c189ff;
+  margin-bottom:14px;
 }
 
-.stat-card strong{
-  font-size:24px;
+.profile-stat-card strong{
   display:block;
+  font-size:25px;
 }
 
-.stat-card span{
-  color:#82768d;
-  font-size:10px;
+.profile-stat-card span{
+  display:block;
+  color:#756a7d;
+  font-size:8px;
+  margin-top:3px;
 }
 
 .profile-section{
-  margin-top:19px;
+  margin-top:20px;
 }
 
-.profile-section-title{
+.profile-section-heading{
   font-size:17px;
   font-weight:900;
   margin-bottom:10px;
 }
 
-.achievements{
+.achievement-grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
 }
 
-.achievement{
-  min-height:115px;
-  border-radius:20px;
-  padding:15px;
-  background:#120c1c;
-  border:1px solid var(--line);
-}
-
-.achievement.locked{
-  opacity:.42;
-}
-
-.achievement-icon{
-  font-size:23px;
-  margin-bottom:10px;
-}
-
-.achievement strong{
-  font-size:12px;
-  display:block;
-}
-
-.achievement span{
-  display:block;
-  color:#7e7388;
-  font-size:9px;
-  margin-top:4px;
-  line-height:1.4;
-}
-
-.activity{
+.achievement-card{
+  min-height:133px;
+  padding:16px;
   border-radius:21px;
-  overflow:hidden;
-  background:#110b19;
-  border:1px solid var(--line);
+  background:#120d19;
+  border:1px solid var(--border);
 }
 
-.activity-row{
-  padding:14px;
-  display:flex;
-  gap:11px;
-  border-bottom:1px solid rgba(255,255,255,.045);
+.achievement-card.unlocked{
+  background:
+    linear-gradient(145deg,rgba(149,78,238,.13),#120d19);
+  border-color:rgba(170,93,255,.19);
 }
 
-.activity-row:last-child{
-  border-bottom:0;
+.achievement-card.locked{
+  opacity:.38;
 }
 
-.activity-dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#a866ff;
-  margin-top:5px;
-  box-shadow:0 0 12px rgba(168,102,255,.6);
+.achievement-symbol{
+  font-size:24px;
+  margin-bottom:13px;
 }
 
-.activity-row strong{
+.achievement-card strong{
   display:block;
   font-size:11px;
 }
 
-.activity-row span{
-  color:#766b80;
-  font-size:9px;
+.achievement-card span{
+  display:block;
+  color:#71677a;
+  font-size:8px;
+  line-height:1.45;
+  margin-top:5px;
 }
 
-/* =========================
-   NAV
-========================= */
+.activity-list{
+  overflow:hidden;
+  border-radius:22px;
+  background:#110c17;
+  border:1px solid var(--border);
+}
+
+.activity{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:14px;
+  border-bottom:1px solid rgba(255,255,255,.045);
+}
+
+.activity:last-child{
+  border-bottom:0;
+}
+
+.activity-marker{
+  width:8px;
+  height:8px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:#b269ff;
+  box-shadow:0 0 12px rgba(178,105,255,.6);
+  margin-top:4px;
+}
+
+.activity strong{
+  display:block;
+  font-size:10px;
+}
+
+.activity span{
+  display:block;
+  color:#6d6377;
+  font-size:8px;
+  margin-top:3px;
+}
+
+.logout-button{
+  width:100%;
+  height:52px;
+  border-radius:17px;
+  background:#17101e;
+  border:1px solid rgba(255,255,255,.07);
+  color:#b7adbd;
+  font-size:10px;
+  font-weight:900;
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
 
 .bottom-nav{
   position:fixed;
-  z-index:80;
-  bottom:0;
+  z-index:150;
   left:0;
   right:0;
-  padding:8px 9px calc(8px + env(safe-area-inset-bottom));
-  background:rgba(8,6,15,.94);
-  border-top:1px solid rgba(255,255,255,.07);
-  backdrop-filter:blur(16px);
+  bottom:0;
+  padding:
+    7px 8px
+    calc(7px + env(safe-area-inset-bottom));
+  background:rgba(8,7,13,.95);
+  border-top:1px solid rgba(255,255,255,.065);
+  backdrop-filter:blur(18px);
 }
 
-.nav-inner{
-  max-width:720px;
+.nav-container{
+  width:min(730px,100%);
   margin:auto;
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:4px;
+  gap:3px;
 }
 
-.nav-item{
-  min-height:67px;
-  border-radius:17px;
+.nav-button{
+  min-height:69px;
+  position:relative;
+  border-radius:18px;
   background:transparent;
-  color:#70657a;
+  color:#655c6e;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   gap:5px;
+  transition:.25s cubic-bezier(.2,.8,.2,1);
+}
+
+.nav-icon{
+  width:30px;
+  height:30px;
   position:relative;
+  transition:.25s cubic-bezier(.2,.8,.2,1);
 }
 
-.nav-item svg{
-  width:28px;
-  height:28px;
-  transition:.18s;
+.nav-icon svg{
+  width:100%;
+  height:100%;
 }
 
-.nav-item span{
+.nav-label{
   font-size:8px;
-  font-weight:800;
+  font-weight:850;
 }
 
-.nav-item.active{
-  color:#c99aff;
-  background:rgba(155,92,255,.09);
+.nav-button.active{
+  color:#c695ff;
+  background:rgba(155,92,255,.08);
 }
 
-.nav-item.active svg{
-  transform:translateY(-2px) scale(1.08);
-  filter:drop-shadow(0 0 7px rgba(183,105,255,.4));
+.nav-button.active .nav-icon{
+  transform:translateY(-3px) scale(1.08);
+  filter:drop-shadow(0 0 9px rgba(181,105,255,.42));
 }
 
-.nav-item.signal.active{
-  color:#e08bff;
+.nav-button.active:after{
+  content:"";
+  position:absolute;
+  width:24px;
+  height:3px;
+  bottom:3px;
+  border-radius:99px;
+  background:#ad68ff;
+  box-shadow:0 0 12px #a35aff;
 }
 
-/* =========================
+.nav-button.signal.active{
+  color:#e294ff;
+}
+
+
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
 .toast{
   position:fixed;
-  z-index:200;
+  z-index:900;
   left:50%;
   bottom:94px;
-  transform:translate(-50%,15px);
+  transform:translate(-50%,20px) scale(.96);
   opacity:0;
   pointer-events:none;
-  background:#24172e;
-  border:1px solid rgba(194,111,255,.25);
-  color:white;
-  padding:12px 17px;
+  max-width:calc(100% - 35px);
+  padding:12px 16px;
   border-radius:15px;
-  font-size:11px;
-  font-weight:800;
-  transition:.22s;
-  white-space:nowrap;
+  background:#21162c;
+  border:1px solid rgba(190,104,255,.23);
+  box-shadow:0 15px 45px rgba(0,0,0,.35);
+  color:white;
+  font-size:10px;
+  font-weight:850;
+  text-align:center;
+  transition:.25s;
 }
 
 .toast.show{
   opacity:1;
-  transform:translate(-50%,0);
+  transform:translate(-50%,0) scale(1);
 }
 
-/* =========================
-   DESKTOP
-========================= */
 
-@media(min-width:760px){
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:#08070d;
+  display:grid;
+  place-items:center;
+  transition:.4s;
+}
+
+.loader.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+.loader-inner{
+  text-align:center;
+}
+
+.loader-logo{
+  width:70px;
+  height:70px;
+  border-radius:23px;
+  display:grid;
+  place-items:center;
+  margin:auto;
+  background:linear-gradient(145deg,#b16aff,#6730c7);
+  box-shadow:0 0 55px rgba(153,78,255,.28);
+  animation:loaderPulse 1.1s ease-in-out infinite;
+}
+
+@keyframes loaderPulse{
+  50%{
+    transform:scale(1.06);
+    box-shadow:0 0 80px rgba(153,78,255,.4);
+  }
+}
+
+.loader-text{
+  margin-top:15px;
+  color:#8c8196;
+  font-size:9px;
+  letter-spacing:2px;
+  font-weight:900;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(min-width:700px){
+
   .screen{
-    padding:28px 25px 45px;
+    padding:30px 25px 45px;
   }
 
-  .home-actions{
+  .home-hero{
+    min-height:570px;
+  }
+
+  .home-hero-copy{
+    padding:40px 40px 0;
+  }
+
+  .hero-stats{
+    left:25px;
+    right:25px;
+    bottom:25px;
+  }
+
+  .home-tools{
     grid-template-columns:repeat(2,300px);
   }
 
-  .community-grid{
+  .community-list{
     grid-template-columns:repeat(3,1fr);
   }
 
-  .stats-grid{
+  .profile-stat-grid{
     grid-template-columns:repeat(4,1fr);
   }
 
-  .achievements{
+  .achievement-grid{
     grid-template-columns:repeat(4,1fr);
   }
 
-  .profile-hero{
-    padding:30px;
-  }
-
-  .bot-shell{
-    max-width:760px;
+  .terminal{
+    max-width:800px;
     margin:auto;
   }
+
 }
+
+@media(max-width:370px){
+
+  .home-stats{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+  .home-stat{
+    padding:11px 8px;
+  }
+
+  .stat-number{
+    font-size:18px;
+  }
+
+  .duration-row{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .analysis-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<!-- =========================
-     AUTH
-========================= -->
+<div class="noise"></div>
 
-<section id="auth" class="auth">
-  <div class="auth-grid"></div>
-  <div class="auth-glow one"></div>
-  <div class="auth-glow two"></div>
 
-  <div class="auth-card">
+<!-- =========================================================
+     LOADER
+========================================================= -->
 
-    <div class="brand">
-      <div class="brand-mark">AV</div>
-      <div>
-        <div class="brand-title">AVA ACADEMY</div>
-        <div class="brand-sub">УЧИСЬ · АНАЛИЗИРУЙ · РАСТИ</div>
-      </div>
+<div id="loader" class="loader">
+
+  <div class="loader-inner">
+
+    <div class="loader-logo">
+      <span class="ava-symbol">AV</span>
     </div>
 
-    <h1 class="auth-title">Твой путь<br>в трейдинге</h1>
-
-    <p class="auth-description">
-      Обучение, практика, тесты, аналитические сценарии
-      и личный прогресс в одном пространстве.
-    </p>
-
-    <div class="field">
-      <label>Имя</label>
-      <input id="authName" type="text" maxlength="24" placeholder="Как тебя зовут?">
-    </div>
-
-    <div class="field">
-      <label>Никнейм</label>
-      <input id="authNick" type="text" maxlength="24" placeholder="@username">
-    </div>
-
-    <button id="enterBtn" class="primary-btn">
-      Войти в AVA ACADEMY
-    </button>
-
-    <div class="auth-note">
-      Данные сохраняются только в браузере этого устройства
+    <div class="loader-text">
+      AVA ACADEMY
     </div>
 
   </div>
+
+</div>
+
+
+<!-- =========================================================
+     AUTH
+========================================================= -->
+
+<section id="authScreen" class="auth-screen">
+
+  <div class="auth-background">
+
+    <div class="auth-light"></div>
+    <div class="auth-light-two"></div>
+
+    <svg class="market-lines" viewBox="0 0 850 450" fill="none">
+
+      <path
+        d="M0 360 C70 350 80 270 145 295
+        S215 355 270 245
+        S340 200 395 245
+        S460 300 520 180
+        S600 105 650 165
+        S735 195 850 55"
+        stroke="#a45cff"
+        stroke-width="3"
+        opacity=".55"
+      />
+
+      <path
+        d="M0 400 C100 390 130 325 210 350
+        S330 365 390 300
+        S500 280 580 210
+        S710 250 850 115"
+        stroke="#5fc7ff"
+        stroke-width="1"
+        opacity=".3"
+      />
+
+      <circle cx="650" cy="165" r="7" fill="#bd77ff"/>
+      <circle cx="850" cy="55" r="8" fill="#70e7ff"/>
+
+    </svg>
+
+  </div>
+
+
+  <div class="auth-wrap">
+
+    <div id="authCard" class="auth-card">
+
+      <div class="auth-logo">
+        <span class="ava-symbol">AV</span>
+      </div>
+
+      <div class="auth-eyebrow">
+        AVA ACADEMY
+      </div>
+
+      <h1 class="auth-title">
+        Начни свой<br>
+        <span>путь трейдера</span>
+      </h1>
+
+      <p class="auth-subtitle">
+        Создай личный профиль и получи доступ к обучению,
+        практике, тестам и аналитическому тренажёру.
+      </p>
+
+
+      <div class="auth-field">
+
+        <label for="authName">
+          ТВОЁ ИМЯ
+        </label>
+
+        <input
+          id="authName"
+          class="auth-input"
+          type="text"
+          maxlength="28"
+          autocomplete="name"
+          placeholder="Например, Вадим"
+        >
+
+      </div>
+
+
+      <div class="auth-field">
+
+        <label for="authNick">
+          НИКНЕЙМ
+        </label>
+
+        <div class="auth-input-wrap">
+
+          <span class="nickname-prefix">@</span>
+
+          <input
+            id="authNick"
+            class="auth-input nickname-input"
+            type="text"
+            maxlength="24"
+            autocomplete="username"
+            placeholder="yourname"
+          >
+
+        </div>
+
+      </div>
+
+      <div id="authError" class="auth-error"></div>
+
+
+      <button id="registerButton" class="auth-submit">
+        Создать профиль
+      </button>
+
+
+      <div class="auth-security">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="10" width="14" height="10" rx="2"/>
+          <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+        </svg>
+
+        Данные сохраняются на этом устройстве
+
+      </div>
+
+    </div>
+
+
+    <div id="setupCard" class="auth-card setup hidden">
+
+      <div id="setupAvatar" class="setup-avatar">
+        A
+      </div>
+
+      <div class="auth-eyebrow">
+        ПРОФИЛЬ СОЗДАН
+      </div>
+
+      <h2>
+        Добро пожаловать
+      </h2>
+
+      <p>
+        Твой личный кабинет AVA ACADEMY готов.
+        Тебя ждут 160 уроков, практика и система прогресса.
+      </p>
+
+      <button id="startAcademy" class="auth-submit">
+        Войти в академию
+      </button>
+
+    </div>
+
+  </div>
+
 </section>
 
 
-<!-- =========================
-     APP
-========================= -->
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
 
 <div id="app" class="app hidden">
+
 
 <header class="topbar">
 
   <div class="top-brand">
-    <div class="top-logo">AV</div>
-    <div>
-      <div class="top-name">AVA ACADEMY</div>
-      <div class="top-caption">TRADING EDUCATION</div>
+
+    <div class="top-mark">
+      <span>AV</span>
     </div>
+
+    <div>
+      <div class="top-brand-name">
+        AVA ACADEMY
+      </div>
+
+      <div class="top-brand-sub">
+        УЧИСЬ · АНАЛИЗИРУЙ · РАСТИ
+      </div>
+    </div>
+
   </div>
 
-  <button id="profileTop" class="profile-button">
-    <div id="topAvatar" class="avatar">A</div>
+
+  <button id="topProfileButton" class="top-profile">
+
+    <div id="topAvatar" class="avatar">
+      A
+    </div>
+
   </button>
 
 </header>
 
 
-<!-- =========================
+<!-- =========================================================
      HOME
-========================= -->
+========================================================= -->
 
-<main id="home" class="screen active">
+<main id="screen-home" class="screen active">
 
   <section class="home-hero">
 
-    <div class="hero-grid"></div>
-    <div class="hero-orb"></div>
+    <div class="home-hero-copy">
 
-    <div class="hero-content">
-
-      <div class="hero-badge">
-        ● AVA LEARNING SYSTEM
+      <div class="home-greeting">
+        Добро пожаловать, <span id="homeName">трейдер</span>
       </div>
 
-      <h1 class="hero-title">
+      <h1 class="home-heading">
         Учись.<br>
         <span>Анализируй.</span><br>
         Расти.
       </h1>
 
-      <p class="hero-text">
-        Большая система обучения трейдингу от базовых понятий
-        до технического анализа, риск-менеджмента и практики.
+      <p class="home-description">
+        Твоя персональная академия для изучения рынка,
+        технического анализа и торговой дисциплины.
       </p>
 
     </div>
 
-    <div class="hero-chart">
-      <div class="candle c1"></div>
-      <div class="candle c2"></div>
-      <div class="candle c3"></div>
-      <div class="candle c4"></div>
-      <div class="candle c5"></div>
-      <div class="candle c6"></div>
-      <div class="candle c7"></div>
-      <div class="candle c8"></div>
-      <div class="candle c9"></div>
-      <div class="candle c10"></div>
-      <div class="candle c11"></div>
+
+    <div class="hero-market-art">
+
+      <div class="hero-market-glow"></div>
+
+      <div class="hero-candle-chart">
+
+        <div class="hero-axis"></div>
+
+        <div class="hero-candles">
+
+          <div class="hero-candle down"></div>
+          <div class="hero-candle"></div>
+          <div class="hero-candle"></div>
+          <div class="hero-candle down"></div>
+          <div class="hero-candle"></div>
+          <div class="hero-candle"></div>
+          <div class="hero-candle"></div>
+          <div class="hero-candle"></div>
+          <div class="hero-candle down"></div>
+          <div class="hero-candle"></div>
+          <div class="hero-candle"></div>
+          <div class="hero-candle"></div>
+
+        </div>
+
+        <div class="hero-line">
+
+          <svg viewBox="0 0 700 150" preserveAspectRatio="none">
+
+            <path
+              d="M0 125 C70 110 90 75 145 90
+              S215 140 270 83
+              S335 55 395 74
+              S455 110 510 49
+              S600 30 700 5"
+              fill="none"
+              stroke="#d092ff"
+              stroke-width="3"
+            />
+
+          </svg>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-floating one">
+
+        <div class="float-label">
+          ИМПУЛЬС
+        </div>
+
+        <div class="float-value up">
+          ↑ СИЛЬНЫЙ
+        </div>
+
+      </div>
+
+
+      <div class="hero-floating two">
+
+        <div class="float-label">
+          АНАЛИЗ
+        </div>
+
+        <div class="float-value">
+          84%
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="hero-bottom">
-      <div class="hero-stat">
-        <strong id="homeLessons">0</strong>
-        <span>уроков</span>
+
+    <div class="hero-stats">
+
+      <div class="home-stat">
+
+        <div class="stat-caption">
+          АВА Монеты
+        </div>
+
+        <div id="homeCoins" class="stat-number coin">
+          0
+        </div>
+
+        <div class="stat-small">
+          внутренняя награда
+        </div>
+
       </div>
-      <div class="hero-stat">
-        <strong id="homeXP">0</strong>
-        <span>XP</span>
+
+
+      <div class="home-stat">
+
+        <div class="stat-caption">
+          Опыт
+        </div>
+
+        <div id="homeXP" class="stat-number xp">
+          0
+        </div>
+
+        <div class="stat-small">
+          XP
+        </div>
+
       </div>
-      <div class="hero-stat">
-        <strong id="homeCoins">0</strong>
-        <span>AVA Coins</span>
+
+
+      <div class="home-stat">
+
+        <div class="stat-caption">
+          Уроки
+        </div>
+
+        <div id="homeLessons" class="stat-number lessons">
+          0
+        </div>
+
+        <div class="stat-small">
+          из 160
+        </div>
+
       </div>
+
     </div>
 
   </section>
 
 
-  <div class="home-actions">
+  <div class="home-tools">
 
-    <button class="big-action education" data-go="education">
-      <div class="action-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/>
-          <path d="M4 5.5V20M8 7h8M8 11h8M8 15h5"/>
+    <button
+      class="home-tool study"
+      data-open="education"
+    >
+
+      <div class="tool-icon">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+
+          <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v18H7.5A2.5 2.5 0 0 0 5 22z"/>
+
+          <path d="M5 4.5V20"/>
+
+          <path d="M9 6h7"/>
+          <path d="M9 10h7"/>
+          <path d="M9 14h4"/>
+
         </svg>
+
       </div>
-      <strong>Начать обучение</strong>
-      <span>160 уроков и большая библиотека</span>
+
+      <strong>
+        Обучение
+      </strong>
+
+      <p>
+        160 уроков от основ до продвинутого анализа
+      </p>
+
+
+      <svg class="tool-art" viewBox="0 0 180 130" fill="none">
+
+        <path
+          d="M15 105 55 72l27 13 36-53 45 28"
+          stroke="#c07bff"
+          stroke-width="4"
+        />
+
+        <path
+          d="M15 105 55 72l27 13 36-53 45 28V130H15Z"
+          fill="#a45cff"
+          opacity=".08"
+        />
+
+      </svg>
+
     </button>
 
-    <button class="big-action signal" data-go="signals">
-      <div class="action-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M5 19V9M12 19V5M19 19v-7"/>
-          <path d="M3 19h18"/>
-          <path d="m4 7 5-3 5 4 6-5"/>
+
+    <button
+      class="home-tool signal"
+      data-open="signals"
+    >
+
+      <div class="tool-icon">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+
+          <path d="M4 19V10"/>
+          <path d="M9 19V6"/>
+          <path d="M14 19V12"/>
+          <path d="M19 19V4"/>
+
+          <path d="M2 19h20"/>
+
+          <path d="m4 8 5-3 5 4 6-6"/>
+
         </svg>
+
       </div>
-      <strong>Сигнал AVA</strong>
-      <span>Учебный сценарий анализа рынка</span>
+
+      <strong>
+        Сигнал
+      </strong>
+
+      <p>
+        Учебный торговый терминал AVA
+      </p>
+
+
+      <svg class="tool-art" viewBox="0 0 180 130" fill="none">
+
+        <path
+          d="M5 95 35 70l25 15 25-42 27 21 31-45"
+          stroke="#e17aff"
+          stroke-width="4"
+        />
+
+        <path
+          d="M140 19v45"
+          stroke="#ff7098"
+          stroke-width="4"
+        />
+
+        <path
+          d="m126 32 14-14 14 14"
+          stroke="#ff7098"
+          stroke-width="4"
+        />
+
+      </svg>
+
     </button>
 
   </div>
@@ -1794,163 +3053,349 @@ input{
 </main>
 
 
-<!-- =========================
+<!-- =========================================================
      EDUCATION
-========================= -->
+========================================================= -->
 
-<main id="education" class="screen">
+<main id="screen-education" class="screen">
 
-  <div class="learning-top">
+  <div class="learning-header">
 
-    <div class="section-head">
-      <div class="section-kicker">LIBRARY</div>
-      <h2 class="section-title">Обучение</h2>
-      <p class="section-sub">
+    <div>
+
+      <div class="section-label">
+        БИБЛИОТЕКА
+      </div>
+
+      <h2 class="section-title">
+        Обучение
+      </h2>
+
+      <p class="section-description">
         16 модулей · 160 уроков
       </p>
+
     </div>
 
-    <div class="progress-box">
-      <div id="eduPercent" class="progress-number">0%</div>
-      <div class="progress-label">пройдено</div>
-      <div class="progress-track">
-        <div id="eduProgress" class="progress-fill" style="width:0%"></div>
+
+    <div class="learning-progress">
+
+      <strong id="educationPercent">
+        0%
+      </strong>
+
+      <span>
+        путь пройден
+      </span>
+
+      <div class="progress-bar">
+        <i id="educationProgress"></i>
       </div>
+
     </div>
 
   </div>
 
-  <div class="search">
-    <span class="search-icon">⌕</span>
-    <input id="lessonSearch" placeholder="Найти урок или тему...">
+
+  <div class="search-wrap">
+
+    <span class="search-symbol">
+      ⌕
+    </span>
+
+    <input
+      id="lessonSearch"
+      class="lesson-search"
+      placeholder="Найти урок, модуль или тему..."
+    >
+
   </div>
 
-  <div id="modules"></div>
+
+  <div id="modulesContainer"></div>
 
 </main>
 
 
-<!-- =========================
-     SIGNAL BOT
-========================= -->
+<!-- =========================================================
+     SIGNALS
+========================================================= -->
 
-<main id="signals" class="screen">
+<main id="screen-signals" class="screen signal-page">
 
-  <div class="section-head">
-    <div class="section-kicker">AVA ANALYTICS</div>
-    <h2 class="section-title">Сигнал</h2>
-    <p class="section-sub">
-      Учебный симулятор анализа. Не является финансовой рекомендацией.
-    </p>
+  <div class="section-label">
+    AVA TERMINAL
   </div>
 
-  <section class="bot-shell">
+  <h2 class="section-title">
+    Сигнал
+  </h2>
 
-    <div class="bot-header">
+  <p class="section-description">
+    Учебный симулятор анализа рынка
+  </p>
 
-      <div class="bot-avatar">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7">
-          <path d="M4 18V9M9 18V5M14 18v-8M19 18V3"/>
+
+  <section class="terminal">
+
+    <header class="terminal-head">
+
+      <div class="bot-logo">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
+
+          <path d="M4 18V9"/>
+          <path d="M8 18V5"/>
+          <path d="M12 18v-7"/>
+          <path d="M16 18V3"/>
+          <path d="M20 18v-9"/>
+
           <path d="M2 18h20"/>
+
         </svg>
+
       </div>
 
-      <div>
-        <strong>AVA Signal Bot</strong>
-        <div class="bot-status">Educational market scanner</div>
+
+      <div class="bot-name">
+
+        <strong>
+          AVA Signal
+        </strong>
+
+        <span>
+          Торговый аналитический тренажёр
+        </span>
+
       </div>
 
-      <div class="bot-online">
-        <span class="online-dot"></span>
+
+      <div class="bot-status">
+
+        <i class="status-dot"></i>
         ONLINE
+
       </div>
 
-    </div>
+    </header>
 
-    <div class="bot-body">
 
-      <div class="bot-step">
-        <div class="bot-label">01 · Рынок</div>
+    <div class="terminal-body">
 
-        <div class="market-tabs">
-          <button class="market-tab active" data-market="exchange">Биржа</button>
-          <button class="market-tab" data-market="otc">OTC</button>
+
+      <div class="terminal-section">
+
+        <div class="terminal-label">
+          01 · ТИП РЫНКА
         </div>
-      </div>
 
+        <div class="market-toggle">
 
-      <div class="bot-step">
+          <button
+            class="market-button active"
+            data-market="exchange"
+          >
+            Биржа
+          </button>
 
-        <div class="bot-label">02 · Валютная пара</div>
-
-        <select id="pairSelect" class="pair-select"></select>
-
-      </div>
-
-
-      <div class="bot-step">
-
-        <div class="bot-label">03 · Время</div>
-
-        <div class="duration-grid">
-
-          <button class="duration active" data-duration="1">1 мин</button>
-          <button class="duration" data-duration="2">2 мин</button>
-          <button class="duration" data-duration="3">3 мин</button>
-          <button class="duration" data-duration="5">5 мин</button>
-          <button class="duration" data-duration="10">10 мин</button>
-          <button class="duration" data-duration="15">15 мин</button>
+          <button
+            class="market-button"
+            data-market="otc"
+          >
+            OTC
+          </button>
 
         </div>
 
       </div>
 
 
-      <button id="generateSignal" class="generate">
-        Сгенерировать сигнал
+      <div class="terminal-section">
+
+        <div class="terminal-label">
+          02 · ВАЛЮТНАЯ ПАРА
+        </div>
+
+        <div class="pair-control">
+
+          <select id="pairSelect" class="pair-select"></select>
+
+        </div>
+
+      </div>
+
+
+      <div class="terminal-section">
+
+        <div class="terminal-label">
+          03 · ВРЕМЯ СЦЕНАРИЯ
+        </div>
+
+        <div class="duration-row">
+
+          <button class="duration-button active" data-duration="1">
+            1 мин
+          </button>
+
+          <button class="duration-button" data-duration="2">
+            2 мин
+          </button>
+
+          <button class="duration-button" data-duration="3">
+            3 мин
+          </button>
+
+          <button class="duration-button" data-duration="5">
+            5 мин
+          </button>
+
+          <button class="duration-button" data-duration="10">
+            10 мин
+          </button>
+
+          <button class="duration-button" data-duration="15">
+            15 мин
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button id="scanButton" class="scan-button">
+        АНАЛИЗИРОВАТЬ РЫНОК
       </button>
 
 
-      <div id="signalResult" class="signal-result">
+      <section id="signalResult" class="signal-result">
 
-        <div class="signal-top">
-          <div id="signalPair" class="signal-pair">EUR/USD</div>
-          <div id="signalTime" class="signal-time">1 минута</div>
+        <div class="signal-result-head">
+
+          <div>
+
+            <div id="resultPair" class="signal-result-pair">
+              EUR/USD
+            </div>
+
+            <div id="resultType" class="signal-result-type">
+              БИРЖА · 1 МИНУТА
+            </div>
+
+          </div>
+
+          <div id="resultConfidence" class="signal-result-type">
+            0%
+          </div>
+
         </div>
 
-        <div id="signalDirection" class="signal-direction buy">
-          BUY
+
+        <div class="signal-chart">
+
+          <svg viewBox="0 0 600 160" preserveAspectRatio="none">
+
+            <path
+              d="M0 125 C50 118 70 100 110 110
+              S165 130 210 82
+              S275 92 310 65
+              S370 40 415 72
+              S475 75 520 45
+              S560 55 600 20"
+              fill="none"
+              stroke="#b86eff"
+              stroke-width="3"
+            />
+
+          </svg>
+
+
+          <div class="signal-candles">
+
+            <div class="signal-candle" style="height:40px"></div>
+            <div class="signal-candle red" style="height:58px"></div>
+            <div class="signal-candle" style="height:72px"></div>
+            <div class="signal-candle" style="height:51px"></div>
+            <div class="signal-candle" style="height:82px"></div>
+            <div class="signal-candle" style="height:70px"></div>
+            <div class="signal-candle red" style="height:47px"></div>
+            <div class="signal-candle" style="height:92px"></div>
+            <div class="signal-candle" style="height:104px"></div>
+            <div class="signal-candle" style="height:120px"></div>
+
+          </div>
+
         </div>
 
-        <div id="signalConfidence" class="signal-confidence">
-          Уверенность анализа: 84%
+
+        <div class="signal-direction">
+
+          <div id="directionArrow" class="direction-arrow up">
+            ↑
+          </div>
+
+          <div id="directionWord" class="direction-word up">
+            ВВЕРХ
+          </div>
+
+          <div id="directionSub" class="direction-sub">
+            Учебный сценарий BUY
+          </div>
+
         </div>
 
-        <div class="signal-bars">
 
-          <div class="signal-mini">
+        <div class="analysis-grid">
+
+          <div class="analysis-item positive">
+
             <span>RSI</span>
-            <strong id="sigRSI">54</strong>
+            <strong id="analysisRSI">
+              54
+            </strong>
+
           </div>
 
-          <div class="signal-mini">
+
+          <div class="analysis-item positive">
+
             <span>EMA</span>
-            <strong id="sigEMA">UP</strong>
+            <strong id="analysisEMA">
+              ↑ UP
+            </strong>
+
           </div>
 
-          <div class="signal-mini">
+
+          <div class="analysis-item positive">
+
             <span>MACD</span>
-            <strong id="sigMACD">+</strong>
+            <strong id="analysisMACD">
+              +
+            </strong>
+
           </div>
 
-          <div class="signal-mini">
-            <span>TF</span>
-            <strong id="sigTF">1M</strong>
+
+          <div class="analysis-item">
+
+            <span>ТРЕНД</span>
+            <strong id="analysisTrend">
+              ↑
+            </strong>
+
           </div>
 
         </div>
 
-      </div>
+
+        <div class="signal-disclaimer">
+
+          Сценарий генерируется для обучения техническому анализу.
+          Это не гарантированный прогноз и не финансовая рекомендация.
+
+        </div>
+
+      </section>
 
     </div>
 
@@ -1959,35 +3404,128 @@ input{
 </main>
 
 
-<!-- =========================
+<!-- =========================================================
      PRACTICE
-========================= -->
+========================================================= -->
 
-<main id="practice" class="screen">
+<main id="screen-practice" class="screen">
 
-  <section class="challenge">
-    <div class="section-kicker">TRAINING ARENA</div>
-    <div class="challenge-title">Практика</div>
-    <div class="challenge-text">
-      Проверяй знания после обучения. За правильные ответы
-      получай XP и AVA Coins.
+  <section class="practice-hero">
+
+    <div class="section-label">
+      ТРЕНИРОВКА
     </div>
+
+    <h2>
+      Практика
+    </h2>
+
+    <p>
+      Проверяй знания, находи слабые места
+      и прокачивай свой уровень.
+    </p>
+
+
+    <svg
+      class="practice-hero-art"
+      viewBox="0 0 220 170"
+      fill="none"
+    >
+
+      <path
+        d="M5 145 42 110l29 18 37-57 34 28 60-76"
+        stroke="#ca79ff"
+        stroke-width="4"
+      />
+
+      <circle cx="202" cy="23" r="8" fill="#d987ff"/>
+
+      <path
+        d="M14 151h195"
+        stroke="#ffffff"
+        opacity=".1"
+      />
+
+    </svg>
+
   </section>
 
-  <section class="quiz-card">
 
-    <div class="quiz-meta">
-      <span id="quizNumber">Вопрос 1</span>
-      <span id="quizScore">0 XP</span>
+  <div class="practice-stats">
+
+    <div class="practice-stat">
+
+      <strong id="practiceCorrect">
+        0
+      </strong>
+
+      <span>
+        правильных
+      </span>
+
     </div>
 
-    <div id="quizQuestion" class="quiz-question"></div>
 
-    <div id="quizOptions" class="options"></div>
+    <div class="practice-stat">
+
+      <strong id="practiceTests">
+        0
+      </strong>
+
+      <span>
+        ответов
+      </span>
+
+    </div>
+
+
+    <div class="practice-stat">
+
+      <strong id="practiceXP">
+        0
+      </strong>
+
+      <span>
+        XP
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <section class="quiz-panel">
+
+    <div class="quiz-top">
+
+      <div id="quizCounter" class="quiz-counter">
+        ВОПРОС 1
+      </div>
+
+      <div id="quizScore" class="quiz-score">
+        0 XP
+      </div>
+
+    </div>
+
+
+    <div class="quiz-progress">
+      <i id="quizProgress"></i>
+    </div>
+
+
+    <div id="quizQuestion" class="quiz-question">
+      Загрузка вопроса...
+    </div>
+
+
+    <div id="quizOptions" class="quiz-options"></div>
+
 
     <div id="quizFeedback" class="quiz-feedback"></div>
 
-    <button id="nextQuestion" class="next-question hidden">
+
+    <button id="quizNext" class="quiz-next hidden">
       Следующий вопрос
     </button>
 
@@ -1996,154 +3534,354 @@ input{
 </main>
 
 
-<!-- =========================
+<!-- =========================================================
      COMMUNITY
-========================= -->
+========================================================= -->
 
-<main id="community" class="screen">
+<main id="screen-community" class="screen">
 
-  <div class="community-intro">
-    <div class="section-kicker">COMMUNITY</div>
-    <h2 class="section-title">Связь</h2>
-    <p class="section-sub">
-      Всё важное — в трёх понятных разделах.
-    </p>
+  <div class="section-label">
+    СОЕДИНЕНИЕ
   </div>
 
-  <div class="community-grid">
+  <h2 class="section-title">
+    Связь
+  </h2>
 
-    <div class="community-card channel" id="channelCard">
+  <p class="section-description">
+    Канал, личная связь и новости академии
+  </p>
 
-      <div class="community-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-          <path d="m21 4-3.1 15.2c-.23 1.07-.82 1.34-1.67.84l-4.58-3.38-2.21 2.13c-.24.24-.44.44-.9.44l.32-4.65 8.46-7.64c.37-.32-.08-.5-.57-.18L6.29 12.5l-4.5-1.41c-.98-.31-1-.98.2-1.45L19.56 3.7C20.46 3.4 21.25 3.9 21 4Z"/>
-        </svg>
+
+  <div class="community-list">
+
+
+    <article id="channelCard" class="community-card telegram">
+
+      <div class="community-content">
+
+        <div class="community-icon">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="#73d7ff" stroke-width="1.6">
+
+            <path d="m21 4-3.1 15.2c-.23 1.07-.82 1.34-1.67.84l-4.58-3.38-2.21 2.13c-.24.24-.44.44-.9.44l.32-4.65 8.46-7.64c.37-.32-.08-.5-.57-.18L6.29 12.5l-4.5-1.41c-.98-.31-1-.98.2-1.45L19.56 3.7C20.46 3.4 21.25 3.9 21 4Z"/>
+
+          </svg>
+
+        </div>
+
+        <h3>
+          AVA Канал
+        </h3>
+
+        <p>
+          Материалы, обновления, идеи и новости AVA ACADEMY.
+        </p>
+
+        <span class="community-button">
+          Открыть Telegram →
+        </span>
+
       </div>
 
-      <strong>AVA Канал</strong>
 
-      <span>
-        Новости, материалы, идеи и обновления AVA ACADEMY.
-      </span>
+      <div class="message-bubble b1">
+        Новый материал
+      </div>
 
-      <div class="open-link">Открыть Telegram →</div>
+      <div class="message-bubble b2">
+        AVA ACADEMY
+      </div>
 
-      <svg class="card-art" viewBox="0 0 220 150" fill="none">
-        <path d="M10 120 45 92l25 12 38-45 30 25 42-52 32 18" stroke="#63cfff" stroke-width="3"/>
-        <path d="M10 130h200" stroke="#63cfff" opacity=".25"/>
+
+      <svg class="community-art" viewBox="0 0 230 170" fill="none">
+
+        <path
+          d="M10 125 55 94l30 15 38-49 36 23 52-58"
+          stroke="#5fc7ff"
+          stroke-width="3"
+        />
+
+        <path
+          d="M10 135h210"
+          stroke="#5fc7ff"
+          opacity=".18"
+        />
+
       </svg>
 
-    </div>
+    </article>
 
 
-    <div class="community-card contact" id="contactCard">
+    <article id="contactCard" class="community-card contact">
 
-      <div class="community-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-          <path d="M20 11.5a7.7 7.7 0 0 1-8 7.5 8.3 8.3 0 0 1-3.8-.9L4 19.5l1.4-3.6A7.3 7.3 0 0 1 4 11.5 7.7 7.7 0 0 1 12 4a7.7 7.7 0 0 1 8 7.5Z"/>
-          <path d="M8 11h.01M12 11h.01M16 11h.01"/>
-        </svg>
+      <div class="community-content">
+
+        <div class="community-icon">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="#d18bff" stroke-width="1.6">
+
+            <path d="M20 11.5a7.7 7.7 0 0 1-8 7.5 8.3 8.3 0 0 1-3.8-.9L4 19.5l1.4-3.6A7.3 7.3 0 0 1 4 11.5 7.7 7.7 0 0 1 12 4a7.7 7.7 0 0 1 8 7.5Z"/>
+
+            <path d="M8 11h.01M12 11h.01M16 11h.01"/>
+
+          </svg>
+
+        </div>
+
+        <h3>
+          Связь со мной
+        </h3>
+
+        <p>
+          Личное сообщение через Telegram.
+          Нажми — и откроется диалог.
+        </p>
+
+        <span class="community-button">
+          Написать →
+        </span>
+
       </div>
 
-      <strong>Связь со мной</strong>
 
-      <span>
-        Напиши напрямую через Telegram.
-      </span>
+      <svg class="community-art" viewBox="0 0 230 170" fill="none">
 
-      <div class="open-link">Написать →</div>
+        <rect x="55" y="45" width="125" height="72" rx="18"
+          fill="#c76cff" opacity=".08"
+          stroke="#c76cff" opacity=".3"/>
 
-    </div>
+        <circle cx="85" cy="80" r="13"
+          stroke="#d28aff" opacity=".7"/>
+
+        <path d="M110 70h45M110 82h34M110 94h25"
+          stroke="#d28aff"
+          opacity=".45"/>
+
+      </svg>
+
+    </article>
 
 
-    <div class="community-card updates" id="updatesCard">
+    <article id="updatesCard" class="community-card updates">
 
-      <div class="community-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-          <path d="M12 3v4M12 17v4M3 12h4M17 12h4"/>
-          <path d="m5.6 5.6 2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>
-          <circle cx="12" cy="12" r="3.2"/>
-        </svg>
+      <div class="community-content">
+
+        <div class="community-icon">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffd275" stroke-width="1.6">
+
+            <path d="M12 3v4M12 17v4M3 12h4M17 12h4"/>
+
+            <path d="m5.6 5.6 2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>
+
+            <circle cx="12" cy="12" r="3.2"/>
+
+          </svg>
+
+        </div>
+
+        <h3>
+          Обновления
+        </h3>
+
+        <p>
+          Новые уроки, функции, задания и улучшения академии.
+        </p>
+
+        <span class="community-button">
+          Что нового →
+        </span>
+
       </div>
 
-      <strong>Обновления</strong>
 
-      <span>
-        Новые уроки, функции и изменения академии.
-      </span>
+      <svg class="community-art" viewBox="0 0 230 170" fill="none">
 
-      <div class="open-link">Скоро новые функции</div>
+        <path
+          d="M18 125h194"
+          stroke="#ffd275"
+          opacity=".2"
+        />
 
-    </div>
+        <rect x="35" y="75" width="13" height="50" rx="5"
+          fill="#ffd275" opacity=".3"/>
+
+        <rect x="67" y="55" width="13" height="70" rx="5"
+          fill="#ffd275" opacity=".45"/>
+
+        <rect x="99" y="88" width="13" height="37" rx="5"
+          fill="#ffd275" opacity=".28"/>
+
+        <rect x="131" y="42" width="13" height="83" rx="5"
+          fill="#ffd275" opacity=".55"/>
+
+        <rect x="163" y="65" width="13" height="60" rx="5"
+          fill="#ffd275" opacity=".35"/>
+
+      </svg>
+
+    </article>
 
   </div>
 
 </main>
 
 
-<!-- =========================
+<!-- =========================================================
      PROFILE
-========================= -->
+========================================================= -->
 
-<main id="profile" class="screen">
+<main id="screen-profile" class="screen">
 
-  <section class="profile-hero">
+  <section class="profile-header">
 
-    <div class="profile-main">
+    <div class="profile-orbit"></div>
+    <div class="profile-orbit two"></div>
 
-      <div id="profileAvatar" class="profile-avatar">A</div>
+
+    <div class="profile-person">
+
+      <div id="profileAvatar" class="profile-avatar-large">
+        A
+      </div>
 
       <div>
-        <div id="profileName" class="profile-name">Ученик</div>
-        <div id="profileNick" class="profile-nick">@username</div>
+
+        <div id="profileName" class="profile-name">
+          Ученик
+        </div>
+
+        <div id="profileNick" class="profile-nick">
+          @username
+        </div>
+
       </div>
 
     </div>
 
-    <div class="level-row">
-      <div id="profileLevel" class="level">Уровень 1 · NOVICE</div>
-      <div id="profileXP" class="xp">0 / 100 XP</div>
+
+    <div class="profile-level">
+
+      <div class="level-top">
+
+        <span id="profileLevel">
+          Уровень 1 · НОВИЧОК
+        </span>
+
+        <span id="profileXP">
+          0 / 100 XP
+        </span>
+
+      </div>
+
+      <div class="level-bar">
+        <i id="profileXPBar"></i>
+      </div>
+
     </div>
 
-    <div class="profile-progress">
-      <span id="profileXPBar" style="width:0%"></span>
+
+    <div class="profile-currency">
+
+      <div class="currency-card">
+
+        <span>
+          АВА МОНЕТЫ
+        </span>
+
+        <strong id="profileCoins">
+          ◆ 0
+        </strong>
+
+      </div>
+
+
+      <div class="currency-card">
+
+        <span>
+          СЕРИЯ
+        </span>
+
+        <strong id="profileStreak">
+          0 дней
+        </strong>
+
+      </div>
+
     </div>
 
   </section>
 
 
-  <section class="coins-card">
-    <div class="coins-label">ТВОЙ БАЛАНС</div>
-    <div class="coins-value">
-      <span>◆</span> <b id="coinsValue">0</b> AVA Coins
-    </div>
-  </section>
+  <div class="profile-stat-grid">
 
 
-  <div class="stats-grid">
+    <div class="profile-stat-card">
 
-    <div class="stat-card">
-      <div class="stat-icon">◈</div>
-      <strong id="statLessons">0</strong>
-      <span>уроков завершено</span>
-    </div>
+      <div class="profile-stat-icon">
+        📚
+      </div>
 
-    <div class="stat-card">
-      <div class="stat-icon">✓</div>
-      <strong id="statTests">0</strong>
-      <span>тестов пройдено</span>
+      <strong id="profileLessons">
+        0
+      </strong>
+
+      <span>
+        уроков завершено
+      </span>
+
     </div>
 
-    <div class="stat-card">
-      <div class="stat-icon">⌁</div>
-      <strong id="statSignals">0</strong>
-      <span>сигналов создано</span>
+
+    <div class="profile-stat-card">
+
+      <div class="profile-stat-icon">
+        ✓
+      </div>
+
+      <strong id="profileTests">
+        0
+      </strong>
+
+      <span>
+        ответов в тестах
+      </span>
+
     </div>
 
-    <div class="stat-card">
-      <div class="stat-icon">★</div>
-      <strong id="statStreak">0</strong>
-      <span>дней серии</span>
+
+    <div class="profile-stat-card">
+
+      <div class="profile-stat-icon">
+        ↗
+      </div>
+
+      <strong id="profileSignals">
+        0
+      </strong>
+
+      <span>
+        сценариев создано
+      </span>
+
+    </div>
+
+
+    <div class="profile-stat-card">
+
+      <div class="profile-stat-icon">
+        ☆
+      </div>
+
+      <strong id="profileBookmarks">
+        0
+      </strong>
+
+      <span>
+        сохранённых уроков
+      </span>
+
     </div>
 
   </div>
@@ -2151,25 +3889,29 @@ input{
 
   <section class="profile-section">
 
-    <div class="profile-section-title">Достижения</div>
+    <div class="profile-section-heading">
+      Достижения
+    </div>
 
-    <div id="achievements" class="achievements"></div>
-
-  </section>
-
-
-  <section class="profile-section">
-
-    <div class="profile-section-title">Последняя активность</div>
-
-    <div id="activity" class="activity"></div>
+    <div id="achievementGrid" class="achievement-grid"></div>
 
   </section>
 
 
   <section class="profile-section">
 
-    <button id="logoutBtn" class="next-question">
+    <div class="profile-section-heading">
+      Последняя активность
+    </div>
+
+    <div id="activityList" class="activity-list"></div>
+
+  </section>
+
+
+  <section class="profile-section">
+
+    <button id="logoutButton" class="logout-button">
       Выйти из аккаунта
     </button>
 
@@ -2178,56 +3920,124 @@ input{
 </main>
 
 
-<!-- =========================
-     BOTTOM NAV
-========================= -->
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
 
 <nav class="bottom-nav">
 
-  <div class="nav-inner">
+  <div class="nav-container">
 
-    <button class="nav-item active" data-screen="home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M3 10.8 12 3l9 7.8"/>
-        <path d="M5.5 9.5V21h13V9.5"/>
-        <path d="M9 21v-6h6v6"/>
-      </svg>
-      <span>Главная</span>
+
+    <button class="nav-button active" data-screen="home">
+
+      <div class="nav-icon">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+
+          <path d="M3 10.8 12 3l9 7.8"/>
+          <path d="M5.5 9.5V21h13V9.5"/>
+          <path d="M9 21v-6h6v6"/>
+
+        </svg>
+
+      </div>
+
+      <span class="nav-label">
+        Главная
+      </span>
+
     </button>
 
-    <button class="nav-item" data-screen="education">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/>
-        <path d="M4 5.5V20M8 7h8M8 11h8M8 15h5"/>
-      </svg>
-      <span>Учёба</span>
+
+    <button class="nav-button" data-screen="education">
+
+      <div class="nav-icon">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+
+          <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v18H7.5A2.5 2.5 0 0 0 5 22z"/>
+          <path d="M5 4.5V20"/>
+          <path d="M9 6h7"/>
+          <path d="M9 10h7"/>
+          <path d="M9 14h4"/>
+
+        </svg>
+
+      </div>
+
+      <span class="nav-label">
+        Учёба
+      </span>
+
     </button>
 
-    <button class="nav-item signal" data-screen="signals">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M4 19V9M9 19V5M14 19v-8M19 19V3"/>
-        <path d="M2 19h20"/>
-        <path d="m4 7 5-3 5 4 6-5"/>
-      </svg>
-      <span>Сигнал</span>
+
+    <button class="nav-button signal" data-screen="signals">
+
+      <div class="nav-icon">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+
+          <path d="M4 19V9"/>
+          <path d="M9 19V5"/>
+          <path d="M14 19v-8"/>
+          <path d="M19 19V3"/>
+          <path d="M2 19h20"/>
+          <path d="m4 7 5-3 5 4 6-5"/>
+
+        </svg>
+
+      </div>
+
+      <span class="nav-label">
+        Сигнал
+      </span>
+
     </button>
 
-    <button class="nav-item" data-screen="community">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M20 11.5a7.7 7.7 0 0 1-8 7.5 8.3 8.3 0 0 1-3.8-.9L4 19.5l1.4-3.6A7.3 7.3 0 0 1 4 11.5 7.7 7.7 0 0 1 12 4a7.7 7.7 0 0 1 8 7.5Z"/>
-        <path d="M8 11h.01M12 11h.01M16 11h.01"/>
-      </svg>
-      <span>Связь</span>
+
+    <button class="nav-button" data-screen="community">
+
+      <div class="nav-icon">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+
+          <path d="M20 11.5a7.7 7.7 0 0 1-8 7.5 8.3 8.3 0 0 1-3.8-.9L4 19.5l1.4-3.6A7.3 7.3 0 0 1 4 11.5 7.7 7.7 0 0 1 12 4a7.7 7.7 0 0 1 8 7.5Z"/>
+
+          <path d="M8 11h.01M12 11h.01M16 11h.01"/>
+
+        </svg>
+
+      </div>
+
+      <span class="nav-label">
+        Связь
+      </span>
+
     </button>
 
-    <button class="nav-item" data-screen="profile">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <circle cx="12" cy="8" r="3.5"/>
-        <path d="M5 21c.6-4.1 3-6 7-6s6.4 1.9 7 6"/>
-        <circle cx="12" cy="12" r="9.2" opacity=".35"/>
-      </svg>
-      <span>Профиль</span>
+
+    <button class="nav-button" data-screen="profile">
+
+      <div class="nav-icon">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+
+          <circle cx="12" cy="8" r="3.4"/>
+          <path d="M5 21c.6-4.2 3-6.1 7-6.1s6.4 1.9 7 6.1"/>
+          <circle cx="12" cy="12" r="9.2" opacity=".25"/>
+
+        </svg>
+
+      </div>
+
+      <span class="nav-label">
+        Профиль
+      </span>
+
     </button>
+
 
   </div>
 
@@ -2236,78 +4046,85 @@ input{
 </div>
 
 
-<!-- =========================
-     LESSON READER
-========================= -->
+<!-- =========================================================
+     LESSON VIEWER
+========================================================= -->
 
-<section id="reader" class="reader">
+<section id="lessonViewer" class="lesson-viewer">
 
-  <div class="reader-top">
+  <div class="viewer-top">
 
-    <button id="readerClose" class="reader-close">←</button>
+    <button id="closeLesson" class="viewer-button">
+      ←
+    </button>
 
-    <div class="reader-progress">
-      <span id="readerProgress" style="width:0%"></span>
+    <div class="viewer-progress">
+      <i id="viewerProgress"></i>
     </div>
 
-    <button id="readerBookmark" class="reader-bookmark">☆</button>
+    <button id="bookmarkLesson" class="viewer-button">
+      ☆
+    </button>
 
   </div>
 
-  <article class="reader-content">
 
-    <div id="readerKicker" class="reader-kicker"></div>
+  <article class="viewer-content">
 
-    <h1 id="readerTitle" class="reader-title"></h1>
+    <div id="viewerModule" class="viewer-module">
+      МОДУЛЬ 01
+    </div>
 
-    <p id="readerIntro" class="reader-intro"></p>
+    <h1 id="viewerTitle" class="viewer-title">
+      Урок
+    </h1>
 
-    <div class="lesson-art">
+    <p id="viewerDescription" class="viewer-description"></p>
 
-      <div class="art-grid"></div>
 
-      <div class="art-line">
-        <svg viewBox="0 0 800 220" preserveAspectRatio="none">
-          <path
-            d="M0 180 C80 165 95 110 160 135
-               S235 175 285 105
-               S355 65 410 100
-               S470 150 520 80
-               S600 35 650 78
-               S720 115 800 30"
-            fill="none"
-            stroke="#b46aff"
-            stroke-width="5"
-          />
-          <path
-            d="M0 180 C80 165 95 110 160 135
-               S235 175 285 105
-               S355 65 410 100
-               S470 150 520 80
-               S600 35 650 78
-               S720 115 800 30 V220 H0Z"
-            fill="url(#fade)"
-            opacity=".16"
-          />
-          <defs>
-            <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-              <stop stop-color="#b46aff"/>
-              <stop offset="1" stop-color="#b46aff" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-        </svg>
+    <div class="lesson-visual">
+
+      <div class="visual-orbit"></div>
+      <div class="visual-orbit two"></div>
+
+      <div class="visual-core">
+        AVA
+      </div>
+
+      <div class="visual-candles">
+
+        <div class="visual-candle"></div>
+        <div class="visual-candle"></div>
+        <div class="visual-candle"></div>
+        <div class="visual-candle"></div>
+        <div class="visual-candle"></div>
+        <div class="visual-candle"></div>
+        <div class="visual-candle"></div>
+
       </div>
 
     </div>
 
-    <div id="readerBody"></div>
+
+    <div id="viewerBody"></div>
 
   </article>
 
-  <div class="reader-bottom">
-    <button id="prevLesson">← Назад</button>
-    <button id="completeLesson" class="complete">Завершить урок</button>
-    <button id="nextLesson">Далее →</button>
+
+  <div class="viewer-bottom">
+
+    <button id="previousLesson">
+      ← Назад
+    </button>
+
+    <button id="completeCurrentLesson" class="complete">
+      Завершить урок
+    </button>
+
+    <button id="nextLesson">
+      Далее →
+    </button>
+
   </div>
 
 </section>
@@ -2317,143 +4134,280 @@ input{
 
 
 <script>
-/* ==========================================================
-   AVA ACADEMY
-   LIGHTWEIGHT APP ENGINE
-========================================================== */
+
+/* =========================================================
+   AVA ACADEMY — APPLICATION ENGINE
+========================================================= */
+
+"use strict";
 
 
-/* =========================
-   SAFE STORAGE
-========================= */
+/* =========================================================
+   STORAGE
+========================================================= */
 
-const STORAGE_KEY = "ava_academy_v2";
+const STORAGE_KEY = "ava_academy_final_v1";
 
-const DEFAULT_STATE = {
+
+const defaultState = {
   registered:false,
   name:"",
   nick:"",
   xp:0,
   coins:0,
-  completed:[],
-  bookmarks:[],
+
+  completedLessons:[],
+  bookmarkedLessons:[],
+
   signals:0,
-  tests:0,
+
+  testAnswers:0,
+  correctAnswers:0,
+
   streak:1,
-  activity:[]
+
+  activity:[],
+
+  createdAt:null
 };
+
+
+function cloneDefault(){
+  return JSON.parse(JSON.stringify(defaultState));
+}
+
 
 function loadState(){
 
   try{
 
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw =
+      localStorage.getItem(STORAGE_KEY);
 
     if(!raw){
-      return structuredClone(DEFAULT_STATE);
+      return cloneDefault();
     }
 
-    const parsed = JSON.parse(raw);
+    const parsed =
+      JSON.parse(raw);
 
     if(!parsed || typeof parsed !== "object"){
-      return structuredClone(DEFAULT_STATE);
+      return cloneDefault();
     }
 
     return {
-      ...structuredClone(DEFAULT_STATE),
+      ...cloneDefault(),
       ...parsed,
-      completed:Array.isArray(parsed.completed) ? parsed.completed : [],
-      bookmarks:Array.isArray(parsed.bookmarks) ? parsed.bookmarks : [],
-      activity:Array.isArray(parsed.activity) ? parsed.activity : []
+
+      completedLessons:
+        Array.isArray(parsed.completedLessons)
+          ? parsed.completedLessons
+          : [],
+
+      bookmarkedLessons:
+        Array.isArray(parsed.bookmarkedLessons)
+          ? parsed.bookmarkedLessons
+          : [],
+
+      activity:
+        Array.isArray(parsed.activity)
+          ? parsed.activity
+          : []
     };
 
   }catch(error){
 
-    console.warn("AVA storage reset:",error);
+    console.warn("AVA storage error:",error);
 
     try{
       localStorage.removeItem(STORAGE_KEY);
     }catch(e){}
 
-    return structuredClone(DEFAULT_STATE);
+    return cloneDefault();
   }
+
 }
+
 
 let state = loadState();
 
-function saveState(){
+
+function save(){
 
   try{
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(state)
+    );
+
   }catch(error){
-    console.warn("Could not save AVA state",error);
+
+    console.warn(
+      "AVA save error:",
+      error
+    );
+
   }
+
 }
 
 
-/* =========================
-   DATA
-========================= */
+/* =========================================================
+   DATA — 160 LESSONS
+========================================================= */
 
-const modules = [
+const moduleData = [
 
-  ["Основы трейдинга","Понимание рынка и базовых терминов"],
-  ["Рынки и инструменты","Валюты, активы и торговые инструменты"],
-  ["Графики","Как читать движение цены"],
-  ["Свечи","Японские свечи и их логика"],
-  ["Тренд","Направление и структура рынка"],
-  ["Уровни","Поддержка, сопротивление и зоны"],
-  ["Индикаторы","Основные технические инструменты"],
-  ["RSI","Импульс и перекупленность"],
-  ["EMA","Скользящие средние"],
-  ["MACD","Импульс и пересечения"],
-  ["Price Action","Анализ движения цены"],
-  ["Стратегии","Создание торгового алгоритма"],
-  ["Риск менеджмент","Контроль капитала"],
-  ["Психология","Эмоции и дисциплина"],
-  ["Практический анализ","Разбор торговых сценариев"],
-  ["Продвинутый уровень","Системный подход трейдера"]
+  {
+    name:"Основы трейдинга",
+    description:"Первые понятия и фундамент рынка",
+    type:"foundation"
+  },
+
+  {
+    name:"Рынки и инструменты",
+    description:"Активы, валюты и устройство рынка",
+    type:"market"
+  },
+
+  {
+    name:"Графики",
+    description:"Как видеть движение цены",
+    type:"chart"
+  },
+
+  {
+    name:"Японские свечи",
+    description:"Читаем цену через свечи",
+    type:"candles"
+  },
+
+  {
+    name:"Тренды",
+    description:"Направление и структура движения",
+    type:"trend"
+  },
+
+  {
+    name:"Уровни",
+    description:"Поддержка, сопротивление и зоны",
+    type:"levels"
+  },
+
+  {
+    name:"Индикаторы",
+    description:"Технические инструменты анализа",
+    type:"indicators"
+  },
+
+  {
+    name:"RSI",
+    description:"Импульс и относительная сила",
+    type:"rsi"
+  },
+
+  {
+    name:"EMA",
+    description:"Скользящие средние",
+    type:"ema"
+  },
+
+  {
+    name:"MACD",
+    description:"Импульс и пересечения",
+    type:"macd"
+  },
+
+  {
+    name:"Price Action",
+    description:"Анализ непосредственно цены",
+    type:"priceaction"
+  },
+
+  {
+    name:"Стратегии",
+    description:"Собираем торговый алгоритм",
+    type:"strategy"
+  },
+
+  {
+    name:"Риск менеджмент",
+    description:"Сохраняем торговый капитал",
+    type:"risk"
+  },
+
+  {
+    name:"Психология",
+    description:"Эмоции, дисциплина и решения",
+    type:"psychology"
+  },
+
+  {
+    name:"Практический анализ",
+    description:"Разбираем реальные сценарии",
+    type:"practice"
+  },
+
+  {
+    name:"Продвинутый уровень",
+    description:"Системный подход трейдера",
+    type:"advanced"
+  }
 
 ];
 
-const lessonTemplates = [
+
+const lessonNames = [
 
   "Что такое трейдинг",
-  "Как устроен финансовый рынок",
-  "Кто участвует в рынке",
-  "Цена и почему она меняется",
+  "Как формируется цена",
   "Покупатель и продавец",
-  "Ликвидность простыми словами",
+  "Спрос и предложение",
+  "Ликвидность",
   "Волатильность",
   "Таймфреймы",
-  "Торговая сессия",
-  "Главные ошибки новичка"
+  "Торговые сессии",
+  "Торговый план",
+  "Ошибки новичков"
 
 ];
+
 
 const lessons = [];
 
-let globalLessonId = 1;
+let lessonId = 1;
 
-modules.forEach((module,index)=>{
+
+moduleData.forEach((module,moduleIndex)=>{
 
   for(let i=0;i<10;i++){
 
-    let title;
-
-    if(index === 0){
-      title = lessonTemplates[i];
-    }else{
-      title = `${module[0]} · ${lessonTemplates[i]}`;
-    }
+    const title =
+      moduleIndex === 0
+        ? lessonNames[i]
+        : `${module.name}: ${lessonNames[i]}`;
 
     lessons.push({
-      id:globalLessonId++,
-      module:index+1,
-      moduleTitle:module[0],
-      title,
-      subtitle:module[1],
-      body:getLessonBody(index,i,title)
+
+      id:lessonId++,
+
+      module:moduleIndex+1,
+
+      moduleName:module.name,
+
+      moduleDescription:module.description,
+
+      type:module.type,
+
+      title:title,
+
+      body:getLessonContent(
+        moduleIndex,
+        i,
+        title
+      )
+
     });
 
   }
@@ -2461,125 +4415,164 @@ modules.forEach((module,index)=>{
 });
 
 
-function getLessonBody(moduleIndex,lessonIndex,title){
+function getLessonContent(
+  moduleIndex,
+  lessonIndex,
+  title
+){
 
-  const bodies = [
+  const mainIdeas = [
 
     [
-      `Трейдинг — это работа с изменением цены финансового инструмента. Главная задача обучения заключается не в поиске волшебной кнопки, а в понимании того, как формируется движение рынка.`,
-      `Начинать нужно с базовой терминологии. Цена движется потому, что участники рынка постоянно меняют свои решения о покупке и продаже.`,
-      `Хороший трейдер сначала строит сценарий, определяет условия и только после этого принимает решение.`
+      "Трейдинг — это работа с изменением цены финансового инструмента. Основой является понимание того, почему цена движется и как участники рынка принимают решения.",
+      "Цена отражает постоянное взаимодействие покупателей и продавцов.",
+      "Главная задача начинающего трейдера — научиться наблюдать рынок, а не пытаться угадывать каждое движение."
     ],
 
     [
-      `Каждый рынок состоит из большого количества участников. Их действия формируют спрос и предложение, а взаимодействие этих факторов отражается в цене.`,
-      `Разные инструменты обладают разной ликвидностью, волатильностью и поведением.`,
-      `Поэтому одна и та же торговая идея не должна механически переноситься на любой актив.`
+      "Финансовый рынок состоит из множества инструментов и участников. Каждый рынок имеет собственную ликвидность, волатильность и характер движения.",
+      "Валютные пары показывают отношение стоимости одной валюты к другой.",
+      "Перед анализом важно понимать, с каким инструментом ты работаешь."
     ],
 
     [
-      `График превращает поток изменения цены в визуальную структуру. Он позволяет увидеть направление, импульсы, коррекции и области интереса.`,
-      `Основными элементами являются цена, время и выбранный таймфрейм.`,
-      `Чем лучше ты читаешь структуру графика, тем меньше зависишь от случайных сигналов.`
+      "График является визуальным представлением изменения цены во времени.",
+      "На нём можно увидеть направление, импульс, коррекции и области реакции.",
+      "Чтение графика начинается с понимания цены и времени."
     ],
 
     [
-      `Японская свеча показывает изменение цены за определённый промежуток времени.`,
-      `У свечи есть открытие, закрытие, максимум и минимум. Соотношение тела и теней помогает оценивать поведение участников рынка.`,
-      `Отдельная свеча редко даёт полноценную картину. Важнее смотреть на неё в контексте предыдущего движения.`
+      "Японская свеча содержит четыре ключевых значения: открытие, закрытие, максимум и минимум.",
+      "Размер тела показывает разницу между открытием и закрытием.",
+      "Тени показывают области, которых цена достигала в течение выбранного периода."
     ],
 
     [
-      `Тренд описывает преобладающее направление движения цены.`,
-      `Восходящее движение обычно формирует последовательность повышающихся максимумов и минимумов. В нисходящем рынке структура зеркальная.`,
-      `Главная задача анализа тренда — не угадать разворот, а понять текущую структуру.`
+      "Тренд показывает преобладающее направление движения.",
+      "Восходящая структура обычно формирует более высокие максимумы и минимумы.",
+      "Нисходящая структура характеризуется понижающимися максимумами и минимумами."
     ],
 
     [
-      `Уровни и зоны помогают определить области, где цена ранее активно реагировала.`,
-      `Поддержка показывает область потенциального интереса покупателей, а сопротивление — область интереса продавцов.`,
-      `Уровень не является гарантированной стеной. Цена может пробить его, поэтому всегда нужен контекст.`
+      "Уровни показывают области, где цена ранее активно реагировала.",
+      "Поддержка может быть областью интереса покупателей, а сопротивление — областью интереса продавцов.",
+      "Лучше рассматривать уровни как зоны, а не как идеальные линии."
     ],
 
     [
-      `Индикатор — это математический инструмент обработки ценовых данных.`,
-      `Индикаторы могут помогать увидеть импульс, направление или изменение волатильности.`,
-      `Главная ошибка новичка — использовать слишком много индикаторов одновременно.`
+      "Индикатор обрабатывает ценовые данные по математическому алгоритму.",
+      "Разные индикаторы предназначены для разных задач.",
+      "Индикатор должен дополнять анализ, а не заменять понимание цены."
     ],
 
     [
-      `RSI используется для оценки силы текущего движения и относительного положения цены.`,
-      `Высокие значения могут указывать на сильный импульс, а низкие — на слабость или давление продавцов.`,
-      `RSI нельзя воспринимать как автоматическую кнопку BUY или SELL.`
+      "RSI используется для оценки относительной силы движения.",
+      "Его значения помогают изучать импульс и потенциально сильные области.",
+      "Само значение RSI не означает автоматическую команду на покупку или продажу."
     ],
 
     [
-      `EMA — экспоненциальная скользящая средняя, которая сильнее учитывает последние значения цены.`,
-      `Она может использоваться для определения направления движения и динамических зон.`,
-      `Пересечение EMA само по себе не является гарантией будущего движения.`
+      "EMA — экспоненциальная скользящая средняя.",
+      "Она сильнее учитывает последние значения цены и может использоваться для изучения направления движения.",
+      "EMA полезнее рассматривать вместе со структурой рынка."
     ],
 
     [
-      `MACD сравнивает две скользящие средние и помогает оценивать изменение импульса.`,
-      `Пересечения линий и положение относительно нулевого уровня могут использоваться как дополнительные подтверждения.`,
-      `Любой индикатор становится полезнее, когда используется вместе со структурой цены.`
+      "MACD помогает оценивать изменение импульса.",
+      "Пересечения линий и положение относительно нулевого уровня дают дополнительную информацию.",
+      "Любой сигнал MACD нужно рассматривать в контексте."
     ],
 
     [
-      `Price Action означает анализ непосредственно поведения цены без необходимости строить систему только на индикаторах.`,
-      `Трейдер изучает свечи, уровни, импульсы, коррекции и реакцию цены.`,
-      `Цель — понимать контекст, а не запоминать отдельные фигуры.`
+      "Price Action — анализ поведения самой цены.",
+      "Вместо зависимости от большого количества индикаторов трейдер изучает свечи, структуру, уровни и реакцию рынка.",
+      "Контекст важнее отдельной формации."
     ],
 
     [
-      `Стратегия превращает отдельные наблюдения в последовательный алгоритм действий.`,
-      `У стратегии должны быть условия входа, условия отмены сценария и правила управления риском.`,
-      `Если правила невозможно описать словами, стратегию трудно объективно протестировать.`
+      "Стратегия превращает наблюдения в последовательный алгоритм.",
+      "Хорошая стратегия содержит условия входа, условия отмены и правила управления риском.",
+      "Стратегию можно тестировать только тогда, когда её правила сформулированы понятно."
     ],
 
     [
-      `Риск менеджмент отвечает за сохранение капитала.`,
-      `Даже хорошая торговая система может иметь убыточные сделки.`,
-      `Поэтому важнее контролировать размер риска, чем пытаться выиграть каждую сделку.`
+      "Риск менеджмент отвечает за сохранение капитала.",
+      "Убыточные сделки являются возможной частью любой торговой системы.",
+      "Размер риска важнее попытки выиграть каждую сделку."
     ],
 
     [
-      `Психология влияет на то, насколько последовательно трейдер выполняет собственные правила.`,
-      `Страх, жадность и желание отыграться могут заставить изменить заранее выбранный план.`,
-      `Дисциплина строится через повторение процесса, а не через попытку полностью убрать эмоции.`
+      "Психология влияет на способность следовать собственному плану.",
+      "Эмоциональные решения часто появляются после серии выигрышей или убытков.",
+      "Дисциплина строится через повторение процесса."
     ],
 
     [
-      `Практический анализ объединяет несколько элементов в единый сценарий.`,
-      `Сначала изучается общий контекст, затем структура, уровни, импульс и только после этого возможное действие.`,
-      `Такой порядок помогает уменьшить количество случайных решений.`
+      "Практический анализ объединяет структуру, уровни, импульс и контекст.",
+      "Порядок анализа помогает избежать хаотичных решений.",
+      "Сначала сценарий, потом действие."
     ],
 
     [
-      `Продвинутый подход — это системное мышление.`,
-      `Трейдер анализирует статистику, качество исполнения, риски, повторяемость модели и собственную дисциплину.`,
-      `Главный навык — не предсказывать рынок идеально, а принимать решения по понятному процессу.`
+      "Продвинутый трейдинг — это системный процесс.",
+      "Нужно анализировать статистику, качество решений, риск, повторяемость моделей и дисциплину.",
+      "Цель не в идеальном прогнозе, а в качественном процессе."
     ]
 
   ];
 
-  const group = bodies[moduleIndex] || bodies[0];
+
+  const group =
+    mainIdeas[moduleIndex] ||
+    mainIdeas[0];
+
+
+  const first =
+    group[lessonIndex % group.length];
+
 
   return [
-    group[0],
-    group[1],
-    group[2],
-    `Практическая идея: ${title}. Попробуй самостоятельно найти этот элемент на любом историческом графике и описать его своими словами.`,
-    `Важно: учебный материал не является финансовой рекомендацией. Реальные рынки несут риск потери капитала.`
+
+    {
+      heading:"Главная идея",
+      text:first
+    },
+
+    {
+      heading:"Как это работает",
+      text:
+        `Тема «${title}» должна рассматриваться не изолированно, а в контексте графика. Сначала определи текущую ситуацию, затем найди подтверждающие признаки и только после этого сформируй учебный сценарий.`
+    },
+
+    {
+      heading:"Что запомнить",
+      text:
+        `Не пытайся превратить один элемент анализа в гарантию результата. Рынок изменяется постоянно, поэтому любой вывод должен иметь условия, при которых он перестаёт быть актуальным.`
+    },
+
+    {
+      heading:"Практическое задание",
+      text:
+        `Открой исторический график и попробуй самостоятельно найти пример темы «${title}». Запиши, что ты увидел, какой был контекст и что изменилось после движения цены.`
+    },
+
+    {
+      heading:"Важно",
+      text:
+        "Материал предназначен для обучения. Торговля финансовыми инструментами связана с риском. Учебный сигнал в приложении является симуляцией и не гарантирует результат."
+    }
+
   ];
+
 }
 
 
-/* =========================
+/* =========================================================
    PAIRS
-========================= */
+========================================================= */
 
 const pairs = [
+
   "EUR/USD",
   "GBP/USD",
   "USD/JPY",
@@ -2587,1068 +4580,248 @@ const pairs = [
   "AUD/USD",
   "USD/CAD",
   "NZD/USD",
+
   "EUR/GBP",
   "EUR/JPY",
-  "GBP/JPY",
   "EUR/CHF",
+  "EUR/AUD",
+  "EUR/CAD",
+  "EUR/NZD",
+
+  "GBP/JPY",
   "GBP/CHF",
+  "GBP/AUD",
+  "GBP/CAD",
+  "GBP/NZD",
+
   "AUD/JPY",
   "AUD/CAD",
   "AUD/CHF",
   "AUD/NZD",
+
   "CAD/JPY",
   "CAD/CHF",
+
   "CHF/JPY",
+
   "NZD/JPY",
   "NZD/CAD",
   "NZD/CHF",
-  "EUR/AUD",
-  "EUR/CAD",
-  "EUR/NZD",
-  "GBP/AUD",
-  "GBP/CAD",
-  "GBP/NZD",
+
   "USD/SGD",
   "USD/HKD",
   "USD/TRY",
   "USD/MXN",
   "USD/ZAR",
-  "USD/SEK",
   "USD/NOK",
+  "USD/SEK",
   "USD/DKK",
-  "EUR/SEK",
+
   "EUR/NOK",
+  "EUR/SEK",
   "EUR/PLN",
   "EUR/TRY",
-  "GBP/SGD",
-  "CHF/SGD"
+
+  "GBP/SGD"
+
 ];
 
 
-/* =========================
-   QUIZ
-========================= */
+/* =========================================================
+   QUIZ DATA
+========================================================= */
 
-const quizData = [
+const questions = [
 
   {
     q:"Что показывает японская свеча?",
-    options:[
-      "Только направление тренда",
+    a:[
+      "Только направление рынка",
       "Открытие, закрытие, максимум и минимум",
       "Только объём",
-      "Только время"
+      "Только цену открытия"
     ],
-    correct:1
+    c:1
   },
 
   {
     q:"Что такое таймфрейм?",
-    options:[
+    a:[
       "Размер депозита",
-      "Интервал, за который формируется свеча",
-      "Название индикатора",
-      "Размер комиссии"
+      "Интервал формирования свечи",
+      "Размер комиссии",
+      "Название стратегии"
     ],
-    correct:1
+    c:1
   },
 
   {
-    q:"Что обычно характеризует восходящий тренд?",
-    options:[
+    q:"Что обычно характеризует восходящую структуру?",
+    a:[
       "Повышающиеся максимумы и минимумы",
       "Только красные свечи",
-      "Отсутствие движения",
-      "Постоянное падение"
+      "Полное отсутствие коррекций",
+      "Постоянное движение вниз"
     ],
-    correct:0
+    c:0
   },
 
   {
-    q:"Для чего используют RSI?",
-    options:[
-      "Для регистрации аккаунта",
-      "Для оценки импульса и относительной силы движения",
-      "Для изменения валюты",
-      "Для расчёта комиссии"
+    q:"Для чего используется RSI?",
+    a:[
+      "Для создания аккаунта",
+      "Для оценки относительной силы и импульса",
+      "Для выбора брокера",
+      "Для изменения таймфрейма"
     ],
-    correct:1
-  },
-
-  {
-    q:"Что такое риск менеджмент?",
-    options:[
-      "Способ увеличить каждую ставку",
-      "Контроль потенциальных потерь и размера риска",
-      "Название графика",
-      "Торговая сессия"
-    ],
-    correct:1
+    c:1
   },
 
   {
     q:"Что такое поддержка?",
-    options:[
+    a:[
       "Область потенциального интереса покупателей",
       "Название валюты",
-      "Индикатор объёма",
-      "Время открытия рынка"
+      "Название индикатора",
+      "Торговая сессия"
     ],
-    correct:0
+    c:0
   },
 
   {
-    q:"Для чего используют EMA?",
-    options:[
-      "Для оценки направления и динамики цены",
-      "Для создания аккаунта",
-      "Для перевода валюты",
-      "Для определения имени трейдера"
+    q:"Для чего может использоваться EMA?",
+    a:[
+      "Для анализа направления и динамики цены",
+      "Для регистрации",
+      "Для пополнения счёта",
+      "Для определения комиссии"
     ],
-    correct:0
+    c:0
   },
 
   {
-    q:"Что является хорошей практикой перед сделкой?",
-    options:[
-      "Входить без плана",
-      "Увеличивать риск после убытка",
-      "Определить сценарий и условия",
-      "Игнорировать график"
+    q:"Что является частью торгового плана?",
+    a:[
+      "Только желание заработать",
+      "Условия сценария и правила риска",
+      "Случайный вход",
+      "Игнорирование убытков"
     ],
-    correct:2
+    c:1
+  },
+
+  {
+    q:"Что такое риск менеджмент?",
+    a:[
+      "Способ увеличить каждую сделку",
+      "Контроль потенциальных потерь",
+      "Название свечи",
+      "Торговая сессия"
+    ],
+    c:1
+  },
+
+  {
+    q:"Что такое Price Action?",
+    a:[
+      "Анализ поведения цены",
+      "Название валютной пары",
+      "Вид комиссии",
+      "Способ регистрации"
+    ],
+    c:0
+  },
+
+  {
+    q:"Что важно делать после серии убытков?",
+    a:[
+      "Увеличивать риск",
+      "Пытаться отыграться",
+      "Вернуться к плану и оценить решения",
+      "Открывать сделки без анализа"
+    ],
+    c:2
   }
 
 ];
 
 
-/* =========================
-   DOM
-========================= */
-
-const $ = id => document.getElementById(id);
-
-const auth = $("auth");
-const app = $("app");
-
-const enterBtn = $("enterBtn");
-const authName = $("authName");
-const authNick = $("authNick");
-
-const modulesContainer = $("modules");
-const lessonSearch = $("lessonSearch");
-
-const reader = $("reader");
+/* =========================================================
+   APP STATE
+========================================================= */
 
 let currentScreen = "home";
+
 let currentLesson = null;
 
 let currentMarket = "exchange";
+
 let currentPair = pairs[0];
+
 let currentDuration = 1;
 
 let quizIndex = 0;
-let quizAnswered = false;
+
+let quizLocked = false;
 
 
-/* =========================
+/* =========================================================
+   DOM HELPERS
+========================================================= */
+
+const $ = id =>
+  document.getElementById(id);
+
+
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
-let toastTimer;
-
-function toast(text){
-
-  const el = $("toast");
-
-  el.textContent = text;
-  el.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(()=>{
-    el.classList.remove("show");
-  },2200);
-}
+let toastTimeout = null;
 
 
-/* =========================
-   AUTH
-========================= */
+function showToast(text){
 
-function normalizeNick(value){
+  const toast =
+    $("toast");
 
-  value = value.trim();
+  toast.textContent =
+    text;
 
-  if(!value) return "";
+  toast.classList.add("show");
 
-  if(!value.startsWith("@")){
-    value = "@" + value;
-  }
+  clearTimeout(toastTimeout);
 
-  return value;
-}
+  toastTimeout =
+    setTimeout(()=>{
 
+      toast.classList.remove("show");
 
-function enterApp(){
-
-  const name = authName.value.trim();
-  const nick = normalizeNick(authNick.value);
-
-  if(name.length < 2){
-    toast("Введи имя");
-    authName.focus();
-    return;
-  }
-
-  if(nick.length < 3){
-    toast("Введи никнейм");
-    authNick.focus();
-    return;
-  }
-
-  state.registered = true;
-  state.name = name;
-  state.nick = nick;
-
-  if(state.coins === 0 && state.xp === 0){
-
-    state.coins = 100;
-    state.xp = 20;
-
-    addActivity("Регистрация в AVA ACADEMY");
-
-  }
-
-  saveState();
-
-  auth.classList.add("hidden");
-  app.classList.remove("hidden");
-
-  updateAll();
-
-  showScreen("home",false);
-
-  toast("Добро пожаловать в AVA ACADEMY");
-}
-
-
-enterBtn.addEventListener("click",enterApp);
-
-authName.addEventListener("keydown",e=>{
-  if(e.key === "Enter") enterApp();
-});
-
-authNick.addEventListener("keydown",e=>{
-  if(e.key === "Enter") enterApp();
-});
-
-
-/* =========================
-   INITIAL AUTH
-========================= */
-
-function boot(){
-
-  if(state.registered){
-
-    auth.classList.add("hidden");
-    app.classList.remove("hidden");
-
-    updateAll();
-
-  }else{
-
-    auth.classList.remove("hidden");
-    app.classList.add("hidden");
-
-  }
-
-}
-
-boot();
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-function showScreen(screen,animate=true){
-
-  currentScreen = screen;
-
-  document.querySelectorAll(".screen").forEach(el=>{
-    el.classList.toggle("active",el.id === screen);
-  });
-
-  document.querySelectorAll(".nav-item").forEach(el=>{
-    el.classList.toggle(
-      "active",
-      el.dataset.screen === screen
-    );
-  });
-
-  if(animate){
-    window.scrollTo(0,0);
-  }
-
-  if(screen === "education"){
-    renderLessons(lessonSearch.value);
-  }
-
-  if(screen === "practice"){
-    renderQuiz();
-  }
-
-  if(screen === "profile"){
-    updateProfile();
-  }
-
-  if(screen === "home"){
-    updateHome();
-  }
+    },2300);
 
 }
 
 
-document.querySelectorAll("[data-screen]").forEach(btn=>{
-
-  btn.addEventListener("click",()=>{
-    showScreen(btn.dataset.screen);
-  });
-
-});
-
-
-document.querySelectorAll("[data-go]").forEach(btn=>{
-
-  btn.addEventListener("click",()=>{
-    showScreen(btn.dataset.go);
-  });
-
-});
-
-
-$("profileTop").addEventListener("click",()=>{
-  showScreen("profile");
-});
-
-
-/* =========================
-   EDUCATION RENDER
-========================= */
-
-function renderLessons(query=""){
-
-  const q = query.trim().toLowerCase();
-
-  let html = "";
-
-  modules.forEach((module,moduleIndex)=>{
-
-    const moduleLessons = lessons.filter(lesson=>{
-
-      if(lesson.module !== moduleIndex+1) return false;
-
-      if(!q) return true;
-
-      return (
-        lesson.title.toLowerCase().includes(q) ||
-        lesson.subtitle.toLowerCase().includes(q) ||
-        module[0].toLowerCase().includes(q)
-      );
-
-    });
-
-    if(!moduleLessons.length) return;
-
-    html += `
-      <section class="module">
-
-        <div class="module-head">
-          <div class="module-number">
-            MODULE ${String(moduleIndex+1).padStart(2,"0")}
-          </div>
-          <div class="module-title">${module[0]}</div>
-          <div class="module-sub">${module[1]}</div>
-        </div>
-
-        <div class="lesson-list">
-    `;
-
-    moduleLessons.forEach(lesson=>{
-
-      const done = state.completed.includes(lesson.id);
-
-      html += `
-        <div
-          class="lesson ${done ? "done":""}"
-          data-lesson="${lesson.id}"
-        >
-
-          <div class="lesson-number">
-            ${String(lesson.id).padStart(3,"0")}
-          </div>
-
-          <div>
-            <div class="lesson-name">${lesson.title}</div>
-            <div class="lesson-meta">
-              ${done ? "Урок завершён":"Открыть урок"} · 5 мин
-            </div>
-          </div>
-
-          <div class="lesson-status">
-            ${done ? "✓":"›"}
-          </div>
-
-        </div>
-      `;
-
-    });
-
-    html += `
-        </div>
-      </section>
-    `;
-
-  });
-
-  modulesContainer.innerHTML =
-    html ||
-    `
-      <div class="quiz-card">
-        Ничего не найдено.
-      </div>
-    `;
-
-}
-
-
-modulesContainer.addEventListener("click",e=>{
-
-  const lesson = e.target.closest("[data-lesson]");
-
-  if(!lesson) return;
-
-  openLesson(Number(lesson.dataset.lesson));
-
-});
-
-
-lessonSearch.addEventListener("input",()=>{
-  renderLessons(lessonSearch.value);
-});
-
-
-/* =========================
-   LESSON READER
-========================= */
-
-function openLesson(id){
-
-  const lesson = lessons.find(x=>x.id === id);
-
-  if(!lesson) return;
-
-  currentLesson = lesson;
-
-  $("readerKicker").textContent =
-    `MODULE ${String(lesson.module).padStart(2,"0")} · УРОК ${String(lesson.id).padStart(3,"0")}`;
-
-  $("readerTitle").textContent = lesson.title;
-
-  $("readerIntro").textContent =
-    lesson.subtitle + ". Изучай материал внимательно и проверяй идеи на истории рынка.";
-
-  let bodyHtml = "";
-
-  lesson.body.forEach((paragraph,index)=>{
-
-    if(index === 0){
-
-      bodyHtml += `
-        <section class="reader-section">
-          <h3>Главная идея</h3>
-          <p>${paragraph}</p>
-        </section>
-      `;
-
-    }else{
-
-      bodyHtml += `
-        <section class="reader-section">
-          <h3>${[
-            "Как это работает",
-            "Что важно запомнить",
-            "Практика",
-            "Важно"
-          ][index-1] || "Разбор"}</h3>
-          <p>${paragraph}</p>
-        </section>
-      `;
-
-    }
-
-  });
-
-  bodyHtml += `
-
-    <div class="info-grid">
-
-      <div class="info-card">
-        <strong>Наблюдай</strong>
-        <span>Сначала найди изучаемый элемент на графике.</span>
-      </div>
-
-      <div class="info-card">
-        <strong>Сравнивай</strong>
-        <span>Смотри не на одну свечу, а на контекст движения.</span>
-      </div>
-
-      <div class="info-card">
-        <strong>Записывай</strong>
-        <span>Фиксируй свои наблюдения и ошибки.</span>
-      </div>
-
-      <div class="info-card">
-        <strong>Повторяй</strong>
-        <span>Навык появляется через систематическую практику.</span>
-      </div>
-
-    </div>
-  `;
-
-  $("readerBody").innerHTML = bodyHtml;
-
-  const position = lessons.findIndex(x=>x.id===id);
-
-  $("readerProgress").style.width =
-    `${((position+1)/lessons.length)*100}%`;
-
-  $("readerBookmark").textContent =
-    state.bookmarks.includes(id) ? "★":"☆";
-
-  $("prevLesson").disabled = position <= 0;
-  $("nextLesson").disabled = position >= lessons.length-1;
-
-  reader.classList.add("open");
-
-  window.scrollTo(0,0);
-}
-
-
-$("readerClose").addEventListener("click",()=>{
-  reader.classList.remove("open");
-});
-
-
-$("readerBookmark").addEventListener("click",()=>{
-
-  if(!currentLesson) return;
-
-  const id = currentLesson.id;
-
-  if(state.bookmarks.includes(id)){
-
-    state.bookmarks =
-      state.bookmarks.filter(x=>x!==id);
-
-    $("readerBookmark").textContent = "☆";
-
-    toast("Урок убран из сохранённых");
-
-  }else{
-
-    state.bookmarks.push(id);
-
-    $("readerBookmark").textContent = "★";
-
-    toast("Урок сохранён");
-
-  }
-
-  saveState();
-});
-
-
-$("completeLesson").addEventListener("click",()=>{
-
-  if(!currentLesson) return;
-
-  const id = currentLesson.id;
-
-  if(!state.completed.includes(id)){
-
-    state.completed.push(id);
-
-    state.xp += 25;
-    state.coins += 15;
-
-    addActivity(`Завершён урок: ${currentLesson.title}`);
-
-    saveState();
-
-    updateAll();
-
-    toast("+25 XP · +15 AVA Coins");
-
-  }else{
-
-    toast("Этот урок уже завершён");
-
-  }
-
-});
-
-
-function moveLesson(direction){
-
-  if(!currentLesson) return;
-
-  const index =
-    lessons.findIndex(x=>x.id===currentLesson.id);
-
-  const next = lessons[index + direction];
-
-  if(next){
-    openLesson(next.id);
-  }
-
-}
-
-
-$("prevLesson").addEventListener("click",()=>{
-  moveLesson(-1);
-});
-
-$("nextLesson").addEventListener("click",()=>{
-  moveLesson(1);
-});
-
-
-/* =========================
-   SIGNAL BOT
-========================= */
-
-function renderPairs(){
-
-  $("pairSelect").innerHTML =
-    pairs.map(pair=>`
-      <option value="${pair}">
-        ${pair}${currentMarket==="otc" ? " · OTC":""}
-      </option>
-    `).join("");
-
-  $("pairSelect").value = currentPair;
-}
-
-
-renderPairs();
-
-
-document.querySelectorAll("[data-market]").forEach(btn=>{
-
-  btn.addEventListener("click",()=>{
-
-    document.querySelectorAll("[data-market]").forEach(x=>{
-      x.classList.remove("active");
-    });
-
-    btn.classList.add("active");
-
-    currentMarket = btn.dataset.market;
-
-    renderPairs();
-
-    $("signalResult").classList.remove("show");
-
-  });
-
-});
-
-
-$("pairSelect").addEventListener("change",e=>{
-  currentPair = e.target.value;
-});
-
-
-document.querySelectorAll("[data-duration]").forEach(btn=>{
-
-  btn.addEventListener("click",()=>{
-
-    document.querySelectorAll("[data-duration]").forEach(x=>{
-      x.classList.remove("active");
-    });
-
-    btn.classList.add("active");
-
-    currentDuration = Number(btn.dataset.duration);
-
-  });
-
-});
-
-
-function generateSignal(){
-
-  const button = $("generateSignal");
-
-  button.disabled = true;
-  button.textContent = "Анализ рынка...";
-
-  $("signalResult").classList.remove("show");
-
-  setTimeout(()=>{
-
-    /*
-      Это симуляция учебного сценария.
-      Никаких заявлений о гарантированном прогнозе.
-    */
-
-    const seed =
-      Date.now() +
-      currentPair.length * 17 +
-      currentDuration * 31;
-
-    const random = Math.abs(
-      Math.sin(seed * 0.00001)
-    );
-
-    const buy = random > .47;
-
-    const confidence =
-      Math.floor(68 + random * 27);
-
-    const rsi =
-      Math.floor(38 + random * 32);
-
-    const ema =
-      buy ? "UP":"DOWN";
-
-    const macd =
-      buy ? "+":"−";
-
-    $("signalPair").textContent =
-      currentPair + (currentMarket==="otc" ? " · OTC":"");
-
-    $("signalTime").textContent =
-      `${currentDuration} ${currentDuration===1 ? "минута":"минут"}`;
-
-    $("signalDirection").textContent =
-      buy ? "BUY":"SELL";
-
-    $("signalDirection").className =
-      "signal-direction " + (buy ? "buy":"sell");
-
-    $("signalConfidence").textContent =
-      `Уверенность учебного сценария: ${confidence}%`;
-
-    $("sigRSI").textContent = rsi;
-    $("sigEMA").textContent = ema;
-    $("sigMACD").textContent = macd;
-    $("sigTF").textContent =
-      currentDuration <= 3 ? "1M":"5M";
-
-    $("signalResult").classList.add("show");
-
-    state.signals++;
-    state.xp += 5;
-
-    addActivity(
-      `Создан учебный сценарий ${buy ? "BUY":"SELL"} · ${currentPair}`
-    );
-
-    saveState();
-
-    updateProfile();
-    updateHome();
-
-    button.disabled = false;
-    button.textContent = "Сгенерировать сигнал";
-
-  },700);
-
-}
-
-
-$("generateSignal").addEventListener("click",generateSignal);
-
-
-/* =========================
-   QUIZ
-========================= */
-
-function renderQuiz(){
-
-  if(quizIndex >= quizData.length){
-    quizIndex = 0;
-  }
-
-  const item = quizData[quizIndex];
-
-  quizAnswered = false;
-
-  $("quizNumber").textContent =
-    `Вопрос ${quizIndex+1} / ${quizData.length}`;
-
-  $("quizScore").textContent =
-    `${state.xp} XP`;
-
-  $("quizQuestion").textContent =
-    item.q;
-
-  $("quizFeedback").textContent = "";
-
-  $("nextQuestion").classList.add("hidden");
-
-  $("quizOptions").innerHTML =
-    item.options.map((option,index)=>`
-      <button
-        class="option"
-        data-option="${index}"
-      >
-        ${String.fromCharCode(65+index)}. ${option}
-      </button>
-    `).join("");
-
-}
-
-
-$("quizOptions").addEventListener("click",e=>{
-
-  const option = e.target.closest("[data-option]");
-
-  if(!option || quizAnswered) return;
-
-  quizAnswered = true;
-
-  const selected =
-    Number(option.dataset.option);
-
-  const correct =
-    quizData[quizIndex].correct;
-
-  document.querySelectorAll(".option").forEach((btn,index)=>{
-
-    if(index === correct){
-      btn.classList.add("correct");
-    }
-
-    if(index === selected && selected !== correct){
-      btn.classList.add("wrong");
-    }
-
-    btn.disabled = true;
-
-  });
-
-
-  if(selected === correct){
-
-    $("quizFeedback").textContent =
-      "✓ Правильно. +20 XP и +10 AVA Coins";
-
-    state.xp += 20;
-    state.coins += 10;
-    state.tests++;
-
-    addActivity(
-      `Правильный ответ · вопрос ${quizIndex+1}`
-    );
-
-    saveState();
-
-    updateAll();
-
-    toast("+20 XP · +10 AVA Coins");
-
-  }else{
-
-    $("quizFeedback").textContent =
-      `✕ Неверно. Правильный ответ: ${
-        quizData[quizIndex].options[correct]
-      }`;
-
-  }
-
-  $("nextQuestion").classList.remove("hidden");
-
-});
-
-
-$("nextQuestion").addEventListener("click",()=>{
-
-  quizIndex++;
-
-  if(quizIndex >= quizData.length){
-    quizIndex = 0;
-    toast("Тест завершён. Новый круг!");
-  }
-
-  renderQuiz();
-
-});
-
-
-/* =========================
-   TELEGRAM
-========================= */
-
-$("channelCard").addEventListener("click",()=>{
-  window.open(
-    "https://t.me/+D1kxbrvyGSViZWFi",
-    "_blank"
-  );
-});
-
-
-$("contactCard").addEventListener("click",()=>{
-  window.open(
-    "https://t.me/m/OsDQxjCLNTUy",
-    "_blank"
-  );
-});
-
-
-$("updatesCard").addEventListener("click",()=>{
-  toast("Новые обновления уже готовятся");
-});
-
-
-/* =========================
-   PROFILE
-========================= */
-
-function getLevel(){
-
-  const xp = state.xp;
-
-  const level =
-    Math.floor(xp / 100) + 1;
-
-  const current =
-    xp % 100;
-
-  return {
-    level,
-    current,
-    percent:current
-  };
-
-}
-
-
-function updateProfile(){
-
-  const level = getLevel();
-
-  const first =
-    (state.name || "A").charAt(0).toUpperCase();
-
-  $("profileAvatar").textContent = first;
-  $("topAvatar").textContent = first;
-
-  $("profileName").textContent =
-    state.name || "Ученик";
-
-  $("profileNick").textContent =
-    state.nick || "@username";
-
-  $("profileLevel").textContent =
-    `Уровень ${level.level} · ${
-      level.level < 3
-      ? "NOVICE"
-      : level.level < 6
-      ? "TRADER"
-      : "ANALYST"
-    }`;
-
-  $("profileXP").textContent =
-    `${level.current} / 100 XP`;
-
-  $("profileXPBar").style.width =
-    `${level.percent}%`;
-
-  $("coinsValue").textContent =
-    state.coins;
-
-  $("statLessons").textContent =
-    state.completed.length;
-
-  $("statTests").textContent =
-    state.tests;
-
-  $("statSignals").textContent =
-    state.signals;
-
-  $("statStreak").textContent =
-    state.streak;
-
-  renderAchievements();
-  renderActivity();
-
-}
-
-
-const achievementData = [
-
-  ["📖","Первый урок","Заверши первый урок",()=>state.completed.length>=1],
-
-  ["⚡","10 уроков","Заверши 10 уроков",()=>state.completed.length>=10],
-
-  ["🔥","50 уроков","Заверши 50 уроков",()=>state.completed.length>=50],
-
-  ["🏆","100 уроков","Заверши 100 уроков",()=>state.completed.length>=100],
-
-  ["🎓","160 уроков","Пройди всю академию",()=>state.completed.length>=160],
-
-  ["◆","500 Coins","Накопи 500 AVA Coins",()=>state.coins>=500],
-
-  ["⌁","Signal User","Создай 10 сигналов",()=>state.signals>=10],
-
-  ["✓","Quiz Master","Ответь на 5 вопросов",()=>state.tests>=5]
-
-];
-
-
-function renderAchievements(){
-
-  $("achievements").innerHTML =
-    achievementData.map(item=>{
-
-      const unlocked = item[3]();
-
-      return `
-        <div class="achievement ${unlocked ? "":"locked"}">
-
-          <div class="achievement-icon">
-            ${item[0]}
-          </div>
-
-          <strong>${item[1]}</strong>
-
-          <span>
-            ${unlocked ? "Получено ✓":item[2]}
-          </span>
-
-        </div>
-      `;
-
-    }).join("");
-
-}
-
+/* =========================================================
+   ACTIVITY
+========================================================= */
 
 function addActivity(text){
 
   state.activity.unshift({
-    text,
-    time:new Date().toLocaleString("ru-RU",{
-      day:"2-digit",
-      month:"2-digit",
-      hour:"2-digit",
-      minute:"2-digit"
-    })
+
+    text:text,
+
+    time:new Date().toLocaleString(
+      "ru-RU",
+      {
+        day:"2-digit",
+        month:"2-digit",
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    )
+
   });
 
   state.activity =
@@ -3657,140 +4830,2048 @@ function addActivity(text){
 }
 
 
+/* =========================================================
+   LEVEL
+========================================================= */
+
+function getLevel(){
+
+  const level =
+    Math.floor(state.xp / 100) + 1;
+
+  const progress =
+    state.xp % 100;
+
+  return {
+    level,
+    progress
+  };
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+function showSetup(){
+
+  $("authCard").classList.add("hidden");
+
+  $("setupCard").classList.remove("hidden");
+
+  const letter =
+    (state.name || "A")
+      .charAt(0)
+      .toUpperCase();
+
+  $("setupAvatar").textContent =
+    letter;
+
+}
+
+
+function register(){
+
+  const name =
+    $("authName").value.trim();
+
+  let nick =
+    $("authNick").value.trim();
+
+  const error =
+    $("authError");
+
+
+  if(name.length < 2){
+
+    error.textContent =
+      "Введите имя минимум из 2 символов.";
+
+    $("authName").focus();
+
+    return;
+
+  }
+
+
+  if(nick.length < 2){
+
+    error.textContent =
+      "Введите никнейм.";
+
+    $("authNick").focus();
+
+    return;
+
+  }
+
+
+  nick =
+    nick.replace(/^@+/,"");
+
+  nick =
+    nick.replace(/\s+/g,"");
+
+
+  if(nick.length < 2){
+
+    error.textContent =
+      "Никнейм слишком короткий.";
+
+    return;
+
+  }
+
+
+  state.registered =
+    true;
+
+  state.name =
+    name;
+
+  state.nick =
+    "@" + nick;
+
+  state.createdAt =
+    state.createdAt ||
+    new Date().toISOString();
+
+
+  if(state.xp === 0 && state.coins === 0){
+
+    state.xp = 25;
+
+    state.coins = 100;
+
+    addActivity(
+      "Профиль создан"
+    );
+
+  }
+
+
+  save();
+
+  showSetup();
+
+}
+
+
+$("registerButton")
+  .addEventListener(
+    "click",
+    register
+  );
+
+
+$("authName")
+  .addEventListener(
+    "keydown",
+    e=>{
+      if(e.key === "Enter"){
+        $("authNick").focus();
+      }
+    }
+  );
+
+
+$("authNick")
+  .addEventListener(
+    "keydown",
+    e=>{
+      if(e.key === "Enter"){
+        register();
+      }
+    }
+  );
+
+
+$("startAcademy")
+  .addEventListener(
+    "click",
+    ()=>{
+      openApp();
+    }
+  );
+
+
+function openApp(){
+
+  $("authScreen")
+    .classList.add("hidden");
+
+  $("app")
+    .classList.remove("hidden");
+
+  updateEverything();
+
+  navigate("home",false);
+
+  showToast(
+    "Добро пожаловать в AVA ACADEMY"
+  );
+
+}
+
+
+/* =========================================================
+   BOOT
+========================================================= */
+
+function boot(){
+
+  setTimeout(()=>{
+
+    $("loader")
+      .classList.add("hide");
+
+    if(state.registered){
+
+      $("authScreen")
+        .classList.add("hidden");
+
+      $("app")
+        .classList.remove("hidden");
+
+      updateEverything();
+
+    }
+
+  },650);
+
+}
+
+
+boot();
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function navigate(
+  screen,
+  animate=true
+){
+
+  currentScreen =
+    screen;
+
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(el=>{
+
+      el.classList.toggle(
+        "active",
+        el.id === `screen-${screen}`
+      );
+
+    });
+
+
+  document
+    .querySelectorAll(".nav-button")
+    .forEach(button=>{
+
+      button.classList.toggle(
+        "active",
+        button.dataset.screen === screen
+      );
+
+    });
+
+
+  if(animate){
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  }
+
+
+  if(screen === "education"){
+
+    renderModules(
+      $("lessonSearch").value
+    );
+
+  }
+
+
+  if(screen === "practice"){
+
+    renderQuiz();
+
+  }
+
+
+  if(screen === "profile"){
+
+    updateProfile();
+
+  }
+
+
+  if(screen === "home"){
+
+    updateHome();
+
+  }
+
+}
+
+
+document
+  .querySelectorAll(".nav-button")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        navigate(
+          button.dataset.screen
+        );
+
+      }
+    );
+
+  });
+
+
+document
+  .querySelectorAll("[data-open]")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        navigate(
+          button.dataset.open
+        );
+
+      }
+    );
+
+  });
+
+
+$("topProfileButton")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      navigate("profile");
+
+    }
+  );
+
+
+/* =========================================================
+   MODULE VISUALS
+========================================================= */
+
+function moduleVisual(type){
+
+  const palettes = {
+
+    foundation:"#c17cff",
+    market:"#62d6ff",
+    chart:"#8f75ff",
+    candles:"#ff8fba",
+    trend:"#a96cff",
+    levels:"#ffd36a",
+    indicators:"#65e2ce",
+    rsi:"#d76cff",
+    ema:"#78baff",
+    macd:"#b27cff",
+    priceaction:"#ff9b70",
+    strategy:"#bd6cff",
+    risk:"#ffd064",
+    psychology:"#ff79c4",
+    practice:"#6cdcff",
+    advanced:"#c58aff"
+
+  };
+
+
+  const color =
+    palettes[type] ||
+    "#b46aff";
+
+
+  const bars =
+    Array.from(
+      {length:8},
+      (_,i)=>{
+
+        const height =
+          35 + ((i*19)%70);
+
+        return `
+          <rect
+            x="${55+i*34}"
+            y="${135-height}"
+            width="10"
+            height="${height}"
+            rx="5"
+            fill="${color}"
+            opacity="${.3+i*.07}"
+          />
+        `;
+
+      }
+    ).join("");
+
+
+  return `
+
+    <svg
+      viewBox="0 0 360 175"
+      preserveAspectRatio="none"
+    >
+
+      <defs>
+
+        <linearGradient
+          id="g${type}"
+          x1="0"
+          y1="0"
+          x2="1"
+          y2="1"
+        >
+
+          <stop
+            offset="0"
+            stop-color="${color}"
+            stop-opacity=".45"
+          />
+
+          <stop
+            offset="1"
+            stop-color="${color}"
+            stop-opacity=".02"
+          />
+
+        </linearGradient>
+
+      </defs>
+
+
+      <path
+        d="M0 140
+        C55 130 70 112 110 120
+        S165 138 200 91
+        S260 62 292 78
+        S330 53 360 22
+        V175 H0Z"
+        fill="url(#g${type})"
+      />
+
+
+      <path
+        d="M0 140
+        C55 130 70 112 110 120
+        S165 138 200 91
+        S260 62 292 78
+        S330 53 360 22"
+        fill="none"
+        stroke="${color}"
+        stroke-width="3"
+        opacity=".8"
+      />
+
+
+      ${bars}
+
+    </svg>
+
+  `;
+
+}
+
+
+/* =========================================================
+   EDUCATION RENDER
+========================================================= */
+
+function renderModules(search=""){
+
+  const query =
+    search.trim().toLowerCase();
+
+
+  let html = "";
+
+
+  moduleData.forEach(
+    (module,moduleIndex)=>{
+
+      const moduleLessons =
+        lessons.filter(
+          lesson=>{
+
+            if(
+              lesson.module !==
+              moduleIndex+1
+            ){
+              return false;
+            }
+
+
+            if(!query){
+              return true;
+            }
+
+
+            return (
+
+              lesson.title
+                .toLowerCase()
+                .includes(query)
+
+              ||
+
+              lesson.moduleName
+                .toLowerCase()
+                .includes(query)
+
+              ||
+
+              lesson.moduleDescription
+                .toLowerCase()
+                .includes(query)
+
+            );
+
+          }
+        );
+
+
+      if(!moduleLessons.length){
+        return;
+      }
+
+
+      const completed =
+        lessons.filter(
+          lesson=>
+            lesson.module === moduleIndex+1 &&
+            state.completedLessons.includes(
+              lesson.id
+            )
+        ).length;
+
+
+      const percent =
+        Math.round(
+          completed / 10 * 100
+        );
+
+
+      html += `
+
+        <section class="module-card">
+
+          <div class="module-cover">
+
+            <div class="module-number">
+              МОДУЛЬ ${String(moduleIndex+1).padStart(2,"0")}
+            </div>
+
+            <div class="module-name">
+              ${module.name}
+            </div>
+
+            <div class="module-description">
+              ${module.description}
+            </div>
+
+            <div class="module-visual">
+              ${moduleVisual(module.type)}
+            </div>
+
+
+            <div class="module-progress">
+
+              <div class="module-progress-top">
+
+                <span>
+                  ${completed} / 10 уроков
+                </span>
+
+                <span>
+                  ${percent}%
+                </span>
+
+              </div>
+
+              <div class="module-progress-bar">
+
+                <i style="width:${percent}%"></i>
+
+              </div>
+
+            </div>
+
+          </div>
+
+      `;
+
+
+      moduleLessons.forEach(
+        lesson=>{
+
+          const done =
+            state.completedLessons
+              .includes(lesson.id);
+
+
+          html += `
+
+            <div
+              class="lesson-row ${done ? "done":""}"
+              data-lesson-id="${lesson.id}"
+            >
+
+              <div class="lesson-number">
+
+                ${done
+                  ? "✓"
+                  : String(lesson.id).padStart(3,"0")
+                }
+
+              </div>
+
+
+              <div>
+
+                <div class="lesson-title">
+                  ${lesson.title}
+                </div>
+
+                <div class="lesson-sub">
+                  ${done
+                    ? "Урок завершён"
+                    : "Открыть урок · 5 мин"
+                  }
+                </div>
+
+              </div>
+
+
+              <div class="lesson-arrow">
+                ${done ? "✓":"›"}
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+
+      html += `
+        </section>
+      `;
+
+    }
+  );
+
+
+  $("modulesContainer").innerHTML =
+    html ||
+    `
+      <div class="quiz-panel">
+        По этому запросу уроков не найдено.
+      </div>
+    `;
+
+}
+
+
+$("lessonSearch")
+  .addEventListener(
+    "input",
+    e=>{
+
+      renderModules(
+        e.target.value
+      );
+
+    }
+  );
+
+
+$("modulesContainer")
+  .addEventListener(
+    "click",
+    e=>{
+
+      const row =
+        e.target.closest(
+          "[data-lesson-id]"
+        );
+
+
+      if(!row){
+        return;
+      }
+
+
+      openLesson(
+        Number(
+          row.dataset.lessonId
+        )
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   LESSON VIEWER
+========================================================= */
+
+function openLesson(id){
+
+  const lesson =
+    lessons.find(
+      x=>x.id === id
+    );
+
+
+  if(!lesson){
+    return;
+  }
+
+
+  currentLesson =
+    lesson;
+
+
+  const index =
+    lessons.findIndex(
+      x=>x.id === id
+    );
+
+
+  $("viewerModule").textContent =
+    `МОДУЛЬ ${String(lesson.module).padStart(2,"0")} · УРОК ${String(lesson.id).padStart(3,"0")}`;
+
+
+  $("viewerTitle").textContent =
+    lesson.title;
+
+
+  $("viewerDescription").textContent =
+    `${lesson.moduleDescription}. Изучай материал последовательно и закрепляй знания практикой.`;
+
+
+  $("viewerProgress").style.width =
+    `${((index+1)/lessons.length)*100}%`;
+
+
+  $("bookmarkLesson").textContent =
+    state.bookmarkedLessons.includes(id)
+      ? "★"
+      : "☆";
+
+
+  $("previousLesson").disabled =
+    index <= 0;
+
+
+  $("nextLesson").disabled =
+    index >= lessons.length-1;
+
+
+  $("viewerBody").innerHTML =
+    lesson.body.map(
+      (item,index)=>`
+
+        <section class="viewer-section">
+
+          <h3>
+            ${item.heading}
+          </h3>
+
+          <p>
+            ${item.text}
+          </p>
+
+        </section>
+
+      `
+    ).join("")
+
+
+    +
+
+    `
+
+      <div class="knowledge-grid">
+
+        <div class="knowledge-card">
+
+          <div class="knowledge-icon">
+            01
+          </div>
+
+          <strong>
+            Наблюдай
+          </strong>
+
+          <span>
+            Найди изучаемый элемент на историческом графике.
+          </span>
+
+        </div>
+
+
+        <div class="knowledge-card">
+
+          <div class="knowledge-icon">
+            02
+          </div>
+
+          <strong>
+            Сравнивай
+          </strong>
+
+          <span>
+            Смотри на контекст, а не только на одну свечу.
+          </span>
+
+        </div>
+
+
+        <div class="knowledge-card">
+
+          <div class="knowledge-icon">
+            03
+          </div>
+
+          <strong>
+            Записывай
+          </strong>
+
+          <span>
+            Фиксируй свои наблюдения и ошибки.
+          </span>
+
+        </div>
+
+
+        <div class="knowledge-card">
+
+          <div class="knowledge-icon">
+            04
+          </div>
+
+          <strong>
+            Повторяй
+          </strong>
+
+          <span>
+            Навык развивается через последовательную практику.
+          </span>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+  $("lessonViewer")
+    .classList.add("open");
+
+
+  $("lessonViewer").scrollTop =
+    0;
+
+}
+
+
+$("closeLesson")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      $("lessonViewer")
+        .classList.remove("open");
+
+    }
+  );
+
+
+$("bookmarkLesson")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      if(!currentLesson){
+        return;
+      }
+
+
+      const id =
+        currentLesson.id;
+
+
+      if(
+        state.bookmarkedLessons
+          .includes(id)
+      ){
+
+        state.bookmarkedLessons =
+          state.bookmarkedLessons
+            .filter(
+              x=>x!==id
+            );
+
+        $("bookmarkLesson")
+          .textContent =
+          "☆";
+
+        showToast(
+          "Урок удалён из сохранённых"
+        );
+
+      }else{
+
+        state.bookmarkedLessons
+          .push(id);
+
+        $("bookmarkLesson")
+          .textContent =
+          "★";
+
+        showToast(
+          "Урок сохранён"
+        );
+
+      }
+
+
+      save();
+
+      updateProfile();
+
+    }
+  );
+
+
+$("completeCurrentLesson")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      if(!currentLesson){
+        return;
+      }
+
+
+      const id =
+        currentLesson.id;
+
+
+      if(
+        state.completedLessons
+          .includes(id)
+      ){
+
+        showToast(
+          "Этот урок уже завершён"
+        );
+
+        return;
+
+      }
+
+
+      state.completedLessons
+        .push(id);
+
+
+      state.xp += 25;
+
+      state.coins += 15;
+
+
+      addActivity(
+        `Завершён урок «${currentLesson.title}»`
+      );
+
+
+      save();
+
+      updateEverything();
+
+      renderModules(
+        $("lessonSearch").value
+      );
+
+
+      showToast(
+        "+25 XP · +15 АВА Монет"
+      );
+
+    }
+  );
+
+
+function moveLesson(direction){
+
+  if(!currentLesson){
+    return;
+  }
+
+
+  const index =
+    lessons.findIndex(
+      x=>x.id === currentLesson.id
+    );
+
+
+  const next =
+    lessons[index + direction];
+
+
+  if(next){
+    openLesson(next.id);
+  }
+
+}
+
+
+$("previousLesson")
+  .addEventListener(
+    "click",
+    ()=>moveLesson(-1)
+  );
+
+
+$("nextLesson")
+  .addEventListener(
+    "click",
+    ()=>moveLesson(1)
+  );
+
+
+/* =========================================================
+   SIGNAL TERMINAL
+========================================================= */
+
+function renderPairs(){
+
+  $("pairSelect").innerHTML =
+    pairs.map(
+      pair=>`
+
+        <option value="${pair}">
+          ${pair}${currentMarket==="otc" ? " · OTC":""}
+        </option>
+
+      `
+    ).join("");
+
+
+  $("pairSelect").value =
+    currentPair;
+
+}
+
+
+renderPairs();
+
+
+document
+  .querySelectorAll("[data-market]")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll(
+            "[data-market]"
+          )
+          .forEach(
+            b=>b.classList.remove("active")
+          );
+
+
+        button.classList.add("active");
+
+
+        currentMarket =
+          button.dataset.market;
+
+
+        renderPairs();
+
+
+        $("signalResult")
+          .classList.remove("show");
+
+      }
+    );
+
+  });
+
+
+$("pairSelect")
+  .addEventListener(
+    "change",
+    e=>{
+
+      currentPair =
+        e.target.value;
+
+    }
+  );
+
+
+document
+  .querySelectorAll("[data-duration]")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll(
+            "[data-duration]"
+          )
+          .forEach(
+            b=>b.classList.remove("active")
+          );
+
+
+        button.classList.add("active");
+
+
+        currentDuration =
+          Number(
+            button.dataset.duration
+          );
+
+      }
+    );
+
+  });
+
+
+$("scanButton")
+  .addEventListener(
+    "click",
+    generateSignal
+  );
+
+
+function generateSignal(){
+
+  const button =
+    $("scanButton");
+
+
+  if(button.disabled){
+    return;
+  }
+
+
+  button.disabled =
+    true;
+
+  button.classList.add(
+    "scanning"
+  );
+
+  button.textContent =
+    "СКАНИРОВАНИЕ РЫНКА…";
+
+
+  $("signalResult")
+    .classList.remove("show");
+
+
+  setTimeout(()=>{
+
+    const seed =
+      Date.now() +
+      currentPair.length * 41 +
+      currentDuration * 97;
+
+
+    const random =
+      Math.abs(
+        Math.sin(
+          seed * 0.000011
+        )
+      );
+
+
+    const isUp =
+      random >= .5;
+
+
+    const confidence =
+      Math.floor(
+        68 + random * 27
+      );
+
+
+    const rsi =
+      Math.floor(
+        39 + random * 27
+      );
+
+
+    $("resultPair").textContent =
+      currentPair;
+
+
+    $("resultType").textContent =
+      `${currentMarket === "otc" ? "OTC":"БИРЖА"} · ${currentDuration} ${currentDuration===1 ? "МИНУТА":"МИНУТ"}`;
+
+
+    $("resultConfidence").textContent =
+      `${confidence}%`;
+
+
+    $("directionArrow").textContent =
+      isUp ? "↑":"↓";
+
+
+    $("directionArrow").className =
+      "direction-arrow " +
+      (isUp ? "up":"down");
+
+
+    $("directionWord").textContent =
+      isUp ? "ВВЕРХ":"ВНИЗ";
+
+
+    $("directionWord").className =
+      "direction-word " +
+      (isUp ? "up":"down");
+
+
+    $("directionSub").textContent =
+      isUp
+        ? "Учебный сценарий BUY"
+        : "Учебный сценарий SELL";
+
+
+    $("analysisRSI").textContent =
+      rsi;
+
+
+    $("analysisEMA").textContent =
+      isUp ? "↑ UP":"↓ DOWN";
+
+
+    $("analysisMACD").textContent =
+      isUp ? "+":"−";
+
+
+    $("analysisTrend").textContent =
+      isUp ? "↑":"↓";
+
+
+    document
+      .querySelectorAll(
+        ".analysis-item"
+      )
+      .forEach(
+        item=>{
+          item.classList.remove(
+            "positive",
+            "negative"
+          );
+        }
+      );
+
+
+    document
+      .querySelectorAll(
+        ".analysis-item"
+      )
+      .forEach(
+        item=>{
+          item.classList.add(
+            isUp
+              ? "positive"
+              : "negative"
+          );
+        }
+      );
+
+
+    $("signalResult")
+      .classList.add("show");
+
+
+    state.signals++;
+
+    state.xp += 5;
+
+
+    addActivity(
+      `Создан учебный сценарий ${isUp ? "ВВЕРХ":"ВНИЗ"} · ${currentPair}`
+    );
+
+
+    save();
+
+    updateHome();
+
+    updateProfile();
+
+
+    button.disabled =
+      false;
+
+    button.classList.remove(
+      "scanning"
+    );
+
+    button.textContent =
+      "АНАЛИЗИРОВАТЬ РЫНОК";
+
+
+  },850);
+
+}
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+function renderQuiz(){
+
+  const question =
+    questions[quizIndex];
+
+
+  if(!question){
+    return;
+  }
+
+
+  quizLocked =
+    false;
+
+
+  $("quizCounter").textContent =
+    `ВОПРОС ${quizIndex+1} / ${questions.length}`;
+
+
+  $("quizScore").textContent =
+    `${state.xp} XP`;
+
+
+  $("quizProgress").style.width =
+    `${((quizIndex+1)/questions.length)*100}%`;
+
+
+  $("quizQuestion").textContent =
+    question.q;
+
+
+  $("quizFeedback").textContent =
+    "";
+
+
+  $("quizNext")
+    .classList.add("hidden");
+
+
+  $("quizOptions").innerHTML =
+    question.a.map(
+      (answer,index)=>`
+
+        <button
+          class="quiz-option"
+          data-answer="${index}"
+        >
+
+          <span class="letter">
+            ${String.fromCharCode(65+index)}
+          </span>
+
+          ${answer}
+
+        </button>
+
+      `
+    ).join("");
+
+
+  updatePracticeStats();
+
+}
+
+
+$("quizOptions")
+  .addEventListener(
+    "click",
+    e=>{
+
+      const button =
+        e.target.closest(
+          "[data-answer]"
+        );
+
+
+      if(!button || quizLocked){
+        return;
+      }
+
+
+      quizLocked =
+        true;
+
+
+      const selected =
+        Number(
+          button.dataset.answer
+        );
+
+
+      const correct =
+        questions[quizIndex].c;
+
+
+      document
+        .querySelectorAll(
+          ".quiz-option"
+        )
+        .forEach(
+          (option,index)=>{
+
+            option.disabled =
+              true;
+
+
+            if(index === correct){
+
+              option.classList.add(
+                "correct"
+              );
+
+            }
+
+
+            if(
+              index === selected &&
+              selected !== correct
+            ){
+
+              option.classList.add(
+                "wrong"
+              );
+
+            }
+
+          }
+        );
+
+
+      state.testAnswers++;
+
+
+      if(selected === correct){
+
+        state.correctAnswers++;
+
+        state.xp += 20;
+
+        state.coins += 10;
+
+
+        $("quizFeedback").textContent =
+          "✓ Правильно. Ты получил +20 XP и +10 АВА Монет.";
+
+        addActivity(
+          `Правильный ответ · вопрос ${quizIndex+1}`
+        );
+
+
+        showToast(
+          "+20 XP · +10 АВА Монет"
+        );
+
+      }else{
+
+        $("quizFeedback").textContent =
+          `✕ Неверно. Правильный ответ: ${questions[quizIndex].a[correct]}`;
+
+      }
+
+
+      save();
+
+      updateEverything();
+
+
+      $("quizNext")
+        .classList.remove("hidden");
+
+    }
+  );
+
+
+$("quizNext")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      quizIndex++;
+
+
+      if(
+        quizIndex >=
+        questions.length
+      ){
+
+        quizIndex = 0;
+
+        showToast(
+          "Тест завершён. Начинаем новый круг."
+        );
+
+      }
+
+
+      renderQuiz();
+
+    }
+  );
+
+
+function updatePracticeStats(){
+
+  $("practiceCorrect").textContent =
+    state.correctAnswers;
+
+
+  $("practiceTests").textContent =
+    state.testAnswers;
+
+
+  $("practiceXP").textContent =
+    state.xp;
+
+}
+
+
+/* =========================================================
+   COMMUNITY
+========================================================= */
+
+$("channelCard")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      window.open(
+        "https://t.me/+D1kxbrvyGSViZWFi",
+        "_blank"
+      );
+
+    }
+  );
+
+
+$("contactCard")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      window.open(
+        "https://t.me/m/OsDQxjCLNTUy",
+        "_blank"
+      );
+
+    }
+  );
+
+
+$("updatesCard")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      showToast(
+        "Новые обновления AVA уже готовятся"
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function updateProfile(){
+
+  const level =
+    getLevel();
+
+
+  const letter =
+    (
+      state.name ||
+      "A"
+    )
+      .charAt(0)
+      .toUpperCase();
+
+
+  $("profileAvatar")
+    .textContent =
+    letter;
+
+
+  $("topAvatar")
+    .textContent =
+    letter;
+
+
+  $("profileName")
+    .textContent =
+    state.name ||
+    "Ученик";
+
+
+  $("profileNick")
+    .textContent =
+    state.nick ||
+    "@username";
+
+
+  let levelName;
+
+
+  if(level.level < 3){
+    levelName =
+      "НОВИЧОК";
+  }else if(level.level < 6){
+    levelName =
+      "ТРЕЙДЕР";
+  }else if(level.level < 10){
+    levelName =
+      "АНАЛИТИК";
+  }else{
+    levelName =
+      "МАСТЕР";
+  }
+
+
+  $("profileLevel")
+    .textContent =
+    `Уровень ${level.level} · ${levelName}`;
+
+
+  $("profileXP")
+    .textContent =
+    `${level.progress} / 100 XP`;
+
+
+  $("profileXPBar")
+    .style.width =
+    `${level.progress}%`;
+
+
+  $("profileCoins")
+    .textContent =
+    `◆ ${state.coins}`;
+
+
+  $("profileStreak")
+    .textContent =
+    `${state.streak} ${
+      state.streak === 1
+        ? "день"
+        : "дней"
+    }`;
+
+
+  $("profileLessons")
+    .textContent =
+    state.completedLessons.length;
+
+
+  $("profileTests")
+    .textContent =
+    state.testAnswers;
+
+
+  $("profileSignals")
+    .textContent =
+    state.signals;
+
+
+  $("profileBookmarks")
+    .textContent =
+    state.bookmarkedLessons.length;
+
+
+  renderAchievements();
+
+  renderActivity();
+
+}
+
+
+const achievements = [
+
+  {
+    icon:"🚀",
+    title:"Первый шаг",
+    description:"Заверши первый урок",
+    check:()=>state.completedLessons.length>=1
+  },
+
+  {
+    icon:"📚",
+    title:"Первые 10",
+    description:"Заверши 10 уроков",
+    check:()=>state.completedLessons.length>=10
+  },
+
+  {
+    icon:"🔥",
+    title:"Половина пути",
+    description:"Заверши 50 уроков",
+    check:()=>state.completedLessons.length>=50
+  },
+
+  {
+    icon:"🏆",
+    title:"100 уроков",
+    description:"Заверши 100 уроков",
+    check:()=>state.completedLessons.length>=100
+  },
+
+  {
+    icon:"🎓",
+    title:"Академия",
+    description:"Заверши все 160 уроков",
+    check:()=>state.completedLessons.length>=160
+  },
+
+  {
+    icon:"◆",
+    title:"500 монет",
+    description:"Накопи 500 АВА Монет",
+    check:()=>state.coins>=500
+  },
+
+  {
+    icon:"📡",
+    title:"Сканер",
+    description:"Создай 10 учебных сценариев",
+    check:()=>state.signals>=10
+  },
+
+  {
+    icon:"✓",
+    title:"Практик",
+    description:"Ответь на 10 вопросов",
+    check:()=>state.testAnswers>=10
+  }
+
+];
+
+
+function renderAchievements(){
+
+  $("achievementGrid").innerHTML =
+    achievements.map(
+      achievement=>{
+
+        const unlocked =
+          achievement.check();
+
+
+        return `
+
+          <div
+            class="achievement-card ${
+              unlocked
+                ? "unlocked"
+                : "locked"
+            }"
+          >
+
+            <div class="achievement-symbol">
+              ${achievement.icon}
+            </div>
+
+            <strong>
+              ${achievement.title}
+            </strong>
+
+            <span>
+              ${
+                unlocked
+                  ? "Достижение получено ✓"
+                  : achievement.description
+              }
+            </span>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
 function renderActivity(){
 
   if(!state.activity.length){
 
-    $("activity").innerHTML = `
-      <div class="activity-row">
-        <div class="activity-dot"></div>
+    $("activityList").innerHTML = `
+
+      <div class="activity">
+
+        <div class="activity-marker"></div>
+
         <div>
-          <strong>Добро пожаловать в AVA ACADEMY</strong>
-          <span>Начни обучение</span>
+
+          <strong>
+            Добро пожаловать в AVA ACADEMY
+          </strong>
+
+          <span>
+            Начни своё обучение
+          </span>
+
         </div>
+
       </div>
+
     `;
 
     return;
+
   }
 
-  $("activity").innerHTML =
-    state.activity.map(item=>`
-      <div class="activity-row">
-        <div class="activity-dot"></div>
-        <div>
-          <strong>${item.text}</strong>
-          <span>${item.time}</span>
+
+  $("activityList").innerHTML =
+    state.activity.map(
+      item=>`
+
+        <div class="activity">
+
+          <div class="activity-marker"></div>
+
+          <div>
+
+            <strong>
+              ${item.text}
+            </strong>
+
+            <span>
+              ${item.time}
+            </span>
+
+          </div>
+
         </div>
-      </div>
-    `).join("");
+
+      `
+    ).join("");
 
 }
 
 
-/* =========================
+/* =========================================================
    HOME UPDATE
-========================= */
+========================================================= */
 
 function updateHome(){
 
-  $("homeLessons").textContent =
-    state.completed.length;
+  $("homeName")
+    .textContent =
+    state.name ||
+    "трейдер";
 
-  $("homeXP").textContent =
+
+  $("homeCoins")
+    .textContent =
+    state.coins;
+
+
+  $("homeXP")
+    .textContent =
     state.xp;
 
-  $("homeCoins").textContent =
-    state.coins;
+
+  $("homeLessons")
+    .textContent =
+    state.completedLessons.length;
 
 }
 
 
-/* =========================
+/* =========================================================
    EDUCATION UPDATE
-========================= */
+========================================================= */
 
 function updateEducation(){
 
   const percent =
     Math.round(
-      state.completed.length /
-      lessons.length * 100
+      state.completedLessons.length /
+      lessons.length *
+      100
     );
 
-  $("eduPercent").textContent =
-    percent + "%";
 
-  $("eduProgress").style.width =
-    percent + "%";
+  $("educationPercent")
+    .textContent =
+    `${percent}%`;
+
+
+  $("educationProgress")
+    .style.width =
+    `${percent}%`;
 
 }
 
 
-/* =========================
+/* =========================================================
    GLOBAL UPDATE
-========================= */
+========================================================= */
 
-function updateAll(){
+function updateEverything(){
 
   updateHome();
+
   updateEducation();
+
   updateProfile();
 
+  updatePracticeStats();
+
 }
 
 
-/* =========================
+/* =========================================================
    LOGOUT
-========================= */
+========================================================= */
 
-$("logoutBtn").addEventListener("click",()=>{
+$("logoutButton")
+  .addEventListener(
+    "click",
+    ()=>{
 
-  const confirmed =
-    confirm("Выйти из аккаунта?");
+      if(
+        !confirm(
+          "Выйти из аккаунта?"
+        )
+      ){
 
-  if(!confirmed) return;
+        return;
 
-  state.registered = false;
-
-  saveState();
-
-  app.classList.add("hidden");
-  auth.classList.remove("hidden");
-
-  authName.value = state.name || "";
-  authNick.value = state.nick || "";
-
-  toast("Вы вышли из аккаунта");
-
-});
+      }
 
 
-/* =========================
-   ESC CLOSE
-========================= */
-
-document.addEventListener("keydown",e=>{
-
-  if(e.key === "Escape" &&
-     reader.classList.contains("open")){
-
-    reader.classList.remove("open");
-
-  }
-
-});
+      state.registered =
+        false;
 
 
-/* =========================
-   START
-========================= */
+      save();
 
-if(state.registered){
 
-  updateAll();
+      $("app")
+        .classList.add("hidden");
 
-}
+
+      $("authScreen")
+        .classList.remove("hidden");
+
+
+      $("authCard")
+        .classList.remove("hidden");
+
+
+      $("setupCard")
+        .classList.add("hidden");
+
+
+      $("authName")
+        .value =
+        state.name;
+
+
+      $("authNick")
+        .value =
+        state.nick.replace(/^@/,"");
+
+
+      $("authError")
+        .textContent =
+        "";
+
+
+      showToast(
+        "Вы вышли из аккаунта"
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+document
+  .addEventListener(
+    "keydown",
+    e=>{
+
+      if(
+        e.key === "Escape" &&
+        $("lessonViewer")
+          .classList.contains("open")
+      ){
+
+        $("lessonViewer")
+          .classList.remove("open");
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   FIRST RENDER
+========================================================= */
+
+renderModules();
+
+renderQuiz();
 
 </script>
 
