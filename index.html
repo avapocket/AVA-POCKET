@@ -2,6802 +2,2265 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#10071c">
-<title>AVA POCKET — Твой путь трейдера</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#6d35e8">
+<title>AVA ACADEMY — Trading Experience</title>
 <style>
-:root{
-  --bg:#08050f;
-  --panel:#130b1e;
-  --panel2:#1a1028;
-  --purple:#8b5cf6;
-  --purple2:#a855f7;
-  --violet:#c084fc;
-  --pink:#ec78ff;
-  --blue:#6366f1;
-  --cyan:#67e8f9;
-  --green:#31df9d;
-  --red:#ff5875;
-  --gold:#f6c85f;
-  --text:#faf8ff;
-  --muted:#91889f;
-  --muted2:#625a70;
-  --border:rgba(255,255,255,.09);
-  --shadow:0 30px 90px rgba(0,0,0,.38);
-  --ease:cubic-bezier(.22,1,.36,1);
-}
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  margin:0;
-  min-height:100vh;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 10% -10%,rgba(168,85,247,.20),transparent 30%),
-    radial-gradient(circle at 100% 20%,rgba(99,102,241,.13),transparent 28%),
-    #08050f;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif;
-  overflow-x:hidden;
-}
-
-button,
-input,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-button:disabled{
-  cursor:not-allowed;
-}
-
-::-webkit-scrollbar{
-  width:5px;
-}
-
-::-webkit-scrollbar-thumb{
-  background:#3a284d;
-  border-radius:99px;
-}
-
-/* =========================================================
-   ANIMATED TRADING BACKGROUND
-========================================================= */
-
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:-20;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-.bg-grid{
-  position:absolute;
-  inset:0;
-  opacity:.22;
-  background-image:
-    linear-gradient(rgba(190,150,255,.028) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(190,150,255,.028) 1px,transparent 1px);
-  background-size:65px 65px;
-  mask-image:linear-gradient(to bottom,black,transparent 90%);
-}
-
-.bg-glow{
-  position:absolute;
-  width:420px;
-  height:420px;
-  border-radius:50%;
-  filter:blur(100px);
-  opacity:.10;
-  background:#9b5cff;
-  animation:bgGlow 14s ease-in-out infinite alternate;
-}
-
-.bg-glow.one{
-  left:-220px;
-  top:15%;
-}
-
-.bg-glow.two{
-  right:-200px;
-  top:55%;
-  background:#5965ef;
-  animation-delay:-5s;
-}
-
-@keyframes bgGlow{
-  from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(80px,-50px,0)}
-}
-
-.brand-watermark{
-  position:absolute;
-  left:50%;
-  top:48%;
-  transform:translate(-50%,-50%) rotate(-7deg);
-  font-size:clamp(80px,14vw,220px);
-  letter-spacing:-10px;
-  font-weight:1000;
-  white-space:nowrap;
-  color:rgba(192,132,252,.018);
-}
-
-.floating-market{
-  position:absolute;
-  inset:0;
-  opacity:.22;
-}
-
-.float-candle{
-  position:absolute;
-  width:5px;
-  border-radius:5px;
-  background:linear-gradient(to bottom,#b78cff,#714de0);
-  box-shadow:0 0 12px rgba(168,85,247,.18);
-  animation:candleFloat 7s ease-in-out infinite;
-}
-
-.float-candle:before{
-  content:"";
-  position:absolute;
-  left:2px;
-  top:-17px;
-  width:1px;
-  height:17px;
-  background:#9d7be8;
-}
-
-.float-candle:after{
-  content:"";
-  position:absolute;
-  left:2px;
-  bottom:-17px;
-  width:1px;
-  height:17px;
-  background:#9d7be8;
-}
-
-.float-candle.green{
-  background:linear-gradient(to bottom,#55edb3,#25aa79);
-}
-
-.float-candle.red{
-  background:linear-gradient(to bottom,#ff7590,#c93656);
-}
-
-@keyframes candleFloat{
-  0%,100%{
-    transform:translateY(0);
-    opacity:.35;
-  }
-  50%{
-    transform:translateY(-25px);
-    opacity:.75;
-  }
-}
-
-.pocket-float{
-  position:absolute;
-  font-weight:1000;
-  letter-spacing:2px;
-  color:rgba(255,255,255,.035);
-  animation:pocketFloat 10s ease-in-out infinite;
-  white-space:nowrap;
-}
-
-.pocket-float.p1{
-  left:5%;
-  top:20%;
-  font-size:18px;
-}
-
-.pocket-float.p2{
-  right:7%;
-  top:67%;
-  font-size:14px;
-  animation-delay:-4s;
-}
-
-.pocket-float.p3{
-  left:42%;
-  top:82%;
-  font-size:11px;
-  animation-delay:-7s;
-}
-
-@keyframes pocketFloat{
-  0%,100%{
-    transform:translate3d(0,0,0) rotate(-4deg);
-  }
-  50%{
-    transform:translate3d(18px,-20px,0) rotate(2deg);
-  }
-}
-
-/* =========================================================
-   LOADER
-========================================================= */
-
-.loader{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  display:grid;
-  place-items:center;
-  background:#090511;
-  transition:.7s var(--ease);
-}
-
-.loader.hide{
-  opacity:0;
-  pointer-events:none;
-}
-
-.loader-inner{
-  text-align:center;
-}
-
-.loader-logo{
-  width:66px;
-  height:66px;
-  margin:auto;
-  display:grid;
-  place-items:center;
-  border-radius:23px;
-  font-size:29px;
-  font-weight:1000;
-  color:white;
-  background:linear-gradient(135deg,#a855f7,#625de9);
-  box-shadow:0 25px 65px rgba(139,92,246,.4);
-  animation:loaderPulse 1.8s ease-in-out infinite;
-}
-
-@keyframes loaderPulse{
-  50%{
-    transform:translateY(-7px) scale(1.04);
-  }
-}
-
-.loader-inner h2{
-  margin:17px 0 4px;
-  font-size:18px;
-}
-
-.loader-inner p{
-  margin:0;
-  color:#625b70;
-  font-size:9px;
-}
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-.auth{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.auth-card{
-  width:min(470px,100%);
-  padding:34px;
-  border-radius:34px;
-  border:1px solid rgba(255,255,255,.10);
-  background:
-    radial-gradient(circle at 85% 0%,rgba(168,85,247,.14),transparent 28%),
-    linear-gradient(145deg,rgba(37,22,57,.86),rgba(11,7,18,.94));
-  backdrop-filter:blur(35px);
-  box-shadow:0 45px 130px rgba(0,0,0,.6);
-  animation:authIn .8s var(--ease);
-}
-
-@keyframes authIn{
-  from{
-    opacity:0;
-    transform:translateY(35px) scale(.96);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.brand-logo{
-  width:48px;
-  height:48px;
-  display:grid;
-  place-items:center;
-  border-radius:17px;
-  color:white;
-  font-weight:1000;
-  font-size:22px;
-  background:linear-gradient(135deg,#a855f7,#625de9);
-  box-shadow:0 15px 40px rgba(139,92,246,.35);
-}
-
-.brand-name{
-  font-size:15px;
-  font-weight:950;
-  letter-spacing:.4px;
-}
-
-.brand-sub{
-  color:#696177;
-  font-size:8px;
-  margin-top:3px;
-  letter-spacing:1.2px;
-}
-
-.auth h1{
-  margin:42px 0 13px;
-  font-size:clamp(42px,9vw,57px);
-  line-height:.92;
-  letter-spacing:-4px;
-}
-
-.gradient{
-  color:transparent;
-  background:linear-gradient(90deg,#fff,#c084fc,#67e8f9);
-  -webkit-background-clip:text;
-  background-clip:text;
-}
-
-.auth-description{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
-  margin-bottom:27px;
-}
-
-.field{
-  margin:13px 0;
-}
-
-.field label{
-  display:block;
-  margin:0 0 8px 3px;
-  color:#aaa1b6;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.5px;
-}
-
-.field input{
-  width:100%;
-  height:55px;
-  border-radius:17px;
-  border:1px solid var(--border);
-  outline:none;
-  color:white;
-  background:rgba(7,4,13,.72);
-  padding:0 16px;
-  transition:.3s var(--ease);
-}
-
-.field input:focus{
-  border-color:rgba(168,85,247,.7);
-  box-shadow:0 0 0 4px rgba(139,92,246,.10);
-}
-
-.username-wrap{
-  position:relative;
-}
-
-.username-prefix{
-  position:absolute;
-  left:16px;
-  top:50%;
-  transform:translateY(-50%);
-  color:#c084fc;
-  font-weight:900;
-  pointer-events:none;
-}
-
-.username-input{
-  padding-left:34px!important;
-}
-
-.primary{
-  width:100%;
-  min-height:55px;
-  border:0;
-  border-radius:18px;
-  color:white;
-  font-weight:900;
-  background:linear-gradient(135deg,#a855f7,#625de9);
-  box-shadow:0 18px 45px rgba(139,92,246,.28);
-  transition:.35s var(--ease);
-}
-
-.primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 24px 55px rgba(139,92,246,.38);
-}
-
-.primary:active{
-  transform:scale(.985);
-}
-
-.auth-note{
-  margin:16px 0 0;
-  color:#5d566c;
-  font-size:9px;
-  line-height:1.55;
-  text-align:center;
-}
-
-/* =========================================================
-   APP SHELL
-========================================================= */
-
-#app{
-  display:none;
-}
-
-.sidebar{
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  width:252px;
-  z-index:60;
-  padding:22px 15px;
-  border-right:1px solid rgba(255,255,255,.055);
-  background:rgba(9,5,15,.76);
-  backdrop-filter:blur(32px);
-}
-
-.sidebar .brand{
-  padding:4px 9px 28px;
-}
-
-.nav{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.nav-button{
-  position:relative;
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:9px 10px;
-  border:0;
-  border-radius:19px;
-  color:#787083;
-  background:transparent;
-  transition:.4s var(--ease);
-}
-
-.nav-button:hover{
-  color:white;
-  background:rgba(255,255,255,.04);
-}
-
-.nav-button.active{
-  color:white;
-  background:linear-gradient(100deg,rgba(139,92,246,.20),rgba(168,85,247,.045));
-}
-
-.nav-button.active:after{
-  content:"";
-  position:absolute;
-  right:5px;
-  width:4px;
-  height:24px;
-  border-radius:99px;
-  background:linear-gradient(#d0a5ff,#765de9);
-  box-shadow:0 0 15px rgba(168,85,247,.8);
-}
-
-.nav-icon{
-  position:relative;
-  width:45px;
-  height:45px;
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  border-radius:15px;
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.045);
-  transition:.4s var(--ease);
-}
-
-.nav-icon:before{
-  content:"";
-  position:absolute;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(168,85,247,.24),transparent 70%);
-  filter:blur(2px);
-}
-
-.nav-button.active .nav-icon{
-  background:linear-gradient(145deg,rgba(168,85,247,.30),rgba(99,102,241,.12));
-  box-shadow:0 10px 30px rgba(139,92,246,.20);
-  transform:scale(1.03);
-}
-
-.nav-svg{
-  position:relative;
-  z-index:2;
-  width:23px;
-  height:23px;
-}
-
-.nav-text{
-  font-size:13px;
-  font-weight:850;
-}
-
-.sidebar-user{
-  position:absolute;
-  left:15px;
-  right:15px;
-  bottom:18px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px;
-  border-radius:19px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.025);
-}
-
-.avatar-mini{
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  border-radius:14px;
-  background:linear-gradient(135deg,#3a2354,#171022);
-  font-weight:950;
-}
-
-.avatar-mini img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.user-name{
-  font-size:12px;
-  font-weight:850;
-}
-
-.user-handle{
-  color:#696174;
-  font-size:9px;
-  margin-top:3px;
-}
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-.main{
-  min-height:100vh;
-  margin-left:252px;
-  padding:20px clamp(15px,3vw,44px) 70px;
-}
-
-.topbar{
-  max-width:1450px;
-  height:58px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.topbar-title{
-  color:#80778e;
-  font-size:11px;
-}
-
-.topbar-title b{
-  color:#d7d0df;
-}
-
-.topbar-action{
-  width:44px;
-  height:44px;
-  border:1px solid var(--border);
-  border-radius:15px;
-  color:white;
-  background:rgba(255,255,255,.035);
-  transition:.3s var(--ease);
-}
-
-.topbar-action:hover{
-  transform:translateY(-2px);
-  background:rgba(168,85,247,.11);
-}
-
-.page{
-  max-width:1450px;
-  margin:auto;
-  animation:pageIn .5s var(--ease);
-}
-
-@keyframes pageIn{
-  from{
-    opacity:0;
-    transform:translateY(12px);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-.card{
-  border:1px solid var(--border);
-  border-radius:25px;
-  background:rgba(20,11,31,.76);
-  backdrop-filter:blur(22px);
-  box-shadow:0 20px 65px rgba(0,0,0,.14);
-}
-
-/* =========================================================
-   HOME
-========================================================= */
-
-.hero{
-  position:relative;
-  min-height:430px;
-  overflow:hidden;
-  padding:45px;
-  border-radius:35px;
-  border:1px solid rgba(255,255,255,.09);
-  background:
-    radial-gradient(circle at 82% 5%,rgba(168,85,247,.22),transparent 27%),
-    radial-gradient(circle at 70% 90%,rgba(99,102,241,.12),transparent 30%),
-    linear-gradient(145deg,#241337,#0d0816 72%);
-  box-shadow:var(--shadow);
-}
-
-.hero:before{
-  content:"";
-  position:absolute;
-  right:-130px;
-  top:-220px;
-  width:470px;
-  height:470px;
-  border-radius:50%;
-  border:1px solid rgba(192,132,252,.11);
-  box-shadow:
-    0 0 0 35px rgba(192,132,252,.025),
-    0 0 0 75px rgba(192,132,252,.016),
-    0 0 0 120px rgba(192,132,252,.009);
-  animation:heroRotate 18s linear infinite;
-}
-
-@keyframes heroRotate{
-  to{transform:rotate(360deg)}
-}
-
-.hero-content{
-  position:relative;
-  z-index:4;
-  max-width:620px;
-}
-
-.status-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:99px;
-  color:#aaa1b3;
-  background:rgba(255,255,255,.035);
-  font-size:9px;
-  font-weight:850;
-}
-
-.status-dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 14px var(--green);
-  animation:dotPulse 1.8s infinite;
-}
-
-@keyframes dotPulse{
-  50%{
-    opacity:.35;
-    transform:scale(.7);
-  }
-}
-
-.hero h1{
-  margin:28px 0 18px;
-  font-size:clamp(44px,5.5vw,73px);
-  line-height:.9;
-  letter-spacing:-4.5px;
-}
-
-.hero-description{
-  max-width:560px;
-  color:#958c9f;
-  font-size:13px;
-  line-height:1.75;
-}
-
-.hero-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:28px;
-}
-
-.secondary{
-  min-height:50px;
-  padding:0 18px;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:16px;
-  color:white;
-  background:rgba(255,255,255,.045);
-  font-weight:820;
-  transition:.35s var(--ease);
-}
-
-.secondary:hover{
-  transform:translateY(-2px);
-  background:rgba(255,255,255,.08);
-}
-
-.hero-chart{
-  position:absolute;
-  right:0;
-  bottom:0;
-  width:60%;
-  height:90%;
-  opacity:.72;
-  mask-image:linear-gradient(90deg,transparent 0%,black 30%);
-}
-
-.hero-chart svg{
-  width:100%;
-  height:100%;
-}
-
-.chart-line{
-  fill:none;
-  stroke:#b985ff;
-  stroke-width:3;
-  stroke-dasharray:1100;
-  stroke-dashoffset:1100;
-  animation:chartDraw 4.5s ease-out forwards;
-  filter:drop-shadow(0 0 12px rgba(168,85,247,.45));
-}
-
-.chart-area{
-  fill:url(#heroArea);
-  opacity:.32;
-}
-
-@keyframes chartDraw{
-  to{stroke-dashoffset:0}
-}
-
-.price-tag{
-  position:absolute;
-  right:15%;
-  top:31%;
-  z-index:5;
-  padding:9px 11px;
-  border-radius:11px;
-  border:1px solid rgba(192,132,252,.13);
-  background:rgba(12,7,20,.82);
-  color:#cfc2dc;
-  font-size:9px;
-  animation:priceFloat 3s ease-in-out infinite;
-}
-
-@keyframes priceFloat{
-  50%{transform:translateY(-8px)}
-}
-
-/* =========================================================
-   STATS
-========================================================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:13px;
-  margin-top:14px;
-}
-
-.stat-card{
-  min-height:120px;
-  padding:18px;
-  border:1px solid var(--border);
-  border-radius:22px;
-  background:rgba(20,11,31,.72);
-  backdrop-filter:blur(20px);
-  transition:.35s var(--ease);
-}
-
-.stat-card:hover{
-  transform:translateY(-3px);
-  border-color:rgba(168,85,247,.16);
-}
-
-.stat-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.stat-label{
-  color:#777080;
-  font-size:9px;
-  font-weight:800;
-}
-
-.stat-icon{
-  width:37px;
-  height:37px;
-  display:grid;
-  place-items:center;
-  border-radius:13px;
-  color:#c084fc;
-  background:rgba(168,85,247,.10);
-}
-
-.stat-value{
-  margin-top:11px;
-  font-size:25px;
-  font-weight:950;
-  letter-spacing:-1px;
-}
-
-.stat-meta{
-  margin-top:4px;
-  color:#5f586c;
-  font-size:9px;
-}
-
-/* =========================================================
-   MARKET ACTIVITY
-========================================================= */
-
-.home-grid{
-  display:grid;
-  grid-template-columns:1.25fr .75fr;
-  gap:14px;
-  margin-top:14px;
-}
-
-.market-card{
-  min-height:315px;
-  position:relative;
-  overflow:hidden;
-  padding:22px;
-  background:
-    radial-gradient(circle at 80% 15%,rgba(168,85,247,.11),transparent 30%),
-    rgba(17,10,27,.82);
-}
-
-.market-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.market-title{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.market-logo{
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border-radius:14px;
-  color:#c084fc;
-  background:linear-gradient(145deg,rgba(168,85,247,.20),rgba(99,102,241,.09));
-}
-
-.market-title h3{
-  margin:0;
-  font-size:16px;
-}
-
-.market-title p{
-  margin:4px 0 0;
-  color:#625b70;
-  font-size:8px;
-}
-
-.market-live{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  color:#81798d;
-  font-size:8px;
-  font-weight:850;
-}
-
-.market-live i{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px var(--green);
-}
-
-.activity{
-  height:205px;
-  position:relative;
-  margin-top:13px;
-}
-
-.activity-grid{
-  position:absolute;
-  inset:0 0 24px;
-  background:
-    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:100% 25%,10% 100%;
-}
-
-.activity-bars{
-  position:absolute;
-  inset:8px 0 25px;
-  display:flex;
-  align-items:end;
-  gap:5px;
-}
-
-.activity-bar{
-  flex:1;
-  min-width:3px;
-  border-radius:5px 5px 2px 2px;
-  background:linear-gradient(to top,#5b43b6,#a855f7);
-  transform-origin:bottom;
-  animation:barPulse 2.5s ease-in-out infinite alternate;
-  opacity:.72;
-}
-
-.activity-bar:nth-child(4n){
-  background:linear-gradient(to top,#4145a9,#818cf8);
-}
-
-.activity-bar:nth-child(5n){
-  background:linear-gradient(to top,#247c8b,#67e8f9);
-}
-
-.activity-bar:nth-child(7n){
-  background:linear-gradient(to top,#8e3c5e,#ff6682);
-}
-
-@keyframes barPulse{
-  from{transform:scaleY(.73)}
-  to{transform:scaleY(1)}
-}
-
-.activity-line{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:25px;
-  height:1px;
-  background:rgba(255,255,255,.07);
-}
-
-.activity-times{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:3px;
-  display:flex;
-  justify-content:space-between;
-  color:#4e475b;
-  font-size:7px;
-}
-
-.activity-bubble{
-  position:absolute;
-  right:15%;
-  top:42px;
-  padding:9px 11px;
-  border:1px solid rgba(168,85,247,.14);
-  border-radius:11px;
-  color:#bfa9d6;
-  background:rgba(10,6,17,.82);
-  font-size:8px;
-  box-shadow:0 12px 35px rgba(0,0,0,.25);
-  animation:signalFloat 3.5s ease-in-out infinite;
-}
-
-@keyframes signalFloat{
-  50%{transform:translateY(-6px)}
-}
-
-/* =========================================================
-   AVA HOME
-========================================================= */
-
-.ava-home{
-  min-height:315px;
-  position:relative;
-  overflow:hidden;
-  padding:24px;
-  background:
-    radial-gradient(circle at 80% 15%,rgba(168,85,247,.24),transparent 32%),
-    linear-gradient(145deg,#211331,#11091c);
-}
-
-.ava-home-orbit{
-  position:absolute;
-  width:210px;
-  height:210px;
-  right:-8px;
-  top:-15px;
-  border-radius:50%;
-  border:1px solid rgba(192,132,252,.13);
-  box-shadow:
-    0 0 0 30px rgba(192,132,252,.025),
-    0 0 0 65px rgba(192,132,252,.015);
-  animation:spin 11s linear infinite;
-}
-
-.ava-home-orbit:after{
-  content:"";
-  position:absolute;
-  top:14px;
-  left:43px;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#67e8f9;
-  box-shadow:0 0 18px #67e8f9;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-.home-robot{
-  position:absolute;
-  right:39px;
-  top:42px;
-  width:105px;
-  height:120px;
-  animation:robotFloat 4s ease-in-out infinite;
-}
-
-@keyframes robotFloat{
-  50%{transform:translateY(-9px)}
-}
-
-.home-robot-head{
-  position:absolute;
-  left:10px;
-  top:4px;
-  width:85px;
-  height:65px;
-  border-radius:24px;
-  background:linear-gradient(145deg,#d6c4ff,#7067df);
-  border:1px solid rgba(255,255,255,.24);
-  box-shadow:0 20px 45px rgba(102,79,219,.42);
-}
-
-.home-robot-screen{
-  position:absolute;
-  left:21px;
-  top:21px;
-  width:43px;
-  height:23px;
-  border-radius:9px;
-  background:#080610;
-}
-
-.home-robot-screen:before,
-.home-robot-screen:after{
-  content:"";
-  position:absolute;
-  top:8px;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#67e8f9;
-  box-shadow:0 0 10px #67e8f9;
-}
-
-.home-robot-screen:before{left:9px}
-.home-robot-screen:after{right:9px}
-
-.home-robot-body{
-  position:absolute;
-  left:22px;
-  top:71px;
-  width:62px;
-  height:42px;
-  border-radius:17px;
-  background:#292344;
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.home-robot-body:after{
-  content:"A";
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  color:#c4b5fd;
-  font-size:15px;
-  font-weight:1000;
-}
-
-.ava-home-copy{
-  position:relative;
-  z-index:3;
-  padding-top:160px;
-  max-width:230px;
-}
-
-.ava-home-copy h3{
-  margin:0 0 7px;
-  font-size:20px;
-}
-
-.ava-home-copy p{
-  margin:0 0 15px;
-  color:#81788e;
-  font-size:10px;
-  line-height:1.65;
-}
-
-/* =========================================================
-   SECTION HEAD
-========================================================= */
-
-.section-head{
-  display:flex;
-  align-items:end;
-  justify-content:space-between;
-  margin:17px 0 20px;
-}
-
-.section-head h1{
-  margin:0;
-  font-size:37px;
-  letter-spacing:-2px;
-}
-
-.section-head p{
-  margin:6px 0 0;
-  color:#756c80;
-  font-size:11px;
-}
-
-/* =========================================================
-   EDUCATION — WHITE
-========================================================= */
-
-.education-page{
-  margin:-20px -3vw -70px;
-  min-height:calc(100vh - 58px);
-  padding:30px clamp(15px,3vw,44px) 70px;
-  color:#17111f;
-  background:
-    radial-gradient(circle at 95% 0%,rgba(168,85,247,.11),transparent 27%),
-    radial-gradient(circle at 0% 70%,rgba(99,102,241,.07),transparent 25%),
-    #faf9fc;
-  border-radius:30px 30px 0 0;
-}
-
-.education-page .section-head h1{
-  color:#17111f;
-}
-
-.education-page .section-head p{
-  color:#837b8b;
-}
-
-.edu-summary{
-  display:flex;
-  align-items:center;
-  gap:17px;
-  padding:20px;
-  margin-bottom:15px;
-  border:1px solid #e8e3ec;
-  border-radius:24px;
-  background:rgba(255,255,255,.82);
-  box-shadow:0 18px 50px rgba(41,25,57,.07);
-}
-
-.edu-summary-icon{
-  width:48px;
-  height:48px;
-  display:grid;
-  place-items:center;
-  flex:none;
-  border-radius:16px;
-  color:white;
-  background:linear-gradient(135deg,#a855f7,#645be7);
-  box-shadow:0 10px 25px rgba(139,92,246,.22);
-}
-
-.edu-summary-progress{
-  flex:1;
-}
-
-.edu-progress-top{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:8px;
-  color:#766e7c;
-  font-size:9px;
-  font-weight:800;
-}
-
-.edu-progress{
-  height:8px;
-  border-radius:99px;
-  overflow:hidden;
-  background:#ebe7ef;
-}
-
-.edu-progress span{
-  display:block;
-  height:100%;
-  border-radius:inherit;
-  background:linear-gradient(90deg,#8b5cf6,#d16cff,#67ddeb);
-}
-
-.edu-modules{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-.edu-module{
-  position:relative;
-  min-height:265px;
-  padding:22px;
-  overflow:hidden;
-  border:1px solid #e9e4ed;
-  border-radius:24px;
-  background:white;
-  box-shadow:0 15px 45px rgba(37,22,51,.055);
-  transition:.45s var(--ease);
-}
-
-.edu-module:hover{
-  transform:translateY(-5px);
-  box-shadow:0 25px 65px rgba(37,22,51,.10);
-  border-color:#ded4e8;
-}
-
-.edu-module:after{
-  content:"";
-  position:absolute;
-  width:160px;
-  height:160px;
-  right:-75px;
-  top:-75px;
-  border-radius:50%;
-  background:var(--module-color);
-  opacity:.07;
-}
-
-.edu-number{
-  color:#a39ba9;
-  font-size:8px;
-  font-weight:950;
-  letter-spacing:1.4px;
-}
-
-.edu-icon{
-  width:49px;
-  height:49px;
-  display:grid;
-  place-items:center;
-  margin:14px 0;
-  border-radius:16px;
-  color:var(--module-color);
-  background:color-mix(in srgb,var(--module-color) 9%,white);
-  border:1px solid color-mix(in srgb,var(--module-color) 13%,white);
-  font-size:21px;
-}
-
-.edu-module h3{
-  margin:0 0 8px;
-  color:#211a29;
-  font-size:17px;
-}
-
-.edu-module p{
-  margin:0;
-  color:#817985;
-  font-size:10px;
-  line-height:1.65;
-}
-
-.edu-bottom{
-  position:absolute;
-  left:22px;
-  right:22px;
-  bottom:19px;
-}
-
-.edu-meta{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:7px;
-  color:#948b98;
-  font-size:8px;
-}
-
-.edu-module-progress{
-  height:6px;
-  border-radius:99px;
-  overflow:hidden;
-  background:#eeeaf1;
-}
-
-.edu-module-progress span{
-  display:block;
-  height:100%;
-  border-radius:inherit;
-}
-
-.edu-open{
-  width:100%;
-  height:40px;
-  margin-top:11px;
-  border:1px solid #e5ddeb;
-  border-radius:13px;
-  color:#4c3d5c;
-  background:#faf8fc;
-  font-size:9px;
-  font-weight:900;
-  transition:.3s;
-}
-
-.edu-open:hover{
-  color:#6d45a5;
-  border-color:#d8c7e7;
-  background:#f5effa;
-}
-
-/* =========================================================
-   LESSON READER — WHITE
-========================================================= */
-
-.reader{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:250;
-  padding:18px;
-  overflow:auto;
-  background:rgba(11,6,17,.76);
-  backdrop-filter:blur(25px);
-}
-
-.reader.open{
-  display:block;
-  animation:fadeIn .3s;
-}
-
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
-
-.reader-box{
-  width:min(930px,100%);
-  min-height:calc(100vh - 36px);
-  margin:auto;
-  overflow:hidden;
-  border-radius:30px;
-  background:#fff;
-  color:#211927;
-  box-shadow:0 50px 150px rgba(0,0,0,.55);
-  animation:readerIn .5s var(--ease);
-}
-
-@keyframes readerIn{
-  from{
-    opacity:0;
-    transform:translateY(25px) scale(.97);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-.reader-top{
-  height:70px;
-  padding:0 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky;
-  top:0;
-  z-index:5;
-  border-bottom:1px solid #eee9f0;
-  background:rgba(255,255,255,.94);
-  backdrop-filter:blur(20px);
-}
-
-.reader-button{
-  width:42px;
-  height:42px;
-  border:1px solid #e6e0e9;
-  border-radius:14px;
-  color:#302638;
-  background:#faf8fc;
-}
-
-.reader-body{
-  padding:42px clamp(22px,7vw,76px) 60px;
-}
-
-.lesson-kicker{
-  color:#8b5cf6;
-  font-size:9px;
-  font-weight:950;
-  letter-spacing:1px;
-}
-
-.reader-body h1{
-  margin:12px 0 22px;
-  color:#1c1522;
-  font-size:clamp(34px,6vw,53px);
-  line-height:.98;
-  letter-spacing:-2.7px;
-}
-
-.lesson-lead{
-  padding:21px;
-  border-left:3px solid #a855f7;
-  border-radius:0 17px 17px 0;
-  color:#756d7c;
-  background:#f8f3fc;
-  font-size:13px;
-  line-height:1.8;
-}
-
-.lesson-section{
-  margin-top:32px;
-}
-
-.lesson-section h2{
-  margin:0 0 11px;
-  color:#241b2c;
-  font-size:20px;
-}
-
-.lesson-section p{
-  margin:0;
-  color:#756d7c;
-  font-size:13px;
-  line-height:1.9;
-}
-
-.example{
-  padding:19px;
-  border:1px solid #e7dff0;
-  border-radius:18px;
-  color:#756d7c;
-  background:#fbf9fd;
-  font-size:12px;
-  line-height:1.8;
-}
-
-.lesson-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-top:35px;
-}
-
-.lesson-actions .primary{
-  width:auto;
-  padding:0 20px;
-}
-
-.lesson-nav{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-top:35px;
-}
-
-.reader .secondary{
-  color:#43374d;
-  background:#faf8fc;
-  border-color:#e4dce8;
-}
-
-/* =========================================================
-   BOT
-========================================================= */
-
-.bot-layout{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 330px;
-  gap:14px;
-}
-
-.bot-card{
-  min-height:725px;
-  overflow:hidden;
-  position:relative;
-  border-radius:32px;
-  border:1px solid var(--border);
-  background:
-    radial-gradient(circle at 50% 28%,rgba(168,85,247,.18),transparent 31%),
-    linear-gradient(145deg,#180c27,#0c0713);
-  box-shadow:var(--shadow);
-}
-
-.bot-card-top{
-  height:74px;
-  padding:0 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid var(--border);
-  background:rgba(9,5,15,.35);
-}
-
-.bot-brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.bot-brand-icon{
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border-radius:14px;
-  color:white;
-  background:linear-gradient(135deg,#a855f7,#625de9);
-  box-shadow:0 12px 30px rgba(139,92,246,.28);
-}
-
-.bot-brand b{
-  display:block;
-  font-size:14px;
-}
-
-.bot-brand span{
-  display:block;
-  margin-top:3px;
-  color:#655d72;
-  font-size:8px;
-}
-
-.market-toggle{
-  display:flex;
-  gap:3px;
-  padding:4px;
-  border:1px solid var(--border);
-  border-radius:13px;
-  background:#0b0711;
-}
-
-.market-toggle button{
-  min-width:68px;
-  height:34px;
-  border:0;
-  border-radius:9px;
-  color:#665e72;
-  background:transparent;
-  font-size:9px;
-  font-weight:900;
-}
-
-.market-toggle button.active{
-  color:white;
-  background:linear-gradient(135deg,#3c2757,#25214a);
-}
-
-.bot-center{
-  height:525px;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.bot-center:before,
-.bot-center:after{
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  border:1px solid rgba(168,85,247,.09);
-}
-
-.bot-center:before{
-  width:340px;
-  height:340px;
-}
-
-.bot-center:after{
-  width:240px;
-  height:240px;
-  border-color:rgba(103,232,249,.07);
-}
-
-.bot-ring{
-  position:absolute;
-  width:400px;
-  height:400px;
-  border-radius:50%;
-  border:1px dashed rgba(168,85,247,.08);
-  animation:spin 22s linear infinite;
-}
-
-.bot-ring:after{
-  content:"";
-  position:absolute;
-  width:8px;
-  height:8px;
-  left:85px;
-  top:17px;
-  border-radius:50%;
-  background:#c084fc;
-  box-shadow:0 0 17px #c084fc;
-}
-
-/* =========================================================
-   UNIQUE AVA BOT
-========================================================= */
-
-.unique-robot{
-  position:relative;
-  width:255px;
-  height:295px;
-  z-index:3;
-  animation:uniqueFloat 4.2s ease-in-out infinite;
-}
-
-@keyframes uniqueFloat{
-  50%{
-    transform:translateY(-10px);
-  }
-}
-
-.robot-aura{
-  position:absolute;
-  width:220px;
-  height:220px;
-  left:18px;
-  top:27px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(168,85,247,.22),transparent 68%);
-  filter:blur(9px);
-}
-
-.robot-circuit{
-  position:absolute;
-  inset:0;
-}
-
-.robot-circuit span{
-  position:absolute;
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:#67e8f9;
-  box-shadow:0 0 14px #67e8f9;
-}
-
-.robot-circuit span:nth-child(1){
-  left:25px;
-  top:86px;
-}
-
-.robot-circuit span:nth-child(2){
-  right:20px;
-  top:126px;
-}
-
-.robot-circuit span:nth-child(3){
-  left:37px;
-  bottom:74px;
-}
-
-.robot-antenna{
-  position:absolute;
-  left:126px;
-  top:0;
-  width:4px;
-  height:38px;
-  border-radius:99px;
-  background:linear-gradient(#67e8f9,#9b67ff);
-}
-
-.robot-antenna:after{
-  content:"";
-  position:absolute;
-  left:-5px;
-  top:-10px;
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  background:#67e8f9;
-  box-shadow:0 0 22px #67e8f9;
-}
-
-.robot-head{
-  position:absolute;
-  left:39px;
-  top:29px;
-  width:177px;
-  height:123px;
-  border-radius:45px;
-  background:
-    linear-gradient(145deg,#e0d1ff 0%,#a88af4 34%,#625bd1 100%);
-  border:1px solid rgba(255,255,255,.28);
-  box-shadow:
-    inset 0 2px 9px rgba(255,255,255,.27),
-    0 30px 75px rgba(104,74,221,.43);
-}
-
-.robot-head:before{
-  content:"";
-  position:absolute;
-  inset:7px;
-  border-radius:39px;
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.robot-ear{
-  position:absolute;
-  top:47px;
-  width:18px;
-  height:34px;
-  border-radius:8px;
-  background:#665dc8;
-  border:1px solid rgba(255,255,255,.12);
-}
-
-.robot-ear.left{left:-11px}
-.robot-ear.right{right:-11px}
-
-.robot-screen{
-  position:absolute;
-  left:36px;
-  top:35px;
-  width:103px;
-  height:47px;
-  border-radius:17px;
-  background:
-    radial-gradient(circle at 30% 50%,rgba(103,232,249,.07),transparent 25%),
-    #080611;
-  border:1px solid rgba(103,232,249,.17);
-  box-shadow:
-    inset 0 0 25px rgba(103,232,249,.06),
-    0 0 18px rgba(103,232,249,.04);
-}
-
-.robot-eye{
-  position:absolute;
-  top:15px;
-  width:13px;
-  height:13px;
-  border-radius:50%;
-  background:#67e8f9;
-  box-shadow:0 0 18px #67e8f9;
-  transition:.3s;
-}
-
-.robot-eye.left{left:26px}
-.robot-eye.right{right:26px}
-
-.robot-mouth{
-  position:absolute;
-  left:41px;
-  bottom:8px;
-  width:21px;
-  height:3px;
-  border-radius:99px;
-  background:#8b5cf6;
-}
-
-.robot-mark{
-  position:absolute;
-  right:13px;
-  top:13px;
-  font-size:7px;
-  color:rgba(255,255,255,.42);
-  letter-spacing:1px;
-  font-weight:900;
-}
-
-.robot-body{
-  position:absolute;
-  left:62px;
-  top:158px;
-  width:130px;
-  height:99px;
-  border-radius:34px;
-  background:
-    linear-gradient(145deg,#3b335f,#141126);
-  border:1px solid rgba(255,255,255,.11);
-  box-shadow:0 27px 60px rgba(0,0,0,.42);
-}
-
-.robot-chest{
-  position:absolute;
-  left:27px;
-  top:26px;
-  width:76px;
-  height:43px;
-  display:grid;
-  place-items:center;
-  border-radius:15px;
-  border:1px solid rgba(168,85,247,.16);
-  background:rgba(168,85,247,.09);
-  color:#d0b9ff;
-  font-size:15px;
-  font-weight:1000;
-  letter-spacing:3px;
-  box-shadow:inset 0 0 18px rgba(168,85,247,.05);
-}
-
-.robot-chest:after{
-  content:"AI";
-  position:absolute;
-  bottom:-12px;
-  font-size:6px;
-  letter-spacing:1px;
-  color:#615870;
-}
-
-.robot-arm{
-  position:absolute;
-  top:177px;
-  width:57px;
-  height:14px;
-  border-radius:99px;
-  background:#3e375f;
-}
-
-.robot-arm.left{
-  left:16px;
-  transform:rotate(18deg);
-}
-
-.robot-arm.right{
-  right:16px;
-  transform:rotate(-18deg);
-}
-
-.robot-hand{
-  position:absolute;
-  top:-3px;
-  width:20px;
-  height:20px;
-  border-radius:7px;
-  background:#5c54a6;
-}
-
-.robot-arm.left .robot-hand{
-  left:-8px;
-}
-
-.robot-arm.right .robot-hand{
-  right:-8px;
-}
-
-.robot-leg{
-  position:absolute;
-  top:250px;
-  width:21px;
-  height:39px;
-  border-radius:0 0 11px 11px;
-  background:#30294d;
-}
-
-.robot-leg.left{left:89px}
-.robot-leg.right{right:89px}
-
-.unique-robot.scanning{
-  animation:robotScan .55s ease-in-out infinite alternate;
-}
-
-.unique-robot.scanning .robot-head{
-  animation:headScan .55s ease-in-out infinite alternate;
-}
-
-.unique-robot.scanning .robot-eye{
-  box-shadow:0 0 22px #67e8f9;
-}
-
-@keyframes robotScan{
-  from{transform:translateY(-3px)}
-  to{transform:translateY(3px)}
-}
-
-@keyframes headScan{
-  from{transform:translateX(-5px)}
-  to{transform:translateX(5px)}
-}
-
-.bot-name{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:25px;
-  z-index:4;
-  text-align:center;
-}
-
-.bot-name strong{
-  display:block;
-  font-size:29px;
-  letter-spacing:5px;
-}
-
-.bot-name span{
-  color:#635b70;
-  font-size:8px;
-  letter-spacing:1.2px;
-}
-
-.signal-popup{
-  display:none;
-  position:absolute;
-  left:50%;
-  top:15px;
-  z-index:12;
-  width:min(520px,calc(100% - 30px));
-  padding:16px;
-  transform:translateX(-50%);
-  border:1px solid rgba(168,85,247,.23);
-  border-radius:22px;
-  background:rgba(9,5,15,.95);
-  backdrop-filter:blur(28px);
-  box-shadow:0 30px 90px rgba(0,0,0,.58);
-}
-
-.signal-popup.show{
-  display:block;
-  animation:signalIn .5s var(--ease);
-}
-
-@keyframes signalIn{
-  from{
-    opacity:0;
-    transform:translate(-50%,-15px) scale(.95);
-  }
-  to{
-    opacity:1;
-    transform:translate(-50%,0) scale(1);
-  }
-}
-
-.signal-main{
-  display:flex;
-  align-items:center;
-  gap:13px;
-}
-
-.signal-arrow{
-  width:55px;
-  height:55px;
-  display:grid;
-  place-items:center;
-  border-radius:17px;
-  font-size:28px;
-  font-weight:1000;
-}
-
-.signal-arrow.up{
-  color:#31df9d;
-  background:rgba(49,223,157,.09);
-}
-
-.signal-arrow.down{
-  color:#ff5875;
-  background:rgba(255,88,117,.09);
-}
-
-.signal-main h2{
-  margin:0 0 3px;
-  font-size:20px;
-}
-
-.signal-main p{
-  margin:0;
-  color:#675f73;
-  font-size:8px;
-}
-
-.confidence{
-  margin-left:auto;
-  text-align:right;
-}
-
-.confidence small{
-  display:block;
-  color:#625b70;
-  font-size:7px;
-}
-
-.confidence b{
-  font-size:17px;
-}
-
-.signal-metrics{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px;
-  margin-top:12px;
-}
-
-.metric{
-  padding:9px;
-  border-radius:11px;
-  background:rgba(255,255,255,.035);
-}
-
-.metric small{
-  display:block;
-  color:#5c5569;
-  font-size:7px;
-}
-
-.metric b{
-  font-size:11px;
-}
-
-.signal-progress{
-  height:6px;
-  margin-top:11px;
-  overflow:hidden;
-  border-radius:99px;
-  background:#22192d;
-}
-
-.signal-progress span{
-  display:block;
-  width:100%;
-  height:100%;
-  background:linear-gradient(90deg,#a855f7,#67e8f9);
-}
-
-.signal-status{
-  margin-top:9px;
-  padding:9px;
-  border-radius:11px;
-  color:#b99ed5;
-  background:rgba(168,85,247,.07);
-  text-align:center;
-  font-size:8px;
-  font-weight:900;
-}
-
-.signal-status.win{
-  color:#31df9d;
-  background:rgba(49,223,157,.07);
-}
-
-.signal-status.loss{
-  color:#ff5875;
-  background:rgba(255,88,117,.07);
-}
-
-.bot-controls{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr auto;
-  gap:8px;
-  padding:17px;
-  border-top:1px solid var(--border);
-  background:rgba(8,4,13,.48);
-}
-
-.control{
-  height:50px;
-  min-width:0;
-  padding:0 13px;
-  outline:none;
-  border:1px solid var(--border);
-  border-radius:15px;
-  color:white;
-  background:#0d0815;
-  font-size:9px;
-}
-
-.generate{
-  min-width:145px;
-  height:50px;
-  border:0;
-  border-radius:15px;
-  color:white;
-  background:linear-gradient(135deg,#a855f7,#625de9);
-  box-shadow:0 13px 32px rgba(139,92,246,.27);
-  font-size:10px;
-  font-weight:950;
-  transition:.3s var(--ease);
-}
-
-.generate:hover{
-  transform:translateY(-2px);
-}
-
-.generate:disabled{
-  opacity:.5;
-}
-
-.bot-side{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-
-.side-card{
-  padding:21px;
-}
-
-.side-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:13px;
-}
-
-.side-title h3{
-  margin:0;
-  font-size:15px;
-}
-
-.side-title span{
-  color:#5f586d;
-  font-size:7px;
-}
-
-.info{
-  display:flex;
-  justify-content:space-between;
-  padding:11px 0;
-  border-bottom:1px solid rgba(255,255,255,.045);
-  font-size:9px;
-}
-
-.info:last-child{
-  border:0;
-}
-
-.info span{
-  color:#655e71;
-}
-
-.info b{
-  color:#d5cedd;
-}
-
-.warning{
-  padding:16px;
-  border:1px solid rgba(247,201,72,.11);
-  border-radius:19px;
-  color:#817557;
-  background:rgba(247,201,72,.035);
-  font-size:8px;
-  line-height:1.75;
-}
-
-/* =========================================================
-   CONTACT
-========================================================= */
-
-.contact-hero{
-  min-height:285px;
-  position:relative;
-  overflow:hidden;
-  padding:35px;
-  border-radius:32px;
-  border:1px solid var(--border);
-  background:
-    radial-gradient(circle at 80% 20%,rgba(103,232,249,.09),transparent 25%),
-    radial-gradient(circle at 30% 90%,rgba(168,85,247,.16),transparent 30%),
-    linear-gradient(145deg,#1c102c,#0d0815);
-}
-
-.contact-hero h1{
-  margin:21px 0 10px;
-  font-size:44px;
-  letter-spacing:-2.5px;
-}
-
-.contact-hero p{
-  max-width:560px;
-  color:#81788e;
-  font-size:11px;
-  line-height:1.75;
-}
-
-.contact-art{
-  position:absolute;
-  width:280px;
-  height:250px;
-  right:25px;
-  top:12px;
-  opacity:.7;
-}
-
-.contact-art circle{
-  fill:none;
-  stroke:rgba(192,132,252,.13);
-  stroke-width:1;
-}
-
-.contact-art path{
-  fill:none;
-  stroke:rgba(103,232,249,.28);
-  stroke-width:2;
-  stroke-dasharray:5 8;
-  animation:dash 5s linear infinite;
-}
-
-@keyframes dash{
-  to{stroke-dashoffset:-100}
-}
-
-.contact-cards{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-  margin-top:14px;
-}
-
-.contact-card{
-  min-height:230px;
-  position:relative;
-  overflow:hidden;
-  padding:25px;
-  border:1px solid var(--border);
-  border-radius:25px;
-  background:rgba(20,11,31,.76);
-  transition:.45s var(--ease);
-  cursor:pointer;
-}
-
-.contact-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(168,85,247,.25);
-  box-shadow:0 28px 65px rgba(0,0,0,.3);
-}
-
-.contact-card:after{
-  content:"↗";
-  position:absolute;
-  right:20px;
-  top:20px;
-  color:#625b70;
-}
-
-.contact-icon{
-  width:58px;
-  height:58px;
-  display:grid;
-  place-items:center;
-  margin-bottom:24px;
-  border-radius:18px;
-  color:#d0bcff;
-  background:linear-gradient(145deg,rgba(168,85,247,.18),rgba(99,102,241,.07));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
-}
-
-.contact-icon svg{
-  width:28px;
-  height:28px;
-}
-
-.contact-card h3{
-  margin:0 0 8px;
-  font-size:18px;
-}
-
-.contact-card p{
-  max-width:440px;
-  margin:0;
-  color:#746c7e;
-  font-size:10px;
-  line-height:1.7;
-}
-
-.contact-link{
-  margin-top:22px;
-  color:#bda5db;
-  font-size:9px;
-  font-weight:900;
-}
-
-.contact-card.update{
-  background:
-    radial-gradient(circle at 90% 0%,rgba(103,232,249,.12),transparent 30%),
-    linear-gradient(145deg,rgba(168,85,247,.14),rgba(15,9,25,.78));
-}
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.profile-layout{
-  display:grid;
-  grid-template-columns:340px 1fr;
-  gap:14px;
-}
-
-.profile-card{
-  padding:28px;
-  text-align:center;
-}
-
-.profile-avatar{
-  width:116px;
-  height:116px;
-  margin:3px auto 17px;
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  border-radius:34px;
-  border:2px solid rgba(168,85,247,.15);
-  color:#d9cfff;
-  background:linear-gradient(145deg,#392354,#151023);
-  font-size:36px;
-  font-weight:1000;
-  box-shadow:0 25px 65px rgba(0,0,0,.3);
-}
-
-.profile-avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.avatar-change{
-  display:inline-block;
-  padding:9px 13px;
-  border-radius:12px;
-  color:#c4b5fd;
-  background:rgba(168,85,247,.09);
-  font-size:8px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.profile-card h2{
-  margin:18px 0 4px;
-  font-size:22px;
-}
-
-.profile-handle{
-  color:#665f71;
-  font-size:9px;
-}
-
-.profile-email{
-  margin-top:7px;
-  color:#514a5d;
-  font-size:8px;
-}
-
-.profile-edit{
-  width:100%;
-  margin-top:20px;
-}
-
-.profile-mini-stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:6px;
-  margin-top:17px;
-}
-
-.profile-mini-stat{
-  padding:12px 4px;
-  border-radius:14px;
-  background:rgba(255,255,255,.03);
-}
-
-.profile-mini-stat b{
-  font-size:15px;
-}
-
-.profile-mini-stat span{
-  display:block;
-  margin-top:4px;
-  color:#5d5669;
-  font-size:7px;
-}
-
-.progress-card{
-  padding:25px;
-}
-
-.level-head{
-  display:flex;
-  align-items:center;
-  gap:17px;
-}
-
-.level-ring{
-  width:82px;
-  height:82px;
-  position:relative;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-}
-
-.level-ring:after{
-  content:"";
-  position:absolute;
-  inset:7px;
-  border-radius:50%;
-  background:#140c20;
-}
-
-.level-ring b{
-  position:relative;
-  z-index:2;
-  font-size:21px;
-}
-
-.level-head h2{
-  margin:0 0 5px;
-}
-
-.level-head p{
-  margin:0;
-  color:#655e70;
-  font-size:9px;
-}
-
-.achievements{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:18px;
-}
-
-.achievement{
-  min-height:110px;
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:17px;
-  background:rgba(255,255,255,.025);
-}
-
-.achievement.locked{
-  opacity:.28;
-}
-
-.achievement-icon{
-  margin-bottom:9px;
-  font-size:21px;
-}
-
-.achievement b{
-  display:block;
-  font-size:9px;
-}
-
-.achievement span{
-  display:block;
-  margin-top:4px;
-  color:#625b6d;
-  font-size:7px;
-}
-
-/* =========================================================
-   AVA ASSISTANT
-========================================================= */
-
-.ai-fab{
-  position:fixed;
-  right:24px;
-  bottom:24px;
-  z-index:100;
-  width:64px;
-  height:64px;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:22px;
-  color:white;
-  font-size:25px;
-  background:linear-gradient(145deg,#a855f7,#5965e8);
-  box-shadow:0 22px 60px rgba(91,68,201,.45);
-  transition:.4s var(--ease);
-}
-
-.ai-fab:before{
-  content:"";
-  position:absolute;
-  inset:-6px;
-  border-radius:27px;
-  border:1px solid rgba(168,85,247,.16);
-  animation:fabRing 2.8s ease-in-out infinite;
-}
-
-@keyframes fabRing{
-  50%{
-    transform:scale(1.08);
-    opacity:.3;
-  }
-}
-
-.ai-fab:hover{
-  transform:translateY(-5px) scale(1.04);
-}
-
-.ai-modal{
-  display:none;
-  position:fixed;
-  right:24px;
-  bottom:100px;
-  z-index:101;
-  width:min(390px,calc(100% - 30px));
-  overflow:hidden;
-  border:1px solid var(--border);
-  border-radius:26px;
-  background:rgba(12,7,20,.95);
-  backdrop-filter:blur(28px);
-  box-shadow:0 35px 110px rgba(0,0,0,.55);
-}
-
-.ai-modal.open{
-  display:block;
-  animation:aiIn .4s var(--ease);
-}
-
-@keyframes aiIn{
-  from{
-    opacity:0;
-    transform:translateY(18px) scale(.96);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-.ai-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:15px;
-  border-bottom:1px solid var(--border);
-}
-
-.ai-avatar{
-  width:44px;
-  height:44px;
-  display:grid;
-  place-items:center;
-  border-radius:15px;
-  background:linear-gradient(135deg,#a855f7,#5965e8);
-}
-
-.ai-title b{
-  display:block;
-  font-size:13px;
-}
-
-.ai-title span{
-  display:block;
-  margin-top:3px;
-  color:#625b70;
-  font-size:8px;
-}
-
-.ai-close{
-  margin-left:auto;
-  border:0;
-  color:#625b70;
-  background:none;
-  font-size:20px;
-}
-
-.ai-chat{
-  height:370px;
-  padding:15px;
-  overflow:auto;
-}
-
-.message{
-  max-width:87%;
-  margin-bottom:9px;
-  padding:11px 13px;
-  border-radius:15px;
-  font-size:9px;
-  line-height:1.65;
-}
-
-.message.bot{
-  color:#aaa0b4;
-  border-bottom-left-radius:5px;
-  background:rgba(255,255,255,.045);
-}
-
-.message.user{
-  margin-left:auto;
-  color:#ddd5e7;
-  border-bottom-right-radius:5px;
-  background:rgba(168,85,247,.15);
-}
-
-.ai-input{
-  display:flex;
-  gap:7px;
-  padding:11px;
-  border-top:1px solid var(--border);
-}
-
-.ai-input input{
-  flex:1;
-  min-width:0;
-  height:43px;
-  outline:none;
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:0 12px;
-  color:white;
-  background:#090510;
-}
-
-.ai-input button{
-  width:43px;
-  border:0;
-  border-radius:13px;
-  color:white;
-  background:#8b5cf6;
-}
-
-/* =========================================================
-   MOBILE NAV
-========================================================= */
-
-.mobile-nav{
-  display:none;
-  position:fixed;
-  left:9px;
-  right:9px;
-  bottom:9px;
-  z-index:90;
-  padding:7px;
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:25px;
-  background:rgba(13,8,22,.91);
-  backdrop-filter:blur(28px);
-  box-shadow:
-    0 20px 70px rgba(0,0,0,.5),
-    inset 0 1px 0 rgba(255,255,255,.05);
-}
-
-.mobile-nav-inner{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-}
-
-.mobile-button{
-  position:relative;
-  padding:6px 2px 7px;
-  border:0;
-  border-radius:18px;
-  color:#696174;
-  background:transparent;
-  transition:.4s var(--ease);
-}
-
-.mobile-button.active{
-  color:white;
-}
-
-.mobile-button.active:before{
-  content:"";
-  position:absolute;
-  width:51px;
-  height:45px;
-  left:50%;
-  top:3px;
-  transform:translateX(-50%);
-  border-radius:16px;
-  background:linear-gradient(145deg,rgba(168,85,247,.21),rgba(99,102,241,.08));
-  box-shadow:
-    inset 0 0 0 1px rgba(192,132,252,.08),
-    0 8px 25px rgba(139,92,246,.12);
-}
-
-.mobile-icon{
-  position:relative;
-  z-index:2;
-  width:25px;
-  height:25px;
-  margin:auto;
-}
-
-.mobile-button span{
-  position:relative;
-  z-index:2;
-  display:block;
-  margin-top:3px;
-  font-size:7px;
-  font-weight:850;
-}
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:25px;
-  z-index:500;
-  padding:12px 17px;
-  transform:translate(-50%,20px);
-  opacity:0;
-  pointer-events:none;
-  border:1px solid var(--border);
-  border-radius:15px;
-  color:#ddd5e7;
-  background:#20172d;
-  box-shadow:0 15px 50px rgba(0,0,0,.4);
-  font-size:9px;
-  transition:.4s var(--ease);
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media(max-width:1100px){
-
-  .edu-modules{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .home-grid,
-  .bot-layout{
-    grid-template-columns:1fr;
-  }
-
-  .bot-side{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-  }
-
-  .profile-layout{
-    grid-template-columns:1fr;
-  }
-}
-
-@media(max-width:760px){
-
-  .sidebar{
-    display:none;
-  }
-
-  .main{
-    margin-left:0;
-    padding:11px 12px 105px;
-  }
-
-  .mobile-nav{
-    display:block;
-  }
-
-  .topbar{
-    height:50px;
-  }
-
-  .hero{
-    min-height:520px;
-    padding:28px 22px;
-    border-radius:28px;
-  }
-
-  .hero h1{
-    font-size:46px;
-    letter-spacing:-3px;
-  }
-
-  .hero-chart{
-    width:100%;
-    height:47%;
-    opacity:.5;
-  }
-
-  .price-tag{
-    top:auto;
-    right:13%;
-    bottom:25%;
-  }
-
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .stat-card{
-    min-height:105px;
-  }
-
-  .edu-modules{
-    grid-template-columns:1fr;
-  }
-
-  .education-page{
-    margin:-11px -12px -105px;
-    padding:27px 12px 105px;
-    border-radius:0;
-  }
-
-  .bot-side{
-    display:flex;
-  }
-
-  .bot-card{
-    min-height:720px;
-  }
-
-  .bot-center{
-    height:525px;
-  }
-
-  .bot-controls{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .generate{
-    width:100%;
-    grid-column:1/-1;
-  }
-
-  .signal-metrics{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .contact-hero{
-    min-height:310px;
-    padding:28px 23px;
-  }
-
-  .contact-hero h1{
-    font-size:37px;
-  }
-
-  .contact-art{
-    right:-70px;
-    opacity:.3;
-  }
-
-  .contact-cards{
-    grid-template-columns:1fr;
-  }
-
-  .achievements{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .reader{
-    padding:8px;
-  }
-
-  .reader-box{
-    min-height:calc(100vh - 16px);
-    border-radius:25px;
-  }
-
-  .reader-body{
-    padding:30px 20px 45px;
-  }
-
-  .ai-fab{
-    right:16px;
-    bottom:84px;
-    width:57px;
-    height:57px;
-  }
-
-  .ai-modal{
-    right:15px;
-    bottom:150px;
-  }
-
-  .unique-robot{
-    transform:scale(.91);
-  }
+:root{--purple:#7c3aed;--purple2:#a855f7;--violet:#6d35e8;--blue:#3b82f6;--cyan:#06b6d4;--pink:#ec4899;--orange:#f59e0b;--green:#16a34a;--red:#ef4444;--ink:#171321;--muted:#746d83;--paper:#fffdfb;--line:#eee8f5;--shadow:0 24px 70px rgba(58,31,100,.13);--r:28px}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;color:var(--ink);background:#f7f4fb}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+a{text-decoration:none;color:inherit}
+.hidden{display:none!important}
+body{overflow-x:hidden}
+
+.market-bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:linear-gradient(145deg,#faf7ff,#f4effc 55%,#fff)}
+.market-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.82),rgba(255,255,255,.62));z-index:3}
+.watermark{position:absolute;white-space:nowrap;font-weight:1000;letter-spacing:9px;color:#7c3aed;opacity:.045;font-size:clamp(70px,13vw,180px);transform:rotate(-12deg);animation:wm 22s ease-in-out infinite}
+.wm1{top:9%;left:-8%}
+.wm2{top:57%;right:-20%;animation-delay:-8s}
+.wm3{top:82%;left:15%;font-size:70px;animation-delay:-15s}
+.candles{position:absolute;inset:0;display:flex;justify-content:space-around;align-items:stretch;padding:4vh 3vw;opacity:.12}
+.candle{position:relative;width:10px;height:100%;animation:drift 8s ease-in-out infinite}
+.candle i{position:absolute;left:50%;transform:translateX(-50%);width:2px;border-radius:9px;background:#7c3aed}
+.candle b{position:absolute;left:50%;transform:translateX(-50%);width:9px;border-radius:3px;background:linear-gradient(180deg,#a855f7,#3b82f6)}
+.candle:nth-child(3n) b{background:linear-gradient(180deg,#16a34a,#06b6d4)}
+.candle:nth-child(4n) b{background:linear-gradient(180deg,#ec4899,#f59e0b)}
+@keyframes drift{50%{transform:translateY(-12px)}}
+@keyframes wm{50%{transform:rotate(-9deg) translate3d(40px,-25px,0)}}
+
+#loader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:linear-gradient(145deg,#6d35e8,#43219c);transition:.8s cubic-bezier(.2,.8,.2,1)}
+#loader.out{opacity:0;visibility:hidden;transform:scale(1.04)}
+.loader-card{text-align:center;color:white}
+.loader-logo{width:88px;height:88px;border-radius:30px;margin:auto;display:grid;place-items:center;background:linear-gradient(145deg,#b27cff,#6030db);box-shadow:0 30px 80px rgba(0,0,0,.28);animation:logoPulse 1.7s ease-in-out infinite}
+.loader-logo svg{width:54px}
+.loader-card strong{display:block;margin-top:20px;font-size:25px;letter-spacing:4px}
+.loader-card small{display:block;margin-top:7px;opacity:.72;letter-spacing:2px}
+@keyframes logoPulse{50%{transform:translateY(-7px) scale(1.04)}}
+
+#auth{position:fixed;inset:0;z-index:8000;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 10% 10%,#c4b5fd,transparent 28%),radial-gradient(circle at 90% 90%,#f0abfc,transparent 30%),linear-gradient(145deg,#4c1d95,#7c3aed 52%,#2563eb)}
+.auth-shell{width:min(460px,100%);padding:12px}
+.auth-card{background:rgba(255,255,255,.94);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.8);border-radius:34px;padding:30px;box-shadow:0 35px 100px rgba(31,16,67,.35);animation:rise .8s cubic-bezier(.2,.8,.2,1)}
+.brand{display:flex;gap:13px;align-items:center}
+.brand-mark{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#a855f7,#5b21b6);box-shadow:0 12px 30px #7c3aed44}
+.brand strong{font-size:18px;letter-spacing:2px}
+.brand small{display:block;color:#8b8298;font-size:8px;font-weight:800;letter-spacing:1.5px;margin-top:3px}
+.auth-card h1{font-size:34px;line-height:1;margin:28px 0 10px;letter-spacing:-1.5px}
+.auth-card>p{color:#7b7287;font-size:12px;line-height:1.6;margin:0 0 22px}
+.field{margin:12px 0}
+.field label{display:block;font-size:10px;font-weight:900;color:#766d80;margin:0 0 7px}
+.field input,.field select{width:100%;height:50px;border:1px solid #e8e0ef;border-radius:16px;padding:0 15px;background:#fff;outline:0;transition:.25s}
+.field input:focus,.field select:focus{border-color:#a855f7;box-shadow:0 0 0 4px #a855f718}
+.primary{height:52px;width:100%;border-radius:17px;color:#fff;font-weight:950;background:linear-gradient(135deg,#8b5cf6,#6d28d9);box-shadow:0 15px 30px #7c3aed38;transition:.3s}
+.primary:hover{transform:translateY(-2px);box-shadow:0 20px 40px #7c3aed4a}
+.hint{font-size:9px;color:#92899d;margin-top:10px}
+.error{color:#dc2626;font-size:10px;font-weight:800;min-height:15px;margin-top:7px}
+
+#app{min-height:100vh}
+.shell{min-height:100vh;display:grid;grid-template-columns:246px 1fr}
+.sidebar{position:sticky;top:0;height:100vh;padding:22px 15px;background:rgba(255,255,255,.84);backdrop-filter:blur(25px);border-right:1px solid #ebe4f2;z-index:100;display:flex;flex-direction:column}
+.side-brand{padding:5px 8px 25px}
+.side-nav{display:grid;gap:8px}
+.nav-btn{height:56px;border-radius:18px;background:transparent;display:flex;align-items:center;gap:12px;padding:7px 10px;color:#7d7488;font-weight:850;transition:.3s;position:relative}
+.nav-btn:hover{background:#f4effb;color:#5b21b6;transform:translateX(2px)}
+.nav-btn.active{background:linear-gradient(135deg,#f0e7ff,#fff);color:#6d28d9;box-shadow:0 12px 30px rgba(124,58,237,.12)}
+.nav-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#f4edff,#e7ddff);color:#7c3aed;box-shadow:inset 0 1px rgba(255,255,255,.9)}
+.nav-btn:nth-child(2) .nav-icon{color:#2563eb;background:linear-gradient(145deg,#e7f0ff,#dce9ff)}
+.nav-btn:nth-child(3) .nav-icon{color:#ec4899;background:linear-gradient(145deg,#ffe9f5,#ffd7eb)}
+.nav-btn:nth-child(4) .nav-icon{color:#06b6d4;background:linear-gradient(145deg,#e5fbff,#d4f6ff)}
+.nav-btn:nth-child(5) .nav-icon{color:#f59e0b;background:linear-gradient(145deg,#fff7df,#ffedbd)}
+.nav-btn svg{width:23px;height:23px}
+.side-bottom{margin-top:auto;padding:12px 5px}
+.mini-user{display:flex;gap:10px;align-items:center;padding:12px;border-radius:18px;background:#f7f3fb}
+.avatar{width:40px;height:40px;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(145deg,#a855f7,#6d28d9);color:#fff;font-weight:950}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.mini-user b{font-size:11px}
+.mini-user small{display:block;color:#8d8498;font-size:8px;margin-top:3px}
+
+main{min-width:0;padding:30px 34px 100px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
+.eyebrow{font-size:9px;letter-spacing:2px;font-weight:950;color:#8a7f98;text-transform:uppercase}
+.topbar h1{margin:5px 0 0;font-size:30px;letter-spacing:-1.2px}
+.coins{padding:11px 14px;border-radius:15px;background:#fff;border:1px solid #eee7f4;box-shadow:0 10px 25px rgba(65,32,101,.07);font-size:10px;font-weight:950}
+.coins span{color:#7c3aed}
+
+.page{display:none;animation:pageIn .55s cubic-bezier(.2,.8,.2,1)}
+.page.active{display:block}
+@keyframes pageIn{from{opacity:0;transform:translateY(12px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
+
+.hero{display:grid;grid-template-columns:1.35fr .85fr;gap:18px}
+.hero-card{min-height:390px;border-radius:34px;padding:34px;position:relative;overflow:hidden;color:white;background:radial-gradient(circle at 88% 20%,#c084fc 0,transparent 23%),radial-gradient(circle at 12% 90%,#22d3ee 0,transparent 25%),linear-gradient(135deg,#5b21b6,#7c3aed 58%,#4338ca);box-shadow:0 30px 80px rgba(91,33,182,.24)}
+.hero-card:before{content:"";position:absolute;inset:auto -5% -45% 25%;height:75%;background:repeating-linear-gradient(90deg,transparent 0 38px,rgba(255,255,255,.08) 39px 40px),linear-gradient(transparent,rgba(255,255,255,.08));transform:skewY(-10deg)}
+.hero-card .hero-copy{position:relative;z-index:2;max-width:600px}
+.hero-card h2{font-size:clamp(36px,5vw,62px);line-height:.95;letter-spacing:-3px;margin:12px 0}
+.hero-card p{max-width:560px;color:#eee7ff;font-size:12px;line-height:1.7}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+.hero-actions button{height:48px;padding:0 18px;border-radius:15px;font-weight:950;transition:.3s}
+.hero-actions .light{background:#fff;color:#5b21b6;box-shadow:0 12px 25px rgba(0,0,0,.13)}
+.hero-actions .ghost{color:#fff;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22)}
+.hero-actions button:hover{transform:translateY(-3px)}
+.hero-art{position:absolute;right:0;bottom:0;width:47%;max-width:430px;z-index:2;opacity:.95}
+.hero-side{display:grid;gap:18px}
+.stat-card,.market-card{border-radius:28px;background:#fff;border:1px solid #eee8f4;box-shadow:var(--shadow);padding:22px;position:relative;overflow:hidden}
+.stat-card{min-height:186px;background:linear-gradient(145deg,#fff,#f4edff)}
+.stat-card .big{font-size:40px;font-weight:1000;color:#6d28d9;letter-spacing:-2px;margin-top:14px}
+.stat-card p{font-size:10px;color:#817789;line-height:1.5}
+.market-card{min-height:186px}
+.market-head{display:flex;justify-content:space-between;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 10px;font-size:8px;font-weight:950;background:#ecfdf5;color:#15803d}
+.dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 5px #22c55e18;animation:blink 1.7s infinite}
+@keyframes blink{50%{opacity:.35;transform:scale(.7)}}
+.market-pair{font-size:23px;font-weight:1000;margin-top:20px}
+.market-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:9px;color:#817789}
+.spark{height:42px;margin-top:13px;display:flex;align-items:end;gap:4px}
+.spark i{flex:1;border-radius:5px 5px 2px 2px;background:linear-gradient(#a855f7,#7c3aed);animation:spark 1.8s ease-in-out infinite}
+.spark i:nth-child(2n){background:linear-gradient(#06b6d4,#3b82f6)}
+@keyframes spark{50%{transform:scaleY(.65)}}
+
+.section-head{display:flex;justify-content:space-between;align-items:end;margin:30px 0 15px}
+.section-head h3{font-size:22px;margin:0;letter-spacing:-.7px}
+.section-head p{margin:4px 0 0;color:#857b8e;font-size:10px}
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.path-card{position:relative;min-height:155px;padding:18px;border-radius:24px;background:#fff;border:1px solid #eee8f4;box-shadow:0 15px 45px rgba(60,30,100,.07);overflow:hidden;transition:.35s}
+.path-card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 24px 55px rgba(60,30,100,.13)}
+.path-card .n{width:35px;height:35px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:1000;background:linear-gradient(145deg,#a855f7,#6d28d9)}
+.path-card:nth-child(2) .n{background:linear-gradient(145deg,#60a5fa,#2563eb)}
+.path-card:nth-child(3) .n{background:linear-gradient(145deg,#fb7185,#ec4899)}
+.path-card:nth-child(4) .n{background:linear-gradient(145deg,#34d399,#06b6d4)}
+.path-card h4{margin:15px 0 5px;font-size:14px}
+.path-card p{margin:0;color:#82788c;font-size:9px;line-height:1.55}
+.path-card svg{position:absolute;right:-4px;bottom:-5px;width:80px;opacity:.13}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}
+.quick-card{border-radius:25px;padding:20px;display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:135px;color:#fff;overflow:hidden;position:relative;transition:.35s}
+.quick-card:hover{transform:translateY(-5px)}
+.quick-card.study{background:linear-gradient(135deg,#f59e0b,#ec4899)}
+.quick-card.bot{background:linear-gradient(135deg,#06b6d4,#2563eb)}
+.quick-card h4{font-size:18px;margin:0 0 6px}
+.quick-card p{font-size:9px;line-height:1.5;opacity:.86;max-width:290px}
+.quick-card button{margin-top:12px;border-radius:12px;padding:10px 13px;background:#fff;color:#222;font-size:9px;font-weight:950}
+.quick-art{width:130px;flex:none}
+
+/* EDUCATION */
+.education-page{margin:-30px -34px -100px;padding:34px;color:#211a28;background:linear-gradient(135deg,#fff,#fff8f0 50%,#f5f0ff);min-height:calc(100vh - 30px)}
+.edu-hero{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:stretch}
+.edu-title{padding:24px 4px}
+.edu-title .eyebrow{color:#8b5cf6}
+.edu-title h2{font-size:clamp(36px,5vw,58px);line-height:.95;letter-spacing:-3px;margin:10px 0}
+.edu-title p{color:#7d7380;max-width:680px;font-size:11px;line-height:1.65}
+.book-card{border-radius:28px;padding:21px;background:#fff;border:1px solid #eee5db;box-shadow:0 20px 55px rgba(71,48,20,.08)}
+.progress-line{height:9px;background:#eee8f1;border-radius:99px;overflow:hidden;margin:14px 0}
+.progress-line i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#7c3aed,#ec4899,#f59e0b);width:0;transition:1s}
+.edu-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+.search{flex:1;min-width:210px;height:47px;border-radius:15px;border:1px solid #e9e0d9;padding:0 14px;background:#fff;outline:0}
+.module-select{height:47px;border:1px solid #e9e0d9;border-radius:15px;padding:0 12px;background:#fff}
+.modules{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.module-card{border-radius:27px;background:#fff;border:1px solid #eee7df;padding:20px;position:relative;overflow:hidden;transition:.35s;box-shadow:0 14px 45px rgba(80,55,25,.06)}
+.module-card:hover{transform:translateY(-5px);box-shadow:0 22px 55px rgba(80,55,25,.11)}
+.module-top{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.module-badge{padding:7px 9px;border-radius:10px;background:#f1eaff;color:#6d28d9;font-size:8px;font-weight:1000}
+.module-art{height:125px;margin:-2px -3px 8px;display:grid;place-items:center}
+.module-art svg{width:150px;height:120px}
+.module-card h3{margin:8px 0 5px;font-size:17px}
+.module-card p{margin:0;color:#837a85;font-size:9px;line-height:1.55}
+.lesson-list{display:grid;gap:7px;margin-top:14px}
+.lesson-row{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:13px;background:#fbf9fd;border:1px solid #f0ebf3;transition:.25s}
+.lesson-row:hover{background:#f5efff;transform:translateX(3px)}
+.lesson-no{width:25px;height:25px;border-radius:9px;display:grid;place-items:center;background:#ede5ff;color:#6d28d9;font-size:8px;font-weight:1000}
+.lesson-row.done .lesson-no{background:#dcfce7;color:#15803d}
+.lesson-row span{font-size:9px;font-weight:850;flex:1}
+.lesson-row small{color:#8e8492;font-size:7px}
+.edu-art-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 25px}
+.art-tile{min-height:120px;border-radius:22px;padding:13px;position:relative;overflow:hidden;color:#fff}
+.art-tile:nth-child(1){background:linear-gradient(135deg,#7c3aed,#c026d3)}
+.art-tile:nth-child(2){background:linear-gradient(135deg,#2563eb,#06b6d4)}
+.art-tile:nth-child(3){background:linear-gradient(135deg,#ec4899,#f97316)}
+.art-tile:nth-child(4){background:linear-gradient(135deg,#059669,#06b6d4)}
+.art-tile strong{font-size:11px}
+.art-tile svg{position:absolute;right:2px;bottom:-8px;width:85px;opacity:.92}
+
+/* LESSON */
+#reader{position:fixed;inset:0;z-index:3000;background:rgba(24,16,32,.48);backdrop-filter:blur(14px);display:none;padding:20px;align-items:center;justify-content:center}
+#reader.show{display:flex}
+.reader-card{width:min(920px,100%);max-height:min(900px,94vh);overflow:auto;border-radius:32px;background:#fffdfb;box-shadow:0 40px 120px rgba(0,0,0,.25);animation:rise .45s}
+.reader-top{position:sticky;top:0;background:rgba(255,253,251,.92);backdrop-filter:blur(15px);padding:18px 22px;border-bottom:1px solid #eee6df;display:flex;justify-content:space-between;align-items:center;z-index:2}
+.close{width:40px;height:40px;border-radius:13px;background:#f2edf5;color:#5f5668;font-weight:1000}
+.reader-body{padding:26px}
+.reader-art{border-radius:25px;background:linear-gradient(135deg,#f0e7ff,#fff1f2);min-height:180px;display:grid;place-items:center;margin-bottom:20px;overflow:hidden}
+.reader-art svg{width:min(300px,70%);height:170px}
+.reader-body h2{font-size:32px;letter-spacing:-1.5px;margin:5px 0}
+.reader-body .lead{font-size:12px;color:#716878;line-height:1.7}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.lesson-box{padding:17px;border-radius:20px;background:#fff;border:1px solid #ece4dc}
+.lesson-box h4{margin:0 0 7px;font-size:11px;color:#6d28d9}
+.lesson-box p,.lesson-box li{font-size:9px;color:#756c79;line-height:1.65}
+.reader-actions{display:flex;gap:10px;margin-top:20px}
+.reader-actions button{height:46px;padding:0 15px;border-radius:14px;font-weight:950}
+.complete{background:#7c3aed;color:#fff}
+.bookmark{background:#f2ecff;color:#6d28d9}
+
+/* BOT */
+.bot-page{max-width:1120px}
+.bot-top{border-radius:30px;padding:20px;background:linear-gradient(135deg,#fff,#f7f2ff);border:1px solid #eae2f2;box-shadow:var(--shadow)}
+.bot-controls{display:grid;grid-template-columns:1.1fr .9fr .8fr;gap:12px}
+.control-label{font-size:8px;color:#8c8192;font-weight:950;letter-spacing:1px;margin:0 0 7px;text-transform:uppercase}
+.segmented{display:flex;gap:5px;padding:5px;background:#f0ebf6;border-radius:14px}
+.segmented button{flex:1;height:37px;border-radius:10px;background:transparent;color:#81778c;font-size:9px;font-weight:950}
+.segmented button.active{background:#fff;color:#6d28d9;box-shadow:0 5px 15px rgba(60,30,100,.08)}
+.pair-select{height:47px;width:100%;border:1px solid #e8e0ef;border-radius:14px;background:#fff;padding:0 12px;outline:0;font-weight:900}
+.duration{display:flex;gap:5px;flex-wrap:wrap}
+.duration button{height:37px;min-width:49px;border-radius:10px;background:#f0ebf6;color:#7c7188;font-size:8px;font-weight:950}
+.duration button.active{background:#7c3aed;color:#fff;box-shadow:0 8px 18px #7c3aed33}
+.bot-stage{margin-top:16px;border-radius:32px;min-height:430px;padding:25px;display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:center;background:radial-gradient(circle at 50% 45%,#b794f633,transparent 28%),linear-gradient(145deg,#171126,#251642 55%,#101b38);color:#fff;position:relative;overflow:hidden}
+.bot-stage:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.8%,#ffffff08 50%,transparent 50.2%),linear-gradient(0deg,transparent 49.8%,#ffffff08 50%,transparent 50.2%);background-size:44px 44px;transform:perspective(400px) rotateX(60deg) scale(1.8);transform-origin:center bottom;opacity:.5}
+.bot-copy{position:relative;z-index:2}
+.bot-copy .tag{display:inline-flex;padding:8px 10px;border-radius:999px;background:#ffffff12;border:1px solid #ffffff1b;font-size:8px;font-weight:950;letter-spacing:1px}
+.bot-copy h2{font-size:44px;letter-spacing:-2px;margin:13px 0 8px}
+.bot-copy p{color:#bcb2cc;font-size:10px;line-height:1.65;max-width:430px}
+.generate{margin-top:18px;height:51px;padding:0 19px;border-radius:16px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-weight:1000;box-shadow:0 15px 35px #7c3aed45;transition:.3s}
+.generate:hover{transform:translateY(-3px)}
+.robot-wrap{position:relative;z-index:2;display:grid;place-items:center}
+.robot{width:min(330px,75vw);height:330px;position:relative}
+.robot-ring{position:absolute;inset:22px;border:1px solid #a855f744;border-radius:50%;animation:spin 10s linear infinite}
+.robot-ring:before,.robot-ring:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#c084fc;box-shadow:0 0 20px #c084fc}
+.robot-ring:before{top:0;left:50%}
+.robot-ring:after{bottom:15%;right:0}
+.robot-core{position:absolute;inset:67px 55px 55px;border-radius:90px;background:linear-gradient(145deg,#7c3aed,#3b1b70);border:1px solid #c4b5fd55;box-shadow:inset 0 0 50px #ffffff0c,0 35px 80px #0008;display:grid;place-items:center;animation:botFloat 3.5s ease-in-out infinite}
+.robot-core:before{content:"";position:absolute;inset:17px;border-radius:65px;border:1px solid #ffffff12}
+.robot-face{width:150px;height:115px;border-radius:38px;background:linear-gradient(145deg,#22123f,#120c20);border:1px solid #ffffff12;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:22px;box-shadow:inset 0 0 30px #0008}
+.eyes{display:flex;justify-content:space-around}
+.eye{width:28px;height:16px;border-radius:10px;background:#c084fc;box-shadow:0 0 25px #a855f7;animation:eye 2.8s infinite}
+.mouth{height:5px;width:48px;border-radius:5px;background:#06b6d4;box-shadow:0 0 18px #06b6d4;margin:auto}
+.antenna{position:absolute;top:25px;width:70px;height:38px;border-left:3px solid #a855f7;transform:rotate(12deg)}
+.antenna:after{content:"";position:absolute;left:-7px;top:-8px;width:12px;height:12px;border-radius:50%;background:#ec4899;box-shadow:0 0 18px #ec4899}
+.bot-status{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:8px;color:#a7f3d0;white-space:nowrap}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes botFloat{50%{transform:translateY(-8px)}}
+@keyframes eye{50%{transform:scaleY(.45)}}
+.scan{position:absolute;inset:40px;border-radius:50%;border-top:2px solid #06b6d4;opacity:0;animation:scan 1.4s linear infinite}
+.scanning .scan{opacity:1}
+@keyframes scan{to{transform:rotate(360deg)}}
+.signal-result{display:none;margin-top:15px;border-radius:25px;padding:19px;background:#fff;color:#211a28;box-shadow:0 15px 45px rgba(0,0,0,.15);animation:rise .45s}
+.signal-result.show{display:block}
+.result-main{display:flex;justify-content:space-between;align-items:center}
+.direction{font-size:34px;font-weight:1000}
+.direction.up{color:#16a34a}
+.direction.down{color:#ef4444}
+.confidence{font-size:12px;font-weight:950}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:13px}
+.metric{padding:10px;border-radius:12px;background:#f7f3fa}
+.metric small{display:block;color:#918697;font-size:7px}
+.metric b{font-size:10px}
+.countdown{margin-top:11px;font-size:9px;color:#7d7380}
+.demo-note{font-size:8px;color:#8d8292;margin-top:8px}
+
+/* CONTACT */
+.contact-page{max-width:1120px}
+.contact-hero{border-radius:32px;padding:28px;color:#fff;position:relative;overflow:hidden;background:radial-gradient(circle at 90% 15%,#67e8f955,transparent 24%),linear-gradient(135deg,#4c1d95,#7c3aed,#2563eb);min-height:235px}
+.contact-hero h2{font-size:40px;letter-spacing:-2px;margin:8px 0}
+.contact-hero p{font-size:11px;line-height:1.65;color:#ede9fe;max-width:620px}
+.contact-hero svg{position:absolute;right:35px;bottom:-5px;width:250px;opacity:.95}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:15px}
+.contact-card{min-height:260px;border-radius:28px;padding:20px;background:#fff;border:1px solid #eee7f4;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.35s}
+.contact-card:hover{transform:translateY(-6px)}
+.contact-icon{width:72px;height:72px;border-radius:22px;display:grid;place-items:center;margin-bottom:20px}
+.telegram .contact-icon{background:linear-gradient(145deg,#dff8ff,#c7edff);color:#159bd3}
+.write .contact-icon{background:linear-gradient(145deg,#ffe8f3,#ffd4e8);color:#ec4899}
+.update .contact-icon{background:linear-gradient(145deg,#e9e3ff,#ddd0ff);color:#7c3aed}
+.contact-card h3{font-size:18px;margin:0 0 7px}
+.contact-card p{font-size:9px;color:#817788;line-height:1.6;max-width:260px}
+.contact-card a,.contact-card button{position:absolute;left:20px;bottom:20px;height:42px;padding:0 13px;border-radius:13px;background:#f4effb;color:#6d28d9;font-size:9px;font-weight:950}
+
+/* PROFILE */
+.profile-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:16px}
+.profile-card{border-radius:30px;padding:25px;background:#fff;border:1px solid #eee7f4;box-shadow:var(--shadow)}
+.profile-main{display:flex;gap:16px;align-items:center}
+.big-avatar{width:94px;height:94px;border-radius:28px;overflow:hidden;background:linear-gradient(145deg,#a855f7,#6d28d9);display:grid;place-items:center;color:#fff;font-size:28px;font-weight:1000;box-shadow:0 15px 35px #7c3aed33}
+.big-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-name{font-size:21px;font-weight:1000}
+.profile-nick{font-size:9px;color:#8a8090;margin-top:5px}
+.profile-actions{display:flex;gap:8px;margin-top:18px}
+.profile-actions button{height:42px;padding:0 12px;border-radius:13px;background:#f2ecff;color:#6d28d9;font-size:9px;font-weight:950}
+.profile-actions .danger{background:#fff0f0;color:#dc2626}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}
+.stat-mini{padding:14px;border-radius:16px;background:#faf8fc}
+.stat-mini small{display:block;color:#8c8292;font-size:7px}
+.stat-mini b{display:block;font-size:18px;margin-top:5px}
+.profile-form{display:grid;gap:10px}
+.profile-form input{height:47px;border-radius:14px;border:1px solid #e9e2ef;padding:0 13px;outline:0}
+.save-btn{height:47px;border-radius:14px;background:#7c3aed;color:#fff;font-size:9px;font-weight:950}
+
+/* AVA */
+.ava-fab{position:fixed;right:25px;bottom:25px;z-index:1200;width:65px;height:65px;border-radius:22px;background:linear-gradient(145deg,#a855f7,#6d28d9);color:#fff;box-shadow:0 20px 50px #7c3aed55;display:grid;place-items:center;animation:fab 3s ease-in-out infinite}
+.ava-fab svg{width:33px}
+@keyframes fab{50%{transform:translateY(-6px)}}
+#avaPanel{position:fixed;right:25px;bottom:103px;z-index:1300;width:min(370px,calc(100vw - 30px));height:510px;border-radius:28px;background:#fff;border:1px solid #eee7f4;box-shadow:0 30px 100px rgba(36,17,59,.22);overflow:hidden;display:none;flex-direction:column;animation:rise .35s}
+#avaPanel.show{display:flex}
+.ava-head{padding:16px;background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;display:flex;align-items:center;gap:10px}
+.ava-head .ava-mini{width:38px;height:38px;border-radius:13px;background:#ffffff20;display:grid;place-items:center}
+.ava-head strong{font-size:11px}
+.ava-head small{display:block;font-size:7px;opacity:.7;margin-top:2px}
+.ava-close{margin-left:auto;background:#ffffff18;color:#fff;width:32px;height:32px;border-radius:10px}
+.ava-messages{flex:1;overflow:auto;padding:13px;background:#fbf9fd}
+.msg{max-width:85%;padding:10px 12px;border-radius:15px;margin:7px 0;font-size:9px;line-height:1.55}
+.msg.bot{background:#eee7ff;color:#3f285f;border-top-left-radius:5px}
+.msg.user{margin-left:auto;background:#7c3aed;color:#fff;border-top-right-radius:5px}
+.ava-input{display:flex;gap:7px;padding:10px;border-top:1px solid #eee7f4}
+.ava-input input{flex:1;border:1px solid #e8e0ef;border-radius:13px;padding:0 11px;height:40px;outline:0;font-size:9px}
+.ava-input button{width:42px;border-radius:12px;background:#7c3aed;color:#fff}
+
+.toast{position:fixed;left:50%;bottom:28px;z-index:5000;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 16px;border-radius:14px;background:#21162c;color:#fff;font-size:9px;font-weight:850;box-shadow:0 20px 50px #0003;transition:.3s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.mobile-nav{display:none}
+.ripple{position:relative;overflow:hidden}
+.ripple:after{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:#fff8;transform:scale(0);opacity:0;transition:.5s}
+.ripple:active:after{transform:scale(30);opacity:1}
+
+@media(max-width:1000px){
+.shell{grid-template-columns:82px 1fr}
+.sidebar{padding:18px 9px}
+.side-brand .brand-copy,.nav-btn span,.side-bottom{display:none}
+.side-brand{display:grid;place-items:center}
+.nav-btn{justify-content:center;padding:7px}
+.hero{grid-template-columns:1fr}
+.hero-side{grid-template-columns:1fr 1fr;display:grid}
+.path{grid-template-columns:repeat(2,1fr)}
+.modules{grid-template-columns:1fr}
+.edu-hero{grid-template-columns:1fr}
+.contact-grid{grid-template-columns:1fr 1fr}
+.profile-grid{grid-template-columns:1fr}
+.bot-controls{grid-template-columns:1fr 1fr}
+.bot-stage{grid-template-columns:1fr}
+.robot-wrap{order:-1}
+}
+
+@media(max-width:700px){
+main{padding:18px 14px 100px}
+.sidebar{display:none}
+.shell{display:block}
+.topbar{margin-bottom:18px}
+.topbar h1{font-size:24px}
+.hero-card{min-height:520px;padding:25px}
+.hero-card h2{font-size:45px}
+.hero-art{width:80%;right:-5%;opacity:.8}
+.hero-side{grid-template-columns:1fr}
+.path{grid-template-columns:1fr 1fr}
+.quick{grid-template-columns:1fr}
+.education-page{margin:-18px -14px -100px;padding:22px 14px 100px}
+.edu-art-strip{grid-template-columns:1fr 1fr}
+.lesson-grid{grid-template-columns:1fr}
+.bot-controls{grid-template-columns:1fr}
+.bot-stage{padding:20px;min-height:600px}
+.bot-copy h2{font-size:37px}
+.robot{width:290px;height:290px}
+.robot-core{inset:58px 48px 48px}
+.metrics{grid-template-columns:1fr 1fr}
+.contact-grid{grid-template-columns:1fr}
+.contact-hero{min-height:340px}
+.contact-hero svg{width:210px;right:-5px}
+.mobile-nav{position:fixed;left:10px;right:10px;bottom:10px;z-index:1100;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:7px;border-radius:24px;background:rgba(255,255,255,.9);backdrop-filter:blur(22px);border:1px solid #e9e1f1;box-shadow:0 20px 60px rgba(50,20,90,.18)}
+.mobile-nav button{height:59px;border-radius:18px;background:transparent;color:#8b8192;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:7px;font-weight:950}
+.mobile-nav button .mn-icon{width:31px;height:31px;border-radius:11px;display:grid;place-items:center}
+.mobile-nav button.active{color:#6d28d9;background:#f3ecff}
+.mobile-nav button.active .mn-icon{background:linear-gradient(145deg,#9f67ff,#6d28d9);color:#fff;box-shadow:0 7px 18px #7c3aed40}
+.ava-fab{right:17px;bottom:87px;width:57px;height:57px;border-radius:19px}
+.ava-fab svg{width:29px}
+#avaPanel{right:14px;bottom:155px;height:470px}
+.reader-card{max-height:96vh;border-radius:25px}
+.reader-body{padding:18px}
+.reader-body h2{font-size:26px}
+.modules{gap:11px}
+.module-card{padding:15px}
 }
 
 @media(prefers-reduced-motion:reduce){
-
-  *,
-  *:before,
-  *:after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:.01ms!important;
-    scroll-behavior:auto!important;
-  }
+*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================================================
-     GLOBAL BACKGROUND
-========================================================= -->
-
-<div class="bg">
-
-  <div class="bg-grid"></div>
-
-  <div class="bg-glow one"></div>
-  <div class="bg-glow two"></div>
-
-  <div class="brand-watermark">
-    AVA POCKET
-  </div>
-
-  <div class="pocket-float p1">AVA POCKET</div>
-  <div class="pocket-float p2">POCKET OPTION</div>
-  <div class="pocket-float p3">TRADING • AVA • MARKET</div>
-
-  <div class="floating-market">
-
-    <span class="float-candle green"
-      style="left:7%;top:25%;height:45px;animation-delay:-1s"></span>
-
-    <span class="float-candle"
-      style="left:12%;top:58%;height:70px;animation-delay:-4s"></span>
-
-    <span class="float-candle red"
-      style="left:18%;top:38%;height:36px;animation-delay:-2s"></span>
-
-    <span class="float-candle green"
-      style="left:24%;top:69%;height:58px;animation-delay:-6s"></span>
-
-    <span class="float-candle"
-      style="left:31%;top:23%;height:82px;animation-delay:-3s"></span>
-
-    <span class="float-candle red"
-      style="left:39%;top:61%;height:48px;animation-delay:-7s"></span>
-
-    <span class="float-candle green"
-      style="left:46%;top:30%;height:62px;animation-delay:-2s"></span>
-
-    <span class="float-candle"
-      style="left:54%;top:70%;height:40px;animation-delay:-5s"></span>
-
-    <span class="float-candle red"
-      style="left:62%;top:22%;height:76px;animation-delay:-1s"></span>
-
-    <span class="float-candle green"
-      style="left:69%;top:48%;height:52px;animation-delay:-6s"></span>
-
-    <span class="float-candle"
-      style="left:77%;top:31%;height:62px;animation-delay:-3s"></span>
-
-    <span class="float-candle red"
-      style="left:85%;top:63%;height:45px;animation-delay:-8s"></span>
-
-    <span class="float-candle green"
-      style="left:92%;top:24%;height:73px;animation-delay:-4s"></span>
-
-  </div>
-
+<div class="market-bg">
+<div class="watermark wm1">AVA POCKET</div>
+<div class="watermark wm2">AVA POCKET</div>
+<div class="watermark wm3">POCKET OPTION</div>
+<div class="candles" id="candles"></div>
 </div>
 
-<!-- =========================================================
-     LOADER
-========================================================= -->
-
-<div class="loader" id="loader">
-
-  <div class="loader-inner">
-
-    <div class="loader-logo">A</div>
-
-    <h2>AVA POCKET</h2>
-
-    <p>Твой путь трейдера</p>
-
-  </div>
-
+<div id="loader">
+<div class="loader-card">
+<div class="loader-logo">
+<svg viewBox="0 0 60 60" fill="none">
+<path d="M8 45 23 13l7 19 8-13 14 26" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18 38h25" stroke="#ddd6fe" stroke-width="4" stroke-linecap="round"/>
+</svg>
+</div>
+<strong>AVA ACADEMY</strong>
+<small>TRADING EXPERIENCE</small>
+</div>
 </div>
 
-<!-- =========================================================
-     AUTH
-========================================================= -->
-
-<section class="auth" id="auth">
-
-  <div class="auth-card">
-
-    <div class="brand">
-
-      <div class="brand-logo">A</div>
-
-      <div>
-        <div class="brand-name">AVA POCKET</div>
-        <div class="brand-sub">TRADER EDUCATION</div>
-      </div>
-
-    </div>
-
-    <h1>
-      Твой путь<br>
-      <span class="gradient">трейдера.</span>
-    </h1>
-
-    <div class="auth-description">
-      Создай свой профиль и открой большую академию,
-      AVA BOT, практику и персонального помощника Ava.
-    </div>
-
-    <form id="registerForm">
-
-      <div class="field">
-
-        <label>ПОЧТА</label>
-
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          placeholder="Gmail, iCloud или любая почта"
-          required>
-
-      </div>
-
-      <div class="field">
-
-        <label>FIO</label>
-
-        <input
-          id="fio"
-          type="text"
-          autocomplete="name"
-          placeholder="Имя и фамилия"
-          required>
-
-      </div>
-
-      <div class="field">
-
-        <label>USERNAME</label>
-
-        <div class="username-wrap">
-
-          <span class="username-prefix">@</span>
-
-          <input
-            id="username"
-            class="username-input"
-            type="text"
-            autocomplete="username"
-            placeholder="username"
-            required>
-
-        </div>
-
-      </div>
-
-      <button
-        class="primary"
-        type="submit">
-        Создать профиль&nbsp;&nbsp;→
-      </button>
-
-    </form>
-
-    <div class="auth-note">
-      После регистрации приложение автоматически откроется.
-      Данные профиля сохраняются на устройстве.
-    </div>
-
-  </div>
-
-</section>
-
-<!-- =========================================================
-     APPLICATION
-========================================================= -->
-
-<div id="app">
-
-  <aside class="sidebar">
-
-    <div class="brand">
-
-      <div class="brand-logo">A</div>
-
-      <div>
-        <div class="brand-name">AVA POCKET</div>
-        <div class="brand-sub">TRADER EDUCATION</div>
-      </div>
-
-    </div>
-
-    <nav class="nav">
-
-      <button class="nav-button active" data-page="home">
-
-        <span class="nav-icon">
-
-          <svg class="nav-svg" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="1.8">
-
-            <path d="M3 10.5 12 3l9 7.5"/>
-            <path d="M5.5 9.5V21h13V9.5"/>
-            <path d="M9 21v-6h6v6"/>
-
-          </svg>
-
-        </span>
-
-        <span class="nav-text">Главный</span>
-
-      </button>
-
-      <button class="nav-button" data-page="education">
-
-        <span class="nav-icon">
-
-          <svg class="nav-svg" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="1.8">
-
-            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
-            <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
-            <path d="M8 7h8M8 10h6"/>
-
-          </svg>
-
-        </span>
-
-        <span class="nav-text">Учёба</span>
-
-      </button>
-
-      <button class="nav-button" data-page="bot">
-
-        <span class="nav-icon">
-
-          <svg class="nav-svg" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="1.8">
-
-            <rect x="4" y="6" width="16" height="14" rx="4"/>
-            <path d="M12 6V3"/>
-            <circle cx="12" cy="2.5" r="1"/>
-            <circle cx="9" cy="12" r="1"/>
-            <circle cx="15" cy="12" r="1"/>
-            <path d="M9 16h6"/>
-
-          </svg>
-
-        </span>
-
-        <span class="nav-text">Ava Bot</span>
-
-      </button>
-
-      <button class="nav-button" data-page="contact">
-
-        <span class="nav-icon">
-
-          <svg class="nav-svg" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="1.8">
-
-            <path d="M20.5 11.2a7.9 7.9 0 0 1-8.2 7.7 8.6 8.6 0 0 1-3.2-.6L4 20l1.7-4.1a7.6 7.6 0 0 1-1.2-4.1A7.9 7.9 0 0 1 12.7 4a8 8 0 0 1 7.8 7.2Z"/>
-            <path d="M8 10h8M8 13h5"/>
-
-          </svg>
-
-        </span>
-
-        <span class="nav-text">Связь</span>
-
-      </button>
-
-      <button class="nav-button" data-page="profile">
-
-        <span class="nav-icon">
-
-          <svg class="nav-svg" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="1.8">
-
-            <circle cx="12" cy="8" r="3.5"/>
-            <path d="M5 21c.7-4 3.1-6 7-6s6.3 2 7 6"/>
-            <circle cx="12" cy="12" r="9"/>
-
-          </svg>
-
-        </span>
-
-        <span class="nav-text">Профиль</span>
-
-      </button>
-
-    </nav>
-
-    <div class="sidebar-user">
-
-      <div class="avatar-mini" id="sideAvatar">A</div>
-
-      <div>
-
-        <div class="user-name" id="sideName">Трейдер</div>
-        <div class="user-handle" id="sideHandle">@trader</div>
-
-      </div>
-
-    </div>
-
-  </aside>
-
-  <main class="main">
-
-    <div class="topbar">
-
-      <div class="topbar-title" id="topTitle">
-        <b>Твой путь трейдера</b>
-      </div>
-
-      <button
-        class="topbar-action"
-        onclick="openAva()">
-        ✦
-      </button>
-
-    </div>
-
-    <div id="content"></div>
-
-  </main>
-
+<div id="auth" class="hidden">
+<div class="auth-shell">
+<div class="auth-card">
+
+<div class="brand">
+<div class="brand-mark">
+<svg viewBox="0 0 50 50" fill="none">
+<path d="M7 38 19 12l7 18 7-12 10 20" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15 32h24" stroke="#ddd6fe" stroke-width="4" stroke-linecap="round"/>
+</svg>
+</div>
+<div>
+<strong>AVA ACADEMY</strong>
+<small>АКАДЕМИЯ ТРЕЙДИНГА</small>
+</div>
 </div>
 
-<!-- =========================================================
-     MOBILE NAV
-========================================================= -->
+<h1>Твой путь<br>начинается здесь.</h1>
+<p>Создай локальный профиль и открой обучение, AVA Bot, практику и свой прогресс.</p>
 
-<nav class="mobile-nav">
+<form id="registerForm">
 
-  <div class="mobile-nav-inner">
+<div class="field">
+<label>EMAIL</label>
+<input id="regEmail" type="email" placeholder="you@gmail.com" autocomplete="email">
+</div>
 
-    <button class="mobile-button active" data-page="home">
+<div class="field">
+<label>ФИО</label>
+<input id="regName" placeholder="Имя Фамилия" autocomplete="name">
+</div>
 
-      <svg class="mobile-icon" viewBox="0 0 24 24"
-           fill="none" stroke="currentColor" stroke-width="1.8">
+<div class="field">
+<label>USERNAME</label>
+<input id="regUsername" placeholder="@username" autocomplete="nickname">
+</div>
 
-        <path d="M3 10.5 12 3l9 7.5"/>
-        <path d="M5.5 9.5V21h13V9.5"/>
-        <path d="M9 21v-6h6v6"/>
+<div class="error" id="regError"></div>
 
-      </svg>
-
-      <span>Главный</span>
-
-    </button>
-
-    <button class="mobile-button" data-page="education">
-
-      <svg class="mobile-icon" viewBox="0 0 24 24"
-           fill="none" stroke="currentColor" stroke-width="1.8">
-
-        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
-        <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
-        <path d="M8 7h8M8 10h6"/>
-
-      </svg>
-
-      <span>Учёба</span>
-
-    </button>
-
-    <button class="mobile-button" data-page="bot">
-
-      <svg class="mobile-icon" viewBox="0 0 24 24"
-           fill="none" stroke="currentColor" stroke-width="1.8">
-
-        <rect x="4" y="6" width="16" height="14" rx="4"/>
-        <path d="M12 6V3"/>
-        <circle cx="12" cy="2.5" r="1"/>
-        <circle cx="9" cy="12" r="1"/>
-        <circle cx="15" cy="12" r="1"/>
-        <path d="M9 16h6"/>
-
-      </svg>
-
-      <span>Ava Bot</span>
-
-    </button>
-
-    <button class="mobile-button" data-page="contact">
-
-      <svg class="mobile-icon" viewBox="0 0 24 24"
-           fill="none" stroke="currentColor" stroke-width="1.8">
-
-        <path d="M20.5 11.2a7.9 7.9 0 0 1-8.2 7.7 8.6 8.6 0 0 1-3.2-.6L4 20l1.7-4.1a7.6 7.6 0 0 1-1.2-4.1A7.9 7.9 0 0 1 12.7 4a8 8 0 0 1 7.8 7.2Z"/>
-        <path d="M8 10h8M8 13h5"/>
-
-      </svg>
-
-      <span>Связь</span>
-
-    </button>
-
-    <button class="mobile-button" data-page="profile">
-
-      <svg class="mobile-icon" viewBox="0 0 24 24"
-           fill="none" stroke="currentColor" stroke-width="1.8">
-
-        <circle cx="12" cy="8" r="3.5"/>
-        <path d="M5 21c.7-4 3.1-6 7-6s6.3 2 7 6"/>
-        <circle cx="12" cy="12" r="9"/>
-
-      </svg>
-
-      <span>Профиль</span>
-
-    </button>
-
-  </div>
-
-</nav>
-
-<!-- =========================================================
-     AVA AI
-========================================================= -->
-
-<button
-  class="ai-fab"
-  onclick="openAva()">
-  ✦
+<button class="primary ripple" type="submit">
+Войти в AVA ACADEMY
 </button>
 
-<div class="ai-modal" id="aiModal">
+</form>
 
-  <div class="ai-head">
+<div class="hint">
+Профиль хранится локально на этом устройстве.
+</div>
 
-    <div class="ai-avatar">✦</div>
+</div>
+</div>
+</div>
 
-    <div class="ai-title">
+<div id="app" class="hidden">
+<div class="shell">
 
-      <b>Ava Assistant</b>
-      <span>Твой учебный помощник</span>
+<aside class="sidebar">
 
-    </div>
+<div class="side-brand">
+<div class="brand">
 
-    <button
-      class="ai-close"
-      onclick="closeAva()">
-      ×
-    </button>
+<div class="brand-mark">
+<svg viewBox="0 0 50 50" fill="none">
+<path d="M7 38 19 12l7 18 7-12 10 20" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15 32h24" stroke="#ddd6fe" stroke-width="4" stroke-linecap="round"/>
+</svg>
+</div>
 
-  </div>
+<div class="brand-copy">
+<strong>AVA ACADEMY</strong>
+<small>АКАДЕМИЯ ТРЕЙДИНГА</small>
+</div>
 
-  <div class="ai-chat" id="aiChat">
+</div>
+</div>
 
-    <div class="message bot">
-      Привет! Я Ava ✦<br><br>
-      Могу помочь тебе разобраться в свечах,
-      трендах, RSI, EMA, Price Action,
-      психологии и риск-менеджменте.
-    </div>
+<nav class="side-nav" id="sideNav"></nav>
 
-  </div>
+<div class="side-bottom">
+<div class="mini-user">
+<div class="avatar" id="sideAvatar"></div>
+<div>
+<b id="sideName">—</b>
+<small id="sideNick">—</small>
+</div>
+</div>
+</div>
 
-  <form class="ai-input" id="aiForm">
+</aside>
 
-    <input
-      id="aiInput"
-      placeholder="Спроси Ava...">
+<main>
 
-    <button>↑</button>
+<div class="topbar">
+<div>
+<div class="eyebrow">AVA ACADEMY</div>
+<h1 id="pageTitle">Главная</h1>
+</div>
+<div class="coins">AVA XP <span id="xpTop">0</span></div>
+</div>
 
-  </form>
+<section id="home" class="page active"></section>
+<section id="education" class="page"></section>
+<section id="bot" class="page"></section>
+<section id="contact" class="page"></section>
+<section id="profile" class="page"></section>
+
+</main>
+</div>
+</div>
+
+<nav class="mobile-nav" id="mobileNav"></nav>
+
+<button class="ava-fab" id="avaFab" aria-label="AVA AI">
+<svg viewBox="0 0 48 48" fill="none">
+<path d="M24 6c3 5 6 7 11 8-5 3-8 6-11 11-3-5-6-8-11-11 5-1 8-3 11-8Z" fill="currentColor"/>
+<rect x="13" y="23" width="22" height="17" rx="7" stroke="currentColor" stroke-width="2.5"/>
+<circle cx="20" cy="31" r="2" fill="currentColor"/>
+<circle cx="28" cy="31" r="2" fill="currentColor"/>
+<path d="M21 36h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</button>
+
+<div id="avaPanel">
+
+<div class="ava-head">
+<div class="ava-mini">
+<svg viewBox="0 0 40 40" fill="none">
+<circle cx="20" cy="20" r="13" stroke="white"/>
+<circle cx="16" cy="19" r="2" fill="white"/>
+<circle cx="24" cy="19" r="2" fill="white"/>
+<path d="M15 25c3 3 7 3 10 0" stroke="white" stroke-linecap="round"/>
+</svg>
+</div>
+
+<div>
+<strong>Ava AI</strong>
+<small>Помощник академии</small>
+</div>
+
+<button class="ava-close" id="avaClose">×</button>
+</div>
+
+<div class="ava-messages" id="avaMessages">
+<div class="msg bot">
+Привет! Я Ava. Спроси про обучение, индикаторы, свечи или навигацию по академии.
+</div>
+</div>
+
+<form class="ava-input" id="avaForm">
+<input id="avaInput" placeholder="Напиши вопрос…">
+<button>➜</button>
+</form>
 
 </div>
 
-<!-- =========================================================
-     LESSON READER
-========================================================= -->
+<div id="reader">
 
-<div class="reader" id="reader">
+<div class="reader-card">
 
-  <div class="reader-box">
+<div class="reader-top">
+<div>
+<div class="eyebrow">УРОК <span id="readerNo"></span></div>
+<b id="readerModule">—</b>
+</div>
+<button class="close" id="readerClose">×</button>
+</div>
 
-    <div class="reader-top">
+<div class="reader-body">
 
-      <button
-        class="reader-button"
-        onclick="closeLesson()">
-        ←
-      </button>
+<div class="reader-art" id="readerArt"></div>
 
-      <span
-        id="readerProgress"
-        style="color:#766d7d;font-size:8px">
-        Урок
-      </span>
+<h2 id="readerTitle">—</h2>
+<p class="lead" id="readerLead">—</p>
 
-      <button
-        class="reader-button"
-        id="bookmarkBtn"
-        onclick="toggleBookmark()">
-        ☆
-      </button>
+<div class="lesson-grid" id="readerGrid"></div>
 
-    </div>
+<div class="reader-actions">
+<button class="bookmark" id="readerBookmark">☆ В закладки</button>
+<button class="complete" id="readerComplete">Завершить урок · +5 XP</button>
+</div>
 
-    <div
-      class="reader-body"
-      id="readerBody">
-    </div>
-
-  </div>
-
+</div>
+</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<input type="file" id="avatarInput" accept="image/*" class="hidden">
+
 <script>
 
-/* =========================================================
-   STATE
-========================================================= */
+const NAV=[
+['home','Главная','home'],
+['education','Учёба','book'],
+['bot','AvaBot','bot'],
+['contact','Связь','chat'],
+['profile','Профиль','user']
+];
 
-const state={
-  registered:false,
-  email:"",
-  fio:"",
-  username:"@trader",
-  avatar:"",
-  xp:0,
-  coins:0,
-  completedLessons:[],
-  bookmarks:[],
-  signalsGenerated:0,
-  wins:0,
-  losses:0,
-  currentPage:"home",
-  currentLesson:0
+const state=JSON.parse(localStorage.getItem('ava_beauty_state')||'null')||{
+registered:false,
+email:'',
+name:'',
+username:'',
+avatar:'',
+xp:0,
+coins:0,
+completed:[],
+bookmarks:[],
+signals:0,
+streak:0,
+level:1
 };
 
-try{
-  const saved=JSON.parse(
-    localStorage.getItem("avaPocketFinal")
-  );
-
-  if(saved){
-    Object.assign(state,saved);
-  }
-
-}catch(e){}
-
-function save(){
-  localStorage.setItem(
-    "avaPocketFinal",
-    JSON.stringify(state)
-  );
-}
-
-function $(id){
-  return document.getElementById(id);
-}
-
-function esc(value){
-  return String(value??"")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;");
-}
-
-function toast(text){
-
-  const el=$("toast");
-
-  el.textContent=text;
-
-  el.classList.add("show");
-
-  clearTimeout(window.toastTimer);
-
-  window.toastTimer=setTimeout(()=>{
-    el.classList.remove("show");
-  },2300);
-}
-
-function normalizeUsername(value){
-
-  value=value
-    .trim()
-    .replace(/\s+/g,"")
-    .replace(/^@+/,"");
-
-  return "@"+(value||"trader");
-}
-
-/* =========================================================
-   REGISTRATION
-========================================================= */
-
-$("username").addEventListener(
-  "input",
-  e=>{
-    e.target.value=
-      e.target.value
-        .replace(/\s/g,"")
-        .replace(/^@+/,"");
-  }
-);
-
-$("registerForm").addEventListener(
-  "submit",
-  e=>{
-
-    e.preventDefault();
-
-    state.email=$("email").value.trim();
-    state.fio=$("fio").value.trim();
-    state.username=
-      normalizeUsername($("username").value);
-
-    state.registered=true;
-    state.currentPage="home";
-
-    save();
-
-    $("auth").style.display="none";
-    $("app").style.display="block";
-
-    render();
-
-    toast("Добро пожаловать в AVA POCKET ✦");
-  }
-);
-
-/* =========================================================
-   NAV
-========================================================= */
-
-document.querySelectorAll("[data-page]")
-  .forEach(button=>{
-
-    button.addEventListener(
-      "click",
-      ()=>{
-
-        state.currentPage=
-          button.dataset.page;
-
-        save();
-
-        render();
-
-        window.scrollTo({
-          top:0,
-          behavior:"smooth"
-        });
-
-      }
-    );
-
-  });
-
-function setNav(page){
-
-  document.querySelectorAll("[data-page]")
-    .forEach(button=>{
-
-      button.classList.toggle(
-        "active",
-        button.dataset.page===page
-      );
-
-    });
-}
-
-function goPage(page){
-
-  state.currentPage=page;
-
-  save();
-
-  render();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-/* =========================================================
-   200+ LESSONS
-========================================================= */
+const pairs=[
+'EUR/USD','GBP/USD','USD/JPY','USD/CHF','AUD/USD','USD/CAD','NZD/USD',
+'EUR/GBP','EUR/JPY','EUR/CHF','EUR/AUD','EUR/CAD','EUR/NZD',
+'GBP/JPY','GBP/CHF','GBP/AUD','GBP/CAD','GBP/NZD',
+'AUD/JPY','AUD/NZD','AUD/CAD','AUD/CHF',
+'CAD/JPY','CAD/CHF','CHF/JPY','NZD/JPY','NZD/CAD','NZD/CHF',
+'USD/SGD','USD/HKD','USD/CNH','USD/TRY','USD/MXN','USD/ZAR',
+'USD/SEK','USD/NOK','USD/DKK','USD/PLN','USD/CZK','USD/HUF',
+'EUR/PLN','EUR/SEK','EUR/NOK','EUR/DKK','EUR/TRY','EUR/ZAR',
+'GBP/SGD','GBP/ZAR','GBP/PLN','AUD/SGD','AUD/ZAR','CAD/SGD',
+'NZD/SGD','SGD/JPY','HKD/JPY','NOK/SEK','SEK/JPY','ZAR/JPY','MXN/JPY'
+];
 
 const modules=[
 
-{
- name:"Фундамент трейдинга",
- icon:"◈",
- color:"#9b6cff",
- desc:"База, без которой невозможно построить систему.",
- topics:[
-  "Что такое трейдинг",
-  "Как устроен финансовый рынок",
-  "Почему движется цена",
-  "Покупатели и продавцы",
-  "Ликвидность",
-  "Волатильность",
-  "Таймфреймы",
-  "Торговые сессии",
-  "Биржа и OTC",
-  "Как мыслит трейдер",
-  "Что такое котировка",
-  "Спред",
-  "Цена Bid и Ask",
-  "Рыночный ордер",
-  "Лимитный ордер",
-  "Импульс рынка",
-  "Коррекция",
-  "Флэт",
-  "Рыночный контекст",
-  "Торговый сценарий"
- ]
-},
+['Старт трейдера','Как устроен рынок и с чего начинать',[
+'Что такое трейдинг','Финансовые рынки','Валютные пары','Цена и котировка','Bid и Ask',
+'Спред','Ликвидность','Волатильность','Таймфреймы','Торговый план'
+]],
 
-{
- name:"Свечной анализ",
- icon:"◒",
- color:"#21b8d4",
- desc:"Читаем график через поведение каждой свечи.",
- topics:[
-  "Устройство свечи",
-  "Тело и тени",
-  "Бычья свеча",
-  "Медвежья свеча",
-  "Размер свечи",
-  "Импульсная свеча",
-  "Свеча неопределённости",
-  "Доджи",
-  "Пин-бар",
-  "Молот",
-  "Падающая звезда",
-  "Поглощение",
-  "Бычье поглощение",
-  "Медвежье поглощение",
-  "Последовательность свечей",
-  "Сильная закрывающая свеча",
-  "Слабая закрывающая свеча",
-  "Длинные тени",
-  "Сжатие свечей",
-  "Свечной контекст"
- ]
-},
+['Свечи','Читаем движение цены без перегруза',[
+'Строение свечи','Тело и тени','Бычья свеча','Медвежья свеча','Сила закрытия',
+'Импульс свечи','Последовательности свечей','Локальные экстремумы','Свечные контексты',
+'Практика чтения графика'
+]],
 
-{
- name:"Тренд и структура",
- icon:"↗",
- color:"#25c995",
- desc:"Определяем направление и структуру рынка.",
- topics:[
-  "Что такое тренд",
-  "Восходящий тренд",
-  "Нисходящий тренд",
-  "Флэт",
-  "Максимумы",
-  "Минимумы",
-  "HH",
-  "HL",
-  "LH",
-  "LL",
-  "Смена структуры",
-  "Импульс",
-  "Коррекция",
-  "Продолжение движения",
-  "Слом структуры",
-  "Локальная структура",
-  "Старший тренд",
-  "Младший тренд",
-  "Сценарии движения",
-  "Полный структурный анализ"
- ]
-},
+['График','Ориентируемся в структуре движения',[
+'Линия и свечи','Масштаб графика','Тренд','Флэт','Импульс','Коррекция',
+'Высшие максимумы','Низшие минимумы','Структура рынка','Разметка графика'
+]],
 
-{
- name:"Поддержка и сопротивление",
- icon:"═",
- color:"#e6b84d",
- desc:"Учимся находить области, где цена может реагировать.",
- topics:[
-  "Поддержка",
-  "Сопротивление",
-  "Уровень и зона",
-  "Как находить зоны",
-  "Сильная зона",
-  "Слабая зона",
-  "Повторный тест",
-  "Пробой",
-  "Ложный пробой",
-  "Ретест",
-  "Зеркальный уровень",
-  "Круглые значения",
-  "Исторические экстремумы",
-  "Многоразовая реакция",
-  "Свежая зона",
-  "Старая зона",
-  "Зона спроса",
-  "Зона предложения",
-  "Зоны на разных таймфреймах",
-  "Комбинация зон и структуры"
- ]
-},
+['Уровни','Поддержка и сопротивление',[
+'Поддержка','Сопротивление','Зоны вместо линий','Касания','Пробой уровня',
+'Ложный пробой','Ретест','Сила уровня','Зеркальный уровень','Практика уровней'
+]],
 
-{
- name:"Индикаторы",
- icon:"◫",
- color:"#a56cff",
- desc:"Используем индикаторы как подтверждение, а не кнопку.",
- topics:[
-  "Что такое индикатор",
-  "EMA",
-  "SMA",
-  "RSI",
-  "MACD",
-  "Bollinger Bands",
-  "Envelopes",
-  "Accelerator Oscillator",
-  "ATR",
-  "Stochastic",
-  "CCI",
-  "ADX",
-  "EMA как фильтр",
-  "RSI как фильтр",
-  "MACD и импульс",
-  "Bollinger и волатильность",
-  "Envelopes и возврат цены",
-  "Accelerator и моментум",
-  "Сочетание индикаторов",
-  "Ошибки при использовании индикаторов"
- ]
-},
+['Тренды','Работа с направлением рынка',[
+'Восходящий тренд','Нисходящий тренд','Боковик','Трендовая линия','Канал',
+'Импульс в тренде','Коррекция в тренде','Смена характера','Слабый тренд',
+'Практика трендов'
+]],
 
-{
- name:"Price Action",
- icon:"⌁",
- color:"#f06a87",
- desc:"Читаем саму цену без лишнего шума.",
- topics:[
-  "Что такое Price Action",
-  "Импульс",
-  "Коррекция",
-  "Отбой",
-  "Пробой",
-  "Ретест",
-  "Ложный пробой",
-  "Сжатие",
-  "Кульминация",
-  "Захват ликвидности",
-  "Реакция на уровень",
-  "Сила закрытия",
-  "Смена характера",
-  "Цена внутри диапазона",
-  "Выход из диапазона",
-  "Тестирование экстремума",
-  "Контекст движения",
-  "Подтверждение",
-  "Фильтрация",
-  "Полный сценарий Price Action"
- ]
-},
+['Индикаторы','Инструменты для подтверждения идеи',[
+'Зачем нужны индикаторы','EMA','SMA','RSI','MACD','Momentum',
+'Accelerator Oscillator','Envelopes','Пересечения','Согласование сигналов'
+]],
 
-{
- name:"Торговые стратегии",
- icon:"◇",
- color:"#5597ee",
- desc:"Создаём правила, которые можно проверить.",
- topics:[
-  "Что такое стратегия",
-  "Торговые правила",
-  "Условия входа",
-  "Условия отмены",
-  "Подтверждение",
-  "Стратегия по тренду",
-  "Стратегия от уровня",
-  "Пробойная стратегия",
-  "Контртренд",
-  "EMA + RSI",
-  "EMA + Price Action",
-  "RSI + уровни",
-  "Envelopes + Accelerator",
-  "Пробой + ретест",
-  "Отбой + подтверждение",
-  "Мультитаймфрейм стратегия",
-  "Фильтр плохих входов",
-  "Создание чек-листа",
-  "Тестирование стратегии",
-  "Улучшение стратегии"
- ]
-},
+['EMA','Средние и динамическая структура',[
+'Что показывает EMA','Период EMA','EMA 9','EMA 21','EMA 50','Наклон EMA',
+'Цена и EMA','Пересечение EMA','EMA как фильтр','Практика EMA'
+]],
 
-{
- name:"Риск-менеджмент",
- icon:"◉",
- color:"#2fdc9b",
- desc:"Сохраняем капитал и контролируем размер риска.",
- topics:[
-  "Что такое риск",
-  "Риск на сделку",
-  "Размер позиции",
-  "Допустимый риск",
-  "Серия убытков",
-  "Дневной лимит",
-  "Мартингейл и риски",
-  "Риск и доходность",
-  "Остановка после серии",
-  "Торговый лимит",
-  "Просадка",
-  "Максимальная просадка",
-  "Risk/Reward",
-  "Размер торговой сессии",
-  "Контроль капитала",
-  "План после убытка",
-  "План после серии побед",
-  "Риск нескольких активов",
-  "Стабильность",
-  "Система сохранения капитала"
- ]
-},
+['RSI','Читаем силу движения',[
+'Что такое RSI','Зона 30','Зона 70','Центральная линия','RSI и тренд',
+'Дивергенция RSI','Ложные экстремумы','RSI как фильтр','Комбинации RSI','Практика RSI'
+]],
 
-{
- name:"Психология",
- icon:"☾",
- color:"#a66df3",
- desc:"Учимся принимать решения спокойно и дисциплинированно.",
- topics:[
-  "Эмоции трейдера",
-  "Страх",
-  "Жадность",
-  "FOMO",
-  "Тильт",
-  "Месть рынку",
-  "Дисциплина",
-  "Ожидания",
-  "Принятие убытка",
-  "Холодная голова",
-  "Импульсивный вход",
-  "Переизбыток сделок",
-  "Страх пропустить движение",
-  "Страх закрыть позицию",
-  "Эйфория",
-  "Самоуверенность",
-  "Сомнения",
-  "Пауза",
-  "Психологический чек-лист",
-  "Ментальная система трейдера"
- ]
-},
+['MACD','Импульс и пересечения',[
+'Линии MACD','Сигнальная линия','Гистограмма','Нулевая линия',
+'Пересечение MACD','Сила импульса','Дивергенция MACD','MACD во флэте',
+'MACD в тренде','Практика MACD'
+]],
 
-{
- name:"Практика графика",
- icon:"⌗",
- color:"#38b9ef",
- desc:"Переходим от теории к реальному чтению графика.",
- topics:[
-  "Как открыть график",
-  "Алгоритм анализа",
-  "Рабочий таймфрейм",
-  "Определение тренда",
-  "Разметка зон",
-  "Поиск подтверждения",
-  "Фильтрация сигналов",
-  "Создание сценария",
-  "Разбор ошибки",
-  "Полный анализ",
-  "Анализ перед входом",
-  "Анализ после входа",
-  "Исторический график",
-  "Поиск повторяющихся ситуаций",
-  "Сравнение сценариев",
-  "Разметка импульса",
-  "Разметка коррекции",
-  "Разбор пробоя",
-  "Разбор ретеста",
-  "Комплексный анализ"
- ]
-},
+['Envelopes','Каналы вокруг средней',[
+'Идея Envelopes','Средняя линия','Верхняя граница','Нижняя граница',
+'Выход за границу','Возврат внутрь','Трендовый контекст','Флэтовый контекст',
+'Ошибки Envelopes','Практика Envelopes'
+]],
 
-{
- name:"Продвинутый анализ",
- icon:"✧",
- color:"#f09f37",
- desc:"Контекст, ликвидность и объединение нескольких факторов.",
- topics:[
-  "Контекст рынка",
-  "Сильный импульс",
-  "Слабый импульс",
-  "Ликвидность и экстремумы",
-  "Захват ликвидности",
-  "Дисбаланс",
-  "Смена характера",
-  "Мультитаймфрейм",
-  "Конфлюэнция",
-  "Фильтрация",
-  "Вероятностное мышление",
-  "Сильная реакция",
-  "Слабая реакция",
-  "Внутренний диапазон",
-  "Внешний диапазон",
-  "Контекст старшего периода",
-  "Контекст младшего периода",
-  "Связь структуры и ликвидности",
-  "Комплексный сценарий",
-  "Продвинутый анализ"
- ]
-},
+['Сетапы','Собираем понятные торговые сценарии',[
+'Что такое сетап','Условия входа','Подтверждение','Точка отмены','Сетап на тренд',
+'Сетап на откат','Сетап от уровня','Сетап пробоя','Фильтр времени','Чек-лист сетапа'
+]],
 
-{
- name:"Работа с сигналами",
- icon:"⌁",
- color:"#818cf8",
- desc:"Учимся читать сигнал и понимать, когда его пропустить.",
- topics:[
-  "Что такое сигнал",
-  "Состав сигнала",
-  "Направление",
-  "Точка входа",
-  "Экспирация",
-  "Уверенность",
-  "Подтверждения",
-  "Когда пропускать",
-  "Серия сигналов",
-  "Журнал сигналов",
-  "Сигнал по тренду",
-  "Сигнал от уровня",
-  "Сигнал после ретеста",
-  "Сигнал после пробоя",
-  "Сигнал против тренда",
-  "Фильтрация сигнала",
-  "Качество сигнала",
-  "Сценарий отмены",
-  "Разбор сигнала",
-  "Полный алгоритм работы с сигналом"
- ]
-},
+['Сигналы','Разбираем учебные сигналы',[
+'Направление UP','Направление DOWN','Уверенность','Согласование факторов',
+'RSI + EMA','MACD + цена','Уровень + свеча','Импульс + структура',
+'Слабый сигнал','Сильный учебный сигнал'
+]],
 
-{
- name:"Дневник трейдера",
- icon:"▤",
- color:"#2dbfae",
- desc:"Превращаем каждую сделку в материал для анализа.",
- topics:[
-  "Зачем вести дневник",
-  "Что записывать",
-  "Причина входа",
-  "Скриншот",
-  "Результат",
-  "Ошибка",
-  "Повторяющиеся ошибки",
-  "Статистика стратегии",
-  "Разбор недели",
-  "Улучшение системы",
-  "Эмоции в сделке",
-  "Качество входа",
-  "Соблюдение правил",
-  "Результат против процесса",
-  "Лучшие сделки",
-  "Худшие сделки",
-  "Поиск закономерностей",
-  "Ежедневный отчёт",
-  "Еженедельный отчёт",
-  "Полный торговый дневник"
- ]
-},
+['Риск','Главное — сохранять капитал',[
+'Что такое риск','Размер позиции','Лимит потерь','Серия сделок','Риск на идею',
+'Риск и эмоции','Почему нельзя догонять','Дисциплина','Дневной лимит','Чек-лист риска'
+]],
 
-{
- name:"Backtesting",
- icon:"◌",
- color:"#6ea6ee",
- desc:"Проверяем идеи на исторических данных.",
- topics:[
-  "Что такое backtest",
-  "Зачем тестировать",
-  "Исторические данные",
-  "Правила теста",
-  "Размер выборки",
-  "Win Rate",
-  "Drawdown",
-  "Плохие тесты",
-  "Оптимизация",
-  "Отчёт стратегии",
-  "Ручное тестирование",
-  "Пошаговый тест",
-  "Случайная выборка",
-  "Серии результатов",
-  "Статистическая выборка",
-  "Переоптимизация",
-  "Overfitting",
-  "Стабильность",
-  "Сравнение стратегий",
-  "Итоговый backtest"
- ]
-},
+['Психология','Спокойное принятие решений',[
+'Эмоции трейдера','Страх','Жадность','FOMO','Тильт','Ожидания',
+'Убыток как статистика','Пауза','Дневник решений','Психологический чек-лист'
+]],
 
-{
- name:"Продвинутый риск",
- icon:"△",
- color:"#45d88e",
- desc:"Вероятность, просадка и устойчивость системы.",
- topics:[
-  "Вероятность",
-  "Математическое ожидание",
-  "Распределение результатов",
-  "Drawdown",
-  "Risk of Ruin",
-  "Размер серии",
-  "Корреляция",
-  "Стабильность",
-  "Риск портфеля",
-  "Контроль просадки",
-  "Вероятность серии",
-  "Отклонение результата",
-  "Стабильный размер риска",
-  "Агрессивный риск",
-  "Консервативный риск",
-  "Сценарии просадки",
-  "Восстановление",
-  "Стресс-тест",
-  "Устойчивость",
-  "Полная система риск-контроля"
- ]
-},
+['Практика','Тренируем навык без спешки',[
+'Распознавание тренда','Поиск уровня','Чтение свечи','Поиск импульса',
+'RSI-фильтр','EMA-фильтр','MACD-фильтр','Сетап','Разбор ошибки','Итоговая тренировка'
+]],
 
-{
- name:"Путь профессионального трейдера",
- icon:"★",
- color:"#ee70b1",
- desc:"Собираем всё обучение в единую систему.",
- topics:[
-  "Торговый план",
-  "Чек-лист",
-  "Рабочее место",
-  "Режим трейдера",
-  "Неделя трейдера",
-  "Месяц трейдера",
-  "Разбор статистики",
-  "Улучшение стратегии",
-  "От эмоций к системе",
-  "Личный торговый план",
-  "Правила перед рынком",
-  "Правила после рынка",
-  "Подготовка",
-  "Пост-анализ",
-  "Работа над ошибками",
-  "Система развития",
-  "Цели трейдера",
-  "Метрики трейдера",
-  "Профессиональная дисциплина",
-  "Финальный торговый план"
- ]
-}
+['Продвинутый уровень','Собираем систему в единое целое',[
+'Мультитаймфрейм','Контекст рынка','Слияние факторов','Сила подтверждения',
+'Сценарий A/B','Журнал статистики','Разбор серии','Оптимизация правил',
+'Личный чек-лист','Финальный экзамен'
+]]
 
 ];
 
-const lessons=[];
+const palette=[
+['#8b5cf6','#ec4899'],
+['#3b82f6','#06b6d4'],
+['#f59e0b','#ec4899'],
+['#10b981','#06b6d4']
+];
 
-modules.forEach((module,moduleIndex)=>{
+function save(){
+localStorage.setItem('ava_beauty_state',JSON.stringify(state));
+}
 
-  module.topics.forEach((topic,topicIndex)=>{
+function esc(x){
+return String(x??'').replace(/[&<>"']/g,c=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
+}[c]));
+}
 
-    lessons.push({
+function initials(){
+return (state.name||'A').split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+}
 
-      id:lessons.length,
+function toast(t){
+const e=document.getElementById('toast');
+e.textContent=t;
+e.classList.add('show');
+clearTimeout(window._toast);
+window._toast=setTimeout(()=>e.classList.remove('show'),2600);
+}
 
-      moduleIndex,
+function navIcon(type){
 
-      module:module.name,
+const p={
 
-      icon:module.icon,
+home:'<path d="M4 11 12 4l8 7v9H4v-9Z"/><path d="M9 20v-5h6v5"/>',
 
-      color:module.color,
+book:'<path d="M4 5.5A3 3 0 0 1 7 3h13v17H7a3 3 0 0 0-3 3V5.5Z"/><path d="M4 19a3 3 0 0 1 3-3h13"/>',
 
-      topic,
+bot:'<rect x="5" y="8" width="14" height="12" rx="4"/><path d="M12 4v4M9 13h.01M15 13h.01M9 17h6"/><path d="M3 12h2M19 12h2"/>',
 
-      level:
-        moduleIndex<4
-        ?"БАЗОВЫЙ"
-        :moduleIndex<10
-        ?"СРЕДНИЙ"
-        :"ПРОДВИНУТЫЙ",
+chat:'<path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v5a3.5 3.5 0 0 1-3.5 3.5H11l-5 4v-4.5a3.5 3.5 0 0 1-1-2.5v-5Z"/><path d="m8 9 4 3 4-3"/>',
 
-      lead:
-        `В этом уроке разбираем тему «${topic}» `+
-        `как часть полноценного торгового процесса. `+
-        `Задача урока — не просто запомнить термин, `+
-        `а научиться видеть его на графике и понимать, `+
-        `какое место он занимает внутри сценария.`,
+user:'<circle cx="12" cy="8" r="3.2"/><path d="M5 20c.8-4 3-6 7-6s6.2 2 7 6"/>'
 
-      sections:[
+};
 
-        {
-          title:"Что это такое?",
-          text:
-            `${topic} — важный элемент анализа рынка. `+
-            `Его нельзя рассматривать отдельно от контекста. `+
-            `Перед любым решением сначала нужно понять, `+
-            `что происходит с ценой, где находится рынок `+
-            `и какой сценарий рассматривается.`
-        },
+return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${p[type]}</svg>`;
+}
 
-        {
-          title:"Как это работает?",
-          text:
-            `Начни с общей картины. Определи направление, `+
-            `структуру, ключевые области и текущее поведение цены. `+
-            `После этого используй тему урока как дополнительный `+
-            `элемент анализа. Такой порядок уменьшает вероятность `+
-            `того, что ты будешь подгонять рынок под заранее `+
-            `желательный результат.`
-        },
+function buildNav(){
 
-        {
-          title:"Как искать это на графике?",
-          text:
-            `Открой исторический график и сначала не предпринимай `+
-            `никаких действий. Найди несколько похожих ситуаций. `+
-            `Отметь контекст до появления события, само событие `+
-            `и то, что произошло после него. Это позволяет отличать `+
-            `реальный повторяющийся паттерн от случайного движения.`
-        },
+const side=document.getElementById('sideNav');
+const mob=document.getElementById('mobileNav');
 
-        {
-          title:"Практический сценарий",
-          text:
-            `Представь ситуацию, связанную с «${topic}». `+
-            `Не спеши входить. Сначала сформулируй сценарий: `+
-            `что должно произойти, чтобы идея получила подтверждение, `+
-            `и что должно произойти, чтобы ты её отменил. `+
-            `Если условия не выполнены — сценарий пропускается.`
-        },
+side.innerHTML='';
+mob.innerHTML='';
 
-        {
-          title:"Типичные ошибки",
-          text:
-            `Самая частая ошибка — воспринимать один признак `+
-            `как гарантированный сигнал. Также опасно входить `+
-            `после сильного движения только из-за страха пропустить его, `+
-            `менять правила после открытия сделки и увеличивать риск `+
-            `после убытка. Хороший анализ начинается с заранее известных правил.`
-        },
+NAV.forEach(([id,label,icon])=>{
 
-        {
-          title:"Практическое задание",
-          text:
-            `Найди минимум пять исторических примеров. `+
-            `Для каждого запиши контекст, направление, `+
-            `ключевую область, подтверждение и причину, `+
-            `по которой сценарий можно было бы отменить. `+
-            `После этого сравни все пять примеров и найди общие признаки.`
-        }
+const b=document.createElement('button');
 
-      ],
+b.className='nav-btn';
+b.dataset.page=id;
+b.innerHTML=`<i class="nav-icon">${navIcon(icon)}</i><span>${label}</span>`;
 
-      tip:
-        `Сначала пойми принцип → потом найди его на графике → `+
-        `после этого проверь несколько исторических примеров.`
-    });
+side.appendChild(b);
 
-  });
+const m=document.createElement('button');
+
+m.dataset.page=id;
+m.innerHTML=`<i class="mn-icon">${navIcon(icon)}</i>${label}`;
+
+mob.appendChild(m);
 
 });
 
-const TOTAL_LESSONS=lessons.length;
+document.querySelectorAll('[data-page]').forEach(b=>{
+b.addEventListener('click',()=>navigate(b.dataset.page));
+});
 
-/* =========================================================
-   LEVEL
-========================================================= */
-
-function getLevel(){
-  return Math.max(
-    1,
-    Math.floor(state.xp/80)+1
-  );
 }
 
-function levelPercent(){
+function navigate(page){
 
-  return Math.min(
-    100,
-    Math.round((state.xp%80)/80*100)
-  );
+document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+
+document.getElementById(page).classList.add('active');
+
+document.querySelectorAll('[data-page]').forEach(x=>{
+x.classList.toggle('active',x.dataset.page===page);
+});
+
+document.getElementById('pageTitle').textContent=
+NAV.find(x=>x[0]===page)?.[1]||'AVA';
+
+if(page==='home')renderHome();
+if(page==='education')renderEducation();
+if(page==='bot')renderBot();
+if(page==='contact')renderContact();
+if(page==='profile')renderProfile();
+
+window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* =========================================================
-   RENDER
-========================================================= */
+function makeArt(kind,idx=0){
 
-function render(){
+const [a,b]=palette[idx%palette.length];
 
-  if(!state.registered)return;
+if(kind==='chart')
 
-  setNav(state.currentPage);
+return `<svg viewBox="0 0 320 180" fill="none">
+<defs>
+<linearGradient id="g${idx}" x1="0" y1="0" x2="1" y2="1">
+<stop stop-color="${a}"/>
+<stop offset="1" stop-color="${b}"/>
+</linearGradient>
+</defs>
 
-  const titles={
-    home:"Твой путь трейдера",
-    education:"Академия обучения",
-    bot:"Ava Bot",
-    contact:"Связь со мной",
-    profile:"Твой профиль"
-  };
+<path d="M15 145 C50 115 57 130 88 92 S135 110 161 72 S210 92 245 45 S280 58 305 20"
+stroke="url(#g${idx})" stroke-width="7" stroke-linecap="round"/>
 
-  $("topTitle").innerHTML=
-    `<b>${titles[state.currentPage]}</b>`;
+<path d="M15 155h290" stroke="#fff" opacity=".2"/>
 
-  updateSideUser();
+<circle cx="245" cy="45" r="8" fill="${b}"/>
 
-  const pageRenderers={
-    home:renderHome,
-    education:renderEducation,
-    bot:renderBot,
-    contact:renderContact,
-    profile:renderProfile
-  };
+<path d="M55 140V105M50 110h10M95 119V78M90 84h10M145 100V58M140 65h10M195 82V35M190 42h10M255 60V20M250 27h10"
+stroke="#fff" opacity=".7" stroke-width="3" stroke-linecap="round"/>
 
-  $("content").innerHTML=
-    pageRenderers[state.currentPage]();
+</svg>`;
+
+if(kind==='book')
+
+return `<svg viewBox="0 0 220 150" fill="none">
+
+<path d="M30 30c25-13 48-12 80 4v90c-32-16-55-17-80-4V30Z" fill="${a}"/>
+<path d="M190 30c-25-13-48-12-80 4v90c32-16 55-17 80-4V30Z" fill="${b}"/>
+<path d="M110 34v89" stroke="#fff" opacity=".7" stroke-width="5"/>
+
+<path d="M52 56h38M52 72h45M52 88h32M168 56h-38M168 72h-45M168 88h-32"
+stroke="#fff" opacity=".55" stroke-width="4" stroke-linecap="round"/>
+
+</svg>`;
+
+return `<svg viewBox="0 0 220 150" fill="none">
+
+<circle cx="110" cy="76" r="55" fill="${a}" opacity=".9"/>
+<circle cx="110" cy="76" r="42" fill="#21142f"/>
+
+<defs>
+<linearGradient id="botg${idx}" x1="70" y1="48" x2="150" y2="106">
+<stop stop-color="${a}"/>
+<stop offset="1" stop-color="${b}"/>
+</linearGradient>
+</defs>
+
+<rect x="70" y="48" width="80" height="58" rx="19" fill="url(#botg${idx})"/>
+
+<circle cx="94" cy="76" r="7" fill="#fff"/>
+<circle cx="126" cy="76" r="7" fill="#fff"/>
+
+<path d="M98 91h24" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+<path d="M110 25v23" stroke="${b}" stroke-width="5"/>
+<circle cx="110" cy="20" r="6" fill="${b}"/>
+
+</svg>`;
 }
-
-/* =========================================================
-   HOME
-========================================================= */
 
 function renderHome(){
 
-  const done=
-    state.completedLessons.length;
-
-  const percent=
-    Math.round(done/TOTAL_LESSONS*100);
-
-  return `
-
-  <section class="page">
-
-    <div class="hero">
-
-      <div class="hero-content">
-
-        <div class="status-pill">
-
-          <span class="status-dot"></span>
-
-          AVA POCKET • ONLINE
-
-        </div>
-
-        <h1>
-          Твой путь<br>
-          <span class="gradient">трейдера.</span>
-        </h1>
-
-        <div class="hero-description">
-          Большая академия, практика, AVA BOT и
-          персональный помощник Ava — всё в одном
-          красивом пространстве.
-        </div>
-
-        <div class="hero-buttons">
-
-          <button
-            class="primary"
-            style="width:auto;padding:0 22px"
-            onclick="goPage('education')">
-            Перейти к обучению →
-          </button>
-
-          <button
-            class="secondary"
-            onclick="goPage('bot')">
-            ✦ Перейти к боту
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="hero-chart">
-
-        <svg
-          viewBox="0 0 750 450"
-          preserveAspectRatio="none">
-
-          <defs>
-
-            <linearGradient
-              id="heroArea"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1">
-
-              <stop
-                offset="0"
-                stop-color="#a855f7"
-                stop-opacity=".55"/>
-
-              <stop
-                offset="1"
-                stop-color="#a855f7"
-                stop-opacity="0"/>
-
-            </linearGradient>
-
-          </defs>
-
-          <path
-            class="chart-area"
-            d="
-              M0 380
-              L55 350
-              L95 365
-              L135 305
-              L180 325
-              L225 265
-              L270 285
-              L315 220
-              L355 245
-              L405 175
-              L450 195
-              L500 135
-              L545 155
-              L600 92
-              L645 115
-              L700 67
-              L750 90
-              L750 450
-              L0 450
-              Z"/>
+const e=document.getElementById('home');
 
-          <path
-            class="chart-line"
-            d="
-              M0 380
-              L55 350
-              L95 365
-              L135 305
-              L180 325
-              L225 265
-              L270 285
-              L315 220
-              L355 245
-              L405 175
-              L450 195
-              L500 135
-              L545 155
-              L600 92
-              L645 115
-              L700 67
-              L750 90"/>
+const pct=Math.min(100,Math.round(state.completed.length/160*100));
 
-        </svg>
+e.innerHTML=`
 
-      </div>
+<div class="hero">
 
-      <div class="price-tag">
-        EUR/USD&nbsp;&nbsp;
-        <b style="color:#31df9d">
-          +0.42%
-        </b>
-      </div>
+<div class="hero-card">
 
-    </div>
+<div class="hero-copy">
 
-    <div class="stats">
+<div class="pill" style="background:#ffffff18;color:#fff">
+<i class="dot" style="background:#fff"></i>
+AVA POCKET • EDUCATION
+</div>
 
-      <div class="stat-card">
+<h2>Твой путь<br>в трейдинге.</h2>
 
-        <div class="stat-top">
+<p>
+Не просто экран с кнопками. Это спокойное пространство, где обучение,
+практика и AVA Bot собраны в одной красивой системе.
+</p>
 
-          <span class="stat-label">
-            ОБУЧЕНИЕ
-          </span>
+<div class="hero-actions">
 
-          <span class="stat-icon">
-            ▣
-          </span>
+<button class="light ripple" onclick="navigate('bot')">
+Перейти к боту
+</button>
 
-        </div>
+<button class="ghost ripple" onclick="navigate('education')">
+Перейти к обучению
+</button>
 
-        <div class="stat-value">
-          ${done}
-          <small style="font-size:11px;color:#61596c">
-            /${TOTAL_LESSONS}
-          </small>
-        </div>
+</div>
 
-        <div class="stat-meta">
-          ${percent}% академии
-        </div>
+</div>
 
-      </div>
+<div class="hero-art">
+${makeArt('chart',0)}
+</div>
 
-      <div class="stat-card">
+</div>
 
-        <div class="stat-top">
+<div class="hero-side">
 
-          <span class="stat-label">
-            УРОВЕНЬ
-          </span>
+<div class="stat-card">
 
-          <span class="stat-icon">
-            ✦
-          </span>
+<div class="eyebrow">ТВОЙ ПРОГРЕСС</div>
 
-        </div>
+<div class="big">${pct}%</div>
 
-        <div class="stat-value">
-          ${getLevel()}
-        </div>
+<p>
+${state.completed.length} из 160 уроков завершено.
+Иди небольшими шагами — прогресс сохраняется.
+</p>
 
-        <div class="stat-meta">
-          ${state.xp} XP
-        </div>
+<div class="progress-line">
+<i style="width:${pct}%"></i>
+</div>
 
-      </div>
+</div>
 
-      <div class="stat-card">
+<div class="market-card">
 
-        <div class="stat-top">
+<div class="market-head">
 
-          <span class="stat-label">
-            AVA BOT
-          </span>
+<div class="eyebrow">MARKET ACTIVE</div>
 
-          <span class="stat-icon">
-            ◉
-          </span>
+<span class="pill">
+<i class="dot"></i>
+DEMO
+</span>
 
-        </div>
+</div>
 
-        <div class="stat-value">
-          ${state.signalsGenerated}
-        </div>
+<div class="market-pair">EUR/USD</div>
 
-        <div class="stat-meta">
-          сканирований
-        </div>
+<div class="market-meta">
+<span>Учебный рынок</span>
+<b id="homePrice">1.0842</b>
+</div>
 
-      </div>
+<div class="spark">
+${Array.from({length:12},(_,i)=>
+`<i style="height:${22+((i*17)%60)}%"></i>`
+).join('')}
+</div>
 
-      <div class="stat-card">
+</div>
 
-        <div class="stat-top">
+</div>
+</div>
 
-          <span class="stat-label">
-            DEMO
-          </span>
+<div class="section-head">
 
-          <span class="stat-icon">
-            ↗
-          </span>
+<div>
+<h3>Путь трейдера</h3>
+<p>Четыре понятных этапа без перегруза</p>
+</div>
 
-        </div>
+</div>
 
-        <div class="stat-value">
-          ${state.wins}
-        </div>
+<div class="path">
 
-        <div class="stat-meta">
-          положительных
-        </div>
+${[
+['1','Старт','Разберись, как устроен рынок и цена.'],
+['2','База','Научись читать свечи, график и уровни.'],
+['3','Практика','Собирай сетапы и проверяй идеи.'],
+['4','Уверенность','Вырабатывай дисциплину и свою систему.']
+].map((x,i)=>
 
-      </div>
+`<div class="path-card">
 
-    </div>
+<div class="n">${x[0]}</div>
+<h4>${x[1]}</h4>
+<p>${x[2]}</p>
 
-    <div class="home-grid">
+${makeArt(i===1?'book':'bot',i)}
 
-      <div class="card market-card">
+</div>`
 
-        <div class="market-header">
+).join('')}
 
-          <div class="market-title">
+</div>
 
-            <div class="market-logo">
-              ⌁
-            </div>
+<div class="quick">
 
-            <div>
+<div class="quick-card study">
 
-              <h3>
-                Market Activity
-              </h3>
+<div>
+<h4>Учёба</h4>
+<p>160 уроков, рисунки, примеры, практика и медленный XP.</p>
+<button onclick="navigate('education')">Открыть обучение</button>
+</div>
 
-              <p>
-                AVA MARKET • PRICE MOVEMENT
-              </p>
+<div class="quick-art">
+${makeArt('book',2)}
+</div>
 
-            </div>
+</div>
 
-          </div>
+<div class="quick-card bot">
 
-          <div class="market-live">
-            <i></i>
-            MARKET ACTIVE
-          </div>
+<div>
+<h4>AvaBot</h4>
+<p>Пары сверху, красивый робот ниже и учебный демо-сигнал.</p>
+<button onclick="navigate('bot')">Открыть AvaBot</button>
+</div>
 
-        </div>
+<div class="quick-art">
+${makeArt('bot',1)}
+</div>
 
-        <div class="activity">
+</div>
 
-          <div class="activity-grid"></div>
+</div>
+`;
 
-          <div class="activity-bars">
+setInterval(()=>{
 
-            ${Array.from(
-              {length:42},
-              (_,i)=>`
+const p=document.getElementById('homePrice');
 
-                <div
-                  class="activity-bar"
-                  style="
-                    height:${25+Math.random()*72}%;
-                    animation-delay:${i*.055}s">
-                </div>
+if(p)
+p.textContent=(1.0835+Math.random()*.002).toFixed(4);
 
-              `
-            ).join("")}
+},2200);
 
-          </div>
-
-          <div class="activity-line"></div>
-
-          <div class="activity-times">
-            <span>09:00</span>
-            <span>12:00</span>
-            <span>15:00</span>
-            <span>18:00</span>
-            <span>21:00</span>
-          </div>
-
-          <div class="activity-bubble">
-            ✦ Ava наблюдает за рынком
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="card ava-home">
-
-        <div class="ava-home-orbit"></div>
-
-        <div class="home-robot">
-
-          <div class="home-robot-head">
-            <div class="home-robot-screen"></div>
-          </div>
-
-          <div class="home-robot-body"></div>
-
-        </div>
-
-        <div class="ava-home-copy">
-
-          <h3>Ava Bot</h3>
-
-          <p>
-            Выбери пару, рынок и время.
-            Ava проведёт учебное сканирование
-            и покажет торговый сценарий.
-          </p>
-
-          <button
-            class="secondary"
-            onclick="goPage('bot')">
-            Перейти к боту →
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div
-      class="card"
-      style="margin-top:14px;padding:21px">
-
-      <div class="market-header">
-
-        <div>
-
-          <h3 style="margin:0;font-size:15px">
-            Продолжить обучение
-          </h3>
-
-          <p
-            style="
-              margin:5px 0 0;
-              color:#625b70;
-              font-size:8px">
-            Твой следующий шаг
-          </p>
-
-        </div>
-
-        <span
-          style="font-size:9px;color:#6d6577">
-          ${percent}%
-        </span>
-
-      </div>
-
-      ${continueLesson()}
-
-    </div>
-
-  </section>
-
-  `;
 }
 
-function continueLesson(){
+function lessonData(mi,li){
 
-  const lesson=
-    lessons.find(
-      l=>!state.completedLessons.includes(l.id)
-    ) || lessons[0];
+const [mt,ms,topics]=modules[mi];
+const topic=topics[li];
 
-  return `
+const mechanics=[
 
-  <div
-    style="
-      display:flex;
-      align-items:center;
-      gap:13px;
-      margin-top:17px;
-      padding:14px;
-      border-radius:17px;
-      background:rgba(255,255,255,.025);
-      border:1px solid rgba(255,255,255,.05)">
+`Разбери ${topic.toLowerCase()} через контекст цены, а не через одну кнопку или один показатель. Сначала посмотри, что происходило до текущего момента, затем отметь главное изменение и только после этого делай вывод.`,
 
-    <div
-      style="
-        width:49px;
-        height:49px;
-        display:grid;
-        place-items:center;
-        flex:none;
-        border-radius:15px;
-        color:#c084fc;
-        background:rgba(168,85,247,.1);
-        font-size:20px">
-      ${lesson.icon}
-    </div>
+`В учебном сценарии ${topic.toLowerCase()} полезно рассматривать как часть последовательности: контекст → наблюдение → подтверждение → решение. Такой порядок помогает не реагировать на случайную свечу.`,
 
-    <div style="flex:1">
+`Главная задача урока — не запомнить термин, а научиться узнавать его на графике. Сравни несколько похожих ситуаций и обрати внимание, чем сильный сценарий отличается от слабого.`
 
-      <div
-        style="
-          color:#655e70;
-          font-size:8px">
-        ${esc(lesson.module)}
-      </div>
+];
 
-      <b
-        style="
-          display:block;
-          margin-top:4px;
-          font-size:11px">
-        ${esc(lesson.topic)}
-      </b>
+return{
 
-    </div>
+mi,
+li,
+module:mt,
+title:topic,
 
-    <button
-      class="secondary"
-      style="
-        min-height:40px;
-        font-size:8px"
-      onclick="openLesson(${lesson.id})">
-      Открыть
-    </button>
+lead:`${topic}: практический разбор внутри модуля «${mt}».`,
 
-  </div>
+body:mechanics[li%3],
 
-  `;
+how:`1. Открой график и выбери спокойный масштаб. 2. Найди участок, где проявляется ${topic.toLowerCase()}. 3. Опиши контекст одним предложением. 4. Отметь подтверждение и фактор, который отменит твою гипотезу.`,
+
+example:`Пример: цена подходит к знакомой области, появляется изменение поведения свечей, а соседние факторы не противоречат сценарию. Вместо мгновенной реакции сравни этот участок с двумя предыдущими и проверь, действительно ли условия совпадают.`,
+
+mistakes:`Не ищи сигнал только потому, что хочется войти. Частая ошибка — вырывать ${topic.toLowerCase()} из контекста, игнорировать движение рынка и принимать единичное совпадение за систему.`,
+
+practice:`Практика: найди 3 примера на графике. Для каждого запиши контекст, наблюдение, подтверждение и причину пропустить сценарий.`,
+
+tip:`Ava Tip: если не можешь объяснить идею простыми словами за 20 секунд — сначала разберись в контексте, а уже потом оценивай вход.`,
+
+xp:5
+
+};
+
 }
-
-/* =========================================================
-   EDUCATION
-========================================================= */
 
 function renderEducation(){
 
-  const done=
-    state.completedLessons.length;
+const e=document.getElementById('education');
 
-  const percent=
-    Math.round(done/TOTAL_LESSONS*100);
+const pct=Math.min(100,Math.round(state.completed.length/160*100));
 
-  return `
+e.innerHTML=`
 
-  <section class="page education-page">
+<div class="education-page">
 
-    <div class="section-head">
+<div class="edu-hero">
 
-      <div>
+<div class="edu-title">
 
-        <h1>Академия</h1>
+<div class="eyebrow">160 УРОКОВ • 16 МОДУЛЕЙ</div>
 
-        <p>
-          ${TOTAL_LESSONS} уроков •
-          ${modules.length} больших модулей
-        </p>
+<h2>Обучение,<br>которое хочется<br>открывать.</h2>
 
-      </div>
+<p>
+Каждый урок — отдельная маленькая история:
+рисунок, объяснение, пример, типичная ошибка и практика.
+XP начисляется только один раз за действительно пройденный урок.
+</p>
 
-      <span
-        style="
-          color:#746c7b;
-          font-size:9px">
-        ${done}/${TOTAL_LESSONS}
-      </span>
+</div>
 
-    </div>
+<div class="book-card">
 
-    <div class="edu-summary">
+<div class="eyebrow">ПРОГРЕСС АКАДЕМИИ</div>
 
-      <div class="edu-summary-icon">
-        ✦
-      </div>
+<div style="font-size:32px;font-weight:1000;margin-top:8px">
+${state.completed.length}
+<span style="color:#b0a6b8;font-size:16px"> / 160</span>
+</div>
 
-      <div class="edu-summary-progress">
+<div class="progress-line">
+<i style="width:${pct}%"></i>
+</div>
 
-        <div class="edu-progress-top">
+<div style="font-size:9px;color:#847a87">
+Уровень ${state.level} · ${state.xp} XP
+</div>
 
-          <span>
-            ПРОГРЕСС АКАДЕМИИ
-          </span>
+</div>
 
-          <b>
-            ${percent}%
-          </b>
+</div>
 
-        </div>
+<div class="edu-art-strip">
 
-        <div class="edu-progress">
+<div class="art-tile">
+<strong>Свечи</strong>
+${makeArt('chart',0)}
+</div>
 
-          <span
-            style="width:${percent}%">
-          </span>
+<div class="art-tile">
+<strong>Структура</strong>
+${makeArt('chart',1)}
+</div>
 
-        </div>
+<div class="art-tile">
+<strong>Индикаторы</strong>
+${makeArt('book',2)}
+</div>
 
-      </div>
+<div class="art-tile">
+<strong>AVA Practice</strong>
+${makeArt('bot',3)}
+</div>
 
-    </div>
+</div>
 
-    <div class="edu-modules">
+<div class="edu-toolbar">
 
-      ${modules.map(
-        (module,index)=>{
+<input id="eduSearch" class="search" placeholder="Поиск урока или модуля…">
 
-          const moduleLessons=
-            lessons.filter(
-              l=>l.moduleIndex===index
-            );
+<select id="moduleFilter" class="module-select">
 
-          const completed=
-            moduleLessons.filter(
-              l=>state.completedLessons.includes(l.id)
-            ).length;
+<option value="all">Все модули</option>
 
-          const p=
-            Math.round(
-              completed/moduleLessons.length*100
-            );
+${modules.map((m,i)=>
+`<option value="${i}">${i+1}. ${m[0]}</option>`
+).join('')}
 
-          return `
+</select>
 
-          <div
-            class="edu-module"
-            style="--module-color:${module.color}">
+</div>
 
-            <div class="edu-number">
-              МОДУЛЬ
-              ${String(index+1).padStart(2,"0")}
-            </div>
+<div class="modules" id="modulesGrid"></div>
 
-            <div class="edu-icon">
-              ${module.icon}
-            </div>
+</div>
+`;
 
-            <h3>
-              ${esc(module.name)}
-            </h3>
+document.getElementById('eduSearch').addEventListener('input',filterEducation);
+document.getElementById('moduleFilter').addEventListener('change',filterEducation);
 
-            <p>
-              ${esc(module.desc)}
-            </p>
+filterEducation();
 
-            <div class="edu-bottom">
-
-              <div class="edu-meta">
-
-                <span>
-                  ${completed}/${moduleLessons.length} уроков
-                </span>
-
-                <span>
-                  ${p}%
-                </span>
-
-              </div>
-
-              <div class="edu-module-progress">
-
-                <span
-                  style="
-                    width:${p}%;
-                    background:${module.color}">
-                </span>
-
-              </div>
-
-              <button
-                class="edu-open"
-                onclick="openModule(${index})">
-                Открыть модуль →
-              </button>
-
-            </div>
-
-          </div>
-
-          `;
-
-        }
-      ).join("")}
-
-    </div>
-
-  </section>
-
-  `;
 }
 
-function openModule(index){
+function filterEducation(){
 
-  const lesson=
-    lessons.find(
-      l=>l.moduleIndex===index
-    );
+const q=(document.getElementById('eduSearch')?.value||'').toLowerCase();
+const f=document.getElementById('moduleFilter')?.value||'all';
 
-  if(lesson){
-    openLesson(lesson.id);
-  }
+const grid=document.getElementById('modulesGrid');
+
+grid.innerHTML='';
+
+modules.forEach((m,mi)=>{
+
+if(f!=='all'&&+f!==mi)return;
+
+const topics=m[2];
+
+const visible=topics
+.map((t,li)=>({t,li}))
+.filter(x=>(m[0]+' '+x.t).toLowerCase().includes(q));
+
+if(!visible.length)return;
+
+const done=topics.filter((_,li)=>
+state.completed.includes(mi*10+li)
+).length;
+
+const c=document.createElement('article');
+
+c.className='module-card';
+
+c.innerHTML=`
+
+<div class="module-art">
+${makeArt(mi%3===0?'chart':mi%3===1?'book':'bot',mi)}
+</div>
+
+<div class="module-top">
+
+<div>
+
+<div class="eyebrow">
+МОДУЛЬ ${String(mi+1).padStart(2,'0')}
+</div>
+
+<h3>${esc(m[0])}</h3>
+
+<p>${esc(m[1])}</p>
+
+</div>
+
+<div class="module-badge">
+${done}/10
+</div>
+
+</div>
+
+<div class="lesson-list">
+
+${visible.map(({t,li})=>{
+
+const id=mi*10+li;
+const d=state.completed.includes(id);
+
+return`
+
+<button class="lesson-row ${d?'done':''}" onclick="openLesson(${id})">
+
+<i class="lesson-no">${li+1}</i>
+
+<span>${esc(t)}</span>
+
+<small>${d?'✓ +5 XP':'5 XP'}</small>
+
+</button>
+`;
+
+}).join('')}
+
+</div>
+
+`;
+
+grid.appendChild(c);
+
+});
+
 }
 
-/* =========================================================
-   LESSON
-========================================================= */
+let currentLesson=0;
 
 function openLesson(id){
 
-  const lesson=
-    lessons.find(l=>l.id===id);
+currentLesson=id;
 
-  if(!lesson)return;
+const mi=Math.floor(id/10);
+const li=id%10;
+const d=lessonData(mi,li);
 
-  state.currentLesson=id;
+document.getElementById('readerNo').textContent=`${id+1}/160`;
+document.getElementById('readerModule').textContent=d.module;
+document.getElementById('readerTitle').textContent=d.title;
+document.getElementById('readerLead').textContent=d.lead+' '+d.body;
 
-  $("reader").classList.add("open");
+document.getElementById('readerArt').innerHTML=
+makeArt(mi%3===0?'chart':mi%3===1?'book':'bot',mi);
 
-  $("readerProgress").textContent=
-    `Урок ${id+1} из ${TOTAL_LESSONS}`;
+document.getElementById('readerGrid').innerHTML=
 
-  $("bookmarkBtn").textContent=
-    state.bookmarks.includes(id)
-    ?"★"
-    :"☆";
+[
+['Как разобраться',d.how],
+['Пример',d.example],
+['Типичные ошибки',d.mistakes],
+['Практика',d.practice],
+['Ava Tip',d.tip]
+]
 
-  $("readerBody").innerHTML=`
+.map(x=>
+`<div class="lesson-box">
+<h4>${x[0]}</h4>
+<p>${x[1]}</p>
+</div>`
+).join('')
 
-    <div class="lesson-kicker">
-      ${esc(lesson.module)}
-      •
-      ${lesson.level}
-    </div>
++
 
-    <h1>
-      ${esc(lesson.topic)}
-    </h1>
+`<div class="lesson-box">
+<h4>Термины урока</h4>
+<p>${d.module} · ${d.title} · контекст · подтверждение · практика</p>
+</div>`;
 
-    <div class="lesson-lead">
-      ${esc(lesson.lead)}
-    </div>
+document.getElementById('readerComplete').textContent=
+state.completed.includes(id)
+?'Урок уже пройден ✓'
+:'Завершить урок · +5 XP';
 
-    ${lesson.sections.map(
-      section=>`
+document.getElementById('readerComplete').disabled=
+state.completed.includes(id);
 
-      <div class="lesson-section">
+document.getElementById('readerBookmark').textContent=
+state.bookmarks.includes(id)
+?'★ В закладках'
+:'☆ В закладки';
 
-        <h2>
-          ${esc(section.title)}
-        </h2>
+document.getElementById('reader').classList.add('show');
 
-        <p>
-          ${esc(section.text)}
-        </p>
-
-      </div>
-
-      `
-    ).join("")}
-
-    <div class="lesson-section">
-
-      <h2>
-        Совет Ava
-      </h2>
-
-      <div class="example">
-        ✦ ${esc(lesson.tip)}
-      </div>
-
-    </div>
-
-    <div class="lesson-section">
-
-      <h2>
-        Мини-практика
-      </h2>
-
-      <div class="example">
-
-        Открой исторический график.
-        Найди минимум пять примеров этой темы.
-        Для каждого запиши контекст, подтверждение
-        и причину, по которой сценарий можно было
-        бы отменить.
-
-      </div>
-
-    </div>
-
-    <div class="lesson-actions">
-
-      <button
-        class="primary"
-        onclick="completeLesson(${id})">
-
-        ${
-          state.completedLessons.includes(id)
-          ?"✓ Урок уже пройден"
-          :"+5 XP • Завершить урок"
-        }
-
-      </button>
-
-      <button
-        class="secondary"
-        onclick="toggleBookmark()">
-
-        ${
-          state.bookmarks.includes(id)
-          ?"★ В закладках"
-          :"☆ Сохранить"
-        }
-
-      </button>
-
-    </div>
-
-    <div class="lesson-nav">
-
-      <button
-        class="secondary"
-        onclick="openLesson(${Math.max(0,id-1)})"
-        ${id===0?"disabled":""}>
-        ← Предыдущий
-      </button>
-
-      <button
-        class="secondary"
-        onclick="openLesson(${Math.min(TOTAL_LESSONS-1,id+1)})"
-        ${id===TOTAL_LESSONS-1?"disabled":""}>
-        Следующий →
-      </button>
-
-    </div>
-
-  `;
-
-  $("reader").scrollTop=0;
 }
 
-function closeLesson(){
-  $("reader").classList.remove("open");
-}
+function completeLesson(){
 
-function completeLesson(id){
+if(state.completed.includes(currentLesson))return;
 
-  if(state.completedLessons.includes(id)){
-    toast("Этот урок уже пройден");
-    return;
-  }
+state.completed.push(currentLesson);
+state.xp+=5;
+state.level=1+Math.floor(state.xp/50);
 
-  state.completedLessons.push(id);
+save();
 
-  /*
-    XP специально выдаётся медленно.
-    За один урок — только 5 XP.
-  */
+document.getElementById('readerComplete').textContent='Урок уже пройден ✓';
+document.getElementById('readerComplete').disabled=true;
 
-  state.xp+=5;
-  state.coins+=2;
+document.getElementById('xpTop').textContent=state.xp;
 
-  save();
+toast('Урок завершён · +5 XP');
 
-  render();
+renderEducation();
 
-  openLesson(id);
-
-  toast("+5 XP • урок завершён");
 }
 
 function toggleBookmark(){
 
-  const id=state.currentLesson;
+const i=state.bookmarks.indexOf(currentLesson);
 
-  const index=
-    state.bookmarks.indexOf(id);
+if(i>=0)
+state.bookmarks.splice(i,1);
+else
+state.bookmarks.push(currentLesson);
 
-  if(index===-1){
+save();
 
-    state.bookmarks.push(id);
+document.getElementById('readerBookmark').textContent=
+state.bookmarks.includes(currentLesson)
+?'★ В закладках'
+:'☆ В закладки';
 
-    toast("Урок сохранён");
-
-  }else{
-
-    state.bookmarks.splice(index,1);
-
-    toast("Урок убран из закладок");
-
-  }
-
-  save();
-
-  if($("bookmarkBtn")){
-
-    $("bookmarkBtn").textContent=
-      state.bookmarks.includes(id)
-      ?"★"
-      :"☆";
-
-  }
 }
-
-/* =========================================================
-   BOT
-========================================================= */
-
-const pairs=[
-
- "EUR/USD",
- "GBP/USD",
- "USD/JPY",
- "USD/CHF",
- "AUD/USD",
- "USD/CAD",
- "NZD/USD",
- "EUR/GBP",
- "EUR/JPY",
- "EUR/CHF",
- "EUR/AUD",
- "EUR/CAD",
- "EUR/NZD",
- "GBP/JPY",
- "GBP/CHF",
- "GBP/AUD",
- "GBP/CAD",
- "GBP/NZD",
- "AUD/JPY",
- "AUD/NZD",
- "AUD/CAD",
- "AUD/CHF",
- "CAD/JPY",
- "CAD/CHF",
- "CHF/JPY",
- "NZD/JPY",
- "NZD/CAD",
- "NZD/CHF",
- "USD/SGD",
- "USD/HKD",
- "USD/CNH",
- "USD/TRY",
- "USD/MXN",
- "USD/ZAR",
- "USD/SEK",
- "USD/NOK",
- "USD/DKK",
- "USD/PLN",
- "USD/CZK",
- "USD/HUF",
- "EUR/PLN",
- "EUR/SEK",
- "EUR/NOK",
- "EUR/DKK",
- "EUR/TRY",
- "EUR/ZAR",
- "GBP/SGD",
- "GBP/ZAR",
- "GBP/PLN",
- "AUD/SGD",
- "AUD/ZAR",
- "CAD/SGD",
- "NZD/SGD",
- "SGD/JPY",
- "HKD/JPY",
- "NOK/SEK",
- "SEK/JPY",
- "ZAR/JPY",
- "MXN/JPY"
-
-];
-
-let selectedMarket="Биржа";
-let botTimer=null;
 
 function renderBot(){
 
-  return `
+const e=document.getElementById('bot');
 
-  <section class="page">
+e.innerHTML=`
 
-    <div class="section-head">
+<div class="bot-page">
 
-      <div>
+<div class="bot-top">
 
-        <h1>Ava Bot</h1>
+<div class="bot-controls">
 
-        <p>
-          Персональный учебный market scanner
-        </p>
+<div>
 
-      </div>
+<div class="control-label">Рынок</div>
 
-      <div class="status-pill">
+<div class="segmented">
 
-        <span class="status-dot"></span>
-        READY
+<button class="market-btn active" data-market="Биржа">
+Биржа
+</button>
 
-      </div>
+<button class="market-btn" data-market="OTC">
+OTC
+</button>
 
-    </div>
+</div>
 
-    <div class="bot-layout">
+</div>
 
-      <div class="bot-card">
+<div>
 
-        <!-- ПАРАМЕТРЫ ТЕПЕРЬ СВЕРХУ -->
+<div class="control-label">Валютная пара</div>
 
-        <div class="bot-card-top">
+<select class="pair-select" id="pairSelect">
 
-          <div class="bot-brand">
+${pairs.map(p=>`<option>${p}</option>`).join('')}
 
-            <div class="bot-brand-icon">
-              ✦
-            </div>
+</select>
 
-            <div>
+</div>
 
-              <b>AVA BOT</b>
+<div>
 
-              <span>
-                PERSONAL MARKET ANALYZER
-              </span>
+<div class="control-label">Экспирация</div>
 
-            </div>
+<div class="duration">
 
-          </div>
+${[1,2,3,5,10,15].map(x=>
 
-          <div class="market-toggle">
+`<button data-duration="${x}" class="${x===1?'active':''}">
+${x} мин
+</button>`
 
-            <button
-              id="exchangeBtn"
-              class="active"
-              onclick="setMarket('Биржа')">
-              Биржа
-            </button>
+).join('')}
 
-            <button
-              id="otcBtn"
-              onclick="setMarket('OTC')">
-              OTC
-            </button>
+</div>
 
-          </div>
+</div>
 
-        </div>
+</div>
 
-        <!-- ВАЛЮТНАЯ ПАРА ВВЕРХУ -->
+</div>
 
-        <div
-          style="
-            display:grid;
-            grid-template-columns:1.4fr 1fr 1fr;
-            gap:8px;
-            padding:13px 17px;
-            border-bottom:1px solid rgba(255,255,255,.05);
-            background:rgba(8,4,13,.22)">
+<div class="bot-stage" id="botStage">
 
-          <select
-            class="control"
-            id="pairSelect">
+<div class="bot-copy">
 
-            ${pairs.map(
-              pair=>`
-                <option>
-                  ${pair}
-                </option>
-              `
-            ).join("")}
+<span class="tag">
+AVA BOT · DEMO ENGINE
+</span>
 
-          </select>
+<h2>
+Сначала<br>пара.
+</h2>
 
-          <select
-            class="control"
-            id="durationSelect">
+<p>
+Выбери инструмент и время сверху.
+Робот анализирует учебный сценарий и покажет направление,
+уверенность и набор факторов.
+Это демонстрация, а не прогноз реального рынка.
+</p>
 
-            <option value="1">
-              1 минута
-            </option>
+<button class="generate ripple" id="generateBtn">
+✦ Сгенерировать сигнал
+</button>
 
-            <option value="2">
-              2 минуты
-            </option>
+<div class="signal-result" id="signalResult"></div>
 
-            <option value="3">
-              3 минуты
-            </option>
+</div>
 
-            <option value="5" selected>
-              5 минут
-            </option>
+<div class="robot-wrap">
 
-            <option value="10">
-              10 минут
-            </option>
+<div class="robot">
 
-            <option value="15">
-              15 минут
-            </option>
+<div class="robot-ring"></div>
+<div class="scan"></div>
 
-          </select>
+<div class="robot-core">
 
-          <select
-            class="control"
-            id="analysisSelect">
+<div class="antenna"></div>
 
-            <option>
-              Обычный анализ
-            </option>
+<div class="robot-face">
 
-            <option>
-              Строгий анализ
-            </option>
+<div class="eyes">
+<i class="eye"></i>
+<i class="eye"></i>
+</div>
 
-            <option>
-              Быстрый анализ
-            </option>
+<div class="mouth"></div>
 
-          </select>
+</div>
 
-        </div>
+</div>
 
-        <div class="bot-center">
+<div class="bot-status">
+● AVA CORE READY
+</div>
 
-          <div class="bot-ring"></div>
+</div>
 
-          <div
-            class="unique-robot"
-            id="robot">
+</div>
 
-            <div class="robot-aura"></div>
+</div>
 
-            <div class="robot-circuit">
+</div>
+`;
 
-              <span></span>
-              <span></span>
-              <span></span>
+document.querySelectorAll('.market-btn').forEach(b=>
+b.onclick=()=>{
 
-            </div>
+document.querySelectorAll('.market-btn')
+.forEach(x=>x.classList.remove('active'));
 
-            <div class="robot-antenna"></div>
+b.classList.add('active');
 
-            <div class="robot-head">
+});
 
-              <div class="robot-ear left"></div>
-              <div class="robot-ear right"></div>
+document.querySelectorAll('.duration button').forEach(b=>
+b.onclick=()=>{
 
-              <div class="robot-screen">
+document.querySelectorAll('.duration button')
+.forEach(x=>x.classList.remove('active'));
 
-                <div class="robot-eye left"></div>
-                <div class="robot-eye right"></div>
+b.classList.add('active');
 
-                <div class="robot-mouth"></div>
+});
 
-                <span class="robot-mark">
-                  AVA
-                </span>
+document.getElementById('generateBtn').onclick=generateSignal;
 
-              </div>
-
-            </div>
-
-            <div class="robot-arm left">
-              <div class="robot-hand"></div>
-            </div>
-
-            <div class="robot-arm right">
-              <div class="robot-hand"></div>
-            </div>
-
-            <div class="robot-body">
-
-              <div class="robot-chest">
-                AVA
-              </div>
-
-            </div>
-
-            <div class="robot-leg left"></div>
-            <div class="robot-leg right"></div>
-
-          </div>
-
-          <div class="bot-name">
-
-            <strong>
-              AVA BOT
-            </strong>
-
-            <span id="botStatus">
-              READY TO SCAN
-            </span>
-
-          </div>
-
-          <div
-            class="signal-popup"
-            id="signalPopup">
-          </div>
-
-        </div>
-
-        <div
-          style="
-            padding:15px 17px;
-            border-top:1px solid rgba(255,255,255,.05)">
-
-          <button
-            class="generate"
-            id="generateButton"
-            style="width:100%"
-            onclick="generateSignal()">
-
-            ✦&nbsp;&nbsp;
-            Сгенерировать сигнал
-
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="bot-side">
-
-        <div class="card side-card">
-
-          <div class="side-title">
-
-            <h3>
-              Параметры Ava
-            </h3>
-
-            <span>
-              ANALYSIS
-            </span>
-
-          </div>
-
-          <div class="info">
-            <span>Направление</span>
-            <b id="trendInfo">—</b>
-          </div>
-
-          <div class="info">
-            <span>RSI</span>
-            <b id="rsiInfo">—</b>
-          </div>
-
-          <div class="info">
-            <span>EMA</span>
-            <b id="emaInfo">—</b>
-          </div>
-
-          <div class="info">
-            <span>Momentum</span>
-            <b id="momentumInfo">—</b>
-          </div>
-
-        </div>
-
-        <div class="card side-card">
-
-          <div class="side-title">
-
-            <h3>
-              Сессия
-            </h3>
-
-            <span>
-              DEMO
-            </span>
-
-          </div>
-
-          <div class="info">
-            <span>Генераций</span>
-            <b>${state.signalsGenerated}</b>
-          </div>
-
-          <div class="info">
-            <span>В плюсе</span>
-            <b style="color:#31df9d">
-              ${state.wins}
-            </b>
-          </div>
-
-          <div class="info">
-            <span>В минусе</span>
-            <b style="color:#ff5875">
-              ${state.losses}
-            </b>
-          </div>
-
-        </div>
-
-        <div class="warning">
-
-          <b>Учебный режим</b>
-
-          <br><br>
-
-          AVA BOT в этой версии работает
-          как DEMO-сценарий. Он не подключён
-          к реальному потоку котировок
-          и не является гарантией результата.
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  `;
 }
 
-function setMarket(type){
-
-  selectedMarket=type;
-
-  $("exchangeBtn")?.classList.toggle(
-    "active",
-    type==="Биржа"
-  );
-
-  $("otcBtn")?.classList.toggle(
-    "active",
-    type==="OTC"
-  );
-}
+let countdownTimer=null;
 
 function generateSignal(){
 
-  if(botTimer)return;
+const stage=document.getElementById('botStage');
+const res=document.getElementById('signalResult');
 
-  const button=
-    $("generateButton");
+const pair=document.getElementById('pairSelect').value;
 
-  const robot=
-    $("robot");
+const dur=
++document.querySelector('.duration button.active').dataset.duration;
 
-  const status=
-    $("botStatus");
+stage.classList.add('scanning');
 
-  const popup=
-    $("signalPopup");
+res.classList.remove('show');
 
-  button.disabled=true;
+document.getElementById('generateBtn').disabled=true;
+document.getElementById('generateBtn').textContent='Ava анализирует…';
 
-  popup.className="signal-popup";
+setTimeout(()=>{
 
-  popup.innerHTML="";
+const up=Math.random()<.6;
+const conf=72+Math.floor(Math.random()*22);
+const rsi=(42+Math.random()*25).toFixed(1);
+const ema=up?'UP':'DOWN';
+const macd=(up?'+':'-')+(0.08+Math.random()*.45).toFixed(2);
+const mom=(up?'+':'-')+(20+Math.floor(Math.random()*55));
 
-  robot.classList.add("scanning");
+const expiry=Date.now()+dur*60000;
 
-  const stages=[
+state.signals++;
+save();
 
-    "READING CANDLES…",
-    "CHECKING MARKET STRUCTURE…",
-    "CALCULATING RSI…",
-    "CHECKING EMA…",
-    "ANALYZING MOMENTUM…",
-    "BUILDING SCENARIO…"
+stage.classList.remove('scanning');
 
-  ];
+res.className='signal-result show';
 
-  let stage=0;
+res.innerHTML=`
 
-  status.textContent=
-    stages[0];
+<div class="result-main">
 
-  const stageTimer=
-    setInterval(()=>{
+<div>
 
-      stage++;
+<div class="eyebrow">
+${pair} · УЧЕБНЫЙ СЦЕНАРИЙ
+</div>
 
-      if(stages[stage]){
-        status.textContent=
-          stages[stage];
-      }
+<div class="direction ${up?'up':'down'}">
+${up?'↑ UP':'↓ DOWN'}
+</div>
 
-    },245);
+</div>
 
-  setTimeout(()=>{
+<div class="confidence">
+${conf}%<br>
+<small style="color:#8b8190">
+уверенность
+</small>
+</div>
 
-    clearInterval(stageTimer);
+</div>
 
-    const pair=
-      $("pairSelect").value;
+<div class="metrics">
 
-    const duration=
-      Number($("durationSelect").value);
+<div class="metric">
+<small>RSI</small>
+<b>${rsi}</b>
+</div>
 
-    const up=
-      Math.random()>.48;
+<div class="metric">
+<small>EMA</small>
+<b>${ema}</b>
+</div>
 
-    const confidence=
-      Math.round(
-        73+Math.random()*24
-      );
+<div class="metric">
+<small>MACD</small>
+<b>${macd}</b>
+</div>
 
-    const rsi=
-      +(30+Math.random()*40).toFixed(1);
+<div class="metric">
+<small>MOMENTUM</small>
+<b>${mom}</b>
+</div>
 
-    const momentum=
-      Math.round(
-        58+Math.random()*38
-      );
+</div>
 
-    state.signalsGenerated++;
+<div class="countdown" id="countdown">
+Экспирация через ${dur}:00
+</div>
 
-    save();
+<div class="demo-note">
+ДЕМО-СИМУЛЯЦИЯ · не финансовая рекомендация.
+Реальный feed не подключён.
+</div>
 
-    $("trendInfo").textContent=
-      up
-      ?"ВОСХОДЯЩЕЕ"
-      :"НИСХОДЯЩЕЕ";
+`;
 
-    $("trendInfo").style.color=
-      up
-      ?"var(--green)"
-      :"var(--red)";
+document.getElementById('generateBtn').disabled=false;
+document.getElementById('generateBtn').textContent='✦ Сгенерировать снова';
 
-    $("rsiInfo").textContent=
-      rsi;
+res.scrollIntoView({
+behavior:'smooth',
+block:'center'
+});
 
-    $("emaInfo").textContent=
-      up
-      ?"BUY BIAS"
-      :"SELL BIAS";
+clearInterval(countdownTimer);
 
-    $("momentumInfo").textContent=
-      momentum+"%";
+countdownTimer=setInterval(()=>{
 
-    robot.classList.remove("scanning");
+const left=Math.max(0,expiry-Date.now());
 
-    status.textContent=
-      "SIGNAL READY";
+const c=document.getElementById('countdown');
 
-    popup.innerHTML=`
-
-      <div class="signal-main">
-
-        <div
-          class="signal-arrow ${up?"up":"down"}">
-          ${up?"↑":"↓"}
-        </div>
-
-        <div>
-
-          <h2>
-            ${up?"ПОВЫШЕНИЕ":"ПОНИЖЕНИЕ"}
-          </h2>
-
-          <p>
-            ${esc(pair)}
-            •
-            ${selectedMarket}
-            •
-            ${duration} мин
-          </p>
-
-        </div>
-
-        <div class="confidence">
-
-          <small>
-            CONFIDENCE
-          </small>
-
-          <b>
-            ${confidence}%
-          </b>
-
-        </div>
-
-      </div>
-
-      <div class="signal-metrics">
-
-        <div class="metric">
-          <small>RSI</small>
-          <b>${rsi}</b>
-        </div>
-
-        <div class="metric">
-          <small>EMA</small>
-          <b>${up?"UP":"DOWN"}</b>
-        </div>
-
-        <div class="metric">
-          <small>MOMENTUM</small>
-          <b>${momentum}%</b>
-        </div>
-
-        <div class="metric">
-          <small>MODE</small>
-          <b>DEMO</b>
-        </div>
-
-      </div>
-
-      <div class="signal-progress">
-
-        <span id="signalProgress"></span>
-
-      </div>
-
-      <div
-        class="signal-status"
-        id="signalStatus">
-
-        СИГНАЛ АКТИВЕН •
-        ${duration}:00
-
-      </div>
-
-    `;
-
-    popup.classList.add("show");
-
-    popup.scrollIntoView({
-      behavior:"smooth",
-      block:"center"
-    });
-
-    startCountdown(
-      duration,
-      up
-    );
-
-    button.disabled=false;
-
-  },1700);
+if(!c){
+clearInterval(countdownTimer);
+return;
 }
 
-function startCountdown(
-  minutes,
-  direction
-){
+if(left<=0){
 
-  clearInterval(botTimer);
+clearInterval(countdownTimer);
 
-  const total=
-    minutes*60;
+c.innerHTML=
+'<b style="color:#6d28d9">Сценарий завершён · открой разбор урока</b>';
 
-  let remaining=
-    total;
+return;
 
-  botTimer=
-    setInterval(()=>{
-
-      remaining--;
-
-      const progress=
-        $("signalProgress");
-
-      const status=
-        $("signalStatus");
-
-      if(progress){
-
-        progress.style.width=
-          Math.max(
-            0,
-            remaining/total*100
-          )+"%";
-
-      }
-
-      if(status){
-
-        const m=
-          Math.floor(remaining/60);
-
-        const s=
-          String(
-            remaining%60
-          ).padStart(2,"0");
-
-        status.textContent=
-          `СИГНАЛ АКТИВЕН • ${m}:${s}`;
-
-      }
-
-      if(remaining<=0){
-
-        clearInterval(botTimer);
-
-        botTimer=null;
-
-        /*
-          DEMO ONLY.
-          Не выдаётся за реальные рыночные данные.
-        */
-
-        const win=
-          Math.random()<.62;
-
-        if(win){
-          state.wins++;
-        }else{
-          state.losses++;
-        }
-
-        save();
-
-        if(status){
-
-          status.className=
-            "signal-status "+
-            (win?"win":"loss");
-
-          status.textContent=
-            win
-            ?"✓ ДЕМО-РЕЗУЛЬТАТ: В ПЛЮСЕ"
-            :"✕ ДЕМО-РЕЗУЛЬТАТ: В МИНУСЕ";
-
-        }
-
-        toast(
-          win
-          ?"Демо-сценарий завершён в плюс"
-          :"Демо-сценарий завершён в минус"
-        );
-
-      }
-
-    },1000);
 }
 
-/* =========================================================
-   CONTACT
-========================================================= */
+const mm=Math.floor(left/60000);
+const ss=Math.floor(left/1000)%60;
+
+c.textContent=
+`Экспирация через ${mm}:${String(ss).padStart(2,'0')}`;
+
+},250);
+
+},1300);
+
+}
+
+function telegramIcon(){
+
+return `<svg viewBox="0 0 72 72" fill="none">
+
+<circle cx="36" cy="36" r="34" fill="currentColor" opacity=".14"/>
+
+<path d="m19 35 35-14-9 36-10-14-10-4-6-4Z" fill="currentColor"/>
+
+<path d="m35 43 3-12 11-7"
+stroke="white"
+stroke-width="3"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>`;
+
+}
 
 function renderContact(){
 
-  return `
+document.getElementById('contact').innerHTML=`
 
-  <section class="page">
+<div class="contact-page">
 
-    <div class="contact-hero">
+<div class="contact-hero">
 
-      <svg
-        class="contact-art"
-        viewBox="0 0 280 250">
+<div class="eyebrow" style="color:#ddd6fe">
+AVA COMMUNITY
+</div>
 
-        <circle cx="140" cy="125" r="98"/>
-        <circle cx="140" cy="125" r="68"/>
-        <circle cx="140" cy="125" r="38"/>
+<h2>Связь со мной.</h2>
 
-        <path d="
-          M5 175
-          C55 78 92 195 140 112
-          S230 45 275 105
-        "/>
+<p>
+Здесь всё нужное собрано аккуратно:
+Telegram-канал, личное сообщение и обновления академии.
+Никаких скучных кнопок — каждая карточка со своей иллюстрацией.
+</p>
 
-        <path d="
-          M0 205
-          C70 168 108 212 164 153
-          S232 115 280 148
-        "/>
+<svg viewBox="0 0 250 180" fill="none">
 
-      </svg>
+<circle cx="135" cy="90" r="58" fill="#ffffff12"/>
 
-      <div
-        style="
-          position:relative;
-          z-index:2">
+<path d="m75 88 105-43-27 94-31-40-31-11-16 0Z"
+fill="#fff" opacity=".92"/>
 
-        <div class="status-pill">
+<path d="m122 99 8-33 32-18"
+stroke="#7c3aed"
+stroke-width="5"
+stroke-linecap="round"
+stroke-linejoin="round"/>
 
-          <span class="status-dot"></span>
+</svg>
 
-          AVA COMMUNITY
+</div>
 
-        </div>
+<div class="contact-grid">
 
-        <h1>
-          Связь со мной
-        </h1>
+<article class="contact-card telegram">
 
-        <p>
-          Все основные способы связи,
-          обновления проекта и помощь
-          по AVA POCKET находятся здесь.
-        </p>
+<div class="contact-icon">
+${telegramIcon()}
+</div>
 
-      </div>
+<h3>Telegram-канал</h3>
 
-    </div>
+<p>
+Новости, материалы, обновления AVA ACADEMY
+и полезные публикации.
+</p>
 
-    <div class="contact-cards">
+<a href="https://t.me/+D1kxbrvyGSViZWFi"
+target="_blank"
+rel="noopener">
+Открыть канал ↗
+</a>
 
-      <!-- TELEGRAM -->
+</article>
 
-      <div
-        class="contact-card"
-        onclick="openTelegram('channel')">
+<article class="contact-card write">
 
-        <div class="contact-icon">
+<div class="contact-icon">
 
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.7">
+<svg viewBox="0 0 72 72" fill="none">
 
-            <path
-              d="M21 4 3.6 10.7c-.8.3-.8 1.4 0 1.7l4.7 1.7 1.8 5.3c.2.7 1.1.8 1.5.2l2.7-3.6 4.5 3.3c.6.4 1.4.1 1.6-.6L23 5.2c.2-.9-.9-1.5-2-.9Z"/>
+<path d="M19 20h34a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8H39l-10 8v-8h-10a8 8 0 0 1-8-8V28a8 8 0 0 1 8-8Z"
+stroke="currentColor"
+stroke-width="4"/>
 
-            <path
-              d="m8.3 14.1 9.5-6.7-7.7 8.8"/>
+<path d="m25 38 8 7 14-15"
+stroke="currentColor"
+stroke-width="4"
+stroke-linecap="round"
+stroke-linejoin="round"/>
 
-          </svg>
+</svg>
 
-        </div>
+</div>
 
-        <h3>
-          Telegram канал
-        </h3>
+<h3>Написать мне</h3>
 
-        <p>
-          Новости, обновления, новые материалы
-          и важная информация по проекту.
-        </p>
+<p>
+Личный Telegram-контакт для вопросов,
+предложений и обратной связи.
+</p>
 
-        <div class="contact-link">
-          Открыть канал →
-        </div>
+<a href="https://t.me/m/56bsIaLqZjky"
+target="_blank"
+rel="noopener">
+Написать ↗
+</a>
 
-      </div>
+</article>
 
-      <!-- PERSONAL CHAT -->
+<article class="contact-card update">
 
-      <div
-        class="contact-card"
-        onclick="openTelegram('chat')">
+<div class="contact-icon">
 
-        <div class="contact-icon">
+<svg viewBox="0 0 72 72" fill="none">
 
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.7">
+<path d="M36 12a24 24 0 1 0 23 29"
+stroke="currentColor"
+stroke-width="5"
+stroke-linecap="round"/>
 
-            <path
-              d="M20.5 11.2a7.9 7.9 0 0 1-8.2 7.7 8.6 8.6 0 0 1-3.2-.6L4 20l1.7-4.1a7.6 7.6 0 0 1-1.2-4.1A7.9 7.9 0 0 1 12.7 4a8 8 0 0 1 7.8 7.2Z"/>
+<path d="M58 13v20H38"
+stroke="currentColor"
+stroke-width="5"
+stroke-linecap="round"
+stroke-linejoin="round"/>
 
-            <path d="M8 10h8M8 13h5"/>
+<path d="M24 36c2 8 9 12 17 11"
+stroke="currentColor"
+stroke-width="4"
+stroke-linecap="round"/>
 
-            <path
-              d="M17.2 17.1 20 20l-.5-3.8"/>
+</svg>
 
-          </svg>
+</div>
 
-        </div>
+<h3>Обновления</h3>
 
-        <h3>
-          Написать мне
-        </h3>
+<p>
+Следи за новыми версиями академии
+и изменениями прямо в Telegram.
+</p>
 
-        <p>
-          Перейди прямо в личный Telegram-чат
-          и задай свой вопрос.
-        </p>
+<a href="https://t.me/+D1kxbrvyGSViZWFi"
+target="_blank"
+rel="noopener">
+Смотреть ↗
+</a>
 
-        <div class="contact-link">
-          Открыть личный чат →
-        </div>
+</article>
 
-      </div>
+</div>
 
-      <!-- UPDATE -->
+</div>
+`;
 
-      <div
-        class="contact-card update"
-        onclick="openTelegram('channel')">
-
-        <div class="contact-icon">
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.7">
-
-            <path
-              d="M12 3v4M12 17v4M3 12h4M17 12h4"/>
-
-            <path
-              d="m5.6 5.6 2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>
-
-            <circle cx="12" cy="12" r="4"/>
-
-          </svg>
-
-        </div>
-
-        <h3>
-          Обновления AVA
-        </h3>
-
-        <p>
-          Новые функции, обучение,
-          изменения приложения и новости проекта.
-        </p>
-
-        <div class="contact-link">
-          Смотреть обновления →
-        </div>
-
-      </div>
-
-      <!-- AVA -->
-
-      <div
-        class="contact-card"
-        onclick="openAva()">
-
-        <div class="contact-icon">
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.6">
-
-            <path
-              d="M12 3.5 14.1 9l5.4 2.1-5.4 2.1L12 18.5l-2.1-5.3-5.4-2.1L9.9 9 12 3.5Z"/>
-
-            <path
-              d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/>
-
-          </svg>
-
-        </div>
-
-        <h3>
-          Ava Assistant
-        </h3>
-
-        <p>
-          Учебный помощник прямо внутри приложения.
-          Спроси про любую тему из академии.
-        </p>
-
-        <div class="contact-link">
-          Спросить Ava →
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  `;
 }
 
-function openTelegram(type){
+function avatarMarkup(cls='avatar'){
 
-  const urls={
+return state.avatar
+?`<div class="${cls}">
+<img src="${state.avatar}" alt="Аватар">
+</div>`
+:`<div class="${cls}">${esc(initials())}</div>`;
 
-    channel:
-      "https://t.me/+D1kxbrvyGSViZWFi",
-
-    chat:
-      "https://t.me/m/56bsIaLqZjky"
-
-  };
-
-  window.open(
-    urls[type],
-    "_blank",
-    "noopener,noreferrer"
-  );
 }
-
-/* =========================================================
-   PROFILE
-========================================================= */
 
 function renderProfile(){
 
-  const p=
-    levelPercent();
+document.getElementById('profile').innerHTML=`
 
-  return `
+<div class="profile-grid">
 
-  <section class="page">
+<div class="profile-card">
 
-    <div class="section-head">
+<div class="profile-main">
 
-      <div>
+${avatarMarkup('big-avatar')}
 
-        <h1>
-          Профиль
-        </h1>
+<div>
 
-        <p>
-          Твой прогресс в AVA POCKET
-        </p>
+<div class="profile-name">
+${esc(state.name||'Трейдер')}
+</div>
 
-      </div>
+<div class="profile-nick">
+${esc(state.username||'@ava')}
+</div>
 
-    </div>
+</div>
 
-    <div class="profile-layout">
+</div>
 
-      <div class="card profile-card">
+<div class="profile-actions">
 
-        <div class="profile-avatar">
+<button id="changeAvatar">
+Изменить фото
+</button>
 
-          ${
-            state.avatar
-            ? `<img src="${state.avatar}" alt="Аватар">`
-            : esc(
-                (state.fio||"A")
-                .trim()
-                .charAt(0)
-                .toUpperCase()
-              )
-          }
+<button class="danger" id="removeAvatar">
+Удалить фото
+</button>
 
-        </div>
+</div>
 
-        <label class="avatar-change">
+<div class="stats">
 
-          Изменить аватар
+<div class="stat-mini">
+<small>XP</small>
+<b>${state.xp}</b>
+</div>
 
-          <input
-            id="profileAvatarInput"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            hidden
-            onchange="changeAvatar(event)">
+<div class="stat-mini">
+<small>УРОВЕНЬ</small>
+<b>${state.level}</b>
+</div>
 
-        </label>
+<div class="stat-mini">
+<small>УРОКИ</small>
+<b>${state.completed.length}</b>
+</div>
 
-        <h2>
-          ${esc(state.fio)}
-        </h2>
+</div>
 
-        <div class="profile-handle">
-          ${esc(state.username)}
-        </div>
+</div>
 
-        <div class="profile-email">
-          ${esc(state.email)}
-        </div>
+<div class="profile-card">
 
-        <button
-          class="secondary profile-edit"
-          onclick="editProfile()">
-          Редактировать профиль
-        </button>
+<div class="eyebrow">
+ПРОФИЛЬ
+</div>
 
-        <div class="profile-mini-stats">
+<h3 style="font-size:22px;margin:7px 0 18px">
+Твои данные
+</h3>
 
-          <div class="profile-mini-stat">
+<div class="profile-form">
 
-            <b>
-              ${state.completedLessons.length}
-            </b>
+<input id="pName"
+value="${esc(state.name)}"
+placeholder="ФИО">
 
-            <span>
-              УРОКОВ
-            </span>
+<input id="pEmail"
+type="email"
+value="${esc(state.email)}"
+placeholder="Email">
 
-          </div>
+<input id="pNick"
+value="${esc(state.username)}"
+placeholder="@username">
 
-          <div class="profile-mini-stat">
+<button class="save-btn" id="saveProfile">
+Сохранить изменения
+</button>
 
-            <b>
-              ${state.xp}
-            </b>
+</div>
 
-            <span>
-              XP
-            </span>
+<div style="margin-top:20px;padding:15px;border-radius:17px;background:#faf8fc;color:#827888;font-size:9px;line-height:1.6">
 
-          </div>
+XP начисляется медленно:
++5 только за первый проход каждого урока.
+Это сделано специально, чтобы обучение ощущалось как реальный путь,
+а не гонка уровней.
 
-          <div class="profile-mini-stat">
+</div>
 
-            <b>
-              ${state.coins}
-            </b>
-
-            <span>
-              COINS
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="card progress-card">
-
-        <div class="level-head">
-
-          <div
-            class="level-ring"
-            style="
-              background:
-              conic-gradient(
-                #a855f7 ${p*3.6}deg,
-                #2a2037 0deg
-              )">
-
-            <b>
-              ${getLevel()}
-            </b>
-
-          </div>
-
-          <div>
-
-            <h2>
-              Уровень ${getLevel()}
-            </h2>
-
-            <p>
-              ${
-                80-(state.xp%80)
-              }
-              XP до следующего уровня
-            </p>
-
-          </div>
-
-        </div>
-
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            margin-top:25px;
-            color:#6b6374;
-            font-size:8px">
-
-          <span>
-            ОПЫТ
-          </span>
-
-          <b>
-            ${state.xp} XP
-          </b>
-
-        </div>
-
-        <div
-          class="progress"
-          style="
-            height:8px;
-            margin-top:8px;
-            border-radius:99px;
-            overflow:hidden;
-            background:#211a2c">
-
-          <span
-            style="
-              display:block;
-              height:100%;
-              width:${p}%;
-              border-radius:inherit;
-              background:
-                linear-gradient(
-                  90deg,
-                  #8b5cf6,
-                  #d66cff,
-                  #67e8f9
-                )">
-          </span>
-
-        </div>
-
-        <h3 style="margin-top:30px">
-          Достижения
-        </h3>
+</div>
 
-        <div class="achievements">
+</div>
+`;
 
-          ${achievement(
-            "📚",
-            "Первый урок",
-            "Начало пути",
-            state.completedLessons.length>=1
-          )}
+document.getElementById('changeAvatar').onclick=
+()=>document.getElementById('avatarInput').click();
 
-          ${achievement(
-            "🔥",
-            "10 уроков",
-            "Продолжение",
-            state.completedLessons.length>=10
-          )}
+document.getElementById('removeAvatar').onclick=()=>{
 
-          ${achievement(
-            "🎯",
-            "50 уроков",
-            "Большой прогресс",
-            state.completedLessons.length>=50
-          )}
+state.avatar='';
+save();
+renderProfile();
+updateSide();
 
-          ${achievement(
-            "✦",
-            "Первый сигнал",
-            "Ava Bot",
-            state.signalsGenerated>=1
-          )}
+toast('Аватар удалён');
 
-          ${achievement(
-            "🤖",
-            "10 сканов",
-            "AVA BOT",
-            state.signalsGenerated>=10
-          )}
+};
 
-          ${achievement(
-            "🏆",
-            "Академик",
-            "Все уроки",
-            state.completedLessons.length>=TOTAL_LESSONS
-          )}
+document.getElementById('saveProfile').onclick=()=>{
 
-        </div>
+const n=document.getElementById('pName').value.trim();
+const em=document.getElementById('pEmail').value.trim();
+const u=normalizeUser(document.getElementById('pNick').value);
 
-      </div>
+if(!n||!/^\S+@\S+\.\S+$/.test(em)||!u){
 
-    </div>
-
-  </section>
-
-  `;
-}
-
-function achievement(
-  icon,
-  title,
-  desc,
-  active
-){
-
-  return `
-
-  <div
-    class="achievement ${active?"":"locked"}">
-
-    <div class="achievement-icon">
-      ${icon}
-    </div>
-
-    <b>
-      ${title}
-    </b>
-
-    <span>
-      ${desc}
-    </span>
-
-  </div>
-
-  `;
-}
-
-/* =========================================================
-   AVATAR — FIXED
-========================================================= */
-
-function changeAvatar(event){
-
-  const file=
-    event.target.files?.[0];
-
-  if(!file)return;
-
-  if(!file.type.startsWith("image/")){
-
-    toast("Выбери изображение");
-
-    event.target.value="";
-
-    return;
-  }
-
-  if(file.size>5*1024*1024){
-
-    toast("Изображение должно быть до 5 МБ");
-
-    event.target.value="";
-
-    return;
-  }
-
-  const reader=
-    new FileReader();
-
-  reader.onload=event=>{
-
-    state.avatar=
-      event.target.result;
-
-    save();
-
-    render();
-
-    toast("Аватар обновлён ✦");
-
-  };
-
-  reader.onerror=()=>{
-
-    toast("Не удалось загрузить изображение");
-
-  };
-
-  reader.readAsDataURL(file);
-}
-
-function editProfile(){
-
-  const fio=
-    prompt(
-      "FIO:",
-      state.fio
-    );
-
-  if(fio===null)return;
-
-  const username=
-    prompt(
-      "Username:",
-      state.username.replace(/^@/,"")
-    );
-
-  if(username===null)return;
-
-  if(fio.trim()){
-    state.fio=fio.trim();
-  }
-
-  if(username.trim()){
-    state.username=
-      normalizeUsername(username);
-  }
-
-  save();
-
-  render();
-
-  toast("Профиль обновлён");
-}
-
-function updateSideUser(){
-
-  $("sideName").textContent=
-    state.fio||"Трейдер";
-
-  $("sideHandle").textContent=
-    state.username;
-
-  if(state.avatar){
-
-    $("sideAvatar").innerHTML=
-      `<img
-        src="${state.avatar}"
-        alt="Avatar">`;
-
-  }else{
-
-    $("sideAvatar").textContent=
-      (
-        state.fio||"A"
-      )
-      .trim()
-      .charAt(0)
-      .toUpperCase();
-
-  }
-}
-
-/* =========================================================
-   AVA ASSISTANT
-========================================================= */
-
-function openAva(){
-
-  $("aiModal").classList.add("open");
-
-  setTimeout(
-    ()=>{
-      $("aiInput").focus();
-    },
-    160
-  );
-}
-
-function closeAva(){
-
-  $("aiModal")
-    .classList
-    .remove("open");
+toast('Проверь данные профиля');
+return;
 
 }
 
-$("aiForm").addEventListener(
-  "submit",
-  e=>{
+state.name=n;
+state.email=em;
+state.username=u;
 
-    e.preventDefault();
+save();
+updateSide();
 
-    const input=
-      $("aiInput");
+toast('Профиль сохранён');
 
-    const text=
-      input.value.trim();
+};
 
-    if(!text)return;
+}
 
-    addMessage(
-      text,
-      "user"
-    );
+function normalizeUser(v){
 
-    input.value="";
+v=v.trim();
 
-    setTimeout(
-      ()=>{
-        addMessage(
-          avaAnswer(text),
-          "bot"
-        );
-      },
-      430
-    );
+if(!v)return '';
 
-  }
+return v.startsWith('@')?v:'@'+v;
+
+}
+
+document.getElementById('avatarInput').addEventListener('change',e=>{
+
+const f=e.target.files?.[0];
+
+if(!f)return;
+
+if(!f.type.startsWith('image/')){
+return toast('Выбери изображение');
+}
+
+const r=new FileReader();
+
+r.onload=()=>{
+
+state.avatar=r.result;
+
+save();
+
+renderProfile();
+updateSide();
+
+toast('Аватар обновлён');
+
+};
+
+r.onerror=()=>{
+toast('Не удалось прочитать изображение');
+};
+
+r.readAsDataURL(f);
+
+e.target.value='';
+
+});
+
+function updateSide(){
+
+document.getElementById('sideName').textContent=
+state.name||'Трейдер';
+
+document.getElementById('sideNick').textContent=
+state.username||'@ava';
+
+document.getElementById('sideAvatar').innerHTML=
+state.avatar
+?`<img src="${state.avatar}" alt="">`
+:esc(initials());
+
+document.getElementById('xpTop').textContent=state.xp;
+
+}
+
+function setupAuth(){
+
+document.getElementById('regUsername')
+.addEventListener('input',e=>{
+
+let v=e.target.value;
+
+if(v&&!v.startsWith('@')){
+
+e.target.value='@'+v.replace(/^@/,'');
+
+}
+
+});
+
+document.getElementById('registerForm')
+.addEventListener('submit',e=>{
+
+e.preventDefault();
+
+const email=document.getElementById('regEmail').value.trim();
+const name=document.getElementById('regName').value.trim();
+const username=normalizeUser(
+document.getElementById('regUsername').value
 );
 
-function addMessage(
-  text,
-  type
-){
+const err=document.getElementById('regError');
 
-  const chat=
-    $("aiChat");
+if(!/^\S+@\S+\.\S+$/.test(email)){
 
-  const message=
-    document.createElement("div");
+err.textContent='Введи корректный email.';
+return;
 
-  message.className=
-    "message "+type;
-
-  message.textContent=
-    text;
-
-  chat.appendChild(message);
-
-  chat.scrollTop=
-    chat.scrollHeight;
 }
 
-function avaAnswer(question){
+if(name.length<2){
 
-  const q=
-    question.toLowerCase();
+err.textContent='Укажи имя и фамилию.';
+return;
 
-  if(q.includes("rsi")){
-
-    return `
-      RSI — осциллятор, который помогает
-      оценивать характер движения цены.
-      Не используй его как автоматическую
-      кнопку входа. Сначала смотри контекст,
-      структуру и реакцию цены.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("ema")){
-
-    return `
-      EMA сильнее учитывает последние значения
-      цены. Её можно использовать как фильтр
-      направления и дополнительное подтверждение.
-      Одного пересечения EMA недостаточно
-      для качественного торгового сценария.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("свеч")){
-
-    return `
-      У свечи есть открытие, закрытие, максимум
-      и минимум. Тело показывает расстояние
-      между открытием и закрытием, а тени —
-      экстремумы выбранного периода.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("тренд")){
-
-    return `
-      Посмотри на последовательность максимумов
-      и минимумов. Более высокие максимумы
-      и минимумы формируют восходящую структуру,
-      а более низкие — нисходящую.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(
-    q.includes("поддерж")
-    ||
-    q.includes("сопротив")
-  ){
-
-    return `
-      Поддержку и сопротивление лучше воспринимать
-      как зоны реакции. Важно учитывать не только
-      сам уровень, но и контекст, структуру,
-      силу движения и реакцию цены.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("риск")){
-
-    return `
-      Риск-менеджмент помогает переживать
-      серии неудачных результатов. Заранее
-      определяй допустимый риск, лимит сессии
-      и условия остановки. После убытка
-      не нужно автоматически увеличивать риск.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("fomo")){
-
-    return `
-      FOMO — страх пропустить движение.
-      Когда цена резко движется, трейдер может
-      нарушить свои правила только ради попытки
-      успеть. Лучше пропустить движение,
-      чем нарушить собственную систему.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("стратег")){
-
-    return `
-      Хорошая стратегия должна иметь контекст,
-      условия входа, подтверждение, условия
-      отмены и правила риска. После создания
-      стратегию нужно тестировать на истории.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("бот")){
-
-    return `
-      Ava Bot работает в учебном DEMO-режиме.
-      Он показывает сценарий, параметры анализа
-      и таймер. Это не подключение к реальному
-      рыночному потоку и не гарантия результата.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("пробой")){
-
-    return `
-      После пробоя можно наблюдать за поведением
-      цены и возможным ретестом зоны. Важно заранее
-      определить, что будет считаться подтверждением,
-      а что отменит сценарий.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  if(q.includes("откуда начать")){
-
-    return `
-      Начни с первых модулей академии: фундамент,
-      свечи, структура, уровни и только потом
-      переходи к индикаторам и стратегиям.
-    `.replace(/\s+/g," ").trim();
-
-  }
-
-  return `
-    Я рядом ✦ Спроси меня конкретнее:
-    «что такое RSI?»,
-    «как определить тренд?»,
-    «что такое FOMO?»,
-    «как работает EMA?»,
-    «как создать стратегию?»,
-    «что такое пробой?»
-  `.replace(/\s+/g," ").trim();
 }
 
-/* =========================================================
-   KEYBOARD
-========================================================= */
+if(username.length<3){
 
-document.addEventListener(
-  "keydown",
-  e=>{
+err.textContent='Укажи username.';
+return;
 
-    if(e.key==="Escape"){
+}
 
-      closeAva();
-      closeLesson();
+state.registered=true;
+state.email=email;
+state.name=name;
+state.username=username;
 
-    }
+save();
 
-  }
+err.textContent='';
+
+document.getElementById('auth').classList.add('hidden');
+document.getElementById('app').classList.remove('hidden');
+document.getElementById('loader').classList.add('out');
+
+updateSide();
+navigate('home');
+
+toast('Добро пожаловать в AVA ACADEMY');
+
+});
+
+}
+
+function avaAnswer(q){
+
+const s=q.toLowerCase();
+
+if(/привет|здрав/.test(s))
+return 'Привет! Я Ava 👋 Могу помочь с уроками, свечами, уровнями, RSI, EMA, MACD или навигацией.';
+
+if(/rsi/.test(s))
+return 'RSI помогает оценивать силу движения. В академии сначала изучи базовые зоны и контекст тренда, а потом переходи к фильтрации сетапов.';
+
+if(/ema/.test(s))
+return 'EMA показывает сглаженное направление цены. Не используй её как единственный сигнал — сначала оцени структуру и контекст.';
+
+if(/свеч|candl/.test(s))
+return 'Начни с уроков модуля «Свечи»: тело, тени, сила закрытия и последовательности. Это хорошая база перед индикаторами.';
+
+if(/бот|сигнал/.test(s))
+return 'Открой AvaBot в нижнем меню. Пара и время находятся сверху, робот — ниже. Результаты здесь учебные и не подключены к реальному рынку.';
+
+if(/урок|обуч/.test(s))
+return 'В «Учёбе» 160 уроков: 16 модулей по 10 занятий. За первый проход урока начисляется +5 XP.';
+
+return 'Попробуй спросить: «что такое RSI?», «как читать свечи?», «где AvaBot?» или «с чего начать обучение?»';
+
+}
+
+document.getElementById('avaFab').onclick=
+()=>document.getElementById('avaPanel').classList.toggle('show');
+
+document.getElementById('avaClose').onclick=
+()=>document.getElementById('avaPanel').classList.remove('show');
+
+document.getElementById('avaForm').addEventListener('submit',e=>{
+
+e.preventDefault();
+
+const inp=document.getElementById('avaInput');
+const q=inp.value.trim();
+
+if(!q)return;
+
+const box=document.getElementById('avaMessages');
+
+box.insertAdjacentHTML(
+'beforeend',
+`<div class="msg user">${esc(q)}</div>`
 );
 
-/* =========================================================
-   LOADER / START
-========================================================= */
+inp.value='';
 
-window.addEventListener(
-  "load",
-  ()=>{
+setTimeout(()=>{
 
-    setTimeout(
-      ()=>{
-
-        $("loader")
-          .classList
-          .add("hide");
-
-        if(state.registered){
-
-          $("auth").style.display="none";
-
-          $("app").style.display="block";
-
-          render();
-
-        }else{
-
-          $("auth").style.display="flex";
-
-        }
-
-      },
-      700
-    );
-
-  }
+box.insertAdjacentHTML(
+'beforeend',
+`<div class="msg bot">${esc(avaAnswer(q))}</div>`
 );
 
-window.addEventListener(
-  "beforeunload",
-  ()=>{
+box.scrollTop=box.scrollHeight;
 
-    if(botTimer){
-      clearInterval(botTimer);
-    }
+},300);
 
-  }
-);
+box.scrollTop=box.scrollHeight;
+
+});
+
+document.getElementById('readerClose').onclick=
+()=>document.getElementById('reader').classList.remove('show');
+
+document.getElementById('readerComplete').onclick=
+completeLesson;
+
+document.getElementById('readerBookmark').onclick=
+toggleBookmark;
+
+document.getElementById('reader').addEventListener('click',e=>{
+
+if(e.target.id==='reader')
+document.getElementById('reader').classList.remove('show');
+
+});
+
+function buildCandles(){
+
+const box=document.getElementById('candles');
+
+for(let i=0;i<48;i++){
+
+const c=document.createElement('div');
+
+c.className='candle';
+
+const top=8+(i*17)%72;
+const height=18+(i*29)%52;
+
+c.innerHTML=
+`<i style="top:${top-8}%;height:${height+15}%"></i>
+<b style="top:${top}%;height:${height}%"></b>`;
+
+c.style.animationDelay=`-${i%9}s`;
+
+box.appendChild(c);
+
+}
+
+}
+
+function boot(){
+
+buildCandles();
+buildNav();
+setupAuth();
+
+if(state.registered){
+
+document.getElementById('app').classList.remove('hidden');
+
+updateSide();
+navigate('home');
+
+}else{
+
+document.getElementById('auth').classList.remove('hidden');
+
+}
+
+setTimeout(()=>
+document.getElementById('loader').classList.add('out')
+,900);
+
+}
+
+boot();
 
 </script>
-
 </body>
 </html>
