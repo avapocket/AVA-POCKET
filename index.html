@@ -3,106 +3,282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#120b24">
-<title>AVA ACADEMY — Твой путь трейдера</title>
+<meta name="theme-color" content="#10071c">
+<title>AVA POCKET — Твой путь трейдера</title>
 
 <style>
 :root{
-  --bg:#0a0613;
-  --bg2:#11091d;
+  --bg:#08050f;
+  --panel:#130b1e;
+  --panel2:#1a1028;
   --purple:#8b5cf6;
   --purple2:#a855f7;
   --violet:#c084fc;
-  --pink:#e879f9;
+  --pink:#ec78ff;
   --blue:#6366f1;
   --cyan:#67e8f9;
-  --green:#34e3a1;
+  --green:#31df9d;
   --red:#ff5875;
-  --white:#fff;
-  --text:#f9f7ff;
-  --muted:#918aa5;
-  --muted2:#625b75;
-  --glass:rgba(27,17,44,.72);
-  --glass2:rgba(35,22,57,.88);
+  --gold:#f6c85f;
+  --text:#faf8ff;
+  --muted:#91889f;
+  --muted2:#625a70;
   --border:rgba(255,255,255,.09);
-  --shadow:0 30px 90px rgba(0,0,0,.45);
+  --shadow:0 30px 90px rgba(0,0,0,.38);
   --ease:cubic-bezier(.22,1,.36,1);
 }
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
   min-height:100vh;
-  overflow-x:hidden;
   color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif;
   background:
-    radial-gradient(circle at 15% -10%,rgba(168,85,247,.28),transparent 32%),
-    radial-gradient(circle at 100% 15%,rgba(99,102,241,.18),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(232,121,249,.07),transparent 32%),
-    var(--bg);
+    radial-gradient(circle at 10% -10%,rgba(168,85,247,.20),transparent 30%),
+    radial-gradient(circle at 100% 20%,rgba(99,102,241,.13),transparent 28%),
+    #08050f;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif;
+  overflow-x:hidden;
 }
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:disabled{cursor:not-allowed}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-thumb{background:#38284d;border-radius:99px}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:disabled{
+  cursor:not-allowed;
+}
+
+::-webkit-scrollbar{
+  width:5px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#3a284d;
+  border-radius:99px;
+}
 
 /* =========================================================
-   GLOBAL ANIMATED BACKGROUND
+   ANIMATED TRADING BACKGROUND
 ========================================================= */
 
-.background{
+.bg{
   position:fixed;
   inset:0;
+  z-index:-20;
   pointer-events:none;
   overflow:hidden;
-  z-index:-10;
-}
-.background-grid{
-  position:absolute;
-  inset:0;
-  opacity:.25;
-  background-image:
-    linear-gradient(rgba(190,150,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(190,150,255,.025) 1px,transparent 1px);
-  background-size:70px 70px;
-  mask-image:linear-gradient(to bottom,black,transparent 80%);
-}
-.glow{
-  position:absolute;
-  border-radius:50%;
-  filter:blur(60px);
-  opacity:.13;
-  animation:glowMove 12s ease-in-out infinite alternate;
-}
-.glow.one{
-  width:430px;height:430px;
-  left:-180px;top:15%;
-  background:#8b5cf6;
-}
-.glow.two{
-  width:360px;height:360px;
-  right:-150px;top:45%;
-  background:#e879f9;
-  animation-delay:-4s;
-}
-@keyframes glowMove{
-  from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(70px,-35px,0)}
 }
 
-.watermark{
+.bg-grid{
+  position:absolute;
+  inset:0;
+  opacity:.22;
+  background-image:
+    linear-gradient(rgba(190,150,255,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(190,150,255,.028) 1px,transparent 1px);
+  background-size:65px 65px;
+  mask-image:linear-gradient(to bottom,black,transparent 90%);
+}
+
+.bg-glow{
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  filter:blur(100px);
+  opacity:.10;
+  background:#9b5cff;
+  animation:bgGlow 14s ease-in-out infinite alternate;
+}
+
+.bg-glow.one{
+  left:-220px;
+  top:15%;
+}
+
+.bg-glow.two{
+  right:-200px;
+  top:55%;
+  background:#5965ef;
+  animation-delay:-5s;
+}
+
+@keyframes bgGlow{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(80px,-50px,0)}
+}
+
+.brand-watermark{
   position:absolute;
   left:50%;
-  top:47%;
-  transform:translate(-50%,-50%) rotate(-8deg);
-  white-space:nowrap;
+  top:48%;
+  transform:translate(-50%,-50%) rotate(-7deg);
+  font-size:clamp(80px,14vw,220px);
+  letter-spacing:-10px;
   font-weight:1000;
-  font-size:clamp(70px,13vw,190px);
-  letter-spacing:-8px;
-  color:rgba(255,255,255,.018);
+  white-space:nowrap;
+  color:rgba(192,132,252,.018);
+}
+
+.floating-market{
+  position:absolute;
+  inset:0;
+  opacity:.22;
+}
+
+.float-candle{
+  position:absolute;
+  width:5px;
+  border-radius:5px;
+  background:linear-gradient(to bottom,#b78cff,#714de0);
+  box-shadow:0 0 12px rgba(168,85,247,.18);
+  animation:candleFloat 7s ease-in-out infinite;
+}
+
+.float-candle:before{
+  content:"";
+  position:absolute;
+  left:2px;
+  top:-17px;
+  width:1px;
+  height:17px;
+  background:#9d7be8;
+}
+
+.float-candle:after{
+  content:"";
+  position:absolute;
+  left:2px;
+  bottom:-17px;
+  width:1px;
+  height:17px;
+  background:#9d7be8;
+}
+
+.float-candle.green{
+  background:linear-gradient(to bottom,#55edb3,#25aa79);
+}
+
+.float-candle.red{
+  background:linear-gradient(to bottom,#ff7590,#c93656);
+}
+
+@keyframes candleFloat{
+  0%,100%{
+    transform:translateY(0);
+    opacity:.35;
+  }
+  50%{
+    transform:translateY(-25px);
+    opacity:.75;
+  }
+}
+
+.pocket-float{
+  position:absolute;
+  font-weight:1000;
+  letter-spacing:2px;
+  color:rgba(255,255,255,.035);
+  animation:pocketFloat 10s ease-in-out infinite;
+  white-space:nowrap;
+}
+
+.pocket-float.p1{
+  left:5%;
+  top:20%;
+  font-size:18px;
+}
+
+.pocket-float.p2{
+  right:7%;
+  top:67%;
+  font-size:14px;
+  animation-delay:-4s;
+}
+
+.pocket-float.p3{
+  left:42%;
+  top:82%;
+  font-size:11px;
+  animation-delay:-7s;
+}
+
+@keyframes pocketFloat{
+  0%,100%{
+    transform:translate3d(0,0,0) rotate(-4deg);
+  }
+  50%{
+    transform:translate3d(18px,-20px,0) rotate(2deg);
+  }
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  background:#090511;
+  transition:.7s var(--ease);
+}
+
+.loader.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+.loader-inner{
+  text-align:center;
+}
+
+.loader-logo{
+  width:66px;
+  height:66px;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  border-radius:23px;
+  font-size:29px;
+  font-weight:1000;
+  color:white;
+  background:linear-gradient(135deg,#a855f7,#625de9);
+  box-shadow:0 25px 65px rgba(139,92,246,.4);
+  animation:loaderPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes loaderPulse{
+  50%{
+    transform:translateY(-7px) scale(1.04);
+  }
+}
+
+.loader-inner h2{
+  margin:17px 0 4px;
+  font-size:18px;
+}
+
+.loader-inner p{
+  margin:0;
+  color:#625b70;
+  font-size:9px;
 }
 
 /* =========================================================
@@ -114,27 +290,31 @@ button:disabled{cursor:not-allowed}
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:22px;
-  position:relative;
+  padding:20px;
 }
 
 .auth-card{
   width:min(470px,100%);
   padding:34px;
   border-radius:34px;
-  border:1px solid rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.10);
   background:
-    linear-gradient(145deg,rgba(39,23,62,.8),rgba(12,7,22,.9));
+    radial-gradient(circle at 85% 0%,rgba(168,85,247,.14),transparent 28%),
+    linear-gradient(145deg,rgba(37,22,57,.86),rgba(11,7,18,.94));
   backdrop-filter:blur(35px);
-  box-shadow:
-    0 40px 120px rgba(0,0,0,.55),
-    inset 0 1px 0 rgba(255,255,255,.06);
-  animation:authIn .85s var(--ease);
+  box-shadow:0 45px 130px rgba(0,0,0,.6);
+  animation:authIn .8s var(--ease);
 }
 
 @keyframes authIn{
-  from{opacity:0;transform:translateY(35px) scale(.96)}
-  to{opacity:1;transform:none}
+  from{
+    opacity:0;
+    transform:translateY(35px) scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
 
 .brand{
@@ -142,44 +322,47 @@ button:disabled{cursor:not-allowed}
   align-items:center;
   gap:12px;
 }
+
 .brand-logo{
   width:48px;
   height:48px;
-  border-radius:17px;
   display:grid;
   place-items:center;
+  border-radius:17px;
   color:white;
-  font-size:22px;
   font-weight:1000;
-  background:linear-gradient(135deg,#a855f7,#6366f1);
-  box-shadow:
-    0 15px 40px rgba(139,92,246,.4),
-    inset 0 1px 0 rgba(255,255,255,.25);
+  font-size:22px;
+  background:linear-gradient(135deg,#a855f7,#625de9);
+  box-shadow:0 15px 40px rgba(139,92,246,.35);
 }
+
 .brand-name{
   font-size:15px;
   font-weight:950;
   letter-spacing:.4px;
 }
+
 .brand-sub{
-  color:#69617a;
-  font-size:9px;
+  color:#696177;
+  font-size:8px;
   margin-top:3px;
-  letter-spacing:1px;
+  letter-spacing:1.2px;
 }
 
 .auth h1{
-  margin:42px 0 12px;
-  font-size:clamp(38px,9vw,55px);
-  line-height:.94;
-  letter-spacing:-3px;
+  margin:42px 0 13px;
+  font-size:clamp(42px,9vw,57px);
+  line-height:.92;
+  letter-spacing:-4px;
 }
+
 .gradient{
+  color:transparent;
   background:linear-gradient(90deg,#fff,#c084fc,#67e8f9);
   -webkit-background-clip:text;
   background-clip:text;
-  color:transparent;
 }
+
 .auth-description{
   color:var(--muted);
   font-size:13px;
@@ -190,75 +373,87 @@ button:disabled{cursor:not-allowed}
 .field{
   margin:13px 0;
 }
+
 .field label{
   display:block;
   margin:0 0 8px 3px;
-  color:#aaa2b9;
-  font-size:11px;
-  font-weight:750;
+  color:#aaa1b6;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.5px;
 }
-.field-wrap{
-  position:relative;
-}
+
 .field input{
   width:100%;
   height:55px;
   border-radius:17px;
   border:1px solid var(--border);
-  background:rgba(8,5,16,.72);
   outline:none;
   color:white;
+  background:rgba(7,4,13,.72);
   padding:0 16px;
   transition:.3s var(--ease);
 }
+
 .field input:focus{
   border-color:rgba(168,85,247,.7);
-  background:rgba(20,11,33,.9);
-  box-shadow:0 0 0 4px rgba(139,92,246,.1);
+  box-shadow:0 0 0 4px rgba(139,92,246,.10);
 }
+
+.username-wrap{
+  position:relative;
+}
+
 .username-prefix{
   position:absolute;
   left:16px;
   top:50%;
   transform:translateY(-50%);
   color:#c084fc;
-  font-weight:850;
+  font-weight:900;
   pointer-events:none;
 }
+
 .username-input{
   padding-left:34px!important;
 }
+
 .primary{
-  border:0;
   width:100%;
-  min-height:56px;
-  margin-top:8px;
+  min-height:55px;
+  border:0;
   border-radius:18px;
-  color:#fff;
+  color:white;
   font-weight:900;
-  background:linear-gradient(135deg,#a855f7,#6659e9);
-  box-shadow:0 18px 40px rgba(139,92,246,.3);
+  background:linear-gradient(135deg,#a855f7,#625de9);
+  box-shadow:0 18px 45px rgba(139,92,246,.28);
   transition:.35s var(--ease);
 }
+
 .primary:hover{
   transform:translateY(-2px);
-  box-shadow:0 23px 48px rgba(139,92,246,.4);
+  box-shadow:0 24px 55px rgba(139,92,246,.38);
 }
-.primary:active{transform:scale(.985)}
+
+.primary:active{
+  transform:scale(.985);
+}
+
 .auth-note{
-  color:#5f5870;
-  font-size:10px;
-  line-height:1.5;
-  text-align:center;
   margin:16px 0 0;
+  color:#5d566c;
+  font-size:9px;
+  line-height:1.55;
+  text-align:center;
 }
 
 /* =========================================================
-   APP
+   APP SHELL
 ========================================================= */
 
-#app{display:none}
-.app{min-height:100vh}
+#app{
+  display:none;
+}
 
 .sidebar{
   position:fixed;
@@ -266,11 +461,11 @@ button:disabled{cursor:not-allowed}
   top:0;
   bottom:0;
   width:252px;
+  z-index:60;
   padding:22px 15px;
-  z-index:50;
-  border-right:1px solid rgba(255,255,255,.06);
-  background:rgba(10,6,18,.72);
-  backdrop-filter:blur(30px);
+  border-right:1px solid rgba(255,255,255,.055);
+  background:rgba(9,5,15,.76);
+  backdrop-filter:blur(32px);
 }
 
 .sidebar .brand{
@@ -285,29 +480,28 @@ button:disabled{cursor:not-allowed}
 
 .nav-button{
   position:relative;
+  width:100%;
   display:flex;
   align-items:center;
   gap:12px;
-  width:100%;
   padding:9px 10px;
   border:0;
-  color:#797188;
+  border-radius:19px;
+  color:#787083;
   background:transparent;
-  border-radius:18px;
-  transition:.35s var(--ease);
+  transition:.4s var(--ease);
 }
+
 .nav-button:hover{
   color:white;
-  background:rgba(255,255,255,.045);
+  background:rgba(255,255,255,.04);
 }
+
 .nav-button.active{
   color:white;
-  background:
-    linear-gradient(100deg,rgba(139,92,246,.2),rgba(168,85,247,.07));
-  box-shadow:
-    inset 0 0 0 1px rgba(168,85,247,.1),
-    0 10px 30px rgba(0,0,0,.12);
+  background:linear-gradient(100deg,rgba(139,92,246,.20),rgba(168,85,247,.045));
 }
+
 .nav-button.active:after{
   content:"";
   position:absolute;
@@ -315,212 +509,255 @@ button:disabled{cursor:not-allowed}
   width:4px;
   height:24px;
   border-radius:99px;
-  background:linear-gradient(#c084fc,#8b5cf6);
-  box-shadow:0 0 14px #8b5cf6;
+  background:linear-gradient(#d0a5ff,#765de9);
+  box-shadow:0 0 15px rgba(168,85,247,.8);
 }
 
 .nav-icon{
+  position:relative;
   width:45px;
   height:45px;
-  position:relative;
   display:grid;
   place-items:center;
+  overflow:hidden;
   border-radius:15px;
   background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.045);
   transition:.4s var(--ease);
-  overflow:hidden;
 }
+
 .nav-icon:before{
   content:"";
   position:absolute;
-  width:25px;
-  height:25px;
+  width:28px;
+  height:28px;
   border-radius:50%;
-  background:linear-gradient(135deg,rgba(168,85,247,.28),transparent);
-  filter:blur(4px);
+  background:radial-gradient(circle,rgba(168,85,247,.24),transparent 70%);
+  filter:blur(2px);
 }
+
 .nav-button.active .nav-icon{
-  background:linear-gradient(145deg,rgba(168,85,247,.3),rgba(99,102,241,.14));
-  border-color:rgba(192,132,252,.17);
-  box-shadow:0 8px 25px rgba(139,92,246,.18);
+  background:linear-gradient(145deg,rgba(168,85,247,.30),rgba(99,102,241,.12));
+  box-shadow:0 10px 30px rgba(139,92,246,.20);
   transform:scale(1.03);
 }
+
 .nav-svg{
-  width:23px;
-  height:23px;
   position:relative;
   z-index:2;
+  width:23px;
+  height:23px;
 }
+
 .nav-text{
   font-size:13px;
-  font-weight:800;
+  font-weight:850;
 }
 
 .sidebar-user{
   position:absolute;
   left:15px;
   right:15px;
-  bottom:19px;
-  padding:10px;
+  bottom:18px;
   display:flex;
   align-items:center;
   gap:10px;
+  padding:10px;
   border-radius:19px;
   border:1px solid var(--border);
   background:rgba(255,255,255,.025);
 }
+
 .avatar-mini{
   width:42px;
   height:42px;
-  border-radius:14px;
   display:grid;
   place-items:center;
   overflow:hidden;
-  background:linear-gradient(135deg,#342153,#171022);
-  font-weight:900;
+  border-radius:14px;
+  background:linear-gradient(135deg,#3a2354,#171022);
+  font-weight:950;
 }
+
 .avatar-mini img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
+
 .user-name{
   font-size:12px;
   font-weight:850;
 }
+
 .user-handle{
-  color:#696278;
-  font-size:10px;
+  color:#696174;
+  font-size:9px;
   margin-top:3px;
 }
 
+/* =========================================================
+   MAIN
+========================================================= */
+
 .main{
-  margin-left:252px;
   min-height:100vh;
-  padding:20px clamp(16px,3vw,44px) 70px;
+  margin-left:252px;
+  padding:20px clamp(15px,3vw,44px) 70px;
 }
+
 .topbar{
+  max-width:1450px;
   height:58px;
-  max-width:1440px;
   margin:auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
+
 .topbar-title{
-  color:#81798f;
-  font-size:12px;
-  font-weight:750;
+  color:#80778e;
+  font-size:11px;
 }
-.topbar-title b{color:#d6cfe0}
+
+.topbar-title b{
+  color:#d7d0df;
+}
+
 .topbar-action{
   width:44px;
   height:44px;
   border:1px solid var(--border);
   border-radius:15px;
-  background:rgba(255,255,255,.035);
   color:white;
+  background:rgba(255,255,255,.035);
   transition:.3s var(--ease);
 }
+
 .topbar-action:hover{
   transform:translateY(-2px);
-  background:rgba(168,85,247,.12);
+  background:rgba(168,85,247,.11);
 }
 
 .page{
-  max-width:1440px;
+  max-width:1450px;
   margin:auto;
-  animation:pageIn .48s var(--ease);
+  animation:pageIn .5s var(--ease);
 }
+
 @keyframes pageIn{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:none}
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.card{
+  border:1px solid var(--border);
+  border-radius:25px;
+  background:rgba(20,11,31,.76);
+  backdrop-filter:blur(22px);
+  box-shadow:0 20px 65px rgba(0,0,0,.14);
 }
 
 /* =========================================================
-   HOME HERO
+   HOME
 ========================================================= */
 
 .hero{
   position:relative;
-  min-height:410px;
+  min-height:430px;
   overflow:hidden;
-  border-radius:34px;
+  padding:45px;
+  border-radius:35px;
   border:1px solid rgba(255,255,255,.09);
-  padding:43px;
   background:
-    radial-gradient(circle at 80% 15%,rgba(168,85,247,.22),transparent 27%),
-    radial-gradient(circle at 72% 90%,rgba(99,102,241,.12),transparent 28%),
-    linear-gradient(135deg,#211335,#0d0917 70%);
+    radial-gradient(circle at 82% 5%,rgba(168,85,247,.22),transparent 27%),
+    radial-gradient(circle at 70% 90%,rgba(99,102,241,.12),transparent 30%),
+    linear-gradient(145deg,#241337,#0d0816 72%);
   box-shadow:var(--shadow);
 }
+
 .hero:before{
   content:"";
   position:absolute;
-  width:420px;
-  height:420px;
-  right:-180px;
-  top:-200px;
+  right:-130px;
+  top:-220px;
+  width:470px;
+  height:470px;
   border-radius:50%;
-  border:1px solid rgba(192,132,252,.13);
+  border:1px solid rgba(192,132,252,.11);
   box-shadow:
-    0 0 0 30px rgba(192,132,252,.025),
-    0 0 0 65px rgba(192,132,252,.018),
-    0 0 0 105px rgba(192,132,252,.01);
-  animation:heroOrbit 12s linear infinite;
+    0 0 0 35px rgba(192,132,252,.025),
+    0 0 0 75px rgba(192,132,252,.016),
+    0 0 0 120px rgba(192,132,252,.009);
+  animation:heroRotate 18s linear infinite;
 }
-@keyframes heroOrbit{
+
+@keyframes heroRotate{
   to{transform:rotate(360deg)}
 }
 
 .hero-content{
   position:relative;
-  z-index:3;
+  z-index:4;
   max-width:620px;
 }
+
 .status-pill{
   display:inline-flex;
   align-items:center;
   gap:8px;
   padding:8px 12px;
-  border-radius:99px;
   border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.04);
-  color:#b7afc2;
-  font-size:10px;
+  border-radius:99px;
+  color:#aaa1b3;
+  background:rgba(255,255,255,.035);
+  font-size:9px;
   font-weight:850;
 }
+
 .status-dot{
   width:7px;
   height:7px;
   border-radius:50%;
   background:var(--green);
-  box-shadow:0 0 15px var(--green);
+  box-shadow:0 0 14px var(--green);
   animation:dotPulse 1.8s infinite;
 }
+
 @keyframes dotPulse{
-  50%{opacity:.35;transform:scale(.72)}
+  50%{
+    opacity:.35;
+    transform:scale(.7);
+  }
 }
 
 .hero h1{
-  font-size:clamp(43px,5.4vw,70px);
-  line-height:.92;
-  letter-spacing:-4px;
-  margin:27px 0 18px;
+  margin:28px 0 18px;
+  font-size:clamp(44px,5.5vw,73px);
+  line-height:.9;
+  letter-spacing:-4.5px;
 }
+
 .hero-description{
-  max-width:530px;
-  color:#958da3;
-  line-height:1.7;
+  max-width:560px;
+  color:#958c9f;
   font-size:13px;
+  line-height:1.75;
 }
+
 .hero-buttons{
   display:flex;
-  gap:10px;
-  margin-top:27px;
   flex-wrap:wrap;
+  gap:10px;
+  margin-top:28px;
 }
+
 .secondary{
   min-height:50px;
   padding:0 18px;
@@ -528,54 +765,63 @@ button:disabled{cursor:not-allowed}
   border-radius:16px;
   color:white;
   background:rgba(255,255,255,.045);
-  font-weight:800;
+  font-weight:820;
   transition:.35s var(--ease);
 }
+
 .secondary:hover{
   transform:translateY(-2px);
   background:rgba(255,255,255,.08);
 }
 
-.hero-market{
+.hero-chart{
   position:absolute;
   right:0;
   bottom:0;
-  width:58%;
-  height:88%;
-  opacity:.75;
+  width:60%;
+  height:90%;
+  opacity:.72;
   mask-image:linear-gradient(90deg,transparent 0%,black 30%);
 }
-.market-svg{
+
+.hero-chart svg{
   width:100%;
   height:100%;
 }
-.chart-path{
-  fill:none;
-  stroke:#b57cff;
-  stroke-width:3;
-  filter:drop-shadow(0 0 12px rgba(168,85,247,.5));
-  stroke-dasharray:1000;
-  stroke-dashoffset:1000;
-  animation:draw 4.5s ease-out forwards;
-}
-.chart-fill{
-  fill:url(#heroGradient);
-  opacity:.35;
-}
-@keyframes draw{to{stroke-dashoffset:0}}
 
-.floating-price{
+.chart-line{
+  fill:none;
+  stroke:#b985ff;
+  stroke-width:3;
+  stroke-dasharray:1100;
+  stroke-dashoffset:1100;
+  animation:chartDraw 4.5s ease-out forwards;
+  filter:drop-shadow(0 0 12px rgba(168,85,247,.45));
+}
+
+.chart-area{
+  fill:url(#heroArea);
+  opacity:.32;
+}
+
+@keyframes chartDraw{
+  to{stroke-dashoffset:0}
+}
+
+.price-tag{
   position:absolute;
   right:15%;
   top:31%;
+  z-index:5;
   padding:9px 11px;
   border-radius:11px;
-  background:rgba(14,9,24,.8);
   border:1px solid rgba(192,132,252,.13);
-  font-size:10px;
-  color:#cbbce0;
+  background:rgba(12,7,20,.82);
+  color:#cfc2dc;
+  font-size:9px;
   animation:priceFloat 3s ease-in-out infinite;
 }
+
 @keyframes priceFloat{
   50%{transform:translateY(-8px)}
 }
@@ -590,46 +836,54 @@ button:disabled{cursor:not-allowed}
   gap:13px;
   margin-top:14px;
 }
+
 .stat-card{
   min-height:120px;
   padding:18px;
   border:1px solid var(--border);
   border-radius:22px;
-  background:var(--glass);
+  background:rgba(20,11,31,.72);
   backdrop-filter:blur(20px);
   transition:.35s var(--ease);
 }
+
 .stat-card:hover{
   transform:translateY(-3px);
   border-color:rgba(168,85,247,.16);
 }
+
 .stat-top{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
+
+.stat-label{
+  color:#777080;
+  font-size:9px;
+  font-weight:800;
+}
+
 .stat-icon{
   width:37px;
   height:37px;
   display:grid;
   place-items:center;
   border-radius:13px;
-  background:rgba(168,85,247,.11);
   color:#c084fc;
+  background:rgba(168,85,247,.10);
 }
-.stat-label{
-  color:#777083;
-  font-size:10px;
-}
+
 .stat-value{
+  margin-top:11px;
   font-size:25px;
   font-weight:950;
-  margin-top:11px;
   letter-spacing:-1px;
 }
+
 .stat-meta{
   margin-top:4px;
-  color:#5e576c;
+  color:#5f586c;
   font-size:9px;
 }
 
@@ -643,249 +897,288 @@ button:disabled{cursor:not-allowed}
   gap:14px;
   margin-top:14px;
 }
-.card{
-  border:1px solid var(--border);
-  border-radius:25px;
-  background:var(--glass);
-  backdrop-filter:blur(22px);
-  box-shadow:0 20px 60px rgba(0,0,0,.14);
-}
 
 .market-card{
+  min-height:315px;
   position:relative;
   overflow:hidden;
-  min-height:305px;
   padding:22px;
   background:
-    radial-gradient(circle at 80% 15%,rgba(168,85,247,.1),transparent 30%),
-    rgba(18,11,29,.78);
+    radial-gradient(circle at 80% 15%,rgba(168,85,247,.11),transparent 30%),
+    rgba(17,10,27,.82);
 }
+
 .market-header{
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
+
 .market-title{
   display:flex;
   align-items:center;
   gap:11px;
 }
+
 .market-logo{
-  width:41px;
-  height:41px;
+  width:42px;
+  height:42px;
   display:grid;
   place-items:center;
-  border-radius:13px;
-  background:linear-gradient(145deg,rgba(168,85,247,.2),rgba(99,102,241,.12));
+  border-radius:14px;
   color:#c084fc;
-  font-weight:950;
+  background:linear-gradient(145deg,rgba(168,85,247,.20),rgba(99,102,241,.09));
 }
+
 .market-title h3{
   margin:0;
   font-size:16px;
 }
+
 .market-title p{
-  margin:3px 0 0;
+  margin:4px 0 0;
   color:#625b70;
-  font-size:9px;
+  font-size:8px;
 }
+
 .market-live{
   display:flex;
   align-items:center;
   gap:6px;
   color:#81798d;
-  font-size:9px;
-  font-weight:800;
+  font-size:8px;
+  font-weight:850;
 }
+
 .market-live i{
   width:6px;
   height:6px;
-  background:var(--green);
   border-radius:50%;
+  background:var(--green);
   box-shadow:0 0 12px var(--green);
 }
 
-.activity-chart{
+.activity{
+  height:205px;
   position:relative;
-  height:190px;
-  margin-top:15px;
+  margin-top:13px;
 }
+
+.activity-grid{
+  position:absolute;
+  inset:0 0 24px;
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:100% 25%,10% 100%;
+}
+
 .activity-bars{
   position:absolute;
-  inset:0;
+  inset:8px 0 25px;
   display:flex;
   align-items:end;
   gap:5px;
-  padding:5px 0 23px;
 }
+
 .activity-bar{
   flex:1;
   min-width:3px;
   border-radius:5px 5px 2px 2px;
-  background:linear-gradient(to top,#5d42bd,#a855f7);
-  opacity:.72;
+  background:linear-gradient(to top,#5b43b6,#a855f7);
   transform-origin:bottom;
-  animation:activityWave 2.8s ease-in-out infinite alternate;
+  animation:barPulse 2.5s ease-in-out infinite alternate;
+  opacity:.72;
 }
+
 .activity-bar:nth-child(4n){
-  background:linear-gradient(to top,#4748b7,#818cf8);
+  background:linear-gradient(to top,#4145a9,#818cf8);
 }
+
 .activity-bar:nth-child(5n){
-  background:linear-gradient(to top,#227e92,#67e8f9);
+  background:linear-gradient(to top,#247c8b,#67e8f9);
 }
-@keyframes activityWave{
-  from{transform:scaleY(.72)}
+
+.activity-bar:nth-child(7n){
+  background:linear-gradient(to top,#8e3c5e,#ff6682);
+}
+
+@keyframes barPulse{
+  from{transform:scaleY(.73)}
   to{transform:scaleY(1)}
 }
+
 .activity-line{
   position:absolute;
   left:0;
   right:0;
-  bottom:23px;
+  bottom:25px;
   height:1px;
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,.07);
 }
+
 .activity-times{
   position:absolute;
-  bottom:0;
   left:0;
   right:0;
+  bottom:3px;
   display:flex;
   justify-content:space-between;
-  color:#4f485d;
-  font-size:8px;
+  color:#4e475b;
+  font-size:7px;
 }
-.activity-signal{
+
+.activity-bubble{
   position:absolute;
-  right:20px;
-  top:56px;
-  padding:8px 10px;
+  right:15%;
+  top:42px;
+  padding:9px 11px;
+  border:1px solid rgba(168,85,247,.14);
   border-radius:11px;
-  border:1px solid rgba(168,85,247,.15);
-  background:rgba(10,6,18,.75);
-  color:#bfa9da;
-  font-size:9px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-  animation:signalFloat 3.4s ease-in-out infinite;
+  color:#bfa9d6;
+  background:rgba(10,6,17,.82);
+  font-size:8px;
+  box-shadow:0 12px 35px rgba(0,0,0,.25);
+  animation:signalFloat 3.5s ease-in-out infinite;
 }
+
 @keyframes signalFloat{
-  50%{transform:translateY(-5px)}
+  50%{transform:translateY(-6px)}
 }
 
 /* =========================================================
-   AVA HOME CARD
+   AVA HOME
 ========================================================= */
 
 .ava-home{
-  min-height:305px;
-  padding:24px;
-  overflow:hidden;
+  min-height:315px;
   position:relative;
+  overflow:hidden;
+  padding:24px;
   background:
-    radial-gradient(circle at 75% 25%,rgba(168,85,247,.25),transparent 32%),
-    linear-gradient(145deg,#201233,#110a1c);
+    radial-gradient(circle at 80% 15%,rgba(168,85,247,.24),transparent 32%),
+    linear-gradient(145deg,#211331,#11091c);
 }
-.ava-home-art{
+
+.ava-home-orbit{
   position:absolute;
-  right:-15px;
-  top:-5px;
-  width:185px;
-  height:185px;
-  opacity:.9;
-}
-.ava-orbit{
-  position:absolute;
-  inset:17px;
-  border:1px solid rgba(192,132,252,.16);
+  width:210px;
+  height:210px;
+  right:-8px;
+  top:-15px;
   border-radius:50%;
-  animation:orbit 8s linear infinite;
+  border:1px solid rgba(192,132,252,.13);
+  box-shadow:
+    0 0 0 30px rgba(192,132,252,.025),
+    0 0 0 65px rgba(192,132,252,.015);
+  animation:spin 11s linear infinite;
 }
-.ava-orbit:after{
+
+.ava-home-orbit:after{
   content:"";
   position:absolute;
+  top:14px;
+  left:43px;
   width:8px;
   height:8px;
-  top:16px;
-  left:35px;
   border-radius:50%;
   background:#67e8f9;
-  box-shadow:0 0 15px #67e8f9;
+  box-shadow:0 0 18px #67e8f9;
 }
-@keyframes orbit{to{transform:rotate(360deg)}}
-.home-bot{
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.home-robot{
   position:absolute;
-  right:44px;
+  right:39px;
   top:42px;
-  width:100px;
-  height:105px;
+  width:105px;
+  height:120px;
+  animation:robotFloat 4s ease-in-out infinite;
 }
-.bot-head{
+
+@keyframes robotFloat{
+  50%{transform:translateY(-9px)}
+}
+
+.home-robot-head{
   position:absolute;
-  left:9px;
-  top:7px;
-  width:82px;
-  height:62px;
-  border-radius:23px;
-  background:linear-gradient(145deg,#c4a8ff,#6f66e9);
-  border:1px solid rgba(255,255,255,.2);
-  box-shadow:0 20px 45px rgba(102,79,219,.45);
+  left:10px;
+  top:4px;
+  width:85px;
+  height:65px;
+  border-radius:24px;
+  background:linear-gradient(145deg,#d6c4ff,#7067df);
+  border:1px solid rgba(255,255,255,.24);
+  box-shadow:0 20px 45px rgba(102,79,219,.42);
 }
-.bot-screen{
+
+.home-robot-screen{
   position:absolute;
   left:21px;
-  top:20px;
-  width:40px;
-  height:21px;
+  top:21px;
+  width:43px;
+  height:23px;
   border-radius:9px;
-  background:#090713;
+  background:#080610;
 }
-.bot-screen:before,
-.bot-screen:after{
+
+.home-robot-screen:before,
+.home-robot-screen:after{
   content:"";
   position:absolute;
-  top:7px;
+  top:8px;
   width:6px;
   height:6px;
   border-radius:50%;
   background:#67e8f9;
   box-shadow:0 0 10px #67e8f9;
 }
-.bot-screen:before{left:9px}
-.bot-screen:after{right:9px}
-.bot-body{
+
+.home-robot-screen:before{left:9px}
+.home-robot-screen:after{right:9px}
+
+.home-robot-body{
   position:absolute;
-  left:20px;
-  top:68px;
-  width:61px;
-  height:38px;
-  border-radius:16px;
-  background:#282342;
+  left:22px;
+  top:71px;
+  width:62px;
+  height:42px;
+  border-radius:17px;
+  background:#292344;
   border:1px solid rgba(255,255,255,.08);
 }
-.bot-body:after{
+
+.home-robot-body:after{
   content:"A";
   position:absolute;
   inset:0;
   display:grid;
   place-items:center;
-  font-weight:1000;
   color:#c4b5fd;
+  font-size:15px;
+  font-weight:1000;
 }
+
 .ava-home-copy{
   position:relative;
   z-index:3;
-  max-width:210px;
-  padding-top:150px;
+  padding-top:160px;
+  max-width:230px;
 }
+
 .ava-home-copy h3{
   margin:0 0 7px;
   font-size:20px;
 }
+
 .ava-home-copy p{
-  color:#81788e;
-  font-size:11px;
-  line-height:1.6;
   margin:0 0 15px;
+  color:#81788e;
+  font-size:10px;
+  line-height:1.65;
 }
 
 /* =========================================================
@@ -898,257 +1191,364 @@ button:disabled{cursor:not-allowed}
   justify-content:space-between;
   margin:17px 0 20px;
 }
+
 .section-head h1{
   margin:0;
-  font-size:36px;
+  font-size:37px;
   letter-spacing:-2px;
 }
+
 .section-head p{
   margin:6px 0 0;
-  color:#756d80;
-  font-size:12px;
+  color:#756c80;
+  font-size:11px;
 }
 
 /* =========================================================
-   EDUCATION
+   EDUCATION — WHITE
 ========================================================= */
 
-.education-top{
-  padding:21px;
-  margin-bottom:14px;
+.education-page{
+  margin:-20px -3vw -70px;
+  min-height:calc(100vh - 58px);
+  padding:30px clamp(15px,3vw,44px) 70px;
+  color:#17111f;
+  background:
+    radial-gradient(circle at 95% 0%,rgba(168,85,247,.11),transparent 27%),
+    radial-gradient(circle at 0% 70%,rgba(99,102,241,.07),transparent 25%),
+    #faf9fc;
+  border-radius:30px 30px 0 0;
+}
+
+.education-page .section-head h1{
+  color:#17111f;
+}
+
+.education-page .section-head p{
+  color:#837b8b;
+}
+
+.edu-summary{
   display:flex;
   align-items:center;
-  gap:16px;
+  gap:17px;
+  padding:20px;
+  margin-bottom:15px;
+  border:1px solid #e8e3ec;
+  border-radius:24px;
+  background:rgba(255,255,255,.82);
+  box-shadow:0 18px 50px rgba(41,25,57,.07);
 }
-.education-progress{
+
+.edu-summary-icon{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  flex:none;
+  border-radius:16px;
+  color:white;
+  background:linear-gradient(135deg,#a855f7,#645be7);
+  box-shadow:0 10px 25px rgba(139,92,246,.22);
+}
+
+.edu-summary-progress{
   flex:1;
 }
-.education-progress-top{
+
+.edu-progress-top{
   display:flex;
   justify-content:space-between;
-  color:#827a8e;
-  font-size:10px;
   margin-bottom:8px;
+  color:#766e7c;
+  font-size:9px;
+  font-weight:800;
 }
-.progress{
+
+.edu-progress{
   height:8px;
   border-radius:99px;
-  background:#21192c;
   overflow:hidden;
+  background:#ebe7ef;
 }
-.progress span{
+
+.edu-progress span{
   display:block;
   height:100%;
   border-radius:inherit;
-  background:linear-gradient(90deg,#8b5cf6,#e879f9,#67e8f9);
-  box-shadow:0 0 14px rgba(168,85,247,.25);
+  background:linear-gradient(90deg,#8b5cf6,#d16cff,#67ddeb);
 }
 
-.modules{
+.edu-modules{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
-.module{
+
+.edu-module{
   position:relative;
-  min-height:250px;
-  padding:21px;
-  border:1px solid var(--border);
-  border-radius:24px;
-  background:linear-gradient(145deg,rgba(31,19,47,.85),rgba(14,9,22,.84));
+  min-height:265px;
+  padding:22px;
   overflow:hidden;
+  border:1px solid #e9e4ed;
+  border-radius:24px;
+  background:white;
+  box-shadow:0 15px 45px rgba(37,22,51,.055);
   transition:.45s var(--ease);
 }
-.module:hover{
-  transform:translateY(-6px);
-  border-color:rgba(168,85,247,.25);
-  box-shadow:0 22px 60px rgba(0,0,0,.3);
+
+.edu-module:hover{
+  transform:translateY(-5px);
+  box-shadow:0 25px 65px rgba(37,22,51,.10);
+  border-color:#ded4e8;
 }
-.module:after{
+
+.edu-module:after{
   content:"";
   position:absolute;
-  right:-60px;
-  top:-60px;
   width:160px;
   height:160px;
+  right:-75px;
+  top:-75px;
   border-radius:50%;
   background:var(--module-color);
-  opacity:.08;
-  filter:blur(4px);
+  opacity:.07;
 }
-.module-number{
-  color:#625b70;
-  font-size:9px;
+
+.edu-number{
+  color:#a39ba9;
+  font-size:8px;
   font-weight:950;
-  letter-spacing:1.5px;
+  letter-spacing:1.4px;
 }
-.module-icon{
-  width:48px;
-  height:48px;
-  margin:14px 0;
+
+.edu-icon{
+  width:49px;
+  height:49px;
   display:grid;
   place-items:center;
+  margin:14px 0;
   border-radius:16px;
-  background:rgba(168,85,247,.11);
   color:var(--module-color);
-  border:1px solid rgba(255,255,255,.05);
-  font-size:20px;
+  background:color-mix(in srgb,var(--module-color) 9%,white);
+  border:1px solid color-mix(in srgb,var(--module-color) 13%,white);
+  font-size:21px;
 }
-.module h3{
+
+.edu-module h3{
   margin:0 0 8px;
+  color:#211a29;
   font-size:17px;
 }
-.module p{
+
+.edu-module p{
   margin:0;
-  color:#716a7d;
-  font-size:11px;
-  line-height:1.6;
+  color:#817985;
+  font-size:10px;
+  line-height:1.65;
 }
-.module-bottom{
+
+.edu-bottom{
   position:absolute;
-  left:21px;
-  right:21px;
-  bottom:20px;
+  left:22px;
+  right:22px;
+  bottom:19px;
 }
-.module-meta{
+
+.edu-meta{
   display:flex;
   justify-content:space-between;
-  color:#635b70;
-  font-size:9px;
-  margin-bottom:8px;
+  margin-bottom:7px;
+  color:#948b98;
+  font-size:8px;
 }
-.module-button{
+
+.edu-module-progress{
+  height:6px;
+  border-radius:99px;
+  overflow:hidden;
+  background:#eeeaf1;
+}
+
+.edu-module-progress span{
+  display:block;
+  height:100%;
+  border-radius:inherit;
+}
+
+.edu-open{
   width:100%;
-  min-height:42px;
-  margin-top:12px;
-  border:1px solid rgba(255,255,255,.07);
-  background:rgba(255,255,255,.04);
+  height:40px;
+  margin-top:11px;
+  border:1px solid #e5ddeb;
   border-radius:13px;
-  color:#c9c0d5;
-  font-size:10px;
-  font-weight:850;
+  color:#4c3d5c;
+  background:#faf8fc;
+  font-size:9px;
+  font-weight:900;
   transition:.3s;
 }
-.module-button:hover{
-  background:rgba(168,85,247,.12);
-  color:white;
+
+.edu-open:hover{
+  color:#6d45a5;
+  border-color:#d8c7e7;
+  background:#f5effa;
 }
 
 /* =========================================================
-   LESSON READER
+   LESSON READER — WHITE
 ========================================================= */
 
 .reader{
   display:none;
   position:fixed;
   inset:0;
-  z-index:200;
+  z-index:250;
+  padding:18px;
   overflow:auto;
-  padding:20px;
-  background:rgba(4,2,9,.82);
+  background:rgba(11,6,17,.76);
   backdrop-filter:blur(25px);
 }
+
 .reader.open{
   display:block;
   animation:fadeIn .3s;
 }
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
 .reader-box{
-  width:min(920px,100%);
-  min-height:calc(100vh - 40px);
+  width:min(930px,100%);
+  min-height:calc(100vh - 36px);
   margin:auto;
   overflow:hidden;
-  border-radius:31px;
-  border:1px solid var(--border);
-  background:#100a1a;
-  box-shadow:0 50px 140px rgba(0,0,0,.65);
+  border-radius:30px;
+  background:#fff;
+  color:#211927;
+  box-shadow:0 50px 150px rgba(0,0,0,.55);
   animation:readerIn .5s var(--ease);
 }
+
 @keyframes readerIn{
-  from{opacity:0;transform:translateY(30px) scale(.97)}
-  to{opacity:1;transform:none}
+  from{
+    opacity:0;
+    transform:translateY(25px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
+
 .reader-top{
   height:70px;
   padding:0 20px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  border-bottom:1px solid var(--border);
-  background:rgba(16,10,26,.9);
-  backdrop-filter:blur(20px);
   position:sticky;
   top:0;
-  z-index:4;
+  z-index:5;
+  border-bottom:1px solid #eee9f0;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(20px);
 }
+
 .reader-button{
   width:42px;
   height:42px;
-  border:1px solid var(--border);
+  border:1px solid #e6e0e9;
   border-radius:14px;
-  background:rgba(255,255,255,.04);
-  color:white;
+  color:#302638;
+  background:#faf8fc;
 }
+
 .reader-body{
-  padding:40px clamp(22px,7vw,75px) 60px;
+  padding:42px clamp(22px,7vw,76px) 60px;
 }
+
 .lesson-kicker{
-  color:#a78bfa;
-  font-size:10px;
+  color:#8b5cf6;
+  font-size:9px;
   font-weight:950;
   letter-spacing:1px;
 }
+
 .reader-body h1{
   margin:12px 0 22px;
-  font-size:clamp(34px,6vw,51px);
-  line-height:1;
-  letter-spacing:-2.5px;
+  color:#1c1522;
+  font-size:clamp(34px,6vw,53px);
+  line-height:.98;
+  letter-spacing:-2.7px;
 }
+
 .lesson-lead{
-  padding:20px;
+  padding:21px;
   border-left:3px solid #a855f7;
   border-radius:0 17px 17px 0;
-  color:#aaa0b8;
-  background:rgba(168,85,247,.055);
-  line-height:1.75;
-  font-size:14px;
+  color:#756d7c;
+  background:#f8f3fc;
+  font-size:13px;
+  line-height:1.8;
 }
+
 .lesson-section{
-  margin-top:31px;
+  margin-top:32px;
 }
+
 .lesson-section h2{
-  font-size:20px;
   margin:0 0 11px;
+  color:#241b2c;
+  font-size:20px;
 }
+
 .lesson-section p{
   margin:0;
-  color:#958b9f;
-  font-size:14px;
-  line-height:1.85;
-}
-.example{
-  padding:18px;
-  border-radius:18px;
-  border:1px solid rgba(103,232,249,.11);
-  background:rgba(103,232,249,.035);
-  color:#958b9f;
+  color:#756d7c;
   font-size:13px;
-  line-height:1.75;
+  line-height:1.9;
 }
+
+.example{
+  padding:19px;
+  border:1px solid #e7dff0;
+  border-radius:18px;
+  color:#756d7c;
+  background:#fbf9fd;
+  font-size:12px;
+  line-height:1.8;
+}
+
 .lesson-actions{
   display:flex;
   flex-wrap:wrap;
-  gap:10px;
-  margin-top:35px;
-}
-.lesson-nav{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+  gap:9px;
   margin-top:35px;
 }
 
+.lesson-actions .primary{
+  width:auto;
+  padding:0 20px;
+}
+
+.lesson-nav{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:35px;
+}
+
+.reader .secondary{
+  color:#43374d;
+  background:#faf8fc;
+  border-color:#e4dce8;
+}
+
 /* =========================================================
-   AVA BOT
+   BOT
 ========================================================= */
 
 .bot-layout{
@@ -1158,16 +1558,17 @@ button:disabled{cursor:not-allowed}
 }
 
 .bot-card{
-  min-height:700px;
+  min-height:725px;
   overflow:hidden;
   position:relative;
-  border-radius:31px;
+  border-radius:32px;
   border:1px solid var(--border);
   background:
-    radial-gradient(circle at 50% 30%,rgba(168,85,247,.17),transparent 30%),
-    linear-gradient(145deg,#170d25,#0d0815);
+    radial-gradient(circle at 50% 28%,rgba(168,85,247,.18),transparent 31%),
+    linear-gradient(145deg,#180c27,#0c0713);
   box-shadow:var(--shadow);
 }
+
 .bot-card-top{
   height:74px;
   padding:0 22px;
@@ -1175,277 +1576,382 @@ button:disabled{cursor:not-allowed}
   align-items:center;
   justify-content:space-between;
   border-bottom:1px solid var(--border);
-  background:rgba(12,7,20,.35);
+  background:rgba(9,5,15,.35);
 }
+
 .bot-brand{
   display:flex;
   align-items:center;
   gap:10px;
 }
+
 .bot-brand-icon{
   width:42px;
   height:42px;
   display:grid;
   place-items:center;
   border-radius:14px;
-  background:linear-gradient(135deg,#a855f7,#6366f1);
-  box-shadow:0 10px 30px rgba(139,92,246,.25);
+  color:white;
+  background:linear-gradient(135deg,#a855f7,#625de9);
+  box-shadow:0 12px 30px rgba(139,92,246,.28);
 }
+
 .bot-brand b{
   display:block;
   font-size:14px;
 }
+
 .bot-brand span{
   display:block;
-  color:#655e72;
-  font-size:9px;
   margin-top:3px;
+  color:#655d72;
+  font-size:8px;
 }
+
 .market-toggle{
   display:flex;
-  padding:4px;
   gap:3px;
+  padding:4px;
+  border:1px solid var(--border);
   border-radius:13px;
   background:#0b0711;
-  border:1px solid var(--border);
 }
+
 .market-toggle button{
   min-width:68px;
   height:34px;
   border:0;
   border-radius:9px;
-  color:#655e72;
+  color:#665e72;
   background:transparent;
   font-size:9px;
   font-weight:900;
-  transition:.3s;
 }
+
 .market-toggle button.active{
   color:white;
-  background:linear-gradient(135deg,#3a2555,#25204a);
-  box-shadow:0 5px 15px rgba(0,0,0,.2);
+  background:linear-gradient(135deg,#3c2757,#25214a);
 }
 
 .bot-center{
-  height:510px;
+  height:525px;
   position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
 }
+
 .bot-center:before,
 .bot-center:after{
   content:"";
   position:absolute;
-  width:330px;
-  height:330px;
   border-radius:50%;
   border:1px solid rgba(168,85,247,.09);
 }
-.bot-center:after{
-  width:230px;
-  height:230px;
-  border-color:rgba(103,232,249,.08);
+
+.bot-center:before{
+  width:340px;
+  height:340px;
 }
+
+.bot-center:after{
+  width:240px;
+  height:240px;
+  border-color:rgba(103,232,249,.07);
+}
+
 .bot-ring{
   position:absolute;
-  width:390px;
-  height:390px;
+  width:400px;
+  height:400px;
   border-radius:50%;
   border:1px dashed rgba(168,85,247,.08);
-  animation:spin 20s linear infinite;
+  animation:spin 22s linear infinite;
 }
+
 .bot-ring:after{
   content:"";
   position:absolute;
   width:8px;
   height:8px;
-  top:18px;
   left:85px;
+  top:17px;
   border-radius:50%;
   background:#c084fc;
-  box-shadow:0 0 16px #c084fc;
+  box-shadow:0 0 17px #c084fc;
 }
-@keyframes spin{to{transform:rotate(360deg)}}
 
-/* BEAUTIFUL ROBOT */
+/* =========================================================
+   UNIQUE AVA BOT
+========================================================= */
 
-.robot{
+.unique-robot{
   position:relative;
-  width:245px;
-  height:280px;
-  z-index:2;
-  animation:robotFloat 4s ease-in-out infinite;
+  width:255px;
+  height:295px;
+  z-index:3;
+  animation:uniqueFloat 4.2s ease-in-out infinite;
 }
-@keyframes robotFloat{
-  50%{transform:translateY(-9px)}
+
+@keyframes uniqueFloat{
+  50%{
+    transform:translateY(-10px);
+  }
 }
+
 .robot-aura{
   position:absolute;
-  width:190px;
-  height:190px;
-  left:27px;
-  top:30px;
+  width:220px;
+  height:220px;
+  left:18px;
+  top:27px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(168,85,247,.2),transparent 68%);
-  filter:blur(10px);
+  background:radial-gradient(circle,rgba(168,85,247,.22),transparent 68%);
+  filter:blur(9px);
 }
+
+.robot-circuit{
+  position:absolute;
+  inset:0;
+}
+
+.robot-circuit span{
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#67e8f9;
+  box-shadow:0 0 14px #67e8f9;
+}
+
+.robot-circuit span:nth-child(1){
+  left:25px;
+  top:86px;
+}
+
+.robot-circuit span:nth-child(2){
+  right:20px;
+  top:126px;
+}
+
+.robot-circuit span:nth-child(3){
+  left:37px;
+  bottom:74px;
+}
+
 .robot-antenna{
   position:absolute;
-  left:120px;
+  left:126px;
   top:0;
   width:4px;
-  height:39px;
+  height:38px;
   border-radius:99px;
-  background:linear-gradient(#67e8f9,#8b5cf6);
+  background:linear-gradient(#67e8f9,#9b67ff);
 }
+
 .robot-antenna:after{
   content:"";
   position:absolute;
-  left:-4px;
-  top:-9px;
-  width:12px;
-  height:12px;
+  left:-5px;
+  top:-10px;
+  width:14px;
+  height:14px;
   border-radius:50%;
   background:#67e8f9;
-  box-shadow:0 0 20px #67e8f9;
+  box-shadow:0 0 22px #67e8f9;
 }
+
 .robot-head{
   position:absolute;
-  left:40px;
+  left:39px;
   top:29px;
-  width:165px;
-  height:116px;
-  border-radius:43px;
+  width:177px;
+  height:123px;
+  border-radius:45px;
   background:
-    linear-gradient(145deg,#d4c0ff 0%,#9b7bf1 38%,#5957ce 100%);
-  border:1px solid rgba(255,255,255,.27);
+    linear-gradient(145deg,#e0d1ff 0%,#a88af4 34%,#625bd1 100%);
+  border:1px solid rgba(255,255,255,.28);
   box-shadow:
-    inset 0 2px 8px rgba(255,255,255,.25),
-    0 25px 70px rgba(105,75,220,.45);
+    inset 0 2px 9px rgba(255,255,255,.27),
+    0 30px 75px rgba(104,74,221,.43);
 }
+
+.robot-head:before{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border-radius:39px;
+  border:1px solid rgba(255,255,255,.08);
+}
+
 .robot-ear{
   position:absolute;
-  top:48px;
-  width:17px;
-  height:32px;
+  top:47px;
+  width:18px;
+  height:34px;
   border-radius:8px;
-  background:#665fd0;
-  border:1px solid rgba(255,255,255,.13);
+  background:#665dc8;
+  border:1px solid rgba(255,255,255,.12);
 }
-.robot-ear.left{left:-10px}
-.robot-ear.right{right:-10px}
+
+.robot-ear.left{left:-11px}
+.robot-ear.right{right:-11px}
+
 .robot-screen{
   position:absolute;
-  left:35px;
+  left:36px;
   top:35px;
-  width:95px;
-  height:43px;
+  width:103px;
+  height:47px;
   border-radius:17px;
   background:
-    linear-gradient(145deg,#080613,#100b1a);
-  border:1px solid rgba(103,232,249,.15);
-  box-shadow:inset 0 0 22px rgba(103,232,249,.06);
+    radial-gradient(circle at 30% 50%,rgba(103,232,249,.07),transparent 25%),
+    #080611;
+  border:1px solid rgba(103,232,249,.17);
+  box-shadow:
+    inset 0 0 25px rgba(103,232,249,.06),
+    0 0 18px rgba(103,232,249,.04);
 }
+
 .robot-eye{
   position:absolute;
-  top:14px;
-  width:12px;
-  height:12px;
+  top:15px;
+  width:13px;
+  height:13px;
   border-radius:50%;
   background:#67e8f9;
-  box-shadow:0 0 16px #67e8f9;
+  box-shadow:0 0 18px #67e8f9;
+  transition:.3s;
 }
-.robot-eye.left{left:24px}
-.robot-eye.right{right:24px}
+
+.robot-eye.left{left:26px}
+.robot-eye.right{right:26px}
+
 .robot-mouth{
   position:absolute;
-  left:38px;
-  bottom:9px;
-  width:20px;
+  left:41px;
+  bottom:8px;
+  width:21px;
   height:3px;
   border-radius:99px;
   background:#8b5cf6;
 }
+
+.robot-mark{
+  position:absolute;
+  right:13px;
+  top:13px;
+  font-size:7px;
+  color:rgba(255,255,255,.42);
+  letter-spacing:1px;
+  font-weight:900;
+}
+
 .robot-body{
   position:absolute;
-  left:61px;
-  top:154px;
-  width:123px;
-  height:94px;
-  border-radius:32px;
-  background:linear-gradient(145deg,#342c5b,#141126);
+  left:62px;
+  top:158px;
+  width:130px;
+  height:99px;
+  border-radius:34px;
+  background:
+    linear-gradient(145deg,#3b335f,#141126);
   border:1px solid rgba(255,255,255,.11);
-  box-shadow:0 25px 55px rgba(0,0,0,.4);
+  box-shadow:0 27px 60px rgba(0,0,0,.42);
 }
+
 .robot-chest{
   position:absolute;
-  left:28px;
-  top:25px;
-  width:67px;
-  height:40px;
-  border-radius:15px;
+  left:27px;
+  top:26px;
+  width:76px;
+  height:43px;
   display:grid;
   place-items:center;
-  background:rgba(168,85,247,.1);
-  border:1px solid rgba(168,85,247,.12);
-  color:#c4b5fd;
-  font-size:16px;
+  border-radius:15px;
+  border:1px solid rgba(168,85,247,.16);
+  background:rgba(168,85,247,.09);
+  color:#d0b9ff;
+  font-size:15px;
   font-weight:1000;
-  letter-spacing:2px;
+  letter-spacing:3px;
+  box-shadow:inset 0 0 18px rgba(168,85,247,.05);
 }
+
+.robot-chest:after{
+  content:"AI";
+  position:absolute;
+  bottom:-12px;
+  font-size:6px;
+  letter-spacing:1px;
+  color:#615870;
+}
+
 .robot-arm{
   position:absolute;
-  top:171px;
-  width:55px;
-  height:13px;
+  top:177px;
+  width:57px;
+  height:14px;
   border-radius:99px;
-  background:#3d3761;
+  background:#3e375f;
 }
+
 .robot-arm.left{
-  left:18px;
-  transform:rotate(19deg);
+  left:16px;
+  transform:rotate(18deg);
 }
+
 .robot-arm.right{
-  right:18px;
-  transform:rotate(-19deg);
+  right:16px;
+  transform:rotate(-18deg);
 }
+
 .robot-hand{
   position:absolute;
   top:-3px;
-  width:19px;
-  height:19px;
+  width:20px;
+  height:20px;
   border-radius:7px;
-  background:#5b52a7;
+  background:#5c54a6;
 }
-.robot-arm.left .robot-hand{left:-8px}
-.robot-arm.right .robot-hand{right:-8px}
+
+.robot-arm.left .robot-hand{
+  left:-8px;
+}
+
+.robot-arm.right .robot-hand{
+  right:-8px;
+}
+
 .robot-leg{
   position:absolute;
-  top:241px;
-  width:20px;
-  height:36px;
-  border-radius:0 0 10px 10px;
-  background:#30294e;
+  top:250px;
+  width:21px;
+  height:39px;
+  border-radius:0 0 11px 11px;
+  background:#30294d;
 }
-.robot-leg.left{left:88px}
-.robot-leg.right{right:88px}
 
-.robot.scanning{
+.robot-leg.left{left:89px}
+.robot-leg.right{right:89px}
+
+.unique-robot.scanning{
   animation:robotScan .55s ease-in-out infinite alternate;
 }
-.robot.scanning .robot-head{
+
+.unique-robot.scanning .robot-head{
   animation:headScan .55s ease-in-out infinite alternate;
 }
-.robot.scanning .robot-screen{
-  box-shadow:
-    inset 0 0 28px rgba(103,232,249,.22),
-    0 0 20px rgba(103,232,249,.1);
+
+.unique-robot.scanning .robot-eye{
+  box-shadow:0 0 22px #67e8f9;
 }
+
 @keyframes robotScan{
   from{transform:translateY(-3px)}
   to{transform:translateY(3px)}
 }
+
 @keyframes headScan{
   from{transform:translateX(-5px)}
   to{transform:translateX(5px)}
@@ -1453,131 +1959,163 @@ button:disabled{cursor:not-allowed}
 
 .bot-name{
   position:absolute;
-  bottom:27px;
   left:0;
   right:0;
+  bottom:25px;
+  z-index:4;
   text-align:center;
-  z-index:3;
 }
+
 .bot-name strong{
   display:block;
   font-size:29px;
   letter-spacing:5px;
 }
+
 .bot-name span{
   color:#635b70;
-  font-size:9px;
-  letter-spacing:1px;
+  font-size:8px;
+  letter-spacing:1.2px;
 }
 
 .signal-popup{
   display:none;
   position:absolute;
-  z-index:8;
   left:50%;
-  top:17px;
-  width:min(510px,calc(100% - 30px));
-  transform:translateX(-50%);
+  top:15px;
+  z-index:12;
+  width:min(520px,calc(100% - 30px));
   padding:16px;
+  transform:translateX(-50%);
   border:1px solid rgba(168,85,247,.23);
   border-radius:22px;
-  background:rgba(10,6,17,.94);
-  backdrop-filter:blur(25px);
-  box-shadow:0 25px 80px rgba(0,0,0,.55);
+  background:rgba(9,5,15,.95);
+  backdrop-filter:blur(28px);
+  box-shadow:0 30px 90px rgba(0,0,0,.58);
 }
+
 .signal-popup.show{
   display:block;
   animation:signalIn .5s var(--ease);
 }
+
 @keyframes signalIn{
-  from{opacity:0;transform:translate(-50%,-15px) scale(.95)}
-  to{opacity:1;transform:translate(-50%,0) scale(1)}
+  from{
+    opacity:0;
+    transform:translate(-50%,-15px) scale(.95);
+  }
+  to{
+    opacity:1;
+    transform:translate(-50%,0) scale(1);
+  }
 }
+
 .signal-main{
   display:flex;
   align-items:center;
   gap:13px;
 }
+
 .signal-arrow{
-  width:54px;
-  height:54px;
+  width:55px;
+  height:55px;
   display:grid;
   place-items:center;
   border-radius:17px;
   font-size:28px;
   font-weight:1000;
 }
+
 .signal-arrow.up{
-  color:#34e3a1;
-  background:rgba(52,227,161,.09);
+  color:#31df9d;
+  background:rgba(49,223,157,.09);
 }
+
 .signal-arrow.down{
   color:#ff5875;
   background:rgba(255,88,117,.09);
 }
+
 .signal-main h2{
   margin:0 0 3px;
   font-size:20px;
 }
+
 .signal-main p{
   margin:0;
   color:#675f73;
-  font-size:9px;
+  font-size:8px;
 }
+
 .confidence{
   margin-left:auto;
   text-align:right;
 }
+
 .confidence small{
   display:block;
-  color:#635b70;
+  color:#625b70;
   font-size:7px;
 }
-.confidence b{font-size:17px}
+
+.confidence b{
+  font-size:17px;
+}
+
 .signal-metrics{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:6px;
   margin-top:12px;
 }
+
 .metric{
   padding:9px;
   border-radius:11px;
   background:rgba(255,255,255,.035);
 }
+
 .metric small{
   display:block;
-  color:#5d566a;
+  color:#5c5569;
   font-size:7px;
 }
-.metric b{font-size:11px}
+
+.metric b{
+  font-size:11px;
+}
+
 .signal-progress{
   height:6px;
   margin-top:11px;
   overflow:hidden;
   border-radius:99px;
-  background:#211a2d;
+  background:#22192d;
 }
+
 .signal-progress span{
   display:block;
-  height:100%;
   width:100%;
+  height:100%;
   background:linear-gradient(90deg,#a855f7,#67e8f9);
 }
+
 .signal-status{
-  padding:9px;
   margin-top:9px;
-  text-align:center;
+  padding:9px;
   border-radius:11px;
-  font-size:9px;
-  font-weight:900;
+  color:#b99ed5;
   background:rgba(168,85,247,.07);
-  color:#b79bd5;
+  text-align:center;
+  font-size:8px;
+  font-weight:900;
 }
+
 .signal-status.win{
-  color:#34e3a1;
-  background:rgba(52,227,161,.07);
+  color:#31df9d;
+  background:rgba(49,223,157,.07);
 }
+
 .signal-status.loss{
   color:#ff5875;
   background:rgba(255,88,117,.07);
@@ -1589,67 +2127,97 @@ button:disabled{cursor:not-allowed}
   gap:8px;
   padding:17px;
   border-top:1px solid var(--border);
-  background:rgba(8,5,13,.45);
+  background:rgba(8,4,13,.48);
 }
+
 .control{
   height:50px;
+  min-width:0;
+  padding:0 13px;
+  outline:none;
   border:1px solid var(--border);
   border-radius:15px;
-  outline:none;
   color:white;
-  background:#0d0816;
-  padding:0 13px;
-  font-size:10px;
+  background:#0d0815;
+  font-size:9px;
 }
+
 .generate{
   min-width:145px;
   height:50px;
   border:0;
   border-radius:15px;
   color:white;
-  font-weight:950;
+  background:linear-gradient(135deg,#a855f7,#625de9);
+  box-shadow:0 13px 32px rgba(139,92,246,.27);
   font-size:10px;
-  background:linear-gradient(135deg,#a855f7,#6366f1);
-  box-shadow:0 12px 30px rgba(139,92,246,.28);
-  transition:.3s;
+  font-weight:950;
+  transition:.3s var(--ease);
 }
-.generate:hover{transform:translateY(-2px)}
-.generate:disabled{opacity:.5}
+
+.generate:hover{
+  transform:translateY(-2px);
+}
+
+.generate:disabled{
+  opacity:.5;
+}
 
 .bot-side{
   display:flex;
   flex-direction:column;
   gap:14px;
 }
+
 .side-card{
   padding:21px;
 }
+
 .side-title{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   margin-bottom:13px;
 }
-.side-title h3{margin:0;font-size:15px}
-.side-title span{font-size:8px;color:#5f586d}
+
+.side-title h3{
+  margin:0;
+  font-size:15px;
+}
+
+.side-title span{
+  color:#5f586d;
+  font-size:7px;
+}
+
 .info{
   display:flex;
   justify-content:space-between;
   padding:11px 0;
   border-bottom:1px solid rgba(255,255,255,.045);
-  font-size:10px;
+  font-size:9px;
 }
-.info:last-child{border:0}
-.info span{color:#655e71}
-.info b{color:#d5cedd}
+
+.info:last-child{
+  border:0;
+}
+
+.info span{
+  color:#655e71;
+}
+
+.info b{
+  color:#d5cedd;
+}
+
 .warning{
   padding:16px;
-  border-radius:19px;
   border:1px solid rgba(247,201,72,.11);
-  background:rgba(247,201,72,.035);
+  border-radius:19px;
   color:#817557;
-  font-size:9px;
-  line-height:1.7;
+  background:rgba(247,201,72,.035);
+  font-size:8px;
+  line-height:1.75;
 }
 
 /* =========================================================
@@ -1657,70 +2225,83 @@ button:disabled{cursor:not-allowed}
 ========================================================= */
 
 .contact-hero{
+  min-height:285px;
   position:relative;
-  min-height:270px;
-  padding:35px;
   overflow:hidden;
-  border-radius:31px;
+  padding:35px;
+  border-radius:32px;
   border:1px solid var(--border);
   background:
-    radial-gradient(circle at 75% 25%,rgba(103,232,249,.1),transparent 25%),
-    radial-gradient(circle at 30% 90%,rgba(168,85,247,.15),transparent 30%),
-    linear-gradient(145deg,#1b102a,#0d0815);
+    radial-gradient(circle at 80% 20%,rgba(103,232,249,.09),transparent 25%),
+    radial-gradient(circle at 30% 90%,rgba(168,85,247,.16),transparent 30%),
+    linear-gradient(145deg,#1c102c,#0d0815);
 }
+
 .contact-hero h1{
-  margin:20px 0 10px;
-  font-size:43px;
-  letter-spacing:-2px;
+  margin:21px 0 10px;
+  font-size:44px;
+  letter-spacing:-2.5px;
 }
+
 .contact-hero p{
   max-width:560px;
   color:#81788e;
-  line-height:1.7;
-  font-size:12px;
+  font-size:11px;
+  line-height:1.75;
 }
+
 .contact-art{
   position:absolute;
-  right:35px;
-  top:15px;
-  width:260px;
-  height:240px;
+  width:280px;
+  height:250px;
+  right:25px;
+  top:12px;
+  opacity:.7;
 }
+
 .contact-art circle{
   fill:none;
   stroke:rgba(192,132,252,.13);
   stroke-width:1;
 }
+
 .contact-art path{
   fill:none;
-  stroke:rgba(103,232,249,.3);
+  stroke:rgba(103,232,249,.28);
   stroke-width:2;
   stroke-dasharray:5 8;
   animation:dash 5s linear infinite;
 }
-@keyframes dash{to{stroke-dashoffset:-100}}
+
+@keyframes dash{
+  to{stroke-dashoffset:-100}
+}
+
 .contact-cards{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
   margin-top:14px;
 }
+
 .contact-card{
+  min-height:230px;
   position:relative;
-  min-height:220px;
-  padding:25px;
   overflow:hidden;
+  padding:25px;
   border:1px solid var(--border);
   border-radius:25px;
-  background:var(--glass);
+  background:rgba(20,11,31,.76);
   transition:.45s var(--ease);
   cursor:pointer;
 }
+
 .contact-card:hover{
   transform:translateY(-5px);
   border-color:rgba(168,85,247,.25);
-  box-shadow:0 25px 60px rgba(0,0,0,.28);
+  box-shadow:0 28px 65px rgba(0,0,0,.3);
 }
+
 .contact-card:after{
   content:"↗";
   position:absolute;
@@ -1728,38 +2309,48 @@ button:disabled{cursor:not-allowed}
   top:20px;
   color:#625b70;
 }
+
 .contact-icon{
-  width:56px;
-  height:56px;
+  width:58px;
+  height:58px;
   display:grid;
   place-items:center;
+  margin-bottom:24px;
   border-radius:18px;
-  margin-bottom:25px;
-  background:linear-gradient(145deg,rgba(168,85,247,.16),rgba(99,102,241,.07));
-  color:#c4b5fd;
-  font-size:23px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+  color:#d0bcff;
+  background:linear-gradient(145deg,rgba(168,85,247,.18),rgba(99,102,241,.07));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
 }
+
+.contact-icon svg{
+  width:28px;
+  height:28px;
+}
+
 .contact-card h3{
   margin:0 0 8px;
   font-size:18px;
 }
+
 .contact-card p{
-  max-width:420px;
+  max-width:440px;
+  margin:0;
   color:#746c7e;
-  font-size:11px;
-  line-height:1.65;
-}
-.contact-link{
-  margin-top:23px;
-  color:#bda5db;
   font-size:10px;
+  line-height:1.7;
+}
+
+.contact-link{
+  margin-top:22px;
+  color:#bda5db;
+  font-size:9px;
   font-weight:900;
 }
+
 .contact-card.update{
   background:
     radial-gradient(circle at 90% 0%,rgba(103,232,249,.12),transparent 30%),
-    linear-gradient(145deg,rgba(168,85,247,.13),rgba(15,9,25,.78));
+    linear-gradient(145deg,rgba(168,85,247,.14),rgba(15,9,25,.78));
 }
 
 /* =========================================================
@@ -1771,92 +2362,109 @@ button:disabled{cursor:not-allowed}
   grid-template-columns:340px 1fr;
   gap:14px;
 }
+
 .profile-card{
   padding:28px;
   text-align:center;
 }
+
 .profile-avatar{
-  width:115px;
-  height:115px;
+  width:116px;
+  height:116px;
   margin:3px auto 17px;
-  border-radius:34px;
-  overflow:hidden;
   display:grid;
   place-items:center;
+  overflow:hidden;
+  border-radius:34px;
+  border:2px solid rgba(168,85,247,.15);
   color:#d9cfff;
+  background:linear-gradient(145deg,#392354,#151023);
   font-size:36px;
   font-weight:1000;
-  background:linear-gradient(145deg,#392354,#151023);
-  border:2px solid rgba(168,85,247,.15);
   box-shadow:0 25px 65px rgba(0,0,0,.3);
 }
+
 .profile-avatar img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
+
 .avatar-change{
   display:inline-block;
   padding:9px 13px;
   border-radius:12px;
   color:#c4b5fd;
   background:rgba(168,85,247,.09);
-  font-size:9px;
+  font-size:8px;
   font-weight:900;
   cursor:pointer;
 }
+
 .profile-card h2{
   margin:18px 0 4px;
   font-size:22px;
 }
+
 .profile-handle{
   color:#665f71;
-  font-size:10px;
-}
-.profile-email{
-  color:#514a5d;
   font-size:9px;
-  margin-top:7px;
 }
+
+.profile-email{
+  margin-top:7px;
+  color:#514a5d;
+  font-size:8px;
+}
+
 .profile-edit{
   width:100%;
   margin-top:20px;
 }
+
 .profile-mini-stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:6px;
   margin-top:17px;
 }
+
 .profile-mini-stat{
   padding:12px 4px;
   border-radius:14px;
   background:rgba(255,255,255,.03);
 }
-.profile-mini-stat b{font-size:15px}
+
+.profile-mini-stat b{
+  font-size:15px;
+}
+
 .profile-mini-stat span{
   display:block;
+  margin-top:4px;
   color:#5d5669;
   font-size:7px;
-  margin-top:4px;
 }
+
 .progress-card{
   padding:25px;
 }
+
 .level-head{
   display:flex;
   align-items:center;
   gap:17px;
 }
+
 .level-ring{
   width:82px;
   height:82px;
-  border-radius:50%;
+  position:relative;
   display:grid;
   place-items:center;
-  position:relative;
-  background:conic-gradient(#a855f7 0deg,#2a2037 0deg);
+  border-radius:50%;
 }
+
 .level-ring:after{
   content:"";
   position:absolute;
@@ -1864,25 +2472,30 @@ button:disabled{cursor:not-allowed}
   border-radius:50%;
   background:#140c20;
 }
+
 .level-ring b{
   position:relative;
   z-index:2;
   font-size:21px;
 }
+
 .level-head h2{
   margin:0 0 5px;
 }
+
 .level-head p{
   margin:0;
   color:#655e70;
-  font-size:10px;
+  font-size:9px;
 }
+
 .achievements{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
   margin-top:18px;
 }
+
 .achievement{
   min-height:110px;
   padding:14px;
@@ -1890,21 +2503,30 @@ button:disabled{cursor:not-allowed}
   border-radius:17px;
   background:rgba(255,255,255,.025);
 }
-.achievement.locked{opacity:.27}
-.achievement-icon{font-size:22px;margin-bottom:9px}
+
+.achievement.locked{
+  opacity:.28;
+}
+
+.achievement-icon{
+  margin-bottom:9px;
+  font-size:21px;
+}
+
 .achievement b{
   display:block;
-  font-size:10px;
+  font-size:9px;
 }
+
 .achievement span{
-  color:#625b6d;
   display:block;
-  font-size:8px;
   margin-top:4px;
+  color:#625b6d;
+  font-size:7px;
 }
 
 /* =========================================================
-   AI
+   AVA ASSISTANT
 ========================================================= */
 
 .ai-fab{
@@ -1922,6 +2544,7 @@ button:disabled{cursor:not-allowed}
   box-shadow:0 22px 60px rgba(91,68,201,.45);
   transition:.4s var(--ease);
 }
+
 .ai-fab:before{
   content:"";
   position:absolute;
@@ -1930,19 +2553,25 @@ button:disabled{cursor:not-allowed}
   border:1px solid rgba(168,85,247,.16);
   animation:fabRing 2.8s ease-in-out infinite;
 }
+
 @keyframes fabRing{
-  50%{transform:scale(1.08);opacity:.3}
+  50%{
+    transform:scale(1.08);
+    opacity:.3;
+  }
 }
+
 .ai-fab:hover{
   transform:translateY(-5px) scale(1.04);
 }
+
 .ai-modal{
   display:none;
   position:fixed;
   right:24px;
   bottom:100px;
-  width:min(390px,calc(100% - 30px));
   z-index:101;
+  width:min(390px,calc(100% - 30px));
   overflow:hidden;
   border:1px solid var(--border);
   border-radius:26px;
@@ -1950,21 +2579,31 @@ button:disabled{cursor:not-allowed}
   backdrop-filter:blur(28px);
   box-shadow:0 35px 110px rgba(0,0,0,.55);
 }
+
 .ai-modal.open{
   display:block;
   animation:aiIn .4s var(--ease);
 }
+
 @keyframes aiIn{
-  from{opacity:0;transform:translateY(18px) scale(.96)}
-  to{opacity:1;transform:none}
+  from{
+    opacity:0;
+    transform:translateY(18px) scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
+
 .ai-head{
-  padding:15px;
   display:flex;
   align-items:center;
   gap:10px;
+  padding:15px;
   border-bottom:1px solid var(--border);
 }
+
 .ai-avatar{
   width:44px;
   height:44px;
@@ -1973,64 +2612,74 @@ button:disabled{cursor:not-allowed}
   border-radius:15px;
   background:linear-gradient(135deg,#a855f7,#5965e8);
 }
+
 .ai-title b{
   display:block;
   font-size:13px;
 }
+
 .ai-title span{
   display:block;
-  color:#625b70;
-  font-size:9px;
   margin-top:3px;
+  color:#625b70;
+  font-size:8px;
 }
+
 .ai-close{
   margin-left:auto;
   border:0;
-  background:none;
   color:#625b70;
+  background:none;
   font-size:20px;
 }
+
 .ai-chat{
   height:370px;
   padding:15px;
   overflow:auto;
 }
+
 .message{
   max-width:87%;
+  margin-bottom:9px;
   padding:11px 13px;
   border-radius:15px;
-  margin-bottom:9px;
-  font-size:10px;
-  line-height:1.6;
+  font-size:9px;
+  line-height:1.65;
 }
+
 .message.bot{
   color:#aaa0b4;
-  background:rgba(255,255,255,.045);
   border-bottom-left-radius:5px;
+  background:rgba(255,255,255,.045);
 }
+
 .message.user{
   margin-left:auto;
   color:#ddd5e7;
-  background:rgba(168,85,247,.15);
   border-bottom-right-radius:5px;
+  background:rgba(168,85,247,.15);
 }
+
 .ai-input{
   display:flex;
   gap:7px;
   padding:11px;
   border-top:1px solid var(--border);
 }
+
 .ai-input input{
   flex:1;
   min-width:0;
   height:43px;
+  outline:none;
   border:1px solid var(--border);
   border-radius:13px;
-  color:white;
-  outline:none;
   padding:0 12px;
+  color:white;
   background:#090510;
 }
+
 .ai-input button{
   width:43px;
   border:0;
@@ -2040,7 +2689,7 @@ button:disabled{cursor:not-allowed}
 }
 
 /* =========================================================
-   MOBILE NAV — BIG BEAUTIFUL ICONS
+   MOBILE NAV
 ========================================================= */
 
 .mobile-nav{
@@ -2051,44 +2700,49 @@ button:disabled{cursor:not-allowed}
   bottom:9px;
   z-index:90;
   padding:7px;
-  border:1px solid rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.10);
   border-radius:25px;
-  background:rgba(13,8,22,.9);
+  background:rgba(13,8,22,.91);
   backdrop-filter:blur(28px);
   box-shadow:
     0 20px 70px rgba(0,0,0,.5),
     inset 0 1px 0 rgba(255,255,255,.05);
 }
+
 .mobile-nav-inner{
   display:grid;
   grid-template-columns:repeat(5,1fr);
 }
+
 .mobile-button{
   position:relative;
-  border:0;
-  background:transparent;
-  color:#696174;
-  border-radius:18px;
   padding:6px 2px 7px;
+  border:0;
+  border-radius:18px;
+  color:#696174;
+  background:transparent;
   transition:.4s var(--ease);
 }
+
 .mobile-button.active{
   color:white;
 }
+
 .mobile-button.active:before{
   content:"";
   position:absolute;
-  width:50px;
+  width:51px;
   height:45px;
   left:50%;
   top:3px;
   transform:translateX(-50%);
   border-radius:16px;
-  background:linear-gradient(145deg,rgba(168,85,247,.2),rgba(99,102,241,.08));
+  background:linear-gradient(145deg,rgba(168,85,247,.21),rgba(99,102,241,.08));
   box-shadow:
     inset 0 0 0 1px rgba(192,132,252,.08),
     0 8px 25px rgba(139,92,246,.12);
 }
+
 .mobile-icon{
   position:relative;
   z-index:2;
@@ -2096,78 +2750,38 @@ button:disabled{cursor:not-allowed}
   height:25px;
   margin:auto;
 }
+
 .mobile-button span{
   position:relative;
   z-index:2;
   display:block;
   margin-top:3px;
   font-size:7px;
-  font-weight:800;
-}
-.mobile-button.active .mobile-icon{
-  filter:drop-shadow(0 0 7px rgba(192,132,252,.55));
+  font-weight:850;
 }
 
 /* =========================================================
-   LOADER / TOAST
+   TOAST
 ========================================================= */
-
-.loader{
-  position:fixed;
-  inset:0;
-  z-index:999;
-  display:grid;
-  place-items:center;
-  background:#090511;
-  transition:.7s var(--ease);
-}
-.loader.hide{
-  opacity:0;
-  pointer-events:none;
-}
-.loader-inner{text-align:center}
-.loader-logo{
-  width:60px;
-  height:60px;
-  margin:auto;
-  display:grid;
-  place-items:center;
-  border-radius:21px;
-  background:linear-gradient(135deg,#a855f7,#6366f1);
-  font-size:27px;
-  font-weight:1000;
-  box-shadow:0 20px 55px rgba(139,92,246,.35);
-  animation:loaderPulse 1.8s ease-in-out infinite;
-}
-@keyframes loaderPulse{
-  50%{transform:translateY(-7px) scale(1.03)}
-}
-.loader-inner h2{
-  margin:17px 0 5px;
-  font-size:18px;
-}
-.loader-inner p{
-  color:#5e576b;
-  font-size:9px;
-}
 
 .toast{
   position:fixed;
-  z-index:500;
   left:50%;
   bottom:25px;
+  z-index:500;
+  padding:12px 17px;
   transform:translate(-50%,20px);
   opacity:0;
   pointer-events:none;
-  padding:12px 17px;
-  border-radius:15px;
   border:1px solid var(--border);
-  background:#20172d;
+  border-radius:15px;
   color:#ddd5e7;
-  font-size:10px;
+  background:#20172d;
   box-shadow:0 15px 50px rgba(0,0,0,.4);
+  font-size:9px;
   transition:.4s var(--ease);
 }
+
 .toast.show{
   opacity:1;
   transform:translate(-50%,0);
@@ -2178,82 +2792,145 @@ button:disabled{cursor:not-allowed}
 ========================================================= */
 
 @media(max-width:1100px){
-  .modules{grid-template-columns:repeat(2,1fr)}
+
+  .edu-modules{
+    grid-template-columns:repeat(2,1fr);
+  }
+
   .home-grid,
-  .bot-layout{grid-template-columns:1fr}
-  .bot-side{display:grid;grid-template-columns:1fr 1fr}
-  .profile-layout{grid-template-columns:1fr}
+  .bot-layout{
+    grid-template-columns:1fr;
+  }
+
+  .bot-side{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .profile-layout{
+    grid-template-columns:1fr;
+  }
 }
 
 @media(max-width:760px){
-  .sidebar{display:none}
+
+  .sidebar{
+    display:none;
+  }
+
   .main{
     margin-left:0;
     padding:11px 12px 105px;
   }
-  .mobile-nav{display:block}
 
-  .topbar{height:50px}
-  .topbar-title{font-size:10px}
+  .mobile-nav{
+    display:block;
+  }
+
+  .topbar{
+    height:50px;
+  }
 
   .hero{
-    min-height:500px;
+    min-height:520px;
     padding:28px 22px;
     border-radius:28px;
   }
+
   .hero h1{
-    font-size:45px;
+    font-size:46px;
     letter-spacing:-3px;
   }
-  .hero-market{
+
+  .hero-chart{
     width:100%;
-    height:48%;
+    height:47%;
     opacity:.5;
   }
-  .floating-price{top:auto;bottom:25%;right:13%}
+
+  .price-tag{
+    top:auto;
+    right:13%;
+    bottom:25%;
+  }
 
   .stats{
     grid-template-columns:repeat(2,1fr);
   }
-  .stat-card{min-height:105px}
 
-  .modules{grid-template-columns:1fr}
-  .module{min-height:245px}
+  .stat-card{
+    min-height:105px;
+  }
 
-  .bot-side{display:flex}
-  .bot-card{min-height:700px}
-  .bot-center{height:515px}
+  .edu-modules{
+    grid-template-columns:1fr;
+  }
+
+  .education-page{
+    margin:-11px -12px -105px;
+    padding:27px 12px 105px;
+    border-radius:0;
+  }
+
+  .bot-side{
+    display:flex;
+  }
+
+  .bot-card{
+    min-height:720px;
+  }
+
+  .bot-center{
+    height:525px;
+  }
+
   .bot-controls{
     grid-template-columns:1fr 1fr;
   }
+
   .generate{
-    grid-column:1/-1;
     width:100%;
+    grid-column:1/-1;
   }
-  .signal-metrics{grid-template-columns:repeat(2,1fr)}
+
+  .signal-metrics{
+    grid-template-columns:repeat(2,1fr);
+  }
 
   .contact-hero{
-    min-height:300px;
-    padding:27px 23px;
+    min-height:310px;
+    padding:28px 23px;
   }
-  .contact-hero h1{font-size:36px}
-  .contact-art{
-    right:-60px;
-    opacity:.35;
-  }
-  .contact-cards{grid-template-columns:1fr}
 
-  .achievements{grid-template-columns:repeat(2,1fr)}
+  .contact-hero h1{
+    font-size:37px;
+  }
+
+  .contact-art{
+    right:-70px;
+    opacity:.3;
+  }
+
+  .contact-cards{
+    grid-template-columns:1fr;
+  }
+
+  .achievements{
+    grid-template-columns:repeat(2,1fr);
+  }
 
   .reader{
     padding:8px;
   }
+
   .reader-box{
     min-height:calc(100vh - 16px);
     border-radius:25px;
   }
-  .reader-top{border-radius:25px 25px 0 0}
-  .reader-body{padding:30px 20px 45px}
+
+  .reader-body{
+    padding:30px 20px 45px;
+  }
 
   .ai-fab{
     right:16px;
@@ -2261,14 +2938,22 @@ button:disabled{cursor:not-allowed}
     width:57px;
     height:57px;
   }
+
   .ai-modal{
     right:15px;
     bottom:150px;
   }
+
+  .unique-robot{
+    transform:scale(.91);
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{
+
+  *,
+  *:before,
+  *:after{
     animation-duration:.01ms!important;
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
@@ -2281,26 +2966,89 @@ button:disabled{cursor:not-allowed}
 <body>
 
 <!-- =========================================================
-     BACKGROUND
+     GLOBAL BACKGROUND
 ========================================================= -->
 
-<div class="background">
-  <div class="background-grid"></div>
-  <div class="glow one"></div>
-  <div class="glow two"></div>
-  <div class="watermark">AVA POCKET</div>
-</div>
+<div class="bg">
 
-<div class="loader" id="loader">
-  <div class="loader-inner">
-    <div class="loader-logo">A</div>
-    <h2>AVA ACADEMY</h2>
-    <p>Твой путь трейдера</p>
+  <div class="bg-grid"></div>
+
+  <div class="bg-glow one"></div>
+  <div class="bg-glow two"></div>
+
+  <div class="brand-watermark">
+    AVA POCKET
   </div>
+
+  <div class="pocket-float p1">AVA POCKET</div>
+  <div class="pocket-float p2">POCKET OPTION</div>
+  <div class="pocket-float p3">TRADING • AVA • MARKET</div>
+
+  <div class="floating-market">
+
+    <span class="float-candle green"
+      style="left:7%;top:25%;height:45px;animation-delay:-1s"></span>
+
+    <span class="float-candle"
+      style="left:12%;top:58%;height:70px;animation-delay:-4s"></span>
+
+    <span class="float-candle red"
+      style="left:18%;top:38%;height:36px;animation-delay:-2s"></span>
+
+    <span class="float-candle green"
+      style="left:24%;top:69%;height:58px;animation-delay:-6s"></span>
+
+    <span class="float-candle"
+      style="left:31%;top:23%;height:82px;animation-delay:-3s"></span>
+
+    <span class="float-candle red"
+      style="left:39%;top:61%;height:48px;animation-delay:-7s"></span>
+
+    <span class="float-candle green"
+      style="left:46%;top:30%;height:62px;animation-delay:-2s"></span>
+
+    <span class="float-candle"
+      style="left:54%;top:70%;height:40px;animation-delay:-5s"></span>
+
+    <span class="float-candle red"
+      style="left:62%;top:22%;height:76px;animation-delay:-1s"></span>
+
+    <span class="float-candle green"
+      style="left:69%;top:48%;height:52px;animation-delay:-6s"></span>
+
+    <span class="float-candle"
+      style="left:77%;top:31%;height:62px;animation-delay:-3s"></span>
+
+    <span class="float-candle red"
+      style="left:85%;top:63%;height:45px;animation-delay:-8s"></span>
+
+    <span class="float-candle green"
+      style="left:92%;top:24%;height:73px;animation-delay:-4s"></span>
+
+  </div>
+
 </div>
 
 <!-- =========================================================
-     REGISTRATION
+     LOADER
+========================================================= -->
+
+<div class="loader" id="loader">
+
+  <div class="loader-inner">
+
+    <div class="loader-logo">A</div>
+
+    <h2>AVA POCKET</h2>
+
+    <p>Твой путь трейдера</p>
+
+  </div>
+
+</div>
+
+<!-- =========================================================
+     AUTH
 ========================================================= -->
 
 <section class="auth" id="auth">
@@ -2308,11 +3056,14 @@ button:disabled{cursor:not-allowed}
   <div class="auth-card">
 
     <div class="brand">
+
       <div class="brand-logo">A</div>
+
       <div>
-        <div class="brand-name">AVA ACADEMY</div>
+        <div class="brand-name">AVA POCKET</div>
         <div class="brand-sub">TRADER EDUCATION</div>
       </div>
+
     </div>
 
     <h1>
@@ -2321,50 +3072,61 @@ button:disabled{cursor:not-allowed}
     </h1>
 
     <div class="auth-description">
-      Создай профиль и открой академию,
+      Создай свой профиль и открой большую академию,
       AVA BOT, практику и персонального помощника Ava.
     </div>
 
     <form id="registerForm">
 
       <div class="field">
+
         <label>ПОЧТА</label>
+
         <input
           id="email"
           type="email"
           autocomplete="email"
           placeholder="Gmail, iCloud или любая почта"
-          required
-        >
+          required>
+
       </div>
 
       <div class="field">
+
         <label>FIO</label>
+
         <input
           id="fio"
           type="text"
           autocomplete="name"
           placeholder="Имя и фамилия"
-          required
-        >
+          required>
+
       </div>
 
       <div class="field">
+
         <label>USERNAME</label>
-        <div class="field-wrap">
+
+        <div class="username-wrap">
+
           <span class="username-prefix">@</span>
+
           <input
             id="username"
             class="username-input"
             type="text"
             autocomplete="username"
             placeholder="username"
-            required
-          >
+            required>
+
         </div>
+
       </div>
 
-      <button class="primary" type="submit">
+      <button
+        class="primary"
+        type="submit">
         Создать профиль&nbsp;&nbsp;→
       </button>
 
@@ -2372,7 +3134,7 @@ button:disabled{cursor:not-allowed}
 
     <div class="auth-note">
       После регистрации приложение автоматически откроется.
-      Профиль сохраняется локально на устройстве.
+      Данные профиля сохраняются на устройстве.
     </div>
 
   </div>
@@ -2380,114 +3142,159 @@ button:disabled{cursor:not-allowed}
 </section>
 
 <!-- =========================================================
-     APP
+     APPLICATION
 ========================================================= -->
 
 <div id="app">
 
-<div class="app">
+  <aside class="sidebar">
 
-<!-- =========================================================
-     SIDEBAR
-========================================================= -->
+    <div class="brand">
 
-<aside class="sidebar">
+      <div class="brand-logo">A</div>
 
-  <div class="brand">
-    <div class="brand-logo">A</div>
-    <div>
-      <div class="brand-name">AVA ACADEMY</div>
-      <div class="brand-sub">TRADER EDUCATION</div>
+      <div>
+        <div class="brand-name">AVA POCKET</div>
+        <div class="brand-sub">TRADER EDUCATION</div>
+      </div>
+
     </div>
-  </div>
 
-  <nav class="nav" id="desktopNav">
+    <nav class="nav">
 
-    <button class="nav-button active" data-page="home">
-      <span class="nav-icon">
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M3 10.5 12 3l9 7.5"/>
-          <path d="M5.5 9.5V21h13V9.5"/>
-          <path d="M9 21v-6h6v6"/>
-        </svg>
-      </span>
-      <span class="nav-text">Главный</span>
-    </button>
+      <button class="nav-button active" data-page="home">
 
-    <button class="nav-button" data-page="education">
-      <span class="nav-icon">
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
-          <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
-          <path d="M8 7h8M8 10h6"/>
-        </svg>
-      </span>
-      <span class="nav-text">Учёба</span>
-    </button>
+        <span class="nav-icon">
 
-    <button class="nav-button" data-page="bot">
-      <span class="nav-icon">
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="4" y="6" width="16" height="14" rx="4"/>
-          <path d="M12 6V3"/>
-          <circle cx="12" cy="2.5" r="1"/>
-          <circle cx="9" cy="12" r="1"/>
-          <circle cx="15" cy="12" r="1"/>
-          <path d="M9 16h6"/>
-        </svg>
-      </span>
-      <span class="nav-text">Ava Bot</span>
-    </button>
+          <svg class="nav-svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.8">
 
-    <button class="nav-button" data-page="contact">
-      <span class="nav-icon">
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M20.5 11.2a7.9 7.9 0 0 1-8.2 7.7 8.6 8.6 0 0 1-3.2-.6L4 20l1.7-4.1a7.6 7.6 0 0 1-1.2-4.1A7.9 7.9 0 0 1 12.7 4a8 8 0 0 1 7.8 7.2Z"/>
-          <path d="M8 10h8M8 13h5"/>
-        </svg>
-      </span>
-      <span class="nav-text">Связь</span>
-    </button>
+            <path d="M3 10.5 12 3l9 7.5"/>
+            <path d="M5.5 9.5V21h13V9.5"/>
+            <path d="M9 21v-6h6v6"/>
 
-    <button class="nav-button" data-page="profile">
-      <span class="nav-icon">
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <circle cx="12" cy="8" r="3.5"/>
-          <path d="M5 21c.7-4 3.1-6 7-6s6.3 2 7 6"/>
-          <circle cx="12" cy="12" r="9"/>
-        </svg>
-      </span>
-      <span class="nav-text">Профиль</span>
-    </button>
+          </svg>
 
-  </nav>
+        </span>
 
-  <div class="sidebar-user">
-    <div class="avatar-mini" id="sideAvatar">A</div>
-    <div>
-      <div class="user-name" id="sideName">Трейдер</div>
-      <div class="user-handle" id="sideHandle">@trader</div>
+        <span class="nav-text">Главный</span>
+
+      </button>
+
+      <button class="nav-button" data-page="education">
+
+        <span class="nav-icon">
+
+          <svg class="nav-svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.8">
+
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
+            <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
+            <path d="M8 7h8M8 10h6"/>
+
+          </svg>
+
+        </span>
+
+        <span class="nav-text">Учёба</span>
+
+      </button>
+
+      <button class="nav-button" data-page="bot">
+
+        <span class="nav-icon">
+
+          <svg class="nav-svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.8">
+
+            <rect x="4" y="6" width="16" height="14" rx="4"/>
+            <path d="M12 6V3"/>
+            <circle cx="12" cy="2.5" r="1"/>
+            <circle cx="9" cy="12" r="1"/>
+            <circle cx="15" cy="12" r="1"/>
+            <path d="M9 16h6"/>
+
+          </svg>
+
+        </span>
+
+        <span class="nav-text">Ava Bot</span>
+
+      </button>
+
+      <button class="nav-button" data-page="contact">
+
+        <span class="nav-icon">
+
+          <svg class="nav-svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.8">
+
+            <path d="M20.5 11.2a7.9 7.9 0 0 1-8.2 7.7 8.6 8.6 0 0 1-3.2-.6L4 20l1.7-4.1a7.6 7.6 0 0 1-1.2-4.1A7.9 7.9 0 0 1 12.7 4a8 8 0 0 1 7.8 7.2Z"/>
+            <path d="M8 10h8M8 13h5"/>
+
+          </svg>
+
+        </span>
+
+        <span class="nav-text">Связь</span>
+
+      </button>
+
+      <button class="nav-button" data-page="profile">
+
+        <span class="nav-icon">
+
+          <svg class="nav-svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.8">
+
+            <circle cx="12" cy="8" r="3.5"/>
+            <path d="M5 21c.7-4 3.1-6 7-6s6.3 2 7 6"/>
+            <circle cx="12" cy="12" r="9"/>
+
+          </svg>
+
+        </span>
+
+        <span class="nav-text">Профиль</span>
+
+      </button>
+
+    </nav>
+
+    <div class="sidebar-user">
+
+      <div class="avatar-mini" id="sideAvatar">A</div>
+
+      <div>
+
+        <div class="user-name" id="sideName">Трейдер</div>
+        <div class="user-handle" id="sideHandle">@trader</div>
+
+      </div>
+
     </div>
-  </div>
 
-</aside>
+  </aside>
 
-<!-- =========================================================
-     MAIN
-========================================================= -->
+  <main class="main">
 
-<main class="main">
+    <div class="topbar">
 
-  <div class="topbar">
-    <div class="topbar-title" id="topTitle">
-      <b>Твой путь трейдера</b>
+      <div class="topbar-title" id="topTitle">
+        <b>Твой путь трейдера</b>
+      </div>
+
+      <button
+        class="topbar-action"
+        onclick="openAva()">
+        ✦
+      </button>
+
     </div>
-    <button class="topbar-action" onclick="openAva()">✦</button>
-  </div>
 
-  <div id="content"></div>
+    <div id="content"></div>
 
-</main>
+  </main>
 
 </div>
 
@@ -2497,92 +3304,140 @@ button:disabled{cursor:not-allowed}
 
 <nav class="mobile-nav">
 
-<div class="mobile-nav-inner">
+  <div class="mobile-nav-inner">
 
-<button class="mobile-button active" data-page="home">
-  <svg class="mobile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <path d="M3 10.5 12 3l9 7.5"/>
-    <path d="M5.5 9.5V21h13V9.5"/>
-    <path d="M9 21v-6h6v6"/>
-  </svg>
-  <span>Главный</span>
-</button>
+    <button class="mobile-button active" data-page="home">
 
-<button class="mobile-button" data-page="education">
-  <svg class="mobile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
-    <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
-    <path d="M8 7h8M8 10h6"/>
-  </svg>
-  <span>Учёба</span>
-</button>
+      <svg class="mobile-icon" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.8">
 
-<button class="mobile-button" data-page="bot">
-  <svg class="mobile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <rect x="4" y="6" width="16" height="14" rx="4"/>
-    <path d="M12 6V3"/>
-    <circle cx="12" cy="2.5" r="1"/>
-    <circle cx="9" cy="12" r="1"/>
-    <circle cx="15" cy="12" r="1"/>
-    <path d="M9 16h6"/>
-  </svg>
-  <span>Ava Bot</span>
-</button>
+        <path d="M3 10.5 12 3l9 7.5"/>
+        <path d="M5.5 9.5V21h13V9.5"/>
+        <path d="M9 21v-6h6v6"/>
 
-<button class="mobile-button" data-page="contact">
-  <svg class="mobile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <path d="M20.5 11.2a7.9 7.9 0 0 1-8.2 7.7 8.6 8.6 0 0 1-3.2-.6L4 20l1.7-4.1a7.6 7.6 0 0 1-1.2-4.1A7.9 7.9 0 0 1 12.7 4a8 8 0 0 1 7.8 7.2Z"/>
-    <path d="M8 10h8M8 13h5"/>
-  </svg>
-  <span>Связь</span>
-</button>
+      </svg>
 
-<button class="mobile-button" data-page="profile">
-  <svg class="mobile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <circle cx="12" cy="8" r="3.5"/>
-    <path d="M5 21c.7-4 3.1-6 7-6s6.3 2 7 6"/>
-    <circle cx="12" cy="12" r="9"/>
-  </svg>
-  <span>Профиль</span>
-</button>
+      <span>Главный</span>
 
-</div>
+    </button>
+
+    <button class="mobile-button" data-page="education">
+
+      <svg class="mobile-icon" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.8">
+
+        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
+        <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/>
+        <path d="M8 7h8M8 10h6"/>
+
+      </svg>
+
+      <span>Учёба</span>
+
+    </button>
+
+    <button class="mobile-button" data-page="bot">
+
+      <svg class="mobile-icon" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.8">
+
+        <rect x="4" y="6" width="16" height="14" rx="4"/>
+        <path d="M12 6V3"/>
+        <circle cx="12" cy="2.5" r="1"/>
+        <circle cx="9" cy="12" r="1"/>
+        <circle cx="15" cy="12" r="1"/>
+        <path d="M9 16h6"/>
+
+      </svg>
+
+      <span>Ava Bot</span>
+
+    </button>
+
+    <button class="mobile-button" data-page="contact">
+
+      <svg class="mobile-icon" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.8">
+
+        <path d="M20.5 11.2a7.9 7.9 0 0 1-8.2 7.7 8.6 8.6 0 0 1-3.2-.6L4 20l1.7-4.1a7.6 7.6 0 0 1-1.2-4.1A7.9 7.9 0 0 1 12.7 4a8 8 0 0 1 7.8 7.2Z"/>
+        <path d="M8 10h8M8 13h5"/>
+
+      </svg>
+
+      <span>Связь</span>
+
+    </button>
+
+    <button class="mobile-button" data-page="profile">
+
+      <svg class="mobile-icon" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.8">
+
+        <circle cx="12" cy="8" r="3.5"/>
+        <path d="M5 21c.7-4 3.1-6 7-6s6.3 2 7 6"/>
+        <circle cx="12" cy="12" r="9"/>
+
+      </svg>
+
+      <span>Профиль</span>
+
+    </button>
+
+  </div>
+
 </nav>
 
-<button class="ai-fab" onclick="openAva()">✦</button>
-
 <!-- =========================================================
-     AVA CHAT
+     AVA AI
 ========================================================= -->
+
+<button
+  class="ai-fab"
+  onclick="openAva()">
+  ✦
+</button>
 
 <div class="ai-modal" id="aiModal">
 
   <div class="ai-head">
+
     <div class="ai-avatar">✦</div>
 
     <div class="ai-title">
+
       <b>Ava Assistant</b>
-      <span>Учебный помощник</span>
+      <span>Твой учебный помощник</span>
+
     </div>
 
-    <button class="ai-close" onclick="closeAva()">×</button>
+    <button
+      class="ai-close"
+      onclick="closeAva()">
+      ×
+    </button>
+
   </div>
 
   <div class="ai-chat" id="aiChat">
+
     <div class="message bot">
-      Привет! Я Ava 👋<br><br>
-      Я могу помочь тебе разобраться в свечах,
-      трендах, RSI, EMA, уровнях, Price Action,
+      Привет! Я Ava ✦<br><br>
+      Могу помочь тебе разобраться в свечах,
+      трендах, RSI, EMA, Price Action,
       психологии и риск-менеджменте.
     </div>
+
   </div>
 
   <form class="ai-input" id="aiForm">
-    <input id="aiInput" placeholder="Спроси Ava...">
-    <button>↑</button>
-  </form>
 
-</div>
+    <input
+      id="aiInput"
+      placeholder="Спроси Ava...">
+
+    <button>↑</button>
+
+  </form>
 
 </div>
 
@@ -2595,18 +3450,36 @@ button:disabled{cursor:not-allowed}
   <div class="reader-box">
 
     <div class="reader-top">
-      <button class="reader-button" onclick="closeLesson()">←</button>
-      <span id="readerProgress" style="color:#6a6274;font-size:9px">Урок</span>
-      <button class="reader-button" id="bookmarkBtn" onclick="toggleBookmark()">☆</button>
+
+      <button
+        class="reader-button"
+        onclick="closeLesson()">
+        ←
+      </button>
+
+      <span
+        id="readerProgress"
+        style="color:#766d7d;font-size:8px">
+        Урок
+      </span>
+
+      <button
+        class="reader-button"
+        id="bookmarkBtn"
+        onclick="toggleBookmark()">
+        ☆
+      </button>
+
     </div>
 
-    <div class="reader-body" id="readerBody"></div>
+    <div
+      class="reader-body"
+      id="readerBody">
+    </div>
 
   </div>
 
 </div>
-
-<input id="avatarInput" type="file" accept="image/*" hidden>
 
 <div class="toast" id="toast"></div>
 
@@ -2634,20 +3507,29 @@ const state={
 };
 
 try{
-  const saved=JSON.parse(localStorage.getItem("avaAcademyV12"));
-  if(saved)Object.assign(state,saved);
+  const saved=JSON.parse(
+    localStorage.getItem("avaPocketFinal")
+  );
+
+  if(saved){
+    Object.assign(state,saved);
+  }
+
 }catch(e){}
 
 function save(){
-  localStorage.setItem("avaAcademyV12",JSON.stringify(state));
+  localStorage.setItem(
+    "avaPocketFinal",
+    JSON.stringify(state)
+  );
 }
 
 function $(id){
   return document.getElementById(id);
 }
 
-function esc(v){
-  return String(v??"")
+function esc(value){
+  return String(value??"")
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
     .replaceAll(">","&gt;")
@@ -2655,76 +3537,116 @@ function esc(v){
 }
 
 function toast(text){
+
   const el=$("toast");
+
   el.textContent=text;
+
   el.classList.add("show");
+
   clearTimeout(window.toastTimer);
+
   window.toastTimer=setTimeout(()=>{
     el.classList.remove("show");
   },2300);
 }
 
-function normalizeUsername(v){
-  v=v.trim().replace(/\s+/g,"").replace(/^@+/,"");
-  return "@"+(v||"trader");
+function normalizeUsername(value){
+
+  value=value
+    .trim()
+    .replace(/\s+/g,"")
+    .replace(/^@+/,"");
+
+  return "@"+(value||"trader");
 }
 
 /* =========================================================
    REGISTRATION
 ========================================================= */
 
-$("username").addEventListener("input",e=>{
-  e.target.value=e.target.value.replace(/\s/g,"").replace(/^@+/,"");
-});
+$("username").addEventListener(
+  "input",
+  e=>{
+    e.target.value=
+      e.target.value
+        .replace(/\s/g,"")
+        .replace(/^@+/,"");
+  }
+);
 
-$("registerForm").addEventListener("submit",e=>{
-  e.preventDefault();
+$("registerForm").addEventListener(
+  "submit",
+  e=>{
 
-  state.email=$("email").value.trim();
-  state.fio=$("fio").value.trim();
-  state.username=normalizeUsername($("username").value);
-  state.registered=true;
-  state.currentPage="home";
+    e.preventDefault();
 
-  save();
+    state.email=$("email").value.trim();
+    state.fio=$("fio").value.trim();
+    state.username=
+      normalizeUsername($("username").value);
 
-  $("auth").style.display="none";
-  $("app").style.display="block";
+    state.registered=true;
+    state.currentPage="home";
 
-  render();
+    save();
 
-  toast("Добро пожаловать в AVA ACADEMY ✦");
-});
+    $("auth").style.display="none";
+    $("app").style.display="block";
+
+    render();
+
+    toast("Добро пожаловать в AVA POCKET ✦");
+  }
+);
 
 /* =========================================================
    NAV
 ========================================================= */
 
-document.querySelectorAll("[data-page]").forEach(button=>{
-  button.addEventListener("click",()=>{
-    state.currentPage=button.dataset.page;
-    save();
-    render();
+document.querySelectorAll("[data-page]")
+  .forEach(button=>{
 
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        state.currentPage=
+          button.dataset.page;
+
+        save();
+
+        render();
+
+        window.scrollTo({
+          top:0,
+          behavior:"smooth"
+        });
+
+      }
+    );
+
   });
-});
 
 function setNav(page){
-  document.querySelectorAll("[data-page]").forEach(button=>{
-    button.classList.toggle(
-      "active",
-      button.dataset.page===page
-    );
-  });
+
+  document.querySelectorAll("[data-page]")
+    .forEach(button=>{
+
+      button.classList.toggle(
+        "active",
+        button.dataset.page===page
+      );
+
+    });
 }
 
 function goPage(page){
+
   state.currentPage=page;
+
   save();
+
   render();
 
   window.scrollTo({
@@ -2734,397 +3656,608 @@ function goPage(page){
 }
 
 /* =========================================================
-   LESSON DATABASE
+   200+ LESSONS
 ========================================================= */
 
-const moduleData=[
+const modules=[
+
 {
  name:"Фундамент трейдинга",
  icon:"◈",
- color:"#c084fc",
- desc:"Основы рынка и мышления трейдера.",
+ color:"#9b6cff",
+ desc:"База, без которой невозможно построить систему.",
  topics:[
- "Что такое трейдинг",
- "Как устроен финансовый рынок",
- "Почему движется цена",
- "Покупатели и продавцы",
- "Ликвидность",
- "Волатильность",
- "Таймфреймы",
- "Торговые сессии",
- "Биржа и OTC",
- "Как мыслит трейдер"
+  "Что такое трейдинг",
+  "Как устроен финансовый рынок",
+  "Почему движется цена",
+  "Покупатели и продавцы",
+  "Ликвидность",
+  "Волатильность",
+  "Таймфреймы",
+  "Торговые сессии",
+  "Биржа и OTC",
+  "Как мыслит трейдер",
+  "Что такое котировка",
+  "Спред",
+  "Цена Bid и Ask",
+  "Рыночный ордер",
+  "Лимитный ордер",
+  "Импульс рынка",
+  "Коррекция",
+  "Флэт",
+  "Рыночный контекст",
+  "Торговый сценарий"
  ]
 },
+
 {
  name:"Свечной анализ",
  icon:"◒",
- color:"#67e8f9",
- desc:"Японские свечи и поведение цены.",
+ color:"#21b8d4",
+ desc:"Читаем график через поведение каждой свечи.",
  topics:[
- "Устройство свечи",
- "Тело и тени",
- "Бычья свеча",
- "Медвежья свеча",
- "Импульсная свеча",
- "Свеча неопределённости",
- "Поглощение",
- "Пин-бар",
- "Доджи",
- "Последовательности свечей"
+  "Устройство свечи",
+  "Тело и тени",
+  "Бычья свеча",
+  "Медвежья свеча",
+  "Размер свечи",
+  "Импульсная свеча",
+  "Свеча неопределённости",
+  "Доджи",
+  "Пин-бар",
+  "Молот",
+  "Падающая звезда",
+  "Поглощение",
+  "Бычье поглощение",
+  "Медвежье поглощение",
+  "Последовательность свечей",
+  "Сильная закрывающая свеча",
+  "Слабая закрывающая свеча",
+  "Длинные тени",
+  "Сжатие свечей",
+  "Свечной контекст"
  ]
 },
+
 {
  name:"Тренд и структура",
  icon:"↗",
- color:"#34e3a1",
- desc:"Направление и структура движения.",
+ color:"#25c995",
+ desc:"Определяем направление и структуру рынка.",
  topics:[
- "Что такое тренд",
- "Восходящий тренд",
- "Нисходящий тренд",
- "Флэт",
- "Максимумы и минимумы",
- "HH и HL",
- "LH и LL",
- "Смена структуры",
- "Импульс и коррекция",
- "Сценарный анализ"
+  "Что такое тренд",
+  "Восходящий тренд",
+  "Нисходящий тренд",
+  "Флэт",
+  "Максимумы",
+  "Минимумы",
+  "HH",
+  "HL",
+  "LH",
+  "LL",
+  "Смена структуры",
+  "Импульс",
+  "Коррекция",
+  "Продолжение движения",
+  "Слом структуры",
+  "Локальная структура",
+  "Старший тренд",
+  "Младший тренд",
+  "Сценарии движения",
+  "Полный структурный анализ"
  ]
 },
+
 {
  name:"Поддержка и сопротивление",
  icon:"═",
- color:"#f7c948",
- desc:"Ключевые зоны реакции цены.",
+ color:"#e6b84d",
+ desc:"Учимся находить области, где цена может реагировать.",
  topics:[
- "Поддержка",
- "Сопротивление",
- "Как находить зоны",
- "Линия против зоны",
- "Сила уровня",
- "Повторный тест",
- "Пробой",
- "Ложный пробой",
- "Ретест",
- "Комбинация зон и структуры"
+  "Поддержка",
+  "Сопротивление",
+  "Уровень и зона",
+  "Как находить зоны",
+  "Сильная зона",
+  "Слабая зона",
+  "Повторный тест",
+  "Пробой",
+  "Ложный пробой",
+  "Ретест",
+  "Зеркальный уровень",
+  "Круглые значения",
+  "Исторические экстремумы",
+  "Многоразовая реакция",
+  "Свежая зона",
+  "Старая зона",
+  "Зона спроса",
+  "Зона предложения",
+  "Зоны на разных таймфреймах",
+  "Комбинация зон и структуры"
  ]
 },
+
 {
  name:"Индикаторы",
  icon:"◫",
- color:"#c084fc",
- desc:"EMA, RSI, MACD и другие инструменты.",
+ color:"#a56cff",
+ desc:"Используем индикаторы как подтверждение, а не кнопку.",
  topics:[
- "Что такое индикатор",
- "EMA",
- "SMA",
- "RSI",
- "MACD",
- "Bollinger Bands",
- "Envelopes",
- "Accelerator Oscillator",
- "ATR",
- "Сочетание индикаторов"
+  "Что такое индикатор",
+  "EMA",
+  "SMA",
+  "RSI",
+  "MACD",
+  "Bollinger Bands",
+  "Envelopes",
+  "Accelerator Oscillator",
+  "ATR",
+  "Stochastic",
+  "CCI",
+  "ADX",
+  "EMA как фильтр",
+  "RSI как фильтр",
+  "MACD и импульс",
+  "Bollinger и волатильность",
+  "Envelopes и возврат цены",
+  "Accelerator и моментум",
+  "Сочетание индикаторов",
+  "Ошибки при использовании индикаторов"
  ]
 },
+
 {
  name:"Price Action",
  icon:"⌁",
- color:"#fb7185",
- desc:"Анализируем саму цену.",
+ color:"#f06a87",
+ desc:"Читаем саму цену без лишнего шума.",
  topics:[
- "Что такое Price Action",
- "Импульс",
- "Коррекция",
- "Отбой",
- "Пробой",
- "Ретест",
- "Ложный пробой",
- "Сжатие",
- "Кульминация",
- "Сценарий Price Action"
+  "Что такое Price Action",
+  "Импульс",
+  "Коррекция",
+  "Отбой",
+  "Пробой",
+  "Ретест",
+  "Ложный пробой",
+  "Сжатие",
+  "Кульминация",
+  "Захват ликвидности",
+  "Реакция на уровень",
+  "Сила закрытия",
+  "Смена характера",
+  "Цена внутри диапазона",
+  "Выход из диапазона",
+  "Тестирование экстремума",
+  "Контекст движения",
+  "Подтверждение",
+  "Фильтрация",
+  "Полный сценарий Price Action"
  ]
 },
+
 {
  name:"Торговые стратегии",
- icon:"♢",
- color:"#60a5fa",
- desc:"Создание и проверка торговых правил.",
+ icon:"◇",
+ color:"#5597ee",
+ desc:"Создаём правила, которые можно проверить.",
  topics:[
- "Что такое стратегия",
- "Условия входа",
- "Подтверждение",
- "Стратегия по тренду",
- "Стратегия от уровня",
- "Пробойная стратегия",
- "Контртренд",
- "EMA + RSI",
- "Envelopes + Accelerator",
- "Тестирование стратегии"
+  "Что такое стратегия",
+  "Торговые правила",
+  "Условия входа",
+  "Условия отмены",
+  "Подтверждение",
+  "Стратегия по тренду",
+  "Стратегия от уровня",
+  "Пробойная стратегия",
+  "Контртренд",
+  "EMA + RSI",
+  "EMA + Price Action",
+  "RSI + уровни",
+  "Envelopes + Accelerator",
+  "Пробой + ретест",
+  "Отбой + подтверждение",
+  "Мультитаймфрейм стратегия",
+  "Фильтр плохих входов",
+  "Создание чек-листа",
+  "Тестирование стратегии",
+  "Улучшение стратегии"
  ]
 },
+
 {
  name:"Риск-менеджмент",
  icon:"◉",
- color:"#34e3a1",
- desc:"Контроль риска и сохранение капитала.",
+ color:"#2fdc9b",
+ desc:"Сохраняем капитал и контролируем размер риска.",
  topics:[
- "Что такое риск",
- "Размер позиции",
- "Риск на сделку",
- "Серия убытков",
- "Дневной лимит",
- "Мартингейл и риски",
- "Риск и доходность",
- "Остановка после серии",
- "Торговый лимит",
- "Система сохранения капитала"
+  "Что такое риск",
+  "Риск на сделку",
+  "Размер позиции",
+  "Допустимый риск",
+  "Серия убытков",
+  "Дневной лимит",
+  "Мартингейл и риски",
+  "Риск и доходность",
+  "Остановка после серии",
+  "Торговый лимит",
+  "Просадка",
+  "Максимальная просадка",
+  "Risk/Reward",
+  "Размер торговой сессии",
+  "Контроль капитала",
+  "План после убытка",
+  "План после серии побед",
+  "Риск нескольких активов",
+  "Стабильность",
+  "Система сохранения капитала"
  ]
 },
+
 {
  name:"Психология",
  icon:"☾",
- color:"#c084fc",
- desc:"Эмоции, дисциплина и решения.",
+ color:"#a66df3",
+ desc:"Учимся принимать решения спокойно и дисциплинированно.",
  topics:[
- "Эмоции трейдера",
- "Страх",
- "Жадность",
- "FOMO",
- "Тильт",
- "Месть рынку",
- "Дисциплина",
- "Ожидания",
- "Принятие убытка",
- "Холодная голова"
+  "Эмоции трейдера",
+  "Страх",
+  "Жадность",
+  "FOMO",
+  "Тильт",
+  "Месть рынку",
+  "Дисциплина",
+  "Ожидания",
+  "Принятие убытка",
+  "Холодная голова",
+  "Импульсивный вход",
+  "Переизбыток сделок",
+  "Страх пропустить движение",
+  "Страх закрыть позицию",
+  "Эйфория",
+  "Самоуверенность",
+  "Сомнения",
+  "Пауза",
+  "Психологический чек-лист",
+  "Ментальная система трейдера"
  ]
 },
+
 {
  name:"Практика графика",
  icon:"⌗",
- color:"#38bdf8",
- desc:"Переходим от теории к анализу.",
+ color:"#38b9ef",
+ desc:"Переходим от теории к реальному чтению графика.",
  topics:[
- "Как открыть график",
- "Алгоритм анализа",
- "Рабочий таймфрейм",
- "Определение тренда",
- "Разметка зон",
- "Поиск подтверждения",
- "Фильтрация сигналов",
- "Создание сценария",
- "Разбор ошибки",
- "Полный анализ"
+  "Как открыть график",
+  "Алгоритм анализа",
+  "Рабочий таймфрейм",
+  "Определение тренда",
+  "Разметка зон",
+  "Поиск подтверждения",
+  "Фильтрация сигналов",
+  "Создание сценария",
+  "Разбор ошибки",
+  "Полный анализ",
+  "Анализ перед входом",
+  "Анализ после входа",
+  "Исторический график",
+  "Поиск повторяющихся ситуаций",
+  "Сравнение сценариев",
+  "Разметка импульса",
+  "Разметка коррекции",
+  "Разбор пробоя",
+  "Разбор ретеста",
+  "Комплексный анализ"
  ]
 },
+
 {
  name:"Продвинутый анализ",
  icon:"✧",
- color:"#f59e0b",
- desc:"Контекст, ликвидность и конфлюэнция.",
+ color:"#f09f37",
+ desc:"Контекст, ликвидность и объединение нескольких факторов.",
  topics:[
- "Контекст рынка",
- "Сильный и слабый импульс",
- "Ликвидность и экстремумы",
- "Захват ликвидности",
- "Дисбаланс",
- "Смена характера",
- "Мультитаймфрейм",
- "Конфлюэнция",
- "Фильтрация",
- "Вероятностное мышление"
+  "Контекст рынка",
+  "Сильный импульс",
+  "Слабый импульс",
+  "Ликвидность и экстремумы",
+  "Захват ликвидности",
+  "Дисбаланс",
+  "Смена характера",
+  "Мультитаймфрейм",
+  "Конфлюэнция",
+  "Фильтрация",
+  "Вероятностное мышление",
+  "Сильная реакция",
+  "Слабая реакция",
+  "Внутренний диапазон",
+  "Внешний диапазон",
+  "Контекст старшего периода",
+  "Контекст младшего периода",
+  "Связь структуры и ликвидности",
+  "Комплексный сценарий",
+  "Продвинутый анализ"
  ]
 },
+
 {
  name:"Работа с сигналами",
  icon:"⌁",
  color:"#818cf8",
- desc:"Учимся правильно читать торговый сценарий.",
+ desc:"Учимся читать сигнал и понимать, когда его пропустить.",
  topics:[
- "Что такое сигнал",
- "Состав сигнала",
- "Направление",
- "Точка входа",
- "Экспирация",
- "Уверенность",
- "Подтверждения",
- "Когда пропускать",
- "Серия сигналов",
- "Журнал сигналов"
+  "Что такое сигнал",
+  "Состав сигнала",
+  "Направление",
+  "Точка входа",
+  "Экспирация",
+  "Уверенность",
+  "Подтверждения",
+  "Когда пропускать",
+  "Серия сигналов",
+  "Журнал сигналов",
+  "Сигнал по тренду",
+  "Сигнал от уровня",
+  "Сигнал после ретеста",
+  "Сигнал после пробоя",
+  "Сигнал против тренда",
+  "Фильтрация сигнала",
+  "Качество сигнала",
+  "Сценарий отмены",
+  "Разбор сигнала",
+  "Полный алгоритм работы с сигналом"
  ]
 },
+
 {
  name:"Дневник трейдера",
  icon:"▤",
- color:"#2dd4bf",
- desc:"Статистика и разбор своих решений.",
+ color:"#2dbfae",
+ desc:"Превращаем каждую сделку в материал для анализа.",
  topics:[
- "Зачем вести дневник",
- "Что записывать",
- "Причина входа",
- "Скриншот",
- "Результат",
- "Ошибка",
- "Повторяющиеся ошибки",
- "Статистика стратегии",
- "Разбор недели",
- "Улучшение системы"
+  "Зачем вести дневник",
+  "Что записывать",
+  "Причина входа",
+  "Скриншот",
+  "Результат",
+  "Ошибка",
+  "Повторяющиеся ошибки",
+  "Статистика стратегии",
+  "Разбор недели",
+  "Улучшение системы",
+  "Эмоции в сделке",
+  "Качество входа",
+  "Соблюдение правил",
+  "Результат против процесса",
+  "Лучшие сделки",
+  "Худшие сделки",
+  "Поиск закономерностей",
+  "Ежедневный отчёт",
+  "Еженедельный отчёт",
+  "Полный торговый дневник"
  ]
 },
+
 {
  name:"Backtesting",
  icon:"◌",
- color:"#93c5fd",
- desc:"Проверяем торговые идеи на истории.",
+ color:"#6ea6ee",
+ desc:"Проверяем идеи на исторических данных.",
  topics:[
- "Что такое backtest",
- "Зачем тестировать",
- "Исторические данные",
- "Правила теста",
- "Размер выборки",
- "Win Rate",
- "Drawdown",
- "Плохие тесты",
- "Оптимизация",
- "Отчёт стратегии"
+  "Что такое backtest",
+  "Зачем тестировать",
+  "Исторические данные",
+  "Правила теста",
+  "Размер выборки",
+  "Win Rate",
+  "Drawdown",
+  "Плохие тесты",
+  "Оптимизация",
+  "Отчёт стратегии",
+  "Ручное тестирование",
+  "Пошаговый тест",
+  "Случайная выборка",
+  "Серии результатов",
+  "Статистическая выборка",
+  "Переоптимизация",
+  "Overfitting",
+  "Стабильность",
+  "Сравнение стратегий",
+  "Итоговый backtest"
  ]
 },
+
 {
  name:"Продвинутый риск",
  icon:"△",
- color:"#4ade80",
- desc:"Вероятность и устойчивость системы.",
+ color:"#45d88e",
+ desc:"Вероятность, просадка и устойчивость системы.",
  topics:[
- "Вероятность",
- "Математическое ожидание",
- "Распределение результатов",
- "Drawdown",
- "Risk of Ruin",
- "Размер серии",
- "Корреляция",
- "Стабильность",
- "Риск портфеля",
- "Контроль просадки"
+  "Вероятность",
+  "Математическое ожидание",
+  "Распределение результатов",
+  "Drawdown",
+  "Risk of Ruin",
+  "Размер серии",
+  "Корреляция",
+  "Стабильность",
+  "Риск портфеля",
+  "Контроль просадки",
+  "Вероятность серии",
+  "Отклонение результата",
+  "Стабильный размер риска",
+  "Агрессивный риск",
+  "Консервативный риск",
+  "Сценарии просадки",
+  "Восстановление",
+  "Стресс-тест",
+  "Устойчивость",
+  "Полная система риск-контроля"
  ]
 },
+
 {
  name:"Путь профессионального трейдера",
  icon:"★",
- color:"#f472b6",
- desc:"Собираем всё в единую систему.",
+ color:"#ee70b1",
+ desc:"Собираем всё обучение в единую систему.",
  topics:[
- "Торговый план",
- "Чек-лист",
- "Рабочее место",
- "Режим трейдера",
- "Неделя трейдера",
- "Месяц трейдера",
- "Разбор статистики",
- "Улучшение стратегии",
- "От эмоций к системе",
- "Личный торговый план"
+  "Торговый план",
+  "Чек-лист",
+  "Рабочее место",
+  "Режим трейдера",
+  "Неделя трейдера",
+  "Месяц трейдера",
+  "Разбор статистики",
+  "Улучшение стратегии",
+  "От эмоций к системе",
+  "Личный торговый план",
+  "Правила перед рынком",
+  "Правила после рынка",
+  "Подготовка",
+  "Пост-анализ",
+  "Работа над ошибками",
+  "Система развития",
+  "Цели трейдера",
+  "Метрики трейдера",
+  "Профессиональная дисциплина",
+  "Финальный торговый план"
  ]
 }
+
 ];
 
 const lessons=[];
 
-moduleData.forEach((module,moduleIndex)=>{
+modules.forEach((module,moduleIndex)=>{
 
   module.topics.forEach((topic,topicIndex)=>{
 
     lessons.push({
+
       id:lessons.length,
+
       moduleIndex,
+
       module:module.name,
+
       icon:module.icon,
+
       color:module.color,
+
       topic,
-      level:moduleIndex<4
+
+      level:
+        moduleIndex<4
         ?"БАЗОВЫЙ"
         :moduleIndex<10
         ?"СРЕДНИЙ"
         :"ПРОДВИНУТЫЙ",
 
       lead:
-        `Тема «${topic}» — важная часть торгового анализа. `+
-        `Здесь ты разберёшь не только определение, `+
-        `но и логику применения, типичные ошибки и практическую работу с графиком.`,
+        `В этом уроке разбираем тему «${topic}» `+
+        `как часть полноценного торгового процесса. `+
+        `Задача урока — не просто запомнить термин, `+
+        `а научиться видеть его на графике и понимать, `+
+        `какое место он занимает внутри сценария.`,
 
       sections:[
+
         {
           title:"Что это такое?",
           text:
-          `${topic} — это элемент системы анализа, который помогает `+
-          `понять происходящее на рынке и принять более структурированное решение. `+
-          `Главное — не превращать термин в механическую кнопку входа. `+
-          `Любой инструмент имеет смысл только внутри контекста.`
+            `${topic} — важный элемент анализа рынка. `+
+            `Его нельзя рассматривать отдельно от контекста. `+
+            `Перед любым решением сначала нужно понять, `+
+            `что происходит с ценой, где находится рынок `+
+            `и какой сценарий рассматривается.`
         },
+
         {
           title:"Как это работает?",
           text:
-          `Начинай с общей картины. Сначала оцени контекст, затем направление `+
-          `и структуру движения. После этого рассматривай ключевые области `+
-          `и дополнительные подтверждения. Такой порядок помогает не искать `+
-          `подтверждение уже после того, как решение принято.`
+            `Начни с общей картины. Определи направление, `+
+            `структуру, ключевые области и текущее поведение цены. `+
+            `После этого используй тему урока как дополнительный `+
+            `элемент анализа. Такой порядок уменьшает вероятность `+
+            `того, что ты будешь подгонять рынок под заранее `+
+            `желательный результат.`
         },
+
         {
-          title:"Практический подход",
+          title:"Как искать это на графике?",
           text:
-          `Представь, что на графике появилась ситуация, связанная с темой «${topic}». `+
-          `Не нужно сразу открывать сделку. Сначала зафиксируй сценарий, `+
-          `определи условие подтверждения и условие отмены. Если рынок не выполняет `+
-          `твои правила — сценарий просто пропускается.`
+            `Открой исторический график и сначала не предпринимай `+
+            `никаких действий. Найди несколько похожих ситуаций. `+
+            `Отметь контекст до появления события, само событие `+
+            `и то, что произошло после него. Это позволяет отличать `+
+            `реальный повторяющийся паттерн от случайного движения.`
         },
+
+        {
+          title:"Практический сценарий",
+          text:
+            `Представь ситуацию, связанную с «${topic}». `+
+            `Не спеши входить. Сначала сформулируй сценарий: `+
+            `что должно произойти, чтобы идея получила подтверждение, `+
+            `и что должно произойти, чтобы ты её отменил. `+
+            `Если условия не выполнены — сценарий пропускается.`
+        },
+
         {
           title:"Типичные ошибки",
           text:
-          `Одна из главных ошибок — использовать ${topic.toLowerCase()} изолированно. `+
-          `Другие ошибки: попытка угадать следующий бар, отсутствие заранее заданных `+
-          `правил, изменение условий после появления результата и эмоциональный вход. `+
-          `Трейдеру важно оценивать процесс, а не только отдельный результат.`
+            `Самая частая ошибка — воспринимать один признак `+
+            `как гарантированный сигнал. Также опасно входить `+
+            `после сильного движения только из-за страха пропустить его, `+
+            `менять правила после открытия сделки и увеличивать риск `+
+            `после убытка. Хороший анализ начинается с заранее известных правил.`
         },
+
         {
-          title:"Практика",
+          title:"Практическое задание",
           text:
-          `Открой исторический график и найди минимум пять ситуаций, `+
-          `связанных с этой темой. Для каждой запиши: контекст, что произошло, `+
-          `какое подтверждение было доступно и что заставило бы тебя отказаться `+
-          `от сценария. После этого сравни ситуации между собой.`
-        },
-        {
-          title:"Задание от Ava",
-          text:
-          `Попробуй объяснить эту тему своими словами без использования `+
-          `сложных терминов. Если можешь объяснить её простыми словами `+
-          `и показать на графике — значит, ты действительно начинаешь её понимать.`
+            `Найди минимум пять исторических примеров. `+
+            `Для каждого запиши контекст, направление, `+
+            `ключевую область, подтверждение и причину, `+
+            `по которой сценарий можно было бы отменить. `+
+            `После этого сравни все пять примеров и найди общие признаки.`
         }
+
       ],
 
       tip:
-        `Не спеши. Сначала пойми принцип, затем найди его на графике, `+
-        `после этого проверь исторические примеры.`
+        `Сначала пойми принцип → потом найди его на графике → `+
+        `после этого проверь несколько исторических примеров.`
     });
 
   });
 
 });
 
+const TOTAL_LESSONS=lessons.length;
+
 /* =========================================================
    LEVEL
 ========================================================= */
 
-function level(){
-  return Math.max(1,Math.floor(state.xp/80)+1);
+function getLevel(){
+  return Math.max(
+    1,
+    Math.floor(state.xp/80)+1
+  );
 }
 
 function levelPercent(){
-  return Math.min(100,Math.round((state.xp%80)/80*100));
+
+  return Math.min(
+    100,
+    Math.round((state.xp%80)/80*100)
+  );
 }
 
 /* =========================================================
-   MAIN RENDER
+   RENDER
 ========================================================= */
 
 function render(){
@@ -3141,11 +4274,12 @@ function render(){
     profile:"Твой профиль"
   };
 
-  $("topTitle").innerHTML=`<b>${titles[state.currentPage]}</b>`;
+  $("topTitle").innerHTML=
+    `<b>${titles[state.currentPage]}</b>`;
 
   updateSideUser();
 
-  const pages={
+  const pageRenderers={
     home:renderHome,
     education:renderEducation,
     bot:renderBot,
@@ -3153,7 +4287,8 @@ function render(){
     profile:renderProfile
   };
 
-  $("content").innerHTML=pages[state.currentPage]();
+  $("content").innerHTML=
+    pageRenderers[state.currentPage]();
 }
 
 /* =========================================================
@@ -3162,10 +4297,14 @@ function render(){
 
 function renderHome(){
 
-  const done=state.completedLessons.length;
-  const percent=Math.round(done/lessons.length*100);
+  const done=
+    state.completedLessons.length;
+
+  const percent=
+    Math.round(done/TOTAL_LESSONS*100);
 
   return `
+
   <section class="page">
 
     <div class="hero">
@@ -3173,8 +4312,11 @@ function renderHome(){
       <div class="hero-content">
 
         <div class="status-pill">
+
           <span class="status-dot"></span>
-          AVA ACADEMY • ONLINE
+
+          AVA POCKET • ONLINE
+
         </div>
 
         <h1>
@@ -3183,9 +4325,9 @@ function renderHome(){
         </h1>
 
         <div class="hero-description">
-          Большая академия, практика, Ava Bot и понятный
-          путь от первых свечей до построения собственной
-          торговой системы.
+          Большая академия, практика, AVA BOT и
+          персональный помощник Ava — всё в одном
+          красивом пространстве.
         </div>
 
         <div class="hero-buttons">
@@ -3207,66 +4349,89 @@ function renderHome(){
 
       </div>
 
-      <div class="hero-market">
+      <div class="hero-chart">
 
-        <svg class="market-svg"
-             viewBox="0 0 750 450"
-             preserveAspectRatio="none">
+        <svg
+          viewBox="0 0 750 450"
+          preserveAspectRatio="none">
 
           <defs>
-            <linearGradient id="heroGradient"
-              x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#a855f7" stop-opacity=".6"/>
-              <stop offset="1" stop-color="#a855f7" stop-opacity="0"/>
+
+            <linearGradient
+              id="heroArea"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1">
+
+              <stop
+                offset="0"
+                stop-color="#a855f7"
+                stop-opacity=".55"/>
+
+              <stop
+                offset="1"
+                stop-color="#a855f7"
+                stop-opacity="0"/>
+
             </linearGradient>
+
           </defs>
 
-          <path class="chart-fill"
-            d="M0 370
-               L55 340
-               L90 355
-               L135 290
-               L175 310
-               L220 250
-               L270 275
-               L315 210
-               L355 235
-               L405 160
-               L450 185
-               L500 125
-               L545 150
-               L600 82
-               L645 112
-               L700 60
-               L750 85
-               L750 450
-               L0 450Z"/>
+          <path
+            class="chart-area"
+            d="
+              M0 380
+              L55 350
+              L95 365
+              L135 305
+              L180 325
+              L225 265
+              L270 285
+              L315 220
+              L355 245
+              L405 175
+              L450 195
+              L500 135
+              L545 155
+              L600 92
+              L645 115
+              L700 67
+              L750 90
+              L750 450
+              L0 450
+              Z"/>
 
-          <path class="chart-path"
-            d="M0 370
-               L55 340
-               L90 355
-               L135 290
-               L175 310
-               L220 250
-               L270 275
-               L315 210
-               L355 235
-               L405 160
-               L450 185
-               L500 125
-               L545 150
-               L600 82
-               L645 112
-               L700 60
-               L750 85"/>
+          <path
+            class="chart-line"
+            d="
+              M0 380
+              L55 350
+              L95 365
+              L135 305
+              L180 325
+              L225 265
+              L270 285
+              L315 220
+              L355 245
+              L405 175
+              L450 195
+              L500 135
+              L545 155
+              L600 92
+              L645 115
+              L700 67
+              L750 90"/>
 
         </svg>
 
       </div>
 
-      <div class="floating-price">
-        EUR/USD&nbsp;&nbsp; <b style="color:#34e3a1">+0.42%</b>
+      <div class="price-tag">
+        EUR/USD&nbsp;&nbsp;
+        <b style="color:#31df9d">
+          +0.42%
+        </b>
       </div>
 
     </div>
@@ -3274,39 +4439,102 @@ function renderHome(){
     <div class="stats">
 
       <div class="stat-card">
+
         <div class="stat-top">
-          <span class="stat-label">ОБУЧЕНИЕ</span>
-          <span class="stat-icon">▣</span>
+
+          <span class="stat-label">
+            ОБУЧЕНИЕ
+          </span>
+
+          <span class="stat-icon">
+            ▣
+          </span>
+
         </div>
-        <div class="stat-value">${done}<small style="font-size:11px;color:#61596c">/${lessons.length}</small></div>
-        <div class="stat-meta">${percent}% академии</div>
+
+        <div class="stat-value">
+          ${done}
+          <small style="font-size:11px;color:#61596c">
+            /${TOTAL_LESSONS}
+          </small>
+        </div>
+
+        <div class="stat-meta">
+          ${percent}% академии
+        </div>
+
       </div>
 
       <div class="stat-card">
+
         <div class="stat-top">
-          <span class="stat-label">УРОВЕНЬ</span>
-          <span class="stat-icon">✦</span>
+
+          <span class="stat-label">
+            УРОВЕНЬ
+          </span>
+
+          <span class="stat-icon">
+            ✦
+          </span>
+
         </div>
-        <div class="stat-value">${level()}</div>
-        <div class="stat-meta">${state.xp} XP</div>
+
+        <div class="stat-value">
+          ${getLevel()}
+        </div>
+
+        <div class="stat-meta">
+          ${state.xp} XP
+        </div>
+
       </div>
 
       <div class="stat-card">
+
         <div class="stat-top">
-          <span class="stat-label">AVA BOT</span>
-          <span class="stat-icon">◉</span>
+
+          <span class="stat-label">
+            AVA BOT
+          </span>
+
+          <span class="stat-icon">
+            ◉
+          </span>
+
         </div>
-        <div class="stat-value">${state.signalsGenerated}</div>
-        <div class="stat-meta">сканирований</div>
+
+        <div class="stat-value">
+          ${state.signalsGenerated}
+        </div>
+
+        <div class="stat-meta">
+          сканирований
+        </div>
+
       </div>
 
       <div class="stat-card">
+
         <div class="stat-top">
-          <span class="stat-label">ДЕМО</span>
-          <span class="stat-icon">↗</span>
+
+          <span class="stat-label">
+            DEMO
+          </span>
+
+          <span class="stat-icon">
+            ↗
+          </span>
+
         </div>
-        <div class="stat-value">${state.wins}</div>
-        <div class="stat-meta">положительных</div>
+
+        <div class="stat-value">
+          ${state.wins}
+        </div>
+
+        <div class="stat-meta">
+          положительных
+        </div>
+
       </div>
 
     </div>
@@ -3318,11 +4546,23 @@ function renderHome(){
         <div class="market-header">
 
           <div class="market-title">
-            <div class="market-logo">⌁</div>
-            <div>
-              <h3>Market Activity</h3>
-              <p>AVA MARKET • PRICE MOVEMENT</p>
+
+            <div class="market-logo">
+              ⌁
             </div>
+
+            <div>
+
+              <h3>
+                Market Activity
+              </h3>
+
+              <p>
+                AVA MARKET • PRICE MOVEMENT
+              </p>
+
+            </div>
+
           </div>
 
           <div class="market-live">
@@ -3332,17 +4572,26 @@ function renderHome(){
 
         </div>
 
-        <div class="activity-chart">
+        <div class="activity">
+
+          <div class="activity-grid"></div>
 
           <div class="activity-bars">
-            ${Array.from({length:40},(_,i)=>`
-              <div
-                class="activity-bar"
-                style="
-                  height:${25+Math.random()*72}%;
-                  animation-delay:${i*.06}s">
-              </div>
-            `).join("")}
+
+            ${Array.from(
+              {length:42},
+              (_,i)=>`
+
+                <div
+                  class="activity-bar"
+                  style="
+                    height:${25+Math.random()*72}%;
+                    animation-delay:${i*.055}s">
+                </div>
+
+              `
+            ).join("")}
+
           </div>
 
           <div class="activity-line"></div>
@@ -3355,7 +4604,7 @@ function renderHome(){
             <span>21:00</span>
           </div>
 
-          <div class="activity-signal">
+          <div class="activity-bubble">
             ✦ Ava наблюдает за рынком
           </div>
 
@@ -3365,18 +4614,16 @@ function renderHome(){
 
       <div class="card ava-home">
 
-        <div class="ava-home-art">
-          <div class="ava-orbit"></div>
+        <div class="ava-home-orbit"></div>
 
-          <div class="home-bot">
+        <div class="home-robot">
 
-            <div class="bot-head">
-              <div class="bot-screen"></div>
-            </div>
-
-            <div class="bot-body"></div>
-
+          <div class="home-robot-head">
+            <div class="home-robot-screen"></div>
           </div>
+
+          <div class="home-robot-body"></div>
+
         </div>
 
         <div class="ava-home-copy">
@@ -3384,9 +4631,9 @@ function renderHome(){
           <h3>Ava Bot</h3>
 
           <p>
-            Выбери валютную пару, рынок и время.
+            Выбери пару, рынок и время.
             Ava проведёт учебное сканирование
-            и покажет сценарий.
+            и покажет торговый сценарий.
           </p>
 
           <button
@@ -3401,77 +4648,109 @@ function renderHome(){
 
     </div>
 
-    <div class="card" style="margin-top:14px;padding:21px">
+    <div
+      class="card"
+      style="margin-top:14px;padding:21px">
 
       <div class="market-header">
+
         <div>
+
           <h3 style="margin:0;font-size:15px">
             Продолжить обучение
           </h3>
-          <p style="margin:5px 0 0;color:#625b70;font-size:9px">
+
+          <p
+            style="
+              margin:5px 0 0;
+              color:#625b70;
+              font-size:8px">
             Твой следующий шаг
           </p>
+
         </div>
 
-        <span style="font-size:9px;color:#6d6577">
+        <span
+          style="font-size:9px;color:#6d6577">
           ${percent}%
         </span>
+
       </div>
 
       ${continueLesson()}
 
     </div>
 
-  </section>`;
+  </section>
+
+  `;
 }
 
 function continueLesson(){
 
   const lesson=
-    lessons.find(l=>!state.completedLessons.includes(l.id))
-    || lessons[0];
+    lessons.find(
+      l=>!state.completedLessons.includes(l.id)
+    ) || lessons[0];
 
   return `
-  <div style="
-    display:flex;
-    align-items:center;
-    gap:13px;
-    margin-top:17px;
-    padding:14px;
-    border-radius:17px;
-    background:rgba(255,255,255,.025);
-    border:1px solid rgba(255,255,255,.05)">
 
-    <div style="
-      width:49px;
-      height:49px;
-      display:grid;
-      place-items:center;
-      border-radius:15px;
-      background:rgba(168,85,247,.1);
-      color:#c084fc;
-      font-size:20px">
+  <div
+    style="
+      display:flex;
+      align-items:center;
+      gap:13px;
+      margin-top:17px;
+      padding:14px;
+      border-radius:17px;
+      background:rgba(255,255,255,.025);
+      border:1px solid rgba(255,255,255,.05)">
+
+    <div
+      style="
+        width:49px;
+        height:49px;
+        display:grid;
+        place-items:center;
+        flex:none;
+        border-radius:15px;
+        color:#c084fc;
+        background:rgba(168,85,247,.1);
+        font-size:20px">
       ${lesson.icon}
     </div>
 
     <div style="flex:1">
-      <div style="color:#655e70;font-size:9px">
+
+      <div
+        style="
+          color:#655e70;
+          font-size:8px">
         ${esc(lesson.module)}
       </div>
 
-      <b style="display:block;margin-top:4px;font-size:12px">
+      <b
+        style="
+          display:block;
+          margin-top:4px;
+          font-size:11px">
         ${esc(lesson.topic)}
       </b>
+
     </div>
 
     <button
       class="secondary"
-      style="min-height:40px;font-size:9px"
+      style="
+        min-height:40px;
+        font-size:8px"
       onclick="openLesson(${lesson.id})">
       Открыть
     </button>
 
-  </div>`;
+  </div>
+
+  `;
 }
 
 /* =========================================================
@@ -3480,131 +4759,179 @@ function continueLesson(){
 
 function renderEducation(){
 
-  const percent=Math.round(
-    state.completedLessons.length/lessons.length*100
-  );
+  const done=
+    state.completedLessons.length;
+
+  const percent=
+    Math.round(done/TOTAL_LESSONS*100);
 
   return `
-  <section class="page">
+
+  <section class="page education-page">
 
     <div class="section-head">
+
       <div>
+
         <h1>Академия</h1>
+
         <p>
-          ${lessons.length} уроков • ${moduleData.length} больших модулей
+          ${TOTAL_LESSONS} уроков •
+          ${modules.length} больших модулей
         </p>
+
       </div>
-      <span style="font-size:10px;color:#665e70">
-        ${state.completedLessons.length}/${lessons.length}
+
+      <span
+        style="
+          color:#746c7b;
+          font-size:9px">
+        ${done}/${TOTAL_LESSONS}
       </span>
+
     </div>
 
-    <div class="card education-top">
+    <div class="edu-summary">
 
-      <div class="education-progress">
-
-        <div class="education-progress-top">
-          <span>ПРОГРЕСС АКАДЕМИИ</span>
-          <b>${percent}%</b>
-        </div>
-
-        <div class="progress">
-          <span style="width:${percent}%"></span>
-        </div>
-
-      </div>
-
-      <div style="
-        width:45px;
-        height:45px;
-        display:grid;
-        place-items:center;
-        border-radius:15px;
-        background:rgba(168,85,247,.1);
-        color:#c084fc">
+      <div class="edu-summary-icon">
         ✦
       </div>
 
-    </div>
+      <div class="edu-summary-progress">
 
-    <div class="modules">
+        <div class="edu-progress-top">
 
-      ${moduleData.map((m,index)=>{
+          <span>
+            ПРОГРЕСС АКАДЕМИИ
+          </span>
 
-        const list=lessons.filter(
-          l=>l.moduleIndex===index
-        );
+          <b>
+            ${percent}%
+          </b>
 
-        const done=list.filter(
-          l=>state.completedLessons.includes(l.id)
-        ).length;
+        </div>
 
-        const p=Math.round(done/list.length*100);
+        <div class="edu-progress">
 
-        return `
-        <div
-          class="module"
-          style="--module-color:${m.color}">
+          <span
+            style="width:${percent}%">
+          </span>
 
-          <div class="module-number">
-            МОДУЛЬ ${String(index+1).padStart(2,"0")}
-          </div>
+        </div>
 
-          <div class="module-icon">
-            ${m.icon}
-          </div>
-
-          <h3>${esc(m.name)}</h3>
-
-          <p>${esc(m.desc)}</p>
-
-          <div class="module-bottom">
-
-            <div class="module-meta">
-              <span>${done}/${list.length} уроков</span>
-              <span>${p}%</span>
-            </div>
-
-            <div class="progress">
-              <span
-                style="
-                  width:${p}%;
-                  background:${m.color}">
-              </span>
-            </div>
-
-            <button
-              class="module-button"
-              onclick="openModule(${index})">
-              Открыть модуль →
-            </button>
-
-          </div>
-
-        </div>`;
-      }).join("")}
+      </div>
 
     </div>
 
-  </section>`;
+    <div class="edu-modules">
+
+      ${modules.map(
+        (module,index)=>{
+
+          const moduleLessons=
+            lessons.filter(
+              l=>l.moduleIndex===index
+            );
+
+          const completed=
+            moduleLessons.filter(
+              l=>state.completedLessons.includes(l.id)
+            ).length;
+
+          const p=
+            Math.round(
+              completed/moduleLessons.length*100
+            );
+
+          return `
+
+          <div
+            class="edu-module"
+            style="--module-color:${module.color}">
+
+            <div class="edu-number">
+              МОДУЛЬ
+              ${String(index+1).padStart(2,"0")}
+            </div>
+
+            <div class="edu-icon">
+              ${module.icon}
+            </div>
+
+            <h3>
+              ${esc(module.name)}
+            </h3>
+
+            <p>
+              ${esc(module.desc)}
+            </p>
+
+            <div class="edu-bottom">
+
+              <div class="edu-meta">
+
+                <span>
+                  ${completed}/${moduleLessons.length} уроков
+                </span>
+
+                <span>
+                  ${p}%
+                </span>
+
+              </div>
+
+              <div class="edu-module-progress">
+
+                <span
+                  style="
+                    width:${p}%;
+                    background:${module.color}">
+                </span>
+
+              </div>
+
+              <button
+                class="edu-open"
+                onclick="openModule(${index})">
+                Открыть модуль →
+              </button>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      ).join("")}
+
+    </div>
+
+  </section>
+
+  `;
 }
 
 function openModule(index){
 
-  const first=lessons.find(
-    l=>l.moduleIndex===index
-  );
+  const lesson=
+    lessons.find(
+      l=>l.moduleIndex===index
+    );
 
-  if(first)openLesson(first.id);
+  if(lesson){
+    openLesson(lesson.id);
+  }
 }
 
 /* =========================================================
-   LESSON READER
+   LESSON
 ========================================================= */
 
 function openLesson(id){
 
-  const lesson=lessons.find(l=>l.id===id);
+  const lesson=
+    lessons.find(l=>l.id===id);
 
   if(!lesson)return;
 
@@ -3613,28 +4940,37 @@ function openLesson(id){
   $("reader").classList.add("open");
 
   $("readerProgress").textContent=
-    `Урок ${id+1} из ${lessons.length}`;
+    `Урок ${id+1} из ${TOTAL_LESSONS}`;
 
   $("bookmarkBtn").textContent=
-    state.bookmarks.includes(id)?"★":"☆";
+    state.bookmarks.includes(id)
+    ?"★"
+    :"☆";
 
   $("readerBody").innerHTML=`
 
     <div class="lesson-kicker">
-      ${esc(lesson.module)} • ${lesson.level}
+      ${esc(lesson.module)}
+      •
+      ${lesson.level}
     </div>
 
-    <h1>${esc(lesson.topic)}</h1>
+    <h1>
+      ${esc(lesson.topic)}
+    </h1>
 
     <div class="lesson-lead">
       ${esc(lesson.lead)}
     </div>
 
-    ${lesson.sections.map(section=>`
+    ${lesson.sections.map(
+      section=>`
 
       <div class="lesson-section">
 
-        <h2>${esc(section.title)}</h2>
+        <h2>
+          ${esc(section.title)}
+        </h2>
 
         <p>
           ${esc(section.text)}
@@ -3642,11 +4978,14 @@ function openLesson(id){
 
       </div>
 
-    `).join("")}
+      `
+    ).join("")}
 
     <div class="lesson-section">
 
-      <h2>Совет Ava</h2>
+      <h2>
+        Совет Ava
+      </h2>
 
       <div class="example">
         ✦ ${esc(lesson.tip)}
@@ -3656,13 +4995,18 @@ function openLesson(id){
 
     <div class="lesson-section">
 
-      <h2>Мини-задание</h2>
+      <h2>
+        Мини-практика
+      </h2>
 
       <div class="example">
-        Открой исторический график и найди
-        минимум 5 примеров этой темы.
-        Для каждого примера запиши,
-        почему ты считаешь ситуацию подходящей.
+
+        Открой исторический график.
+        Найди минимум пять примеров этой темы.
+        Для каждого запиши контекст, подтверждение
+        и причину, по которой сценарий можно было
+        бы отменить.
+
       </div>
 
     </div>
@@ -3671,12 +5015,13 @@ function openLesson(id){
 
       <button
         class="primary"
-        style="width:auto;padding:0 20px"
         onclick="completeLesson(${id})">
 
-        ${state.completedLessons.includes(id)
+        ${
+          state.completedLessons.includes(id)
           ?"✓ Урок уже пройден"
-          :"Завершить урок • +5 XP"}
+          :"+5 XP • Завершить урок"
+        }
 
       </button>
 
@@ -3684,9 +5029,11 @@ function openLesson(id){
         class="secondary"
         onclick="toggleBookmark()">
 
-        ${state.bookmarks.includes(id)
+        ${
+          state.bookmarks.includes(id)
           ?"★ В закладках"
-          :"☆ Сохранить"}
+          :"☆ Сохранить"
+        }
 
       </button>
 
@@ -3703,12 +5050,13 @@ function openLesson(id){
 
       <button
         class="secondary"
-        onclick="openLesson(${Math.min(lessons.length-1,id+1)})"
-        ${id===lessons.length-1?"disabled":""}>
+        onclick="openLesson(${Math.min(TOTAL_LESSONS-1,id+1)})"
+        ${id===TOTAL_LESSONS-1?"disabled":""}>
         Следующий →
       </button>
 
     </div>
+
   `;
 
   $("reader").scrollTop=0;
@@ -3727,13 +5075,18 @@ function completeLesson(id){
 
   state.completedLessons.push(id);
 
-  /* XP специально выдаётся медленно */
+  /*
+    XP специально выдаётся медленно.
+    За один урок — только 5 XP.
+  */
+
   state.xp+=5;
   state.coins+=2;
 
   save();
 
   render();
+
   openLesson(id);
 
   toast("+5 XP • урок завершён");
@@ -3742,21 +5095,33 @@ function completeLesson(id){
 function toggleBookmark(){
 
   const id=state.currentLesson;
-  const index=state.bookmarks.indexOf(id);
+
+  const index=
+    state.bookmarks.indexOf(id);
 
   if(index===-1){
+
     state.bookmarks.push(id);
-    toast("Урок добавлен в закладки");
+
+    toast("Урок сохранён");
+
   }else{
+
     state.bookmarks.splice(index,1);
+
     toast("Урок убран из закладок");
+
   }
 
   save();
 
   if($("bookmarkBtn")){
+
     $("bookmarkBtn").textContent=
-      state.bookmarks.includes(id)?"★":"☆";
+      state.bookmarks.includes(id)
+      ?"★"
+      :"☆";
+
   }
 }
 
@@ -3765,21 +5130,67 @@ function toggleBookmark(){
 ========================================================= */
 
 const pairs=[
- "EUR/USD","GBP/USD","USD/JPY","USD/CHF",
- "AUD/USD","USD/CAD","NZD/USD","EUR/GBP",
- "EUR/JPY","EUR/CHF","EUR/AUD","EUR/CAD",
- "EUR/NZD","GBP/JPY","GBP/CHF","GBP/AUD",
- "GBP/CAD","GBP/NZD","AUD/JPY","AUD/NZD",
- "AUD/CAD","AUD/CHF","CAD/JPY","CAD/CHF",
- "CHF/JPY","NZD/JPY","NZD/CAD","NZD/CHF",
- "USD/SGD","USD/HKD","USD/CNH","USD/TRY",
- "USD/MXN","USD/ZAR","USD/SEK","USD/NOK",
- "USD/DKK","USD/PLN","USD/CZK","USD/HUF",
- "EUR/PLN","EUR/SEK","EUR/NOK","EUR/DKK",
- "EUR/TRY","EUR/ZAR","GBP/SGD","GBP/ZAR",
- "GBP/PLN","AUD/SGD","AUD/ZAR","CAD/SGD",
- "NZD/SGD","SGD/JPY","HKD/JPY","NOK/SEK",
- "SEK/JPY","ZAR/JPY","MXN/JPY"
+
+ "EUR/USD",
+ "GBP/USD",
+ "USD/JPY",
+ "USD/CHF",
+ "AUD/USD",
+ "USD/CAD",
+ "NZD/USD",
+ "EUR/GBP",
+ "EUR/JPY",
+ "EUR/CHF",
+ "EUR/AUD",
+ "EUR/CAD",
+ "EUR/NZD",
+ "GBP/JPY",
+ "GBP/CHF",
+ "GBP/AUD",
+ "GBP/CAD",
+ "GBP/NZD",
+ "AUD/JPY",
+ "AUD/NZD",
+ "AUD/CAD",
+ "AUD/CHF",
+ "CAD/JPY",
+ "CAD/CHF",
+ "CHF/JPY",
+ "NZD/JPY",
+ "NZD/CAD",
+ "NZD/CHF",
+ "USD/SGD",
+ "USD/HKD",
+ "USD/CNH",
+ "USD/TRY",
+ "USD/MXN",
+ "USD/ZAR",
+ "USD/SEK",
+ "USD/NOK",
+ "USD/DKK",
+ "USD/PLN",
+ "USD/CZK",
+ "USD/HUF",
+ "EUR/PLN",
+ "EUR/SEK",
+ "EUR/NOK",
+ "EUR/DKK",
+ "EUR/TRY",
+ "EUR/ZAR",
+ "GBP/SGD",
+ "GBP/ZAR",
+ "GBP/PLN",
+ "AUD/SGD",
+ "AUD/ZAR",
+ "CAD/SGD",
+ "NZD/SGD",
+ "SGD/JPY",
+ "HKD/JPY",
+ "NOK/SEK",
+ "SEK/JPY",
+ "ZAR/JPY",
+ "MXN/JPY"
+
 ];
 
 let selectedMarket="Биржа";
@@ -3788,20 +5199,26 @@ let botTimer=null;
 function renderBot(){
 
   return `
+
   <section class="page">
 
     <div class="section-head">
 
       <div>
+
         <h1>Ava Bot</h1>
+
         <p>
-          Красивый учебный сканер торгового сценария
+          Персональный учебный market scanner
         </p>
+
       </div>
 
       <div class="status-pill">
+
         <span class="status-dot"></span>
         READY
+
       </div>
 
     </div>
@@ -3810,15 +5227,24 @@ function renderBot(){
 
       <div class="bot-card">
 
+        <!-- ПАРАМЕТРЫ ТЕПЕРЬ СВЕРХУ -->
+
         <div class="bot-card-top">
 
           <div class="bot-brand">
 
-            <div class="bot-brand-icon">✦</div>
+            <div class="bot-brand-icon">
+              ✦
+            </div>
 
             <div>
+
               <b>AVA BOT</b>
-              <span>MARKET ANALYZER</span>
+
+              <span>
+                PERSONAL MARKET ANALYZER
+              </span>
+
             </div>
 
           </div>
@@ -3842,13 +5268,98 @@ function renderBot(){
 
         </div>
 
+        <!-- ВАЛЮТНАЯ ПАРА ВВЕРХУ -->
+
+        <div
+          style="
+            display:grid;
+            grid-template-columns:1.4fr 1fr 1fr;
+            gap:8px;
+            padding:13px 17px;
+            border-bottom:1px solid rgba(255,255,255,.05);
+            background:rgba(8,4,13,.22)">
+
+          <select
+            class="control"
+            id="pairSelect">
+
+            ${pairs.map(
+              pair=>`
+                <option>
+                  ${pair}
+                </option>
+              `
+            ).join("")}
+
+          </select>
+
+          <select
+            class="control"
+            id="durationSelect">
+
+            <option value="1">
+              1 минута
+            </option>
+
+            <option value="2">
+              2 минуты
+            </option>
+
+            <option value="3">
+              3 минуты
+            </option>
+
+            <option value="5" selected>
+              5 минут
+            </option>
+
+            <option value="10">
+              10 минут
+            </option>
+
+            <option value="15">
+              15 минут
+            </option>
+
+          </select>
+
+          <select
+            class="control"
+            id="analysisSelect">
+
+            <option>
+              Обычный анализ
+            </option>
+
+            <option>
+              Строгий анализ
+            </option>
+
+            <option>
+              Быстрый анализ
+            </option>
+
+          </select>
+
+        </div>
+
         <div class="bot-center">
 
           <div class="bot-ring"></div>
 
-          <div class="robot" id="robot">
+          <div
+            class="unique-robot"
+            id="robot">
 
             <div class="robot-aura"></div>
+
+            <div class="robot-circuit">
+
+              <span></span>
+              <span></span>
+              <span></span>
+
+            </div>
 
             <div class="robot-antenna"></div>
 
@@ -3858,9 +5369,16 @@ function renderBot(){
               <div class="robot-ear right"></div>
 
               <div class="robot-screen">
+
                 <div class="robot-eye left"></div>
                 <div class="robot-eye right"></div>
+
                 <div class="robot-mouth"></div>
+
+                <span class="robot-mark">
+                  AVA
+                </span>
+
               </div>
 
             </div>
@@ -3874,7 +5392,11 @@ function renderBot(){
             </div>
 
             <div class="robot-body">
-              <div class="robot-chest">AVA</div>
+
+              <div class="robot-chest">
+                AVA
+              </div>
+
             </div>
 
             <div class="robot-leg left"></div>
@@ -3883,10 +5405,15 @@ function renderBot(){
           </div>
 
           <div class="bot-name">
-            <strong>AVA BOT</strong>
+
+            <strong>
+              AVA BOT
+            </strong>
+
             <span id="botStatus">
               READY TO SCAN
             </span>
+
           </div>
 
           <div
@@ -3896,34 +5423,20 @@ function renderBot(){
 
         </div>
 
-        <div class="bot-controls">
-
-          <select class="control" id="pairSelect">
-            ${pairs.map(p=>`
-              <option>${p}</option>
-            `).join("")}
-          </select>
-
-          <select class="control" id="durationSelect">
-            <option value="1">1 минута</option>
-            <option value="2">2 минуты</option>
-            <option value="3">3 минуты</option>
-            <option value="5" selected>5 минут</option>
-            <option value="10">10 минут</option>
-            <option value="15">15 минут</option>
-          </select>
-
-          <select class="control" id="analysisSelect">
-            <option>Обычный анализ</option>
-            <option>Строгий анализ</option>
-            <option>Быстрый анализ</option>
-          </select>
+        <div
+          style="
+            padding:15px 17px;
+            border-top:1px solid rgba(255,255,255,.05)">
 
           <button
             class="generate"
             id="generateButton"
+            style="width:100%"
             onclick="generateSignal()">
-            ✦ Сгенерировать
+
+            ✦&nbsp;&nbsp;
+            Сгенерировать сигнал
+
           </button>
 
         </div>
@@ -3935,8 +5448,15 @@ function renderBot(){
         <div class="card side-card">
 
           <div class="side-title">
-            <h3>Параметры Ava</h3>
-            <span>ANALYSIS</span>
+
+            <h3>
+              Параметры Ava
+            </h3>
+
+            <span>
+              ANALYSIS
+            </span>
+
           </div>
 
           <div class="info">
@@ -3964,8 +5484,15 @@ function renderBot(){
         <div class="card side-card">
 
           <div class="side-title">
-            <h3>Сессия</h3>
-            <span>DEMO</span>
+
+            <h3>
+              Сессия
+            </h3>
+
+            <span>
+              DEMO
+            </span>
+
           </div>
 
           <div class="info">
@@ -3975,23 +5502,30 @@ function renderBot(){
 
           <div class="info">
             <span>В плюсе</span>
-            <b style="color:#34e3a1">${state.wins}</b>
+            <b style="color:#31df9d">
+              ${state.wins}
+            </b>
           </div>
 
           <div class="info">
             <span>В минусе</span>
-            <b style="color:#ff5875">${state.losses}</b>
+            <b style="color:#ff5875">
+              ${state.losses}
+            </b>
           </div>
 
         </div>
 
         <div class="warning">
 
-          <b>Учебный режим</b><br><br>
+          <b>Учебный режим</b>
 
-          Ava Bot здесь работает как DEMO-сценарий.
-          Он не подключён к реальному потоку котировок
-          Pocket Option и не гарантирует результат торговли.
+          <br><br>
+
+          AVA BOT в этой версии работает
+          как DEMO-сценарий. Он не подключён
+          к реальному потоку котировок
+          и не является гарантией результата.
 
         </div>
 
@@ -3999,7 +5533,9 @@ function renderBot(){
 
     </div>
 
-  </section>`;
+  </section>
+
+  `;
 }
 
 function setMarket(type){
@@ -4021,104 +5557,145 @@ function generateSignal(){
 
   if(botTimer)return;
 
-  const button=$("generateButton");
-  const robot=$("robot");
-  const status=$("botStatus");
-  const popup=$("signalPopup");
+  const button=
+    $("generateButton");
+
+  const robot=
+    $("robot");
+
+  const status=
+    $("botStatus");
+
+  const popup=
+    $("signalPopup");
 
   button.disabled=true;
 
   popup.className="signal-popup";
+
   popup.innerHTML="";
 
   robot.classList.add("scanning");
 
   const stages=[
+
     "READING CANDLES…",
     "CHECKING MARKET STRUCTURE…",
     "CALCULATING RSI…",
     "CHECKING EMA…",
     "ANALYZING MOMENTUM…",
     "BUILDING SCENARIO…"
+
   ];
 
-  let i=0;
+  let stage=0;
 
-  status.textContent=stages[0];
+  status.textContent=
+    stages[0];
 
-  const stageInterval=setInterval(()=>{
+  const stageTimer=
+    setInterval(()=>{
 
-    i++;
+      stage++;
 
-    if(stages[i]){
-      status.textContent=stages[i];
-    }
+      if(stages[stage]){
+        status.textContent=
+          stages[stage];
+      }
 
-  },240);
+    },245);
 
   setTimeout(()=>{
 
-    clearInterval(stageInterval);
+    clearInterval(stageTimer);
 
-    const pair=$("pairSelect").value;
-    const duration=Number($("durationSelect").value);
+    const pair=
+      $("pairSelect").value;
 
-    const up=Math.random()>.48;
+    const duration=
+      Number($("durationSelect").value);
+
+    const up=
+      Math.random()>.48;
 
     const confidence=
-      Math.round(73+Math.random()*24);
+      Math.round(
+        73+Math.random()*24
+      );
 
     const rsi=
       +(30+Math.random()*40).toFixed(1);
 
     const momentum=
-      Math.round(58+Math.random()*38);
+      Math.round(
+        58+Math.random()*38
+      );
 
     state.signalsGenerated++;
 
     save();
 
     $("trendInfo").textContent=
-      up?"ВОСХОДЯЩЕЕ":"НИСХОДЯЩЕЕ";
+      up
+      ?"ВОСХОДЯЩЕЕ"
+      :"НИСХОДЯЩЕЕ";
 
     $("trendInfo").style.color=
-      up?"#34e3a1":"#ff5875";
+      up
+      ?"var(--green)"
+      :"var(--red)";
 
-    $("rsiInfo").textContent=rsi;
+    $("rsiInfo").textContent=
+      rsi;
 
     $("emaInfo").textContent=
-      up?"BUY BIAS":"SELL BIAS";
+      up
+      ?"BUY BIAS"
+      :"SELL BIAS";
 
     $("momentumInfo").textContent=
       momentum+"%";
 
     robot.classList.remove("scanning");
 
-    status.textContent="SIGNAL READY";
+    status.textContent=
+      "SIGNAL READY";
 
     popup.innerHTML=`
 
       <div class="signal-main">
 
-        <div class="signal-arrow ${up?"up":"down"}">
+        <div
+          class="signal-arrow ${up?"up":"down"}">
           ${up?"↑":"↓"}
         </div>
 
         <div>
+
           <h2>
             ${up?"ПОВЫШЕНИЕ":"ПОНИЖЕНИЕ"}
           </h2>
 
           <p>
-            ${esc(pair)} •
-            ${selectedMarket} •
+            ${esc(pair)}
+            •
+            ${selectedMarket}
+            •
             ${duration} мин
           </p>
+
         </div>
 
         <div class="confidence">
-          <small>CONFIDENCE</small>
-          <b>${confidence}%</b>
+
+          <small>
+            CONFIDENCE
+          </small>
+
+          <b>
+            ${confidence}%
+          </b>
+
         </div>
 
       </div>
@@ -4148,13 +5725,18 @@ function generateSignal(){
       </div>
 
       <div class="signal-progress">
+
         <span id="signalProgress"></span>
+
       </div>
 
       <div
         class="signal-status"
         id="signalStatus">
-        СИГНАЛ АКТИВЕН • ${duration}:00
+
+        СИГНАЛ АКТИВЕН •
+        ${duration}:00
+
       </div>
 
     `;
@@ -4166,75 +5748,109 @@ function generateSignal(){
       block:"center"
     });
 
-    startCountdown(duration,up);
+    startCountdown(
+      duration,
+      up
+    );
 
     button.disabled=false;
 
-  },1650);
+  },1700);
 }
 
-function startCountdown(minutes,up){
+function startCountdown(
+  minutes,
+  direction
+){
 
   clearInterval(botTimer);
 
-  const total=minutes*60;
-  let remaining=total;
+  const total=
+    minutes*60;
 
-  botTimer=setInterval(()=>{
+  let remaining=
+    total;
 
-    remaining--;
+  botTimer=
+    setInterval(()=>{
 
-    const bar=$("signalProgress");
-    const status=$("signalStatus");
+      remaining--;
 
-    if(bar){
-      bar.style.width=
-        Math.max(0,remaining/total*100)+"%";
-    }
+      const progress=
+        $("signalProgress");
 
-    if(status){
+      const status=
+        $("signalStatus");
 
-      const m=Math.floor(remaining/60);
-      const s=String(remaining%60).padStart(2,"0");
+      if(progress){
 
-      status.textContent=
-        `СИГНАЛ АКТИВЕН • ${m}:${s}`;
-    }
+        progress.style.width=
+          Math.max(
+            0,
+            remaining/total*100
+          )+"%";
 
-    if(remaining<=0){
-
-      clearInterval(botTimer);
-      botTimer=null;
-
-      /*
-        DEMO outcome.
-        Не выдаётся за реальную статистику рынка.
-      */
-      const win=Math.random()<.62;
-
-      if(win)state.wins++;
-      else state.losses++;
-
-      save();
+      }
 
       if(status){
 
-        status.className=
-          "signal-status "+(win?"win":"loss");
+        const m=
+          Math.floor(remaining/60);
 
-        status.textContent=win
-          ?"✓ ДЕМО-РЕЗУЛЬТАТ: В ПЛЮСЕ"
-          :"✕ ДЕМО-РЕЗУЛЬТАТ: В МИНУСЕ";
+        const s=
+          String(
+            remaining%60
+          ).padStart(2,"0");
+
+        status.textContent=
+          `СИГНАЛ АКТИВЕН • ${m}:${s}`;
+
       }
 
-      toast(
-        win
+      if(remaining<=0){
+
+        clearInterval(botTimer);
+
+        botTimer=null;
+
+        /*
+          DEMO ONLY.
+          Не выдаётся за реальные рыночные данные.
+        */
+
+        const win=
+          Math.random()<.62;
+
+        if(win){
+          state.wins++;
+        }else{
+          state.losses++;
+        }
+
+        save();
+
+        if(status){
+
+          status.className=
+            "signal-status "+
+            (win?"win":"loss");
+
+          status.textContent=
+            win
+            ?"✓ ДЕМО-РЕЗУЛЬТАТ: В ПЛЮСЕ"
+            :"✕ ДЕМО-РЕЗУЛЬТАТ: В МИНУСЕ";
+
+        }
+
+        toast(
+          win
           ?"Демо-сценарий завершён в плюс"
           :"Демо-сценарий завершён в минус"
-      );
-    }
+        );
 
-  },1000);
+      }
+
+    },1000);
 }
 
 /* =========================================================
@@ -4244,42 +5860,54 @@ function startCountdown(minutes,up){
 function renderContact(){
 
   return `
+
   <section class="page">
 
     <div class="contact-hero">
 
-      <svg class="contact-art" viewBox="0 0 260 240">
+      <svg
+        class="contact-art"
+        viewBox="0 0 280 250">
 
-        <circle cx="130" cy="120" r="95"/>
-        <circle cx="130" cy="120" r="65"/>
-        <circle cx="130" cy="120" r="35"/>
+        <circle cx="140" cy="125" r="98"/>
+        <circle cx="140" cy="125" r="68"/>
+        <circle cx="140" cy="125" r="38"/>
 
         <path d="
-          M10 165
-          C50 75 85 185 130 110
-          S215 45 255 100
+          M5 175
+          C55 78 92 195 140 112
+          S230 45 275 105
         "/>
 
         <path d="
-          M0 195
-          C65 160 105 205 155 145
-          S220 115 260 145
+          M0 205
+          C70 168 108 212 164 153
+          S232 115 280 148
         "/>
 
       </svg>
 
-      <div style="position:relative;z-index:2">
+      <div
+        style="
+          position:relative;
+          z-index:2">
 
         <div class="status-pill">
+
           <span class="status-dot"></span>
+
           AVA COMMUNITY
+
         </div>
 
-        <h1>Связь со мной</h1>
+        <h1>
+          Связь со мной
+        </h1>
 
         <p>
-          Здесь собраны все основные способы связи,
-          обновления проекта и помощь по AVA ACADEMY.
+          Все основные способы связи,
+          обновления проекта и помощь
+          по AVA POCKET находятся здесь.
         </p>
 
       </div>
@@ -4288,13 +5916,33 @@ function renderContact(){
 
     <div class="contact-cards">
 
+      <!-- TELEGRAM -->
+
       <div
         class="contact-card"
         onclick="openTelegram('channel')">
 
-        <div class="contact-icon">✈</div>
+        <div class="contact-icon">
 
-        <h3>Telegram канал</h3>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7">
+
+            <path
+              d="M21 4 3.6 10.7c-.8.3-.8 1.4 0 1.7l4.7 1.7 1.8 5.3c.2.7 1.1.8 1.5.2l2.7-3.6 4.5 3.3c.6.4 1.4.1 1.6-.6L23 5.2c.2-.9-.9-1.5-2-.9Z"/>
+
+            <path
+              d="m8.3 14.1 9.5-6.7-7.7 8.8"/>
+
+          </svg>
+
+        </div>
+
+        <h3>
+          Telegram канал
+        </h3>
 
         <p>
           Новости, обновления, новые материалы
@@ -4307,36 +5955,80 @@ function renderContact(){
 
       </div>
 
+      <!-- PERSONAL CHAT -->
+
       <div
         class="contact-card"
         onclick="openTelegram('chat')">
 
-        <div class="contact-icon">◉</div>
+        <div class="contact-icon">
 
-        <h3>Написать мне</h3>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7">
+
+            <path
+              d="M20.5 11.2a7.9 7.9 0 0 1-8.2 7.7 8.6 8.6 0 0 1-3.2-.6L4 20l1.7-4.1a7.6 7.6 0 0 1-1.2-4.1A7.9 7.9 0 0 1 12.7 4a8 8 0 0 1 7.8 7.2Z"/>
+
+            <path d="M8 10h8M8 13h5"/>
+
+            <path
+              d="M17.2 17.1 20 20l-.5-3.8"/>
+
+          </svg>
+
+        </div>
+
+        <h3>
+          Написать мне
+        </h3>
 
         <p>
-          Можно перейти прямо в личный Telegram-чат
-          и задать свой вопрос.
+          Перейди прямо в личный Telegram-чат
+          и задай свой вопрос.
         </p>
 
         <div class="contact-link">
-          Открыть чат →
+          Открыть личный чат →
         </div>
 
       </div>
+
+      <!-- UPDATE -->
 
       <div
         class="contact-card update"
         onclick="openTelegram('channel')">
 
-        <div class="contact-icon">✦</div>
+        <div class="contact-icon">
 
-        <h3>Обновления AVA</h3>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7">
+
+            <path
+              d="M12 3v4M12 17v4M3 12h4M17 12h4"/>
+
+            <path
+              d="m5.6 5.6 2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>
+
+            <circle cx="12" cy="12" r="4"/>
+
+          </svg>
+
+        </div>
+
+        <h3>
+          Обновления AVA
+        </h3>
 
         <p>
-          Новые функции приложения, уроки,
-          изменения и сообщения проекта.
+          Новые функции, обучение,
+          изменения приложения и новости проекта.
         </p>
 
         <div class="contact-link">
@@ -4345,17 +6037,37 @@ function renderContact(){
 
       </div>
 
+      <!-- AVA -->
+
       <div
         class="contact-card"
         onclick="openAva()">
 
-        <div class="contact-icon">A</div>
+        <div class="contact-icon">
 
-        <h3>Ava Assistant</h3>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6">
+
+            <path
+              d="M12 3.5 14.1 9l5.4 2.1-5.4 2.1L12 18.5l-2.1-5.3-5.4-2.1L9.9 9 12 3.5Z"/>
+
+            <path
+              d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/>
+
+          </svg>
+
+        </div>
+
+        <h3>
+          Ava Assistant
+        </h3>
 
         <p>
-          Не хочешь выходить из приложения?
-          Спроси Ava прямо здесь.
+          Учебный помощник прямо внутри приложения.
+          Спроси про любую тему из академии.
         </p>
 
         <div class="contact-link">
@@ -4366,17 +6078,28 @@ function renderContact(){
 
     </div>
 
-  </section>`;
+  </section>
+
+  `;
 }
 
 function openTelegram(type){
 
   const urls={
-    channel:"https://t.me/+D1kxbrvyGSViZWFi",
-    chat:"https://t.me/m/56bsIaLqZjky"
+
+    channel:
+      "https://t.me/+D1kxbrvyGSViZWFi",
+
+    chat:
+      "https://t.me/m/56bsIaLqZjky"
+
   };
 
-  window.open(urls[type],"_blank");
+  window.open(
+    urls[type],
+    "_blank",
+    "noopener,noreferrer"
+  );
 }
 
 /* =========================================================
@@ -4385,16 +6108,27 @@ function openTelegram(type){
 
 function renderProfile(){
 
-  const p=levelPercent();
+  const p=
+    levelPercent();
 
   return `
+
   <section class="page">
 
     <div class="section-head">
+
       <div>
-        <h1>Профиль</h1>
-        <p>Твой прогресс в AVA ACADEMY</p>
+
+        <h1>
+          Профиль
+        </h1>
+
+        <p>
+          Твой прогресс в AVA POCKET
+        </p>
+
       </div>
+
     </div>
 
     <div class="profile-layout">
@@ -4405,22 +6139,33 @@ function renderProfile(){
 
           ${
             state.avatar
-            ? `<img src="${state.avatar}">`
-            : esc((state.fio||"A")[0].toUpperCase())
+            ? `<img src="${state.avatar}" alt="Аватар">`
+            : esc(
+                (state.fio||"A")
+                .trim()
+                .charAt(0)
+                .toUpperCase()
+              )
           }
 
         </div>
 
         <label class="avatar-change">
+
           Изменить аватар
+
           <input
+            id="profileAvatarInput"
             type="file"
-            accept="image/*"
-            onchange="changeAvatar(event)"
-            hidden>
+            accept="image/jpeg,image/png,image/webp"
+            hidden
+            onchange="changeAvatar(event)">
+
         </label>
 
-        <h2>${esc(state.fio)}</h2>
+        <h2>
+          ${esc(state.fio)}
+        </h2>
 
         <div class="profile-handle">
           ${esc(state.username)}
@@ -4439,18 +6184,39 @@ function renderProfile(){
         <div class="profile-mini-stats">
 
           <div class="profile-mini-stat">
-            <b>${state.completedLessons.length}</b>
-            <span>УРОКОВ</span>
+
+            <b>
+              ${state.completedLessons.length}
+            </b>
+
+            <span>
+              УРОКОВ
+            </span>
+
           </div>
 
           <div class="profile-mini-stat">
-            <b>${state.xp}</b>
-            <span>XP</span>
+
+            <b>
+              ${state.xp}
+            </b>
+
+            <span>
+              XP
+            </span>
+
           </div>
 
           <div class="profile-mini-stat">
-            <b>${state.coins}</b>
-            <span>COINS</span>
+
+            <b>
+              ${state.coins}
+            </b>
+
+            <span>
+              COINS
+            </span>
+
           </div>
 
         </div>
@@ -4470,16 +6236,22 @@ function renderProfile(){
                 #2a2037 0deg
               )">
 
-            <b>${level()}</b>
+            <b>
+              ${getLevel()}
+            </b>
 
           </div>
 
           <div>
 
-            <h2>Уровень ${level()}</h2>
+            <h2>
+              Уровень ${getLevel()}
+            </h2>
 
             <p>
-              ${80-(state.xp%80)}
+              ${
+                80-(state.xp%80)
+              }
               XP до следующего уровня
             </p>
 
@@ -4487,18 +6259,48 @@ function renderProfile(){
 
         </div>
 
-        <div style="
-          margin-top:25px;
-          display:flex;
-          justify-content:space-between;
-          color:#6b6374;
-          font-size:9px">
-          <span>ОПЫТ</span>
-          <b>${state.xp} XP</b>
+        <div
+          style="
+            display:flex;
+            justify-content:space-between;
+            margin-top:25px;
+            color:#6b6374;
+            font-size:8px">
+
+          <span>
+            ОПЫТ
+          </span>
+
+          <b>
+            ${state.xp} XP
+          </b>
+
         </div>
 
-        <div class="progress" style="margin-top:8px">
-          <span style="width:${p}%"></span>
+        <div
+          class="progress"
+          style="
+            height:8px;
+            margin-top:8px;
+            border-radius:99px;
+            overflow:hidden;
+            background:#211a2c">
+
+          <span
+            style="
+              display:block;
+              height:100%;
+              width:${p}%;
+              border-radius:inherit;
+              background:
+                linear-gradient(
+                  90deg,
+                  #8b5cf6,
+                  #d66cff,
+                  #67e8f9
+                )">
+          </span>
+
         </div>
 
         <h3 style="margin-top:30px">
@@ -4546,7 +6348,7 @@ function renderProfile(){
             "🏆",
             "Академик",
             "Все уроки",
-            state.completedLessons.length>=lessons.length
+            state.completedLessons.length>=TOTAL_LESSONS
           )}
 
         </div>
@@ -4555,43 +6357,89 @@ function renderProfile(){
 
     </div>
 
-  </section>`;
+  </section>
+
+  `;
 }
 
-function achievement(icon,title,desc,active){
+function achievement(
+  icon,
+  title,
+  desc,
+  active
+){
 
   return `
-  <div class="achievement ${active?"":"locked"}">
+
+  <div
+    class="achievement ${active?"":"locked"}">
 
     <div class="achievement-icon">
       ${icon}
     </div>
 
-    <b>${title}</b>
+    <b>
+      ${title}
+    </b>
 
-    <span>${desc}</span>
+    <span>
+      ${desc}
+    </span>
 
-  </div>`;
+  </div>
+
+  `;
 }
+
+/* =========================================================
+   AVATAR — FIXED
+========================================================= */
 
 function changeAvatar(event){
 
-  const file=event.target.files?.[0];
+  const file=
+    event.target.files?.[0];
 
   if(!file)return;
 
-  if(file.size>4*1024*1024){
-    toast("Выбери изображение до 4 МБ");
+  if(!file.type.startsWith("image/")){
+
+    toast("Выбери изображение");
+
+    event.target.value="";
+
     return;
   }
 
-  const reader=new FileReader();
+  if(file.size>5*1024*1024){
 
-  reader.onload=e=>{
-    state.avatar=e.target.result;
+    toast("Изображение должно быть до 5 МБ");
+
+    event.target.value="";
+
+    return;
+  }
+
+  const reader=
+    new FileReader();
+
+  reader.onload=event=>{
+
+    state.avatar=
+      event.target.result;
+
     save();
+
     render();
+
     toast("Аватар обновлён ✦");
+
+  };
+
+  reader.onerror=()=>{
+
+    toast("Не удалось загрузить изображение");
+
   };
 
   reader.readAsDataURL(file);
@@ -4599,27 +6447,33 @@ function changeAvatar(event){
 
 function editProfile(){
 
-  const fio=prompt(
-    "FIO:",
-    state.fio
-  );
+  const fio=
+    prompt(
+      "FIO:",
+      state.fio
+    );
 
   if(fio===null)return;
 
-  const username=prompt(
-    "Username:",
-    state.username.replace(/^@/,"")
-  );
+  const username=
+    prompt(
+      "Username:",
+      state.username.replace(/^@/,"")
+    );
 
   if(username===null)return;
 
-  if(fio.trim())
+  if(fio.trim()){
     state.fio=fio.trim();
+  }
 
-  if(username.trim())
-    state.username=normalizeUsername(username);
+  if(username.trim()){
+    state.username=
+      normalizeUsername(username);
+  }
 
   save();
+
   render();
 
   toast("Профиль обновлён");
@@ -4636,12 +6490,20 @@ function updateSideUser(){
   if(state.avatar){
 
     $("sideAvatar").innerHTML=
-      `<img src="${state.avatar}">`;
+      `<img
+        src="${state.avatar}"
+        alt="Avatar">`;
 
   }else{
 
     $("sideAvatar").textContent=
-      (state.fio||"A")[0].toUpperCase();
+      (
+        state.fio||"A"
+      )
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
   }
 }
 
@@ -4653,39 +6515,63 @@ function openAva(){
 
   $("aiModal").classList.add("open");
 
-  setTimeout(()=>{
-    $("aiInput").focus();
-  },180);
+  setTimeout(
+    ()=>{
+      $("aiInput").focus();
+    },
+    160
+  );
 }
 
 function closeAva(){
-  $("aiModal").classList.remove("open");
+
+  $("aiModal")
+    .classList
+    .remove("open");
+
 }
 
-$("aiForm").addEventListener("submit",e=>{
+$("aiForm").addEventListener(
+  "submit",
+  e=>{
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const input=$("aiInput");
-  const text=input.value.trim();
+    const input=
+      $("aiInput");
 
-  if(!text)return;
+    const text=
+      input.value.trim();
 
-  addMessage(text,"user");
+    if(!text)return;
 
-  input.value="";
-
-  setTimeout(()=>{
     addMessage(
-      avaAnswer(text),
-      "bot"
+      text,
+      "user"
     );
-  },430);
-});
 
-function addMessage(text,type){
+    input.value="";
 
-  const chat=$("aiChat");
+    setTimeout(
+      ()=>{
+        addMessage(
+          avaAnswer(text),
+          "bot"
+        );
+      },
+      430
+    );
+
+  }
+);
+
+function addMessage(
+  text,
+  type
+){
+
+  const chat=
+    $("aiChat");
 
   const message=
     document.createElement("div");
@@ -4693,7 +6579,8 @@ function addMessage(text,type){
   message.className=
     "message "+type;
 
-  message.textContent=text;
+  message.textContent=
+    text;
 
   chat.appendChild(message);
 
@@ -4703,91 +6590,212 @@ function addMessage(text,type){
 
 function avaAnswer(question){
 
-  const q=question.toLowerCase();
+  const q=
+    question.toLowerCase();
 
-  if(q.includes("rsi"))
-    return "RSI — осциллятор для оценки характера движения. Не используй его как автоматическую кнопку входа. Сначала смотри структуру и контекст, а RSI применяй как дополнительное подтверждение.";
+  if(q.includes("rsi")){
 
-  if(q.includes("ema"))
-    return "EMA — скользящая средняя, которая сильнее учитывает последние значения цены. Её можно использовать как фильтр направления, но одно пересечение EMA не является гарантией сделки.";
+    return `
+      RSI — осциллятор, который помогает
+      оценивать характер движения цены.
+      Не используй его как автоматическую
+      кнопку входа. Сначала смотри контекст,
+      структуру и реакцию цены.
+    `.replace(/\s+/g," ").trim();
 
-  if(q.includes("свеч"))
-    return "У свечи есть открытие, закрытие, максимум и минимум. Тело показывает разницу между открытием и закрытием, а тени показывают экстремумы периода.";
+  }
 
-  if(q.includes("тренд"))
-    return "Сначала посмотри на максимумы и минимумы. Последовательность более высоких максимумов и минимумов формирует восходящую структуру, а более низких — нисходящую.";
+  if(q.includes("ema")){
 
-  if(q.includes("поддерж")||q.includes("сопротив"))
-    return "Поддержку и сопротивление лучше рассматривать как зоны реакции. Важно смотреть не только на сам уровень, но и на реакцию цены, структуру и контекст.";
+    return `
+      EMA сильнее учитывает последние значения
+      цены. Её можно использовать как фильтр
+      направления и дополнительное подтверждение.
+      Одного пересечения EMA недостаточно
+      для качественного торгового сценария.
+    `.replace(/\s+/g," ").trim();
 
-  if(q.includes("риск"))
-    return "Риск-менеджмент — одна из важнейших частей системы. Заранее определяй допустимый риск, дневной лимит и условия остановки. Не пытайся отыгрывать убыток увеличением риска.";
+  }
 
-  if(q.includes("fomo"))
-    return "FOMO — страх пропустить движение. Частый сценарий: цена резко идёт вверх, трейдер видит зелёные свечи и входит без своих условий. Лучше пропустить движение, чем нарушить систему.";
+  if(q.includes("свеч")){
 
-  if(q.includes("стратег"))
-    return "Хорошая стратегия должна иметь понятный контекст, условия входа, подтверждение, отмену сценария и правила риска. После создания её нужно тестировать на истории.";
+    return `
+      У свечи есть открытие, закрытие, максимум
+      и минимум. Тело показывает расстояние
+      между открытием и закрытием, а тени —
+      экстремумы выбранного периода.
+    `.replace(/\s+/g," ").trim();
 
-  if(q.includes("бот"))
-    return "Ava Bot в этой версии работает в учебном DEMO-режиме. Он создаёт сценарий, показывает параметры и запускает таймер. Это не подключение к реальному рынку.";
+  }
 
-  if(q.includes("пробой"))
-    return "После пробоя можно ждать ретест зоны и реакцию цены. Главное — заранее определить, что считается подтверждением и когда сценарий считается отменённым.";
+  if(q.includes("тренд")){
 
-  return "Я рядом ✦ Спроси меня конкретнее: например «что такое RSI?», «как определить тренд?», «что такое FOMO?», «как работает EMA?» или «как создать стратегию?»";
+    return `
+      Посмотри на последовательность максимумов
+      и минимумов. Более высокие максимумы
+      и минимумы формируют восходящую структуру,
+      а более низкие — нисходящую.
+    `.replace(/\s+/g," ").trim();
+
+  }
+
+  if(
+    q.includes("поддерж")
+    ||
+    q.includes("сопротив")
+  ){
+
+    return `
+      Поддержку и сопротивление лучше воспринимать
+      как зоны реакции. Важно учитывать не только
+      сам уровень, но и контекст, структуру,
+      силу движения и реакцию цены.
+    `.replace(/\s+/g," ").trim();
+
+  }
+
+  if(q.includes("риск")){
+
+    return `
+      Риск-менеджмент помогает переживать
+      серии неудачных результатов. Заранее
+      определяй допустимый риск, лимит сессии
+      и условия остановки. После убытка
+      не нужно автоматически увеличивать риск.
+    `.replace(/\s+/g," ").trim();
+
+  }
+
+  if(q.includes("fomo")){
+
+    return `
+      FOMO — страх пропустить движение.
+      Когда цена резко движется, трейдер может
+      нарушить свои правила только ради попытки
+      успеть. Лучше пропустить движение,
+      чем нарушить собственную систему.
+    `.replace(/\s+/g," ").trim();
+
+  }
+
+  if(q.includes("стратег")){
+
+    return `
+      Хорошая стратегия должна иметь контекст,
+      условия входа, подтверждение, условия
+      отмены и правила риска. После создания
+      стратегию нужно тестировать на истории.
+    `.replace(/\s+/g," ").trim();
+
+  }
+
+  if(q.includes("бот")){
+
+    return `
+      Ava Bot работает в учебном DEMO-режиме.
+      Он показывает сценарий, параметры анализа
+      и таймер. Это не подключение к реальному
+      рыночному потоку и не гарантия результата.
+    `.replace(/\s+/g," ").trim();
+
+  }
+
+  if(q.includes("пробой")){
+
+    return `
+      После пробоя можно наблюдать за поведением
+      цены и возможным ретестом зоны. Важно заранее
+      определить, что будет считаться подтверждением,
+      а что отменит сценарий.
+    `.replace(/\s+/g," ").trim();
+
+  }
+
+  if(q.includes("откуда начать")){
+
+    return `
+      Начни с первых модулей академии: фундамент,
+      свечи, структура, уровни и только потом
+      переходи к индикаторам и стратегиям.
+    `.replace(/\s+/g," ").trim();
+
+  }
+
+  return `
+    Я рядом ✦ Спроси меня конкретнее:
+    «что такое RSI?»,
+    «как определить тренд?»,
+    «что такое FOMO?»,
+    «как работает EMA?»,
+    «как создать стратегию?»,
+    «что такое пробой?»
+  `.replace(/\s+/g," ").trim();
 }
 
 /* =========================================================
    KEYBOARD
 ========================================================= */
 
-document.addEventListener("keydown",e=>{
+document.addEventListener(
+  "keydown",
+  e=>{
 
-  if(e.key==="Escape"){
-    closeAva();
-    closeLesson();
-  }
+    if(e.key==="Escape"){
 
-});
-
-/* =========================================================
-   LOADER
-========================================================= */
-
-window.addEventListener("load",()=>{
-
-  setTimeout(()=>{
-
-    $("loader").classList.add("hide");
-
-    if(state.registered){
-
-      $("auth").style.display="none";
-      $("app").style.display="block";
-
-      render();
-
-    }else{
-
-      $("auth").style.display="flex";
+      closeAva();
+      closeLesson();
 
     }
 
-  },700);
-
-});
+  }
+);
 
 /* =========================================================
-   CLEANUP
+   LOADER / START
 ========================================================= */
 
-window.addEventListener("beforeunload",()=>{
+window.addEventListener(
+  "load",
+  ()=>{
 
-  if(botTimer)
-    clearInterval(botTimer);
+    setTimeout(
+      ()=>{
 
-});
+        $("loader")
+          .classList
+          .add("hide");
+
+        if(state.registered){
+
+          $("auth").style.display="none";
+
+          $("app").style.display="block";
+
+          render();
+
+        }else{
+
+          $("auth").style.display="flex";
+
+        }
+
+      },
+      700
+    );
+
+  }
+);
+
+window.addEventListener(
+  "beforeunload",
+  ()=>{
+
+    if(botTimer){
+      clearInterval(botTimer);
+    }
+
+  }
+);
 
 </script>
 
