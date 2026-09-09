@@ -5,2262 +5,6186 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#6d35e8">
 <title>AVA ACADEMY — Trading Experience</title>
+
 <style>
-:root{--purple:#7c3aed;--purple2:#a855f7;--violet:#6d35e8;--blue:#3b82f6;--cyan:#06b6d4;--pink:#ec4899;--orange:#f59e0b;--green:#16a34a;--red:#ef4444;--ink:#171321;--muted:#746d83;--paper:#fffdfb;--line:#eee8f5;--shadow:0 24px 70px rgba(58,31,100,.13);--r:28px}
+:root{
+  --purple:#7c3aed;
+  --purple2:#a855f7;
+  --violet:#6d35e8;
+  --blue:#3b82f6;
+  --cyan:#06b6d4;
+  --pink:#ec4899;
+  --orange:#f59e0b;
+  --green:#16a34a;
+  --red:#ef4444;
+  --ink:#171321;
+  --muted:#746d83;
+  --line:#eee8f5;
+  --paper:#fffdfb;
+  --bg:#f7f4fb;
+  --card:#fff;
+  --shadow:0 24px 70px rgba(58,31,100,.13);
+}
+
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;color:var(--ink);background:#f7f4fb}
+
+html{
+  margin:0;
+  min-height:100%;
+  scroll-behavior:smooth
+}
+
+body{
+  margin:0;
+  min-height:100%;
+  overflow-x:hidden;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  transition:background .45s ease,color .45s ease
+}
+
 button,input,select{font:inherit}
 button{cursor:pointer;border:0}
 a{text-decoration:none;color:inherit}
 .hidden{display:none!important}
-body{overflow-x:hidden}
 
-.market-bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:linear-gradient(145deg,#faf7ff,#f4effc 55%,#fff)}
-.market-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.82),rgba(255,255,255,.62));z-index:3}
-.watermark{position:absolute;white-space:nowrap;font-weight:1000;letter-spacing:9px;color:#7c3aed;opacity:.045;font-size:clamp(70px,13vw,180px);transform:rotate(-12deg);animation:wm 22s ease-in-out infinite}
+button,
+.nav-btn,
+.path-card,
+.quick-card,
+.module-card,
+.lesson-row,
+.contact-card,
+.profile-card,
+.stat-mini{
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .3s ease,
+    border-color .3s ease,
+    color .3s ease
+}
+
+button:active{
+  transform:scale(.97)
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.market-bg{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 10% 10%,#ede5ff,transparent 25%),
+    radial-gradient(circle at 90% 80%,#e5f7ff,transparent 25%),
+    linear-gradient(145deg,#faf7ff,#f4effc 55%,#fff)
+}
+
+.market-bg:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(115deg,rgba(255,255,255,.85),rgba(255,255,255,.62)),
+    radial-gradient(circle at 50% 50%,transparent,rgba(255,255,255,.5));
+}
+
+.watermark{
+  position:absolute;
+  white-space:nowrap;
+  font-weight:1000;
+  letter-spacing:9px;
+  color:#7c3aed;
+  opacity:.045;
+  font-size:clamp(70px,13vw,180px);
+  transform:rotate(-12deg);
+  animation:watermarkMove 22s ease-in-out infinite
+}
+
 .wm1{top:9%;left:-8%}
 .wm2{top:57%;right:-20%;animation-delay:-8s}
-.wm3{top:82%;left:15%;font-size:70px;animation-delay:-15s}
-.candles{position:absolute;inset:0;display:flex;justify-content:space-around;align-items:stretch;padding:4vh 3vw;opacity:.12}
-.candle{position:relative;width:10px;height:100%;animation:drift 8s ease-in-out infinite}
-.candle i{position:absolute;left:50%;transform:translateX(-50%);width:2px;border-radius:9px;background:#7c3aed}
-.candle b{position:absolute;left:50%;transform:translateX(-50%);width:9px;border-radius:3px;background:linear-gradient(180deg,#a855f7,#3b82f6)}
-.candle:nth-child(3n) b{background:linear-gradient(180deg,#16a34a,#06b6d4)}
-.candle:nth-child(4n) b{background:linear-gradient(180deg,#ec4899,#f59e0b)}
-@keyframes drift{50%{transform:translateY(-12px)}}
-@keyframes wm{50%{transform:rotate(-9deg) translate3d(40px,-25px,0)}}
+.wm3{
+  top:82%;
+  left:15%;
+  font-size:70px;
+  animation-delay:-15s
+}
 
-#loader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:linear-gradient(145deg,#6d35e8,#43219c);transition:.8s cubic-bezier(.2,.8,.2,1)}
-#loader.out{opacity:0;visibility:hidden;transform:scale(1.04)}
-.loader-card{text-align:center;color:white}
-.loader-logo{width:88px;height:88px;border-radius:30px;margin:auto;display:grid;place-items:center;background:linear-gradient(145deg,#b27cff,#6030db);box-shadow:0 30px 80px rgba(0,0,0,.28);animation:logoPulse 1.7s ease-in-out infinite}
+@keyframes watermarkMove{
+  50%{
+    transform:rotate(-9deg) translate3d(40px,-25px,0)
+  }
+}
+
+.candles{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:space-around;
+  padding:4vh 3vw;
+  opacity:.12
+}
+
+.candle{
+  position:relative;
+  width:10px;
+  height:100%;
+  animation:drift 8s ease-in-out infinite
+}
+
+.candle i{
+  position:absolute;
+  left:50%;
+  width:2px;
+  border-radius:9px;
+  background:#7c3aed;
+  transform:translateX(-50%)
+}
+
+.candle b{
+  position:absolute;
+  left:50%;
+  width:9px;
+  border-radius:3px;
+  background:linear-gradient(180deg,#a855f7,#3b82f6);
+  transform:translateX(-50%)
+}
+
+.candle:nth-child(3n) b{
+  background:linear-gradient(180deg,#16a34a,#06b6d4)
+}
+
+.candle:nth-child(4n) b{
+  background:linear-gradient(180deg,#ec4899,#f59e0b)
+}
+
+@keyframes drift{
+  50%{transform:translateY(-12px)}
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+#loader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 20% 20%,#a855f7,transparent 25%),
+    linear-gradient(145deg,#6d35e8,#43219c);
+  transition:.8s cubic-bezier(.2,.8,.2,1)
+}
+
+#loader.out{
+  opacity:0;
+  visibility:hidden;
+  transform:scale(1.04)
+}
+
+.loader-card{
+  text-align:center;
+  color:white
+}
+
+.loader-logo{
+  width:88px;
+  height:88px;
+  border-radius:30px;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#b27cff,#6030db);
+  box-shadow:0 30px 80px rgba(0,0,0,.28);
+  animation:logoPulse 1.7s ease-in-out infinite
+}
+
 .loader-logo svg{width:54px}
-.loader-card strong{display:block;margin-top:20px;font-size:25px;letter-spacing:4px}
-.loader-card small{display:block;margin-top:7px;opacity:.72;letter-spacing:2px}
-@keyframes logoPulse{50%{transform:translateY(-7px) scale(1.04)}}
 
-#auth{position:fixed;inset:0;z-index:8000;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 10% 10%,#c4b5fd,transparent 28%),radial-gradient(circle at 90% 90%,#f0abfc,transparent 30%),linear-gradient(145deg,#4c1d95,#7c3aed 52%,#2563eb)}
-.auth-shell{width:min(460px,100%);padding:12px}
-.auth-card{background:rgba(255,255,255,.94);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.8);border-radius:34px;padding:30px;box-shadow:0 35px 100px rgba(31,16,67,.35);animation:rise .8s cubic-bezier(.2,.8,.2,1)}
-.brand{display:flex;gap:13px;align-items:center}
-.brand-mark{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#a855f7,#5b21b6);box-shadow:0 12px 30px #7c3aed44}
-.brand strong{font-size:18px;letter-spacing:2px}
-.brand small{display:block;color:#8b8298;font-size:8px;font-weight:800;letter-spacing:1.5px;margin-top:3px}
-.auth-card h1{font-size:34px;line-height:1;margin:28px 0 10px;letter-spacing:-1.5px}
-.auth-card>p{color:#7b7287;font-size:12px;line-height:1.6;margin:0 0 22px}
+.loader-card strong{
+  display:block;
+  margin-top:20px;
+  font-size:25px;
+  letter-spacing:4px
+}
+
+.loader-card small{
+  display:block;
+  margin-top:7px;
+  opacity:.72;
+  letter-spacing:2px
+}
+
+@keyframes logoPulse{
+  50%{
+    transform:translateY(-7px) scale(1.04)
+  }
+}
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+#auth{
+  position:fixed;
+  inset:0;
+  z-index:8000;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 10% 10%,#c4b5fd,transparent 28%),
+    radial-gradient(circle at 90% 90%,#f0abfc,transparent 30%),
+    linear-gradient(145deg,#4c1d95,#7c3aed 52%,#2563eb)
+}
+
+.auth-shell{
+  width:min(460px,100%);
+  padding:12px
+}
+
+.auth-card{
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:34px;
+  padding:30px;
+  box-shadow:0 35px 100px rgba(31,16,67,.35);
+  animation:rise .8s cubic-bezier(.2,.8,.2,1)
+}
+
+.brand{
+  display:flex;
+  gap:13px;
+  align-items:center
+}
+
+.brand-mark{
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#a855f7,#5b21b6);
+  box-shadow:0 12px 30px #7c3aed44
+}
+
+.brand-mark svg{width:34px}
+
+.brand strong{
+  font-size:18px;
+  letter-spacing:2px
+}
+
+.brand small{
+  display:block;
+  color:#8b8298;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  margin-top:3px
+}
+
+.auth-card h1{
+  font-size:34px;
+  line-height:1;
+  margin:28px 0 10px;
+  letter-spacing:-1.5px
+}
+
+.auth-card>p{
+  color:#7b7287;
+  font-size:12px;
+  line-height:1.6;
+  margin:0 0 22px
+}
+
 .field{margin:12px 0}
-.field label{display:block;font-size:10px;font-weight:900;color:#766d80;margin:0 0 7px}
-.field input,.field select{width:100%;height:50px;border:1px solid #e8e0ef;border-radius:16px;padding:0 15px;background:#fff;outline:0;transition:.25s}
-.field input:focus,.field select:focus{border-color:#a855f7;box-shadow:0 0 0 4px #a855f718}
-.primary{height:52px;width:100%;border-radius:17px;color:#fff;font-weight:950;background:linear-gradient(135deg,#8b5cf6,#6d28d9);box-shadow:0 15px 30px #7c3aed38;transition:.3s}
-.primary:hover{transform:translateY(-2px);box-shadow:0 20px 40px #7c3aed4a}
-.hint{font-size:9px;color:#92899d;margin-top:10px}
-.error{color:#dc2626;font-size:10px;font-weight:800;min-height:15px;margin-top:7px}
+
+.field label{
+  display:block;
+  font-size:10px;
+  font-weight:900;
+  color:#766d80;
+  margin:0 0 7px
+}
+
+.field input{
+  width:100%;
+  height:50px;
+  border:1px solid #e8e0ef;
+  border-radius:16px;
+  padding:0 15px;
+  background:#fff;
+  outline:0;
+  transition:.25s
+}
+
+.field input:focus{
+  border-color:#a855f7;
+  box-shadow:0 0 0 4px #a855f718
+}
+
+.primary{
+  height:52px;
+  width:100%;
+  border-radius:17px;
+  color:#fff;
+  font-weight:950;
+  background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+  box-shadow:0 15px 30px #7c3aed38
+}
+
+.primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 20px 40px #7c3aed4a
+}
+
+.hint{
+  font-size:9px;
+  color:#92899d;
+  margin-top:10px
+}
+
+.error{
+  color:#dc2626;
+  font-size:10px;
+  font-weight:800;
+  min-height:15px;
+  margin-top:7px
+}
+
+/* =========================================================
+   APP / SIDEBAR
+========================================================= */
 
 #app{min-height:100vh}
-.shell{min-height:100vh;display:grid;grid-template-columns:246px 1fr}
-.sidebar{position:sticky;top:0;height:100vh;padding:22px 15px;background:rgba(255,255,255,.84);backdrop-filter:blur(25px);border-right:1px solid #ebe4f2;z-index:100;display:flex;flex-direction:column}
-.side-brand{padding:5px 8px 25px}
-.side-nav{display:grid;gap:8px}
-.nav-btn{height:56px;border-radius:18px;background:transparent;display:flex;align-items:center;gap:12px;padding:7px 10px;color:#7d7488;font-weight:850;transition:.3s;position:relative}
-.nav-btn:hover{background:#f4effb;color:#5b21b6;transform:translateX(2px)}
-.nav-btn.active{background:linear-gradient(135deg,#f0e7ff,#fff);color:#6d28d9;box-shadow:0 12px 30px rgba(124,58,237,.12)}
-.nav-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#f4edff,#e7ddff);color:#7c3aed;box-shadow:inset 0 1px rgba(255,255,255,.9)}
-.nav-btn:nth-child(2) .nav-icon{color:#2563eb;background:linear-gradient(145deg,#e7f0ff,#dce9ff)}
-.nav-btn:nth-child(3) .nav-icon{color:#ec4899;background:linear-gradient(145deg,#ffe9f5,#ffd7eb)}
-.nav-btn:nth-child(4) .nav-icon{color:#06b6d4;background:linear-gradient(145deg,#e5fbff,#d4f6ff)}
-.nav-btn:nth-child(5) .nav-icon{color:#f59e0b;background:linear-gradient(145deg,#fff7df,#ffedbd)}
-.nav-btn svg{width:23px;height:23px}
-.side-bottom{margin-top:auto;padding:12px 5px}
-.mini-user{display:flex;gap:10px;align-items:center;padding:12px;border-radius:18px;background:#f7f3fb}
-.avatar{width:40px;height:40px;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(145deg,#a855f7,#6d28d9);color:#fff;font-weight:950}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.mini-user b{font-size:11px}
-.mini-user small{display:block;color:#8d8498;font-size:8px;margin-top:3px}
 
-main{min-width:0;padding:30px 34px 100px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
-.eyebrow{font-size:9px;letter-spacing:2px;font-weight:950;color:#8a7f98;text-transform:uppercase}
-.topbar h1{margin:5px 0 0;font-size:30px;letter-spacing:-1.2px}
-.coins{padding:11px 14px;border-radius:15px;background:#fff;border:1px solid #eee7f4;box-shadow:0 10px 25px rgba(65,32,101,.07);font-size:10px;font-weight:950}
+.shell{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:246px 1fr
+}
+
+.sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  padding:22px 15px;
+  background:rgba(255,255,255,.84);
+  backdrop-filter:blur(25px);
+  border-right:1px solid #ebe4f2;
+  z-index:100;
+  display:flex;
+  flex-direction:column
+}
+
+.side-brand{
+  padding:5px 8px 25px
+}
+
+.side-nav{
+  display:grid;
+  gap:8px
+}
+
+.nav-btn{
+  height:56px;
+  border-radius:18px;
+  background:transparent;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:7px 10px;
+  color:#7d7488;
+  font-weight:850;
+  position:relative
+}
+
+.nav-btn:hover{
+  background:#f4effb;
+  color:#5b21b6;
+  transform:translateX(2px)
+}
+
+.nav-btn.active{
+  background:linear-gradient(135deg,#f0e7ff,#fff);
+  color:#6d28d9;
+  box-shadow:0 12px 30px rgba(124,58,237,.12)
+}
+
+.nav-icon{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#f4edff,#e7ddff);
+  color:#7c3aed
+}
+
+.nav-btn:nth-child(2) .nav-icon{
+  color:#2563eb;
+  background:linear-gradient(145deg,#e7f0ff,#dce9ff)
+}
+
+.nav-btn:nth-child(3) .nav-icon{
+  color:#ec4899;
+  background:linear-gradient(145deg,#ffe9f5,#ffd7eb)
+}
+
+.nav-btn:nth-child(4) .nav-icon{
+  color:#06b6d4;
+  background:linear-gradient(145deg,#e5fbff,#d4f6ff)
+}
+
+.nav-btn:nth-child(5) .nav-icon{
+  color:#f59e0b;
+  background:linear-gradient(145deg,#fff7df,#ffedbd)
+}
+
+.nav-btn svg{
+  width:23px;
+  height:23px
+}
+
+.side-bottom{
+  margin-top:auto;
+  padding:12px 5px
+}
+
+.mini-user{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:12px;
+  border-radius:18px;
+  background:#f7f3fb
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:14px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#a855f7,#6d28d9);
+  color:#fff;
+  font-weight:950
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.mini-user b{font-size:11px}
+
+.mini-user small{
+  display:block;
+  color:#8d8498;
+  font-size:8px;
+  margin-top:3px
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main{
+  min-width:0;
+  padding:30px 34px 100px
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:26px
+}
+
+.eyebrow{
+  font-size:9px;
+  letter-spacing:2px;
+  font-weight:950;
+  color:#8a7f98;
+  text-transform:uppercase
+}
+
+.topbar h1{
+  margin:5px 0 0;
+  font-size:30px;
+  letter-spacing:-1.2px
+}
+
+.coins{
+  padding:11px 14px;
+  border-radius:15px;
+  background:#fff;
+  border:1px solid #eee7f4;
+  box-shadow:0 10px 25px rgba(65,32,101,.07);
+  font-size:10px;
+  font-weight:950
+}
+
 .coins span{color:#7c3aed}
 
-.page{display:none;animation:pageIn .55s cubic-bezier(.2,.8,.2,1)}
+.page{
+  display:none;
+  animation:pageIn .55s cubic-bezier(.2,.8,.2,1)
+}
+
 .page.active{display:block}
-@keyframes pageIn{from{opacity:0;transform:translateY(12px) scale(.99)}to{opacity:1;transform:none}}
-@keyframes rise{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
 
-.hero{display:grid;grid-template-columns:1.35fr .85fr;gap:18px}
-.hero-card{min-height:390px;border-radius:34px;padding:34px;position:relative;overflow:hidden;color:white;background:radial-gradient(circle at 88% 20%,#c084fc 0,transparent 23%),radial-gradient(circle at 12% 90%,#22d3ee 0,transparent 25%),linear-gradient(135deg,#5b21b6,#7c3aed 58%,#4338ca);box-shadow:0 30px 80px rgba(91,33,182,.24)}
-.hero-card:before{content:"";position:absolute;inset:auto -5% -45% 25%;height:75%;background:repeating-linear-gradient(90deg,transparent 0 38px,rgba(255,255,255,.08) 39px 40px),linear-gradient(transparent,rgba(255,255,255,.08));transform:skewY(-10deg)}
-.hero-card .hero-copy{position:relative;z-index:2;max-width:600px}
-.hero-card h2{font-size:clamp(36px,5vw,62px);line-height:.95;letter-spacing:-3px;margin:12px 0}
-.hero-card p{max-width:560px;color:#eee7ff;font-size:12px;line-height:1.7}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
-.hero-actions button{height:48px;padding:0 18px;border-radius:15px;font-weight:950;transition:.3s}
-.hero-actions .light{background:#fff;color:#5b21b6;box-shadow:0 12px 25px rgba(0,0,0,.13)}
-.hero-actions .ghost{color:#fff;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22)}
-.hero-actions button:hover{transform:translateY(-3px)}
-.hero-art{position:absolute;right:0;bottom:0;width:47%;max-width:430px;z-index:2;opacity:.95}
-.hero-side{display:grid;gap:18px}
-.stat-card,.market-card{border-radius:28px;background:#fff;border:1px solid #eee8f4;box-shadow:var(--shadow);padding:22px;position:relative;overflow:hidden}
-.stat-card{min-height:186px;background:linear-gradient(145deg,#fff,#f4edff)}
-.stat-card .big{font-size:40px;font-weight:1000;color:#6d28d9;letter-spacing:-2px;margin-top:14px}
-.stat-card p{font-size:10px;color:#817789;line-height:1.5}
-.market-card{min-height:186px}
-.market-head{display:flex;justify-content:space-between;align-items:center}
-.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 10px;font-size:8px;font-weight:950;background:#ecfdf5;color:#15803d}
-.dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 5px #22c55e18;animation:blink 1.7s infinite}
-@keyframes blink{50%{opacity:.35;transform:scale(.7)}}
-.market-pair{font-size:23px;font-weight:1000;margin-top:20px}
-.market-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:9px;color:#817789}
-.spark{height:42px;margin-top:13px;display:flex;align-items:end;gap:4px}
-.spark i{flex:1;border-radius:5px 5px 2px 2px;background:linear-gradient(#a855f7,#7c3aed);animation:spark 1.8s ease-in-out infinite}
-.spark i:nth-child(2n){background:linear-gradient(#06b6d4,#3b82f6)}
-@keyframes spark{50%{transform:scaleY(.65)}}
+@keyframes pageIn{
+  from{
+    opacity:0;
+    transform:translateY(16px) scale(.985)
+  }
+  to{
+    opacity:1;
+    transform:none
+  }
+}
 
-.section-head{display:flex;justify-content:space-between;align-items:end;margin:30px 0 15px}
-.section-head h3{font-size:22px;margin:0;letter-spacing:-.7px}
-.section-head p{margin:4px 0 0;color:#857b8e;font-size:10px}
-.path{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.path-card{position:relative;min-height:155px;padding:18px;border-radius:24px;background:#fff;border:1px solid #eee8f4;box-shadow:0 15px 45px rgba(60,30,100,.07);overflow:hidden;transition:.35s}
-.path-card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 24px 55px rgba(60,30,100,.13)}
-.path-card .n{width:35px;height:35px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:1000;background:linear-gradient(145deg,#a855f7,#6d28d9)}
-.path-card:nth-child(2) .n{background:linear-gradient(145deg,#60a5fa,#2563eb)}
-.path-card:nth-child(3) .n{background:linear-gradient(145deg,#fb7185,#ec4899)}
-.path-card:nth-child(4) .n{background:linear-gradient(145deg,#34d399,#06b6d4)}
-.path-card h4{margin:15px 0 5px;font-size:14px}
-.path-card p{margin:0;color:#82788c;font-size:9px;line-height:1.55}
-.path-card svg{position:absolute;right:-4px;bottom:-5px;width:80px;opacity:.13}
-.quick{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}
-.quick-card{border-radius:25px;padding:20px;display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:135px;color:#fff;overflow:hidden;position:relative;transition:.35s}
-.quick-card:hover{transform:translateY(-5px)}
-.quick-card.study{background:linear-gradient(135deg,#f59e0b,#ec4899)}
-.quick-card.bot{background:linear-gradient(135deg,#06b6d4,#2563eb)}
-.quick-card h4{font-size:18px;margin:0 0 6px}
-.quick-card p{font-size:9px;line-height:1.5;opacity:.86;max-width:290px}
-.quick-card button{margin-top:12px;border-radius:12px;padding:10px 13px;background:#fff;color:#222;font-size:9px;font-weight:950}
-.quick-art{width:130px;flex:none}
+@keyframes rise{
+  from{
+    opacity:0;
+    transform:translateY(25px)
+  }
+  to{
+    opacity:1;
+    transform:none
+  }
+}
 
-/* EDUCATION */
-.education-page{margin:-30px -34px -100px;padding:34px;color:#211a28;background:linear-gradient(135deg,#fff,#fff8f0 50%,#f5f0ff);min-height:calc(100vh - 30px)}
-.edu-hero{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:stretch}
-.edu-title{padding:24px 4px}
-.edu-title .eyebrow{color:#8b5cf6}
-.edu-title h2{font-size:clamp(36px,5vw,58px);line-height:.95;letter-spacing:-3px;margin:10px 0}
-.edu-title p{color:#7d7380;max-width:680px;font-size:11px;line-height:1.65}
-.book-card{border-radius:28px;padding:21px;background:#fff;border:1px solid #eee5db;box-shadow:0 20px 55px rgba(71,48,20,.08)}
-.progress-line{height:9px;background:#eee8f1;border-radius:99px;overflow:hidden;margin:14px 0}
-.progress-line i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#7c3aed,#ec4899,#f59e0b);width:0;transition:1s}
-.edu-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
-.search{flex:1;min-width:210px;height:47px;border-radius:15px;border:1px solid #e9e0d9;padding:0 14px;background:#fff;outline:0}
-.module-select{height:47px;border:1px solid #e9e0d9;border-radius:15px;padding:0 12px;background:#fff}
-.modules{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.module-card{border-radius:27px;background:#fff;border:1px solid #eee7df;padding:20px;position:relative;overflow:hidden;transition:.35s;box-shadow:0 14px 45px rgba(80,55,25,.06)}
-.module-card:hover{transform:translateY(-5px);box-shadow:0 22px 55px rgba(80,55,25,.11)}
-.module-top{display:flex;justify-content:space-between;gap:12px;align-items:start}
-.module-badge{padding:7px 9px;border-radius:10px;background:#f1eaff;color:#6d28d9;font-size:8px;font-weight:1000}
-.module-art{height:125px;margin:-2px -3px 8px;display:grid;place-items:center}
-.module-art svg{width:150px;height:120px}
-.module-card h3{margin:8px 0 5px;font-size:17px}
-.module-card p{margin:0;color:#837a85;font-size:9px;line-height:1.55}
-.lesson-list{display:grid;gap:7px;margin-top:14px}
-.lesson-row{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:13px;background:#fbf9fd;border:1px solid #f0ebf3;transition:.25s}
-.lesson-row:hover{background:#f5efff;transform:translateX(3px)}
-.lesson-no{width:25px;height:25px;border-radius:9px;display:grid;place-items:center;background:#ede5ff;color:#6d28d9;font-size:8px;font-weight:1000}
-.lesson-row.done .lesson-no{background:#dcfce7;color:#15803d}
-.lesson-row span{font-size:9px;font-weight:850;flex:1}
-.lesson-row small{color:#8e8492;font-size:7px}
-.edu-art-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 25px}
-.art-tile{min-height:120px;border-radius:22px;padding:13px;position:relative;overflow:hidden;color:#fff}
-.art-tile:nth-child(1){background:linear-gradient(135deg,#7c3aed,#c026d3)}
-.art-tile:nth-child(2){background:linear-gradient(135deg,#2563eb,#06b6d4)}
-.art-tile:nth-child(3){background:linear-gradient(135deg,#ec4899,#f97316)}
-.art-tile:nth-child(4){background:linear-gradient(135deg,#059669,#06b6d4)}
-.art-tile strong{font-size:11px}
-.art-tile svg{position:absolute;right:2px;bottom:-8px;width:85px;opacity:.92}
+/* =========================================================
+   HOME
+========================================================= */
 
-/* LESSON */
-#reader{position:fixed;inset:0;z-index:3000;background:rgba(24,16,32,.48);backdrop-filter:blur(14px);display:none;padding:20px;align-items:center;justify-content:center}
+.hero{
+  display:grid;
+  grid-template-columns:1.35fr .85fr;
+  gap:18px
+}
+
+.hero-card{
+  min-height:390px;
+  border-radius:34px;
+  padding:34px;
+  position:relative;
+  overflow:hidden;
+  color:white;
+  background:
+    radial-gradient(circle at 88% 20%,#c084fc 0,transparent 23%),
+    radial-gradient(circle at 12% 90%,#22d3ee 0,transparent 25%),
+    linear-gradient(135deg,#5b21b6,#7c3aed 58%,#4338ca);
+  box-shadow:0 30px 80px rgba(91,33,182,.24)
+}
+
+.hero-card:before{
+  content:"";
+  position:absolute;
+  inset:auto -5% -45% 25%;
+  height:75%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 38px,
+      rgba(255,255,255,.08) 39px 40px
+    ),
+    linear-gradient(transparent,rgba(255,255,255,.08));
+  transform:skewY(-10deg)
+}
+
+.hero-card:after,
+.contact-hero:after,
+.bot-stage:after{
+  content:"";
+  position:absolute;
+  inset:-50%;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.13),transparent 24%),
+    radial-gradient(circle at 80% 80%,rgba(56,189,248,.11),transparent 24%);
+  animation:heroGlow 7s ease-in-out infinite
+}
+
+@keyframes heroGlow{
+  50%{transform:translate(3%,2%)}
+}
+
+.hero-copy{
+  position:relative;
+  z-index:2;
+  max-width:600px
+}
+
+.hero-card h2{
+  font-size:clamp(36px,5vw,62px);
+  line-height:.95;
+  letter-spacing:-3px;
+  margin:12px 0
+}
+
+.hero-card p{
+  max-width:560px;
+  color:#eee7ff;
+  font-size:12px;
+  line-height:1.7
+}
+
+.hero-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:25px
+}
+
+.hero-actions button{
+  height:48px;
+  padding:0 18px;
+  border-radius:15px;
+  font-weight:950
+}
+
+.hero-actions .light{
+  background:#fff;
+  color:#5b21b6;
+  box-shadow:0 12px 25px rgba(0,0,0,.13)
+}
+
+.hero-actions .ghost{
+  color:#fff;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.22)
+}
+
+.hero-actions button:hover{
+  transform:translateY(-3px)
+}
+
+.hero-art{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:47%;
+  max-width:430px;
+  z-index:2;
+  opacity:.95;
+  animation:artFloat 5s ease-in-out infinite
+}
+
+@keyframes artFloat{
+  50%{transform:translateY(-8px)}
+}
+
+.hero-side{
+  display:grid;
+  gap:18px
+}
+
+.stat-card,
+.market-card{
+  border-radius:28px;
+  background:#fff;
+  border:1px solid #eee8f4;
+  box-shadow:var(--shadow);
+  padding:22px;
+  position:relative;
+  overflow:hidden
+}
+
+.stat-card{
+  min-height:186px;
+  background:linear-gradient(145deg,#fff,#f4edff)
+}
+
+.stat-card .big{
+  font-size:40px;
+  font-weight:1000;
+  color:#6d28d9;
+  letter-spacing:-2px;
+  margin-top:14px
+}
+
+.stat-card p{
+  font-size:10px;
+  color:#817789;
+  line-height:1.5
+}
+
+.progress-line{
+  height:9px;
+  background:#eee8f1;
+  border-radius:99px;
+  overflow:hidden;
+  margin:14px 0
+}
+
+.progress-line i{
+  display:block;
+  height:100%;
+  border-radius:99px;
+  background:linear-gradient(90deg,#7c3aed,#ec4899,#f59e0b);
+  transition:1s
+}
+
+.market-card{
+  min-height:186px
+}
+
+.market-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:8px;
+  font-weight:950;
+  background:#ecfdf5;
+  color:#15803d
+}
+
+.dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 0 5px #22c55e18;
+  animation:blink 1.7s infinite
+}
+
+@keyframes blink{
+  50%{
+    opacity:.35;
+    transform:scale(.7)
+  }
+}
+
+.market-pair{
+  font-size:23px;
+  font-weight:1000;
+  margin-top:20px
+}
+
+.market-meta{
+  display:flex;
+  justify-content:space-between;
+  margin-top:8px;
+  font-size:9px;
+  color:#817789
+}
+
+.spark{
+  height:42px;
+  margin-top:13px;
+  display:flex;
+  align-items:end;
+  gap:4px
+}
+
+.spark i{
+  flex:1;
+  border-radius:5px 5px 2px 2px;
+  background:linear-gradient(#a855f7,#7c3aed);
+  animation:spark 1.8s ease-in-out infinite
+}
+
+.spark i:nth-child(2n){
+  background:linear-gradient(#06b6d4,#3b82f6)
+}
+
+@keyframes spark{
+  50%{transform:scaleY(.65)}
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin:30px 0 15px
+}
+
+.section-head h3{
+  font-size:22px;
+  margin:0;
+  letter-spacing:-.7px
+}
+
+.section-head p{
+  margin:4px 0 0;
+  color:#857b8e;
+  font-size:10px
+}
+
+.path{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px
+}
+
+.path-card{
+  position:relative;
+  min-height:155px;
+  padding:18px;
+  border-radius:24px;
+  background:#fff;
+  border:1px solid #eee8f4;
+  box-shadow:0 15px 45px rgba(60,30,100,.07);
+  overflow:hidden
+}
+
+.path-card:hover{
+  transform:translateY(-6px) rotate(-.4deg);
+  box-shadow:0 24px 55px rgba(60,30,100,.13)
+}
+
+.path-card .n{
+  width:35px;
+  height:35px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-weight:1000;
+  background:linear-gradient(145deg,#a855f7,#6d28d9)
+}
+
+.path-card:nth-child(2) .n{
+  background:linear-gradient(145deg,#60a5fa,#2563eb)
+}
+
+.path-card:nth-child(3) .n{
+  background:linear-gradient(145deg,#fb7185,#ec4899)
+}
+
+.path-card:nth-child(4) .n{
+  background:linear-gradient(145deg,#34d399,#06b6d4)
+}
+
+.path-card h4{
+  margin:15px 0 5px;
+  font-size:14px
+}
+
+.path-card p{
+  margin:0;
+  color:#82788c;
+  font-size:9px;
+  line-height:1.55
+}
+
+.path-card svg{
+  position:absolute;
+  right:-4px;
+  bottom:-5px;
+  width:80px;
+  opacity:.13
+}
+
+.quick{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:15px
+}
+
+.quick-card{
+  border-radius:25px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  min-height:135px;
+  color:#fff;
+  overflow:hidden;
+  position:relative
+}
+
+.quick-card:hover{
+  transform:translateY(-5px)
+}
+
+.quick-card.study{
+  background:linear-gradient(135deg,#f59e0b,#ec4899)
+}
+
+.quick-card.bot{
+  background:linear-gradient(135deg,#06b6d4,#2563eb)
+}
+
+.quick-card h4{
+  font-size:18px;
+  margin:0 0 6px
+}
+
+.quick-card p{
+  font-size:9px;
+  line-height:1.5;
+  opacity:.86;
+  max-width:290px
+}
+
+.quick-card button{
+  margin-top:12px;
+  border-radius:12px;
+  padding:10px 13px;
+  background:#fff;
+  color:#222;
+  font-size:9px;
+  font-weight:950
+}
+
+.quick-art{
+  width:130px;
+  flex:none
+}
+
+/* =========================================================
+   EDUCATION
+========================================================= */
+
+.education-page{
+  margin:-30px -34px -100px;
+  padding:34px;
+  color:#211a28;
+  background:
+    radial-gradient(circle at 90% 10%,#e8ddff,transparent 22%),
+    radial-gradient(circle at 10% 70%,#fff1e8,transparent 25%),
+    linear-gradient(135deg,#fff,#fff8f0 50%,#f5f0ff);
+  min-height:calc(100vh - 30px)
+}
+
+.edu-hero{
+  display:grid;
+  grid-template-columns:1fr 330px;
+  gap:18px;
+  align-items:stretch
+}
+
+.edu-title{
+  padding:24px 4px
+}
+
+.edu-title .eyebrow{
+  color:#8b5cf6
+}
+
+.edu-title h2{
+  font-size:clamp(36px,5vw,58px);
+  line-height:.95;
+  letter-spacing:-3px;
+  margin:10px 0
+}
+
+.edu-title p{
+  color:#7d7380;
+  max-width:680px;
+  font-size:11px;
+  line-height:1.65
+}
+
+.book-card{
+  border-radius:28px;
+  padding:21px;
+  background:#fff;
+  border:1px solid #eee5db;
+  box-shadow:0 20px 55px rgba(71,48,20,.08)
+}
+
+.edu-art-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:16px 0 25px
+}
+
+.art-tile{
+  min-height:120px;
+  border-radius:22px;
+  padding:13px;
+  position:relative;
+  overflow:hidden;
+  color:#fff
+}
+
+.art-tile:nth-child(1){
+  background:linear-gradient(135deg,#7c3aed,#c026d3)
+}
+
+.art-tile:nth-child(2){
+  background:linear-gradient(135deg,#2563eb,#06b6d4)
+}
+
+.art-tile:nth-child(3){
+  background:linear-gradient(135deg,#ec4899,#f97316)
+}
+
+.art-tile:nth-child(4){
+  background:linear-gradient(135deg,#059669,#06b6d4)
+}
+
+.art-tile strong{
+  font-size:11px
+}
+
+.art-tile svg{
+  position:absolute;
+  right:2px;
+  bottom:-8px;
+  width:85px;
+  opacity:.92
+}
+
+.edu-toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:22px 0
+}
+
+.search{
+  flex:1;
+  min-width:210px;
+  height:47px;
+  border-radius:15px;
+  border:1px solid #e9e0d9;
+  padding:0 14px;
+  background:#fff;
+  outline:0
+}
+
+.module-select{
+  height:47px;
+  border:1px solid #e9e0d9;
+  border-radius:15px;
+  padding:0 12px;
+  background:#fff
+}
+
+.modules{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px
+}
+
+.module-card{
+  border-radius:27px;
+  background:#fff;
+  border:1px solid #eee7df;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 14px 45px rgba(80,55,25,.06)
+}
+
+.module-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 22px 55px rgba(80,55,25,.11)
+}
+
+.module-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:start
+}
+
+.module-badge{
+  padding:7px 9px;
+  border-radius:10px;
+  background:#f1eaff;
+  color:#6d28d9;
+  font-size:8px;
+  font-weight:1000
+}
+
+.module-art{
+  height:125px;
+  margin:-2px -3px 8px;
+  display:grid;
+  place-items:center
+}
+
+.module-art svg{
+  width:150px;
+  height:120px
+}
+
+.module-card h3{
+  margin:8px 0 5px;
+  font-size:17px
+}
+
+.module-card p{
+  margin:0;
+  color:#837a85;
+  font-size:9px;
+  line-height:1.55
+}
+
+.lesson-list{
+  display:grid;
+  gap:7px;
+  margin-top:14px
+}
+
+.lesson-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 10px;
+  border-radius:13px;
+  background:#fbf9fd;
+  border:1px solid #f0ebf3
+}
+
+.lesson-row:hover{
+  background:#f5efff;
+  transform:translateX(3px)
+}
+
+.lesson-no{
+  width:25px;
+  height:25px;
+  border-radius:9px;
+  display:grid;
+  place-items:center;
+  background:#ede5ff;
+  color:#6d28d9;
+  font-size:8px;
+  font-weight:1000
+}
+
+.lesson-row.done .lesson-no{
+  background:#dcfce7;
+  color:#15803d
+}
+
+.lesson-row span{
+  font-size:9px;
+  font-weight:850;
+  flex:1
+}
+
+.lesson-row small{
+  color:#8e8492;
+  font-size:7px
+}
+
+/* =========================================================
+   READER
+========================================================= */
+
+#reader{
+  position:fixed;
+  inset:0;
+  z-index:3000;
+  background:rgba(24,16,32,.48);
+  backdrop-filter:blur(14px);
+  display:none;
+  padding:20px;
+  align-items:center;
+  justify-content:center
+}
+
 #reader.show{display:flex}
-.reader-card{width:min(920px,100%);max-height:min(900px,94vh);overflow:auto;border-radius:32px;background:#fffdfb;box-shadow:0 40px 120px rgba(0,0,0,.25);animation:rise .45s}
-.reader-top{position:sticky;top:0;background:rgba(255,253,251,.92);backdrop-filter:blur(15px);padding:18px 22px;border-bottom:1px solid #eee6df;display:flex;justify-content:space-between;align-items:center;z-index:2}
-.close{width:40px;height:40px;border-radius:13px;background:#f2edf5;color:#5f5668;font-weight:1000}
-.reader-body{padding:26px}
-.reader-art{border-radius:25px;background:linear-gradient(135deg,#f0e7ff,#fff1f2);min-height:180px;display:grid;place-items:center;margin-bottom:20px;overflow:hidden}
-.reader-art svg{width:min(300px,70%);height:170px}
-.reader-body h2{font-size:32px;letter-spacing:-1.5px;margin:5px 0}
-.reader-body .lead{font-size:12px;color:#716878;line-height:1.7}
-.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
-.lesson-box{padding:17px;border-radius:20px;background:#fff;border:1px solid #ece4dc}
-.lesson-box h4{margin:0 0 7px;font-size:11px;color:#6d28d9}
-.lesson-box p,.lesson-box li{font-size:9px;color:#756c79;line-height:1.65}
-.reader-actions{display:flex;gap:10px;margin-top:20px}
-.reader-actions button{height:46px;padding:0 15px;border-radius:14px;font-weight:950}
-.complete{background:#7c3aed;color:#fff}
-.bookmark{background:#f2ecff;color:#6d28d9}
 
-/* BOT */
-.bot-page{max-width:1120px}
-.bot-top{border-radius:30px;padding:20px;background:linear-gradient(135deg,#fff,#f7f2ff);border:1px solid #eae2f2;box-shadow:var(--shadow)}
-.bot-controls{display:grid;grid-template-columns:1.1fr .9fr .8fr;gap:12px}
-.control-label{font-size:8px;color:#8c8192;font-weight:950;letter-spacing:1px;margin:0 0 7px;text-transform:uppercase}
-.segmented{display:flex;gap:5px;padding:5px;background:#f0ebf6;border-radius:14px}
-.segmented button{flex:1;height:37px;border-radius:10px;background:transparent;color:#81778c;font-size:9px;font-weight:950}
-.segmented button.active{background:#fff;color:#6d28d9;box-shadow:0 5px 15px rgba(60,30,100,.08)}
-.pair-select{height:47px;width:100%;border:1px solid #e8e0ef;border-radius:14px;background:#fff;padding:0 12px;outline:0;font-weight:900}
-.duration{display:flex;gap:5px;flex-wrap:wrap}
-.duration button{height:37px;min-width:49px;border-radius:10px;background:#f0ebf6;color:#7c7188;font-size:8px;font-weight:950}
-.duration button.active{background:#7c3aed;color:#fff;box-shadow:0 8px 18px #7c3aed33}
-.bot-stage{margin-top:16px;border-radius:32px;min-height:430px;padding:25px;display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:center;background:radial-gradient(circle at 50% 45%,#b794f633,transparent 28%),linear-gradient(145deg,#171126,#251642 55%,#101b38);color:#fff;position:relative;overflow:hidden}
-.bot-stage:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.8%,#ffffff08 50%,transparent 50.2%),linear-gradient(0deg,transparent 49.8%,#ffffff08 50%,transparent 50.2%);background-size:44px 44px;transform:perspective(400px) rotateX(60deg) scale(1.8);transform-origin:center bottom;opacity:.5}
-.bot-copy{position:relative;z-index:2}
-.bot-copy .tag{display:inline-flex;padding:8px 10px;border-radius:999px;background:#ffffff12;border:1px solid #ffffff1b;font-size:8px;font-weight:950;letter-spacing:1px}
-.bot-copy h2{font-size:44px;letter-spacing:-2px;margin:13px 0 8px}
-.bot-copy p{color:#bcb2cc;font-size:10px;line-height:1.65;max-width:430px}
-.generate{margin-top:18px;height:51px;padding:0 19px;border-radius:16px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-weight:1000;box-shadow:0 15px 35px #7c3aed45;transition:.3s}
-.generate:hover{transform:translateY(-3px)}
-.robot-wrap{position:relative;z-index:2;display:grid;place-items:center}
-.robot{width:min(330px,75vw);height:330px;position:relative}
-.robot-ring{position:absolute;inset:22px;border:1px solid #a855f744;border-radius:50%;animation:spin 10s linear infinite}
-.robot-ring:before,.robot-ring:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#c084fc;box-shadow:0 0 20px #c084fc}
-.robot-ring:before{top:0;left:50%}
-.robot-ring:after{bottom:15%;right:0}
-.robot-core{position:absolute;inset:67px 55px 55px;border-radius:90px;background:linear-gradient(145deg,#7c3aed,#3b1b70);border:1px solid #c4b5fd55;box-shadow:inset 0 0 50px #ffffff0c,0 35px 80px #0008;display:grid;place-items:center;animation:botFloat 3.5s ease-in-out infinite}
-.robot-core:before{content:"";position:absolute;inset:17px;border-radius:65px;border:1px solid #ffffff12}
-.robot-face{width:150px;height:115px;border-radius:38px;background:linear-gradient(145deg,#22123f,#120c20);border:1px solid #ffffff12;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:22px;box-shadow:inset 0 0 30px #0008}
-.eyes{display:flex;justify-content:space-around}
-.eye{width:28px;height:16px;border-radius:10px;background:#c084fc;box-shadow:0 0 25px #a855f7;animation:eye 2.8s infinite}
-.mouth{height:5px;width:48px;border-radius:5px;background:#06b6d4;box-shadow:0 0 18px #06b6d4;margin:auto}
-.antenna{position:absolute;top:25px;width:70px;height:38px;border-left:3px solid #a855f7;transform:rotate(12deg)}
-.antenna:after{content:"";position:absolute;left:-7px;top:-8px;width:12px;height:12px;border-radius:50%;background:#ec4899;box-shadow:0 0 18px #ec4899}
-.bot-status{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:8px;color:#a7f3d0;white-space:nowrap}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes botFloat{50%{transform:translateY(-8px)}}
-@keyframes eye{50%{transform:scaleY(.45)}}
-.scan{position:absolute;inset:40px;border-radius:50%;border-top:2px solid #06b6d4;opacity:0;animation:scan 1.4s linear infinite}
+.reader-card{
+  width:min(920px,100%);
+  max-height:min(900px,94vh);
+  overflow:auto;
+  border-radius:32px;
+  background:#fffdfb;
+  box-shadow:0 40px 120px rgba(0,0,0,.25);
+  animation:rise .45s
+}
+
+.reader-top{
+  position:sticky;
+  top:0;
+  background:rgba(255,253,251,.92);
+  backdrop-filter:blur(15px);
+  padding:18px 22px;
+  border-bottom:1px solid #eee6df;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:2
+}
+
+.close{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  background:#f2edf5;
+  color:#5f5668;
+  font-weight:1000
+}
+
+.reader-body{
+  padding:26px
+}
+
+.reader-art{
+  border-radius:25px;
+  background:linear-gradient(135deg,#f0e7ff,#fff1f2);
+  min-height:180px;
+  display:grid;
+  place-items:center;
+  margin-bottom:20px;
+  overflow:hidden
+}
+
+.reader-art svg{
+  width:min(300px,70%);
+  height:170px
+}
+
+.reader-body h2{
+  font-size:32px;
+  letter-spacing:-1.5px;
+  margin:5px 0
+}
+
+.reader-body .lead{
+  font-size:12px;
+  color:#716878;
+  line-height:1.7
+}
+
+.lesson-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px
+}
+
+.lesson-box{
+  padding:17px;
+  border-radius:20px;
+  background:#fff;
+  border:1px solid #ece4dc
+}
+
+.lesson-box h4{
+  margin:0 0 7px;
+  font-size:11px;
+  color:#6d28d9
+}
+
+.lesson-box p{
+  font-size:9px;
+  color:#756c79;
+  line-height:1.65
+}
+
+.reader-actions{
+  display:flex;
+  gap:10px;
+  margin-top:20px
+}
+
+.reader-actions button{
+  height:46px;
+  padding:0 15px;
+  border-radius:14px;
+  font-weight:950
+}
+
+.complete{
+  background:#7c3aed;
+  color:#fff
+}
+
+.bookmark{
+  background:#f2ecff;
+  color:#6d28d9
+}
+
+/* =========================================================
+   AVA BOT
+========================================================= */
+
+.bot-page{
+  max-width:1120px
+}
+
+.bot-top{
+  border-radius:30px;
+  padding:20px;
+  background:linear-gradient(135deg,#fff,#f7f2ff);
+  border:1px solid #eae2f2;
+  box-shadow:var(--shadow)
+}
+
+.bot-controls{
+  display:grid;
+  grid-template-columns:1.1fr .9fr .8fr;
+  gap:12px
+}
+
+.control-label{
+  font-size:8px;
+  color:#8c8192;
+  font-weight:950;
+  letter-spacing:1px;
+  margin:0 0 7px;
+  text-transform:uppercase
+}
+
+.segmented{
+  display:flex;
+  gap:5px;
+  padding:5px;
+  background:#f0ebf6;
+  border-radius:14px
+}
+
+.segmented button{
+  flex:1;
+  height:37px;
+  border-radius:10px;
+  background:transparent;
+  color:#81778c;
+  font-size:9px;
+  font-weight:950
+}
+
+.segmented button.active{
+  background:#fff;
+  color:#6d28d9;
+  box-shadow:0 5px 15px rgba(60,30,100,.08)
+}
+
+.pair-select{
+  height:47px;
+  width:100%;
+  border:1px solid #e8e0ef;
+  border-radius:14px;
+  background:#fff;
+  padding:0 12px;
+  outline:0;
+  font-weight:900
+}
+
+.duration{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap
+}
+
+.duration button{
+  height:37px;
+  min-width:49px;
+  border-radius:10px;
+  background:#f0ebf6;
+  color:#7c7188;
+  font-size:8px;
+  font-weight:950
+}
+
+.duration button.active{
+  background:#7c3aed;
+  color:#fff;
+  box-shadow:0 8px 18px #7c3aed33
+}
+
+.bot-stage{
+  margin-top:16px;
+  border-radius:32px;
+  min-height:500px;
+  padding:25px;
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:20px;
+  align-items:center;
+  background:
+    radial-gradient(circle at 50% 45%,#b794f633,transparent 28%),
+    linear-gradient(145deg,#171126,#251642 55%,#101b38);
+  color:#fff;
+  position:relative;
+  overflow:hidden
+}
+
+.bot-stage:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,transparent 49.8%,#ffffff08 50%,transparent 50.2%),
+    linear-gradient(0deg,transparent 49.8%,#ffffff08 50%,transparent 50.2%);
+  background-size:44px 44px;
+  transform:perspective(400px) rotateX(60deg) scale(1.8);
+  transform-origin:center bottom;
+  opacity:.5
+}
+
+.bot-copy{
+  position:relative;
+  z-index:2
+}
+
+.bot-copy .tag{
+  display:inline-flex;
+  padding:8px 10px;
+  border-radius:999px;
+  background:#ffffff12;
+  border:1px solid #ffffff1b;
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:1px
+}
+
+.bot-copy h2{
+  font-size:44px;
+  letter-spacing:-2px;
+  margin:13px 0 8px
+}
+
+.bot-copy p{
+  color:#bcb2cc;
+  font-size:10px;
+  line-height:1.65;
+  max-width:430px
+}
+
+.generate{
+  margin-top:18px;
+  height:51px;
+  padding:0 19px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#a855f7,#7c3aed);
+  color:#fff;
+  font-weight:1000;
+  box-shadow:0 15px 35px #7c3aed45
+}
+
+.generate:hover{
+  transform:translateY(-3px)
+}
+
+.robot-wrap{
+  position:relative;
+  z-index:2;
+  display:grid;
+  place-items:center
+}
+
+.robot{
+  width:min(330px,75vw);
+  height:330px;
+  position:relative;
+  animation:robotFloat 4.5s ease-in-out infinite
+}
+
+.robot-ring{
+  position:absolute;
+  inset:22px;
+  border:1px solid #a855f744;
+  border-radius:50%;
+  animation:spin 10s linear infinite
+}
+
+.robot-ring:before,
+.robot-ring:after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#c084fc;
+  box-shadow:0 0 20px #c084fc
+}
+
+.robot-ring:before{
+  top:0;
+  left:50%
+}
+
+.robot-ring:after{
+  bottom:15%;
+  right:0
+}
+
+.robot-core{
+  position:absolute;
+  inset:67px 55px 55px;
+  border-radius:90px;
+  background:linear-gradient(145deg,#7c3aed,#3b1b70);
+  border:1px solid #c4b5fd55;
+  box-shadow:inset 0 0 50px #ffffff0c,0 35px 80px #0008;
+  display:grid;
+  place-items:center
+}
+
+.robot-core:before{
+  content:"";
+  position:absolute;
+  inset:17px;
+  border-radius:65px;
+  border:1px solid #ffffff12
+}
+
+.robot-face{
+  width:150px;
+  height:115px;
+  border-radius:38px;
+  background:linear-gradient(145deg,#22123f,#120c20);
+  border:1px solid #ffffff12;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:20px;
+  padding:22px;
+  box-shadow:inset 0 0 30px #0008
+}
+
+.eyes{
+  display:flex;
+  justify-content:space-around
+}
+
+.eye{
+  width:28px;
+  height:16px;
+  border-radius:10px;
+  background:#c084fc;
+  box-shadow:0 0 25px #a855f7;
+  animation:eyeBlink 4s infinite
+}
+
+.mouth{
+  height:5px;
+  width:48px;
+  border-radius:5px;
+  background:#06b6d4;
+  box-shadow:0 0 18px #06b6d4;
+  margin:auto
+}
+
+.antenna{
+  position:absolute;
+  top:25px;
+  width:70px;
+  height:38px;
+  border-left:3px solid #a855f7;
+  transform:rotate(12deg)
+}
+
+.antenna:after{
+  content:"";
+  position:absolute;
+  left:-7px;
+  top:-8px;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#ec4899;
+  box-shadow:0 0 18px #ec4899
+}
+
+.bot-status{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:8px;
+  color:#a7f3d0;
+  white-space:nowrap
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes robotFloat{
+  50%{transform:translateY(-9px)}
+}
+
+@keyframes eyeBlink{
+  0%,44%,48%,100%{transform:scaleY(1)}
+  46%{transform:scaleY(.15)}
+}
+
+.scan{
+  position:absolute;
+  inset:40px;
+  border-radius:50%;
+  border-top:2px solid #06b6d4;
+  opacity:0;
+  animation:scan 1.4s linear infinite
+}
+
 .scanning .scan{opacity:1}
-@keyframes scan{to{transform:rotate(360deg)}}
-.signal-result{display:none;margin-top:15px;border-radius:25px;padding:19px;background:#fff;color:#211a28;box-shadow:0 15px 45px rgba(0,0,0,.15);animation:rise .45s}
-.signal-result.show{display:block}
-.result-main{display:flex;justify-content:space-between;align-items:center}
-.direction{font-size:34px;font-weight:1000}
+
+@keyframes scan{
+  to{transform:rotate(360deg)}
+}
+
+.signal-result{
+  display:none;
+  margin-top:15px;
+  border-radius:25px;
+  padding:19px;
+  background:#fff;
+  color:#211a28;
+  box-shadow:0 15px 45px rgba(0,0,0,.15)
+}
+
+.signal-result.show{
+  display:block;
+  animation:rise .45s
+}
+
+.result-main{
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.direction{
+  font-size:34px;
+  font-weight:1000
+}
+
 .direction.up{color:#16a34a}
 .direction.down{color:#ef4444}
-.confidence{font-size:12px;font-weight:950}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:13px}
-.metric{padding:10px;border-radius:12px;background:#f7f3fa}
-.metric small{display:block;color:#918697;font-size:7px}
-.metric b{font-size:10px}
-.countdown{margin-top:11px;font-size:9px;color:#7d7380}
-.demo-note{font-size:8px;color:#8d8292;margin-top:8px}
 
-/* CONTACT */
-.contact-page{max-width:1120px}
-.contact-hero{border-radius:32px;padding:28px;color:#fff;position:relative;overflow:hidden;background:radial-gradient(circle at 90% 15%,#67e8f955,transparent 24%),linear-gradient(135deg,#4c1d95,#7c3aed,#2563eb);min-height:235px}
-.contact-hero h2{font-size:40px;letter-spacing:-2px;margin:8px 0}
-.contact-hero p{font-size:11px;line-height:1.65;color:#ede9fe;max-width:620px}
-.contact-hero svg{position:absolute;right:35px;bottom:-5px;width:250px;opacity:.95}
-.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:15px}
-.contact-card{min-height:260px;border-radius:28px;padding:20px;background:#fff;border:1px solid #eee7f4;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.35s}
-.contact-card:hover{transform:translateY(-6px)}
-.contact-icon{width:72px;height:72px;border-radius:22px;display:grid;place-items:center;margin-bottom:20px}
-.telegram .contact-icon{background:linear-gradient(145deg,#dff8ff,#c7edff);color:#159bd3}
-.write .contact-icon{background:linear-gradient(145deg,#ffe8f3,#ffd4e8);color:#ec4899}
-.update .contact-icon{background:linear-gradient(145deg,#e9e3ff,#ddd0ff);color:#7c3aed}
-.contact-card h3{font-size:18px;margin:0 0 7px}
-.contact-card p{font-size:9px;color:#817788;line-height:1.6;max-width:260px}
-.contact-card a,.contact-card button{position:absolute;left:20px;bottom:20px;height:42px;padding:0 13px;border-radius:13px;background:#f4effb;color:#6d28d9;font-size:9px;font-weight:950}
+.confidence{
+  font-size:12px;
+  font-weight:950
+}
 
-/* PROFILE */
-.profile-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:16px}
-.profile-card{border-radius:30px;padding:25px;background:#fff;border:1px solid #eee7f4;box-shadow:var(--shadow)}
-.profile-main{display:flex;gap:16px;align-items:center}
-.big-avatar{width:94px;height:94px;border-radius:28px;overflow:hidden;background:linear-gradient(145deg,#a855f7,#6d28d9);display:grid;place-items:center;color:#fff;font-size:28px;font-weight:1000;box-shadow:0 15px 35px #7c3aed33}
-.big-avatar img{width:100%;height:100%;object-fit:cover}
-.profile-name{font-size:21px;font-weight:1000}
-.profile-nick{font-size:9px;color:#8a8090;margin-top:5px}
-.profile-actions{display:flex;gap:8px;margin-top:18px}
-.profile-actions button{height:42px;padding:0 12px;border-radius:13px;background:#f2ecff;color:#6d28d9;font-size:9px;font-weight:950}
-.profile-actions .danger{background:#fff0f0;color:#dc2626}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:22px}
-.stat-mini{padding:14px;border-radius:16px;background:#faf8fc}
-.stat-mini small{display:block;color:#8c8292;font-size:7px}
-.stat-mini b{display:block;font-size:18px;margin-top:5px}
-.profile-form{display:grid;gap:10px}
-.profile-form input{height:47px;border-radius:14px;border:1px solid #e9e2ef;padding:0 13px;outline:0}
-.save-btn{height:47px;border-radius:14px;background:#7c3aed;color:#fff;font-size:9px;font-weight:950}
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-top:13px
+}
 
-/* AVA */
-.ava-fab{position:fixed;right:25px;bottom:25px;z-index:1200;width:65px;height:65px;border-radius:22px;background:linear-gradient(145deg,#a855f7,#6d28d9);color:#fff;box-shadow:0 20px 50px #7c3aed55;display:grid;place-items:center;animation:fab 3s ease-in-out infinite}
-.ava-fab svg{width:33px}
-@keyframes fab{50%{transform:translateY(-6px)}}
-#avaPanel{position:fixed;right:25px;bottom:103px;z-index:1300;width:min(370px,calc(100vw - 30px));height:510px;border-radius:28px;background:#fff;border:1px solid #eee7f4;box-shadow:0 30px 100px rgba(36,17,59,.22);overflow:hidden;display:none;flex-direction:column;animation:rise .35s}
-#avaPanel.show{display:flex}
-.ava-head{padding:16px;background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;display:flex;align-items:center;gap:10px}
-.ava-head .ava-mini{width:38px;height:38px;border-radius:13px;background:#ffffff20;display:grid;place-items:center}
-.ava-head strong{font-size:11px}
-.ava-head small{display:block;font-size:7px;opacity:.7;margin-top:2px}
-.ava-close{margin-left:auto;background:#ffffff18;color:#fff;width:32px;height:32px;border-radius:10px}
-.ava-messages{flex:1;overflow:auto;padding:13px;background:#fbf9fd}
-.msg{max-width:85%;padding:10px 12px;border-radius:15px;margin:7px 0;font-size:9px;line-height:1.55}
-.msg.bot{background:#eee7ff;color:#3f285f;border-top-left-radius:5px}
-.msg.user{margin-left:auto;background:#7c3aed;color:#fff;border-top-right-radius:5px}
-.ava-input{display:flex;gap:7px;padding:10px;border-top:1px solid #eee7f4}
-.ava-input input{flex:1;border:1px solid #e8e0ef;border-radius:13px;padding:0 11px;height:40px;outline:0;font-size:9px}
-.ava-input button{width:42px;border-radius:12px;background:#7c3aed;color:#fff}
+.metric{
+  padding:10px;
+  border-radius:12px;
+  background:#f7f3fa
+}
 
-.toast{position:fixed;left:50%;bottom:28px;z-index:5000;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 16px;border-radius:14px;background:#21162c;color:#fff;font-size:9px;font-weight:850;box-shadow:0 20px 50px #0003;transition:.3s}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.mobile-nav{display:none}
-.ripple{position:relative;overflow:hidden}
-.ripple:after{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:#fff8;transform:scale(0);opacity:0;transition:.5s}
-.ripple:active:after{transform:scale(30);opacity:1}
+.metric small{
+  display:block;
+  color:#918697;
+  font-size:7px
+}
+
+.metric b{
+  font-size:10px
+}
+
+.countdown{
+  margin-top:11px;
+  font-size:9px;
+  color:#7d7380
+}
+
+.demo-note{
+  font-size:8px;
+  color:#8d8292;
+  margin-top:8px
+}
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-page{
+  max-width:1120px
+}
+
+.contact-hero{
+  border-radius:32px;
+  padding:28px;
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 90% 15%,#67e8f955,transparent 24%),
+    linear-gradient(135deg,#4c1d95,#7c3aed,#2563eb);
+  min-height:235px
+}
+
+.contact-hero h2{
+  font-size:40px;
+  letter-spacing:-2px;
+  margin:8px 0
+}
+
+.contact-hero p{
+  font-size:11px;
+  line-height:1.65;
+  color:#ede9fe;
+  max-width:620px
+}
+
+.contact-hero svg{
+  position:absolute;
+  right:35px;
+  bottom:-5px;
+  width:250px;
+  opacity:.95
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:15px
+}
+
+.contact-card{
+  min-height:260px;
+  border-radius:28px;
+  padding:20px;
+  background:#fff;
+  border:1px solid #eee7f4;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+  cursor:pointer
+}
+
+.contact-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 28px 65px rgba(60,30,100,.15)
+}
+
+.contact-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255,255,255,.5) 48%,
+    transparent 66%
+  );
+  background-size:250% 100%;
+  opacity:0
+}
+
+.contact-card:hover:before{
+  opacity:1;
+  animation:shine 1.1s linear
+}
+
+@keyframes shine{
+  from{background-position:-300% 0}
+  to{background-position:300% 0}
+}
+
+.contact-card a{
+  display:none!important
+}
+
+.contact-icon{
+  width:72px;
+  height:72px;
+  border-radius:22px;
+  display:grid;
+  place-items:center;
+  margin-bottom:20px;
+  animation:iconFloat 4s ease-in-out infinite
+}
+
+.contact-icon svg{
+  width:52px;
+  height:52px
+}
+
+.telegram .contact-icon{
+  background:linear-gradient(145deg,#dff8ff,#c7edff);
+  color:#159bd3
+}
+
+.write .contact-icon{
+  background:linear-gradient(145deg,#ffe8f3,#ffd4e8);
+  color:#ec4899
+}
+
+.update .contact-icon{
+  background:linear-gradient(145deg,#e9e3ff,#ddd0ff);
+  color:#7c3aed
+}
+
+.contact-card h3{
+  font-size:18px;
+  margin:0 0 7px
+}
+
+.contact-card p{
+  font-size:9px;
+  color:#817788;
+  line-height:1.6;
+  max-width:260px
+}
+
+.contact-open{
+  position:absolute;
+  left:20px;
+  bottom:20px;
+  font-size:8px;
+  font-weight:950;
+  color:#7c3aed
+}
+
+@keyframes iconFloat{
+  50%{transform:translateY(-6px)}
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-grid{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:16px
+}
+
+.profile-card{
+  border-radius:30px;
+  padding:25px;
+  background:#fff;
+  border:1px solid #eee7f4;
+  box-shadow:var(--shadow)
+}
+
+.profile-card:hover{
+  transform:translateY(-3px)
+}
+
+.profile-main{
+  display:flex;
+  gap:16px;
+  align-items:center
+}
+
+.big-avatar{
+  width:94px;
+  height:94px;
+  border-radius:28px;
+  overflow:hidden;
+  background:linear-gradient(145deg,#a855f7,#6d28d9);
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-size:28px;
+  font-weight:1000;
+  box-shadow:0 15px 35px #7c3aed33
+}
+
+.big-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.profile-name{
+  font-size:21px;
+  font-weight:1000
+}
+
+.profile-nick{
+  font-size:9px;
+  color:#8a8090;
+  margin-top:5px
+}
+
+.profile-actions{
+  display:flex;
+  gap:8px;
+  margin-top:18px
+}
+
+.profile-actions button{
+  height:42px;
+  padding:0 12px;
+  border-radius:13px;
+  background:#f2ecff;
+  color:#6d28d9;
+  font-size:9px;
+  font-weight:950
+}
+
+.profile-actions .danger{
+  background:#fff0f0;
+  color:#dc2626
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:22px
+}
+
+.stat-mini{
+  padding:14px;
+  border-radius:16px;
+  background:#faf8fc
+}
+
+.stat-mini small{
+  display:block;
+  color:#8c8292;
+  font-size:7px
+}
+
+.stat-mini b{
+  display:block;
+  font-size:18px;
+  margin-top:5px
+}
+
+.profile-form{
+  display:grid;
+  gap:10px
+}
+
+.profile-form input{
+  height:47px;
+  border-radius:14px;
+  border:1px solid #e9e2ef;
+  padding:0 13px;
+  outline:0
+}
+
+.save-btn{
+  height:47px;
+  border-radius:14px;
+  background:#7c3aed;
+  color:#fff;
+  font-size:9px;
+  font-weight:950
+}
+
+/* =========================================================
+   THEME SETTINGS
+========================================================= */
+
+.theme-box{
+  margin-top:20px;
+  padding:18px;
+  border:1px solid #ece7f3;
+  border-radius:22px;
+  background:linear-gradient(145deg,#fff,#faf7ff);
+  box-shadow:0 12px 30px rgba(45,31,65,.06)
+}
+
+.theme-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px
+}
+
+.theme-head b{
+  font-size:15px
+}
+
+.theme-head span{
+  font-size:11px;
+  color:#817889;
+  display:block;
+  margin-top:3px
+}
+
+.theme-toggle{
+  border:0;
+  width:58px;
+  height:32px;
+  border-radius:99px;
+  background:#ddd6fe;
+  padding:3px;
+  cursor:pointer
+}
+
+.theme-toggle i{
+  display:block;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 3px 10px #0002;
+  transition:transform .3s ease
+}
+
+.theme-toggle.on{
+  background:#7c3aed
+}
+
+.theme-toggle.on i{
+  transform:translateX(26px)
+}
+
+.theme-modes{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px
+}
+
+.theme-mode{
+  border:1px solid #ebe5f2;
+  background:#fff;
+  border-radius:15px;
+  padding:11px;
+  cursor:pointer;
+  text-align:left
+}
+
+.theme-mode b{
+  font-size:12px;
+  display:block
+}
+
+.theme-mode small{
+  font-size:9px;
+  color:#817889
+}
+
+.theme-mode.active{
+  border-color:#a78bfa;
+  box-shadow:0 0 0 3px #ede9fe;
+  background:#faf8ff
+}
+
+/* =========================================================
+   AVA AI
+========================================================= */
+
+.ava-fab{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  z-index:1200;
+  width:65px;
+  height:65px;
+  border-radius:22px;
+  background:linear-gradient(145deg,#a855f7,#6d28d9);
+  color:#fff;
+  box-shadow:0 20px 50px #7c3aed55;
+  display:grid;
+  place-items:center;
+  animation:fabFloat 3s ease-in-out infinite
+}
+
+.ava-fab svg{
+  width:33px
+}
+
+@keyframes fabFloat{
+  50%{transform:translateY(-6px)}
+}
+
+#avaPanel{
+  position:fixed;
+  right:25px;
+  bottom:103px;
+  z-index:1300;
+  width:min(370px,calc(100vw - 30px));
+  height:510px;
+  border-radius:28px;
+  background:#fff;
+  border:1px solid #eee7f4;
+  box-shadow:0 30px 100px rgba(36,17,59,.22);
+  overflow:hidden;
+  display:none;
+  flex-direction:column;
+  animation:rise .35s
+}
+
+#avaPanel.show{
+  display:flex
+}
+
+.ava-head{
+  padding:16px;
+  background:linear-gradient(135deg,#6d28d9,#8b5cf6);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.ava-head .ava-mini{
+  width:38px;
+  height:38px;
+  border-radius:13px;
+  background:#ffffff20;
+  display:grid;
+  place-items:center
+}
+
+.ava-head strong{
+  font-size:11px
+}
+
+.ava-head small{
+  display:block;
+  font-size:7px;
+  opacity:.7;
+  margin-top:2px
+}
+
+.ava-close{
+  margin-left:auto;
+  background:#ffffff18;
+  color:#fff;
+  width:32px;
+  height:32px;
+  border-radius:10px
+}
+
+.ava-messages{
+  flex:1;
+  overflow:auto;
+  padding:13px;
+  background:#fbf9fd
+}
+
+.msg{
+  max-width:85%;
+  padding:10px 12px;
+  border-radius:15px;
+  margin:7px 0;
+  font-size:9px;
+  line-height:1.55
+}
+
+.msg.bot{
+  background:#eee7ff;
+  color:#3f285f;
+  border-top-left-radius:5px
+}
+
+.msg.user{
+  margin-left:auto;
+  background:#7c3aed;
+  color:#fff;
+  border-top-right-radius:5px
+}
+
+.ava-input{
+  display:flex;
+  gap:7px;
+  padding:10px;
+  border-top:1px solid #eee7f4
+}
+
+.ava-input input{
+  flex:1;
+  border:1px solid #e8e0ef;
+  border-radius:13px;
+  padding:0 11px;
+  height:40px;
+  outline:0;
+  font-size:9px
+}
+
+.ava-input button{
+  width:42px;
+  border-radius:12px;
+  background:#7c3aed;
+  color:#fff
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:28px;
+  z-index:5000;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  padding:12px 16px;
+  border-radius:14px;
+  background:#21162c;
+  color:#fff;
+  font-size:9px;
+  font-weight:850;
+  box-shadow:0 20px 50px #0003;
+  transition:.3s
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0)
+}
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
+
+.mobile-nav{
+  display:none
+}
 
 @media(max-width:1000px){
-.shell{grid-template-columns:82px 1fr}
-.sidebar{padding:18px 9px}
-.side-brand .brand-copy,.nav-btn span,.side-bottom{display:none}
-.side-brand{display:grid;place-items:center}
-.nav-btn{justify-content:center;padding:7px}
-.hero{grid-template-columns:1fr}
-.hero-side{grid-template-columns:1fr 1fr;display:grid}
-.path{grid-template-columns:repeat(2,1fr)}
-.modules{grid-template-columns:1fr}
-.edu-hero{grid-template-columns:1fr}
-.contact-grid{grid-template-columns:1fr 1fr}
-.profile-grid{grid-template-columns:1fr}
-.bot-controls{grid-template-columns:1fr 1fr}
-.bot-stage{grid-template-columns:1fr}
-.robot-wrap{order:-1}
+
+  .shell{
+    grid-template-columns:82px 1fr
+  }
+
+  .sidebar{
+    padding:18px 9px
+  }
+
+  .side-brand .brand-copy,
+  .nav-btn span,
+  .side-bottom{
+    display:none
+  }
+
+  .side-brand{
+    display:grid;
+    place-items:center
+  }
+
+  .nav-btn{
+    justify-content:center;
+    padding:7px
+  }
+
+  .hero{
+    grid-template-columns:1fr
+  }
+
+  .hero-side{
+    grid-template-columns:1fr 1fr;
+    display:grid
+  }
+
+  .path{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .modules{
+    grid-template-columns:1fr
+  }
+
+  .edu-hero{
+    grid-template-columns:1fr
+  }
+
+  .contact-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+  .profile-grid{
+    grid-template-columns:1fr
+  }
+
+  .bot-controls{
+    grid-template-columns:1fr 1fr
+  }
+
+  .bot-stage{
+    grid-template-columns:1fr
+  }
+
+  .robot-wrap{
+    order:-1
+  }
 }
 
 @media(max-width:700px){
-main{padding:18px 14px 100px}
-.sidebar{display:none}
-.shell{display:block}
-.topbar{margin-bottom:18px}
-.topbar h1{font-size:24px}
-.hero-card{min-height:520px;padding:25px}
-.hero-card h2{font-size:45px}
-.hero-art{width:80%;right:-5%;opacity:.8}
-.hero-side{grid-template-columns:1fr}
-.path{grid-template-columns:1fr 1fr}
-.quick{grid-template-columns:1fr}
-.education-page{margin:-18px -14px -100px;padding:22px 14px 100px}
-.edu-art-strip{grid-template-columns:1fr 1fr}
-.lesson-grid{grid-template-columns:1fr}
-.bot-controls{grid-template-columns:1fr}
-.bot-stage{padding:20px;min-height:600px}
-.bot-copy h2{font-size:37px}
-.robot{width:290px;height:290px}
-.robot-core{inset:58px 48px 48px}
-.metrics{grid-template-columns:1fr 1fr}
-.contact-grid{grid-template-columns:1fr}
-.contact-hero{min-height:340px}
-.contact-hero svg{width:210px;right:-5px}
-.mobile-nav{position:fixed;left:10px;right:10px;bottom:10px;z-index:1100;display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:7px;border-radius:24px;background:rgba(255,255,255,.9);backdrop-filter:blur(22px);border:1px solid #e9e1f1;box-shadow:0 20px 60px rgba(50,20,90,.18)}
-.mobile-nav button{height:59px;border-radius:18px;background:transparent;color:#8b8192;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:7px;font-weight:950}
-.mobile-nav button .mn-icon{width:31px;height:31px;border-radius:11px;display:grid;place-items:center}
-.mobile-nav button.active{color:#6d28d9;background:#f3ecff}
-.mobile-nav button.active .mn-icon{background:linear-gradient(145deg,#9f67ff,#6d28d9);color:#fff;box-shadow:0 7px 18px #7c3aed40}
-.ava-fab{right:17px;bottom:87px;width:57px;height:57px;border-radius:19px}
-.ava-fab svg{width:29px}
-#avaPanel{right:14px;bottom:155px;height:470px}
-.reader-card{max-height:96vh;border-radius:25px}
-.reader-body{padding:18px}
-.reader-body h2{font-size:26px}
-.modules{gap:11px}
-.module-card{padding:15px}
+
+  main{
+    padding:18px 14px 100px
+  }
+
+  .sidebar{
+    display:none
+  }
+
+  .shell{
+    display:block
+  }
+
+  .topbar{
+    margin-bottom:18px
+  }
+
+  .topbar h1{
+    font-size:24px
+  }
+
+  .hero-card{
+    min-height:520px;
+    padding:25px
+  }
+
+  .hero-card h2{
+    font-size:45px
+  }
+
+  .hero-art{
+    width:80%;
+    right:-5%;
+    opacity:.8
+  }
+
+  .hero-side{
+    grid-template-columns:1fr
+  }
+
+  .path{
+    grid-template-columns:1fr 1fr
+  }
+
+  .quick{
+    grid-template-columns:1fr
+  }
+
+  .education-page{
+    margin:-18px -14px -100px;
+    padding:22px 14px 100px
+  }
+
+  .edu-art-strip{
+    grid-template-columns:1fr 1fr
+  }
+
+  .lesson-grid{
+    grid-template-columns:1fr
+  }
+
+  .bot-controls{
+    grid-template-columns:1fr
+  }
+
+  .bot-stage{
+    padding:20px;
+    min-height:640px
+  }
+
+  .bot-copy h2{
+    font-size:37px
+  }
+
+  .robot{
+    width:290px;
+    height:290px
+  }
+
+  .robot-core{
+    inset:58px 48px 48px
+  }
+
+  .metrics{
+    grid-template-columns:1fr 1fr
+  }
+
+  .contact-grid{
+    grid-template-columns:1fr
+  }
+
+  .contact-hero{
+    min-height:340px
+  }
+
+  .contact-hero svg{
+    width:210px;
+    right:-5px
+  }
+
+  .mobile-nav{
+    position:fixed;
+    left:10px;
+    right:10px;
+    bottom:10px;
+    z-index:1100;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:5px;
+    padding:7px;
+    border-radius:24px;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(22px);
+    border:1px solid #e9e1f1;
+    box-shadow:0 20px 60px rgba(50,20,90,.18)
+  }
+
+  .mobile-nav button{
+    height:59px;
+    border-radius:18px;
+    background:transparent;
+    color:#8b8192;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    font-size:7px;
+    font-weight:950
+  }
+
+  .mn-icon{
+    width:31px;
+    height:31px;
+    border-radius:11px;
+    display:grid;
+    place-items:center
+  }
+
+  .mobile-nav button.active{
+    color:#6d28d9;
+    background:#f3ecff
+  }
+
+  .mobile-nav button.active .mn-icon{
+    background:linear-gradient(145deg,#9f67ff,#6d28d9);
+    color:#fff;
+    box-shadow:0 7px 18px #7c3aed40
+  }
+
+  .ava-fab{
+    right:17px;
+    bottom:87px;
+    width:57px;
+    height:57px;
+    border-radius:19px
+  }
+
+  .ava-fab svg{
+    width:29px
+  }
+
+  #avaPanel{
+    right:14px;
+    bottom:155px;
+    height:470px
+  }
+
+  .reader-card{
+    max-height:96vh;
+    border-radius:25px
+  }
+
+  .reader-body{
+    padding:18px
+  }
+
+  .reader-body h2{
+    font-size:26px
+  }
+
+  .module-card{
+    padding:15px
+  }
+}
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark-mode{
+  --bg:#0d0b12;
+  --ink:#f5f1fa;
+  --muted:#aaa0b3;
+  background:#0d0b12;
+  color:#f5f1fa
+}
+
+body.dark-mode .market-bg{
+  background:
+    radial-gradient(circle at 10% 10%,#211633,transparent 25%),
+    radial-gradient(circle at 90% 80%,#10263b,transparent 25%),
+    #0d0b12
+}
+
+body.dark-mode .market-bg:after{
+  background:linear-gradient(115deg,rgba(13,11,18,.78),rgba(13,11,18,.72))
+}
+
+body.dark-mode .sidebar{
+  background:rgba(20,16,27,.92);
+  border-color:#2d2637
+}
+
+body.dark-mode .nav-btn{
+  color:#aaa0b3
+}
+
+body.dark-mode .nav-btn:hover{
+  background:#211a2d;
+  color:#c4b5fd
+}
+
+body.dark-mode .nav-btn.active{
+  background:linear-gradient(135deg,#241936,#17131f);
+  color:#c4b5fd
+}
+
+body.dark-mode .mini-user{
+  background:#17131f
+}
+
+body.dark-mode .coins,
+body.dark-mode .stat-card,
+body.dark-mode .market-card,
+body.dark-mode .path-card,
+body.dark-mode .profile-card,
+body.dark-mode .bot-top{
+  background:#17131f;
+  border-color:#2d2637;
+  color:#f5f1fa
+}
+
+body.dark-mode .stat-card{
+  background:linear-gradient(145deg,#17131f,#211831)
+}
+
+body.dark-mode .stat-card p,
+body.dark-mode .market-meta,
+body.dark-mode .path-card p,
+body.dark-mode .section-head p{
+  color:#aaa0b3
+}
+
+body.dark-mode .education-page{
+  color:#f5f1fa;
+  background:
+    radial-gradient(circle at 90% 10%,#251b38,transparent 22%),
+    radial-gradient(circle at 10% 70%,#291a17,transparent 25%),
+    #0d0b12
+}
+
+body.dark-mode .book-card,
+body.dark-mode .module-card,
+body.dark-mode .lesson-row,
+body.dark-mode .search,
+body.dark-mode .module-select{
+  background:#17131f;
+  border-color:#2d2637;
+  color:#f5f1fa
+}
+
+body.dark-mode .module-card p,
+body.dark-mode .lesson-row small{
+  color:#aaa0b3
+}
+
+body.dark-mode .lesson-row:hover{
+  background:#211a2d
+}
+
+body.dark-mode .lesson-no{
+  background:#2b2140;
+  color:#c4b5fd
+}
+
+body.dark-mode .reader-card,
+body.dark-mode .reader-top,
+body.dark-mode .lesson-box{
+  background:#17131f;
+  color:#f5f1fa;
+  border-color:#2d2637
+}
+
+body.dark-mode .reader-top{
+  background:rgba(23,19,31,.92)
+}
+
+body.dark-mode .reader-body .lead,
+body.dark-mode .lesson-box p{
+  color:#aaa0b3
+}
+
+body.dark-mode .reader-art{
+  background:linear-gradient(135deg,#251c38,#301c28)
+}
+
+body.dark-mode .contact-card{
+  background:#17131f;
+  border-color:#2d2637;
+  color:#fff
+}
+
+body.dark-mode .contact-card p{
+  color:#aaa0b3
+}
+
+body.dark-mode .theme-box{
+  background:linear-gradient(145deg,#17131f,#211831);
+  border-color:#2d2637
+}
+
+body.dark-mode .theme-head span,
+body.dark-mode .theme-mode small{
+  color:#aaa0b3
+}
+
+body.dark-mode .theme-mode{
+  background:#100d16;
+  color:#fff;
+  border-color:#332b3e
+}
+
+body.dark-mode .theme-mode.active{
+  background:#211a2d;
+  border-color:#8b5cf6;
+  box-shadow:0 0 0 3px #7c3aed22
+}
+
+body.dark-mode input,
+body.dark-mode select{
+  background:#100d16!important;
+  color:#fff!important;
+  border-color:#332b3e!important
+}
+
+body.dark-mode .stat-mini{
+  background:#211b28
+}
+
+body.dark-mode .profile-nick,
+body.dark-mode .stat-mini small{
+  color:#aaa0b3
+}
+
+body.dark-mode .mobile-nav{
+  background:rgba(20,16,27,.94);
+  border-color:#31293a
+}
+
+body.dark-mode .mobile-nav button{
+  color:#aaa0b3
+}
+
+body.dark-mode .mobile-nav button.active{
+  color:#c4b5fd;
+  background:#211a2d
+}
+
+body.dark-mode #avaPanel{
+  background:#17131f;
+  border-color:#2d2637
+}
+
+body.dark-mode .ava-messages{
+  background:#100d16
+}
+
+body.dark-mode .msg.bot{
+  background:#2a2040;
+  color:#eee7ff
+}
+
+body.dark-mode .ava-input{
+  border-color:#2d2637
+}
+
+body.dark-mode .ava-input input{
+  background:#100d16;
+  color:#fff;
+  border-color:#332b3e
 }
 
 @media(prefers-reduced-motion:reduce){
-*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
+  *,
+  *:before,
+  *:after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
 <div class="market-bg">
-<div class="watermark wm1">AVA POCKET</div>
-<div class="watermark wm2">AVA POCKET</div>
-<div class="watermark wm3">POCKET OPTION</div>
-<div class="candles" id="candles"></div>
+  <div class="watermark wm1">AVA POCKET</div>
+  <div class="watermark wm2">AVA POCKET</div>
+  <div class="watermark wm3">POCKET OPTION</div>
+  <div class="candles" id="candles"></div>
 </div>
+
+<!-- =========================================================
+     LOADER
+========================================================= -->
 
 <div id="loader">
-<div class="loader-card">
-<div class="loader-logo">
-<svg viewBox="0 0 60 60" fill="none">
-<path d="M8 45 23 13l7 19 8-13 14 26" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M18 38h25" stroke="#ddd6fe" stroke-width="4" stroke-linecap="round"/>
-</svg>
+  <div class="loader-card">
+    <div class="loader-logo">
+      <svg viewBox="0 0 60 60" fill="none">
+        <path
+          d="M8 45 23 13l7 19 8-13 14 26"
+          stroke="white"
+          stroke-width="6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M18 38h25"
+          stroke="#ddd6fe"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
+      </svg>
+    </div>
+    <strong>AVA ACADEMY</strong>
+    <small>TRADING EXPERIENCE</small>
+  </div>
 </div>
-<strong>AVA ACADEMY</strong>
-<small>TRADING EXPERIENCE</small>
-</div>
-</div>
+
+<!-- =========================================================
+     AUTH
+========================================================= -->
 
 <div id="auth" class="hidden">
-<div class="auth-shell">
-<div class="auth-card">
+  <div class="auth-shell">
+    <div class="auth-card">
 
-<div class="brand">
-<div class="brand-mark">
-<svg viewBox="0 0 50 50" fill="none">
-<path d="M7 38 19 12l7 18 7-12 10 20" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M15 32h24" stroke="#ddd6fe" stroke-width="4" stroke-linecap="round"/>
-</svg>
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 50 50" fill="none">
+            <path
+              d="M7 38 19 12l7 18 7-12 10 20"
+              stroke="white"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M15 32h24"
+              stroke="#ddd6fe"
+              stroke-width="4"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+
+        <div>
+          <strong>AVA ACADEMY</strong>
+          <small>АКАДЕМИЯ ТРЕЙДИНГА</small>
+        </div>
+      </div>
+
+      <h1>
+        Твой путь<br>
+        начинается здесь.
+      </h1>
+
+      <p>
+        Создай локальный профиль и открой обучение,
+        AVA Bot, практику и свой прогресс.
+      </p>
+
+      <form id="registerForm">
+
+        <div class="field">
+          <label>EMAIL</label>
+          <input
+            id="regEmail"
+            type="email"
+            placeholder="you@gmail.com"
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="field">
+          <label>ФИО</label>
+          <input
+            id="regName"
+            placeholder="Имя Фамилия"
+            autocomplete="name"
+          >
+        </div>
+
+        <div class="field">
+          <label>USERNAME</label>
+          <input
+            id="regUsername"
+            placeholder="@username"
+            autocomplete="nickname"
+          >
+        </div>
+
+        <div class="error" id="regError"></div>
+
+        <button class="primary" type="submit">
+          Войти в AVA ACADEMY
+        </button>
+
+      </form>
+
+      <div class="hint">
+        Профиль хранится локально на этом устройстве.
+      </div>
+
+    </div>
+  </div>
 </div>
-<div>
-<strong>AVA ACADEMY</strong>
-<small>АКАДЕМИЯ ТРЕЙДИНГА</small>
-</div>
-</div>
 
-<h1>Твой путь<br>начинается здесь.</h1>
-<p>Создай локальный профиль и открой обучение, AVA Bot, практику и свой прогресс.</p>
-
-<form id="registerForm">
-
-<div class="field">
-<label>EMAIL</label>
-<input id="regEmail" type="email" placeholder="you@gmail.com" autocomplete="email">
-</div>
-
-<div class="field">
-<label>ФИО</label>
-<input id="regName" placeholder="Имя Фамилия" autocomplete="name">
-</div>
-
-<div class="field">
-<label>USERNAME</label>
-<input id="regUsername" placeholder="@username" autocomplete="nickname">
-</div>
-
-<div class="error" id="regError"></div>
-
-<button class="primary ripple" type="submit">
-Войти в AVA ACADEMY
-</button>
-
-</form>
-
-<div class="hint">
-Профиль хранится локально на этом устройстве.
-</div>
-
-</div>
-</div>
-</div>
+<!-- =========================================================
+     APP
+========================================================= -->
 
 <div id="app" class="hidden">
-<div class="shell">
 
-<aside class="sidebar">
+  <div class="shell">
 
-<div class="side-brand">
-<div class="brand">
+    <aside class="sidebar">
 
-<div class="brand-mark">
-<svg viewBox="0 0 50 50" fill="none">
-<path d="M7 38 19 12l7 18 7-12 10 20" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M15 32h24" stroke="#ddd6fe" stroke-width="4" stroke-linecap="round"/>
-</svg>
+      <div class="side-brand">
+        <div class="brand">
+
+          <div class="brand-mark">
+            <svg viewBox="0 0 50 50" fill="none">
+              <path
+                d="M7 38 19 12l7 18 7-12 10 20"
+                stroke="white"
+                stroke-width="5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M15 32h24"
+                stroke="#ddd6fe"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+
+          <div class="brand-copy">
+            <strong>AVA ACADEMY</strong>
+            <small>АКАДЕМИЯ ТРЕЙДИНГА</small>
+          </div>
+
+        </div>
+      </div>
+
+      <nav class="side-nav" id="sideNav"></nav>
+
+      <div class="side-bottom">
+        <div class="mini-user">
+
+          <div class="avatar" id="sideAvatar"></div>
+
+          <div>
+            <b id="sideName">—</b>
+            <small id="sideNick">—</small>
+          </div>
+
+        </div>
+      </div>
+
+    </aside>
+
+    <main>
+
+      <div class="topbar">
+
+        <div>
+          <div class="eyebrow">AVA ACADEMY</div>
+          <h1 id="pageTitle">Главная</h1>
+        </div>
+
+        <div class="coins">
+          AVA XP <span id="xpTop">0</span>
+        </div>
+
+      </div>
+
+      <section id="home" class="page active"></section>
+      <section id="education" class="page"></section>
+      <section id="bot" class="page"></section>
+      <section id="contact" class="page"></section>
+      <section id="profile" class="page"></section>
+
+    </main>
+
+  </div>
 </div>
 
-<div class="brand-copy">
-<strong>AVA ACADEMY</strong>
-<small>АКАДЕМИЯ ТРЕЙДИНГА</small>
-</div>
-
-</div>
-</div>
-
-<nav class="side-nav" id="sideNav"></nav>
-
-<div class="side-bottom">
-<div class="mini-user">
-<div class="avatar" id="sideAvatar"></div>
-<div>
-<b id="sideName">—</b>
-<small id="sideNick">—</small>
-</div>
-</div>
-</div>
-
-</aside>
-
-<main>
-
-<div class="topbar">
-<div>
-<div class="eyebrow">AVA ACADEMY</div>
-<h1 id="pageTitle">Главная</h1>
-</div>
-<div class="coins">AVA XP <span id="xpTop">0</span></div>
-</div>
-
-<section id="home" class="page active"></section>
-<section id="education" class="page"></section>
-<section id="bot" class="page"></section>
-<section id="contact" class="page"></section>
-<section id="profile" class="page"></section>
-
-</main>
-</div>
-</div>
+<!-- =========================================================
+     MOBILE NAV
+========================================================= -->
 
 <nav class="mobile-nav" id="mobileNav"></nav>
 
+<!-- =========================================================
+     AVA AI
+========================================================= -->
+
 <button class="ava-fab" id="avaFab" aria-label="AVA AI">
-<svg viewBox="0 0 48 48" fill="none">
-<path d="M24 6c3 5 6 7 11 8-5 3-8 6-11 11-3-5-6-8-11-11 5-1 8-3 11-8Z" fill="currentColor"/>
-<rect x="13" y="23" width="22" height="17" rx="7" stroke="currentColor" stroke-width="2.5"/>
-<circle cx="20" cy="31" r="2" fill="currentColor"/>
-<circle cx="28" cy="31" r="2" fill="currentColor"/>
-<path d="M21 36h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-</svg>
+  <svg viewBox="0 0 48 48" fill="none">
+    <path
+      d="M24 6c3 5 6 7 11 8-5 3-8 6-11 11-3-5-6-8-11-11 5-1 8-3 11-8Z"
+      fill="currentColor"
+    />
+    <rect
+      x="13"
+      y="23"
+      width="22"
+      height="17"
+      rx="7"
+      stroke="currentColor"
+      stroke-width="2.5"
+    />
+    <circle cx="20" cy="31" r="2" fill="currentColor"/>
+    <circle cx="28" cy="31" r="2" fill="currentColor"/>
+    <path
+      d="M21 36h6"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+  </svg>
 </button>
 
 <div id="avaPanel">
 
-<div class="ava-head">
-<div class="ava-mini">
-<svg viewBox="0 0 40 40" fill="none">
-<circle cx="20" cy="20" r="13" stroke="white"/>
-<circle cx="16" cy="19" r="2" fill="white"/>
-<circle cx="24" cy="19" r="2" fill="white"/>
-<path d="M15 25c3 3 7 3 10 0" stroke="white" stroke-linecap="round"/>
-</svg>
+  <div class="ava-head">
+
+    <div class="ava-mini">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="13" stroke="white"/>
+        <circle cx="16" cy="19" r="2" fill="white"/>
+        <circle cx="24" cy="19" r="2" fill="white"/>
+        <path
+          d="M15 25c3 3 7 3 10 0"
+          stroke="white"
+          stroke-linecap="round"
+        />
+      </svg>
+    </div>
+
+    <div>
+      <strong>Ava AI</strong>
+      <small>Помощник академии</small>
+    </div>
+
+    <button class="ava-close" id="avaClose">×</button>
+
+  </div>
+
+  <div class="ava-messages" id="avaMessages">
+    <div class="msg bot">
+      Привет! Я Ava. Спроси про обучение, индикаторы,
+      свечи или навигацию по академии.
+    </div>
+  </div>
+
+  <form class="ava-input" id="avaForm">
+    <input id="avaInput" placeholder="Напиши вопрос…">
+    <button>➜</button>
+  </form>
+
 </div>
 
-<div>
-<strong>Ava AI</strong>
-<small>Помощник академии</small>
-</div>
-
-<button class="ava-close" id="avaClose">×</button>
-</div>
-
-<div class="ava-messages" id="avaMessages">
-<div class="msg bot">
-Привет! Я Ava. Спроси про обучение, индикаторы, свечи или навигацию по академии.
-</div>
-</div>
-
-<form class="ava-input" id="avaForm">
-<input id="avaInput" placeholder="Напиши вопрос…">
-<button>➜</button>
-</form>
-
-</div>
+<!-- =========================================================
+     LESSON READER
+========================================================= -->
 
 <div id="reader">
 
-<div class="reader-card">
+  <div class="reader-card">
 
-<div class="reader-top">
-<div>
-<div class="eyebrow">УРОК <span id="readerNo"></span></div>
-<b id="readerModule">—</b>
-</div>
-<button class="close" id="readerClose">×</button>
-</div>
+    <div class="reader-top">
 
-<div class="reader-body">
+      <div>
+        <div class="eyebrow">
+          УРОК <span id="readerNo"></span>
+        </div>
+        <b id="readerModule">—</b>
+      </div>
 
-<div class="reader-art" id="readerArt"></div>
+      <button class="close" id="readerClose">×</button>
 
-<h2 id="readerTitle">—</h2>
-<p class="lead" id="readerLead">—</p>
+    </div>
 
-<div class="lesson-grid" id="readerGrid"></div>
+    <div class="reader-body">
 
-<div class="reader-actions">
-<button class="bookmark" id="readerBookmark">☆ В закладки</button>
-<button class="complete" id="readerComplete">Завершить урок · +5 XP</button>
-</div>
+      <div class="reader-art" id="readerArt"></div>
 
-</div>
-</div>
+      <h2 id="readerTitle">—</h2>
+
+      <p class="lead" id="readerLead">—</p>
+
+      <div class="lesson-grid" id="readerGrid"></div>
+
+      <div class="reader-actions">
+
+        <button class="bookmark" id="readerBookmark">
+          ☆ В закладки
+        </button>
+
+        <button class="complete" id="readerComplete">
+          Завершить урок · +5 XP
+        </button>
+
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<input type="file" id="avatarInput" accept="image/*" class="hidden">
+<input
+  type="file"
+  id="avatarInput"
+  accept="image/*"
+  class="hidden"
+>
 
 <script>
 
+/* =========================================================
+   STATE
+========================================================= */
+
 const NAV=[
-['home','Главная','home'],
-['education','Учёба','book'],
-['bot','AvaBot','bot'],
-['contact','Связь','chat'],
-['profile','Профиль','user']
+  ['home','Главная','home'],
+  ['education','Учёба','book'],
+  ['bot','AvaBot','bot'],
+  ['contact','Связь','chat'],
+  ['profile','Профиль','user']
 ];
 
-const state=JSON.parse(localStorage.getItem('ava_beauty_state')||'null')||{
-registered:false,
-email:'',
-name:'',
-username:'',
-avatar:'',
-xp:0,
-coins:0,
-completed:[],
-bookmarks:[],
-signals:0,
-streak:0,
-level:1
+const defaultState={
+  registered:false,
+  email:'',
+  name:'',
+  username:'',
+  avatar:'',
+  xp:0,
+  coins:0,
+  completed:[],
+  bookmarks:[],
+  signals:0,
+  streak:0,
+  level:1,
+  theme:'light'
 };
 
+let state;
+
+try{
+  state=JSON.parse(
+    localStorage.getItem('ava_beauty_state')||'null'
+  )||structuredClone(defaultState);
+}catch{
+  state=structuredClone(defaultState)
+}
+
+state={...defaultState,...state};
+
 const pairs=[
-'EUR/USD','GBP/USD','USD/JPY','USD/CHF','AUD/USD','USD/CAD','NZD/USD',
-'EUR/GBP','EUR/JPY','EUR/CHF','EUR/AUD','EUR/CAD','EUR/NZD',
-'GBP/JPY','GBP/CHF','GBP/AUD','GBP/CAD','GBP/NZD',
-'AUD/JPY','AUD/NZD','AUD/CAD','AUD/CHF',
-'CAD/JPY','CAD/CHF','CHF/JPY','NZD/JPY','NZD/CAD','NZD/CHF',
-'USD/SGD','USD/HKD','USD/CNH','USD/TRY','USD/MXN','USD/ZAR',
-'USD/SEK','USD/NOK','USD/DKK','USD/PLN','USD/CZK','USD/HUF',
-'EUR/PLN','EUR/SEK','EUR/NOK','EUR/DKK','EUR/TRY','EUR/ZAR',
-'GBP/SGD','GBP/ZAR','GBP/PLN','AUD/SGD','AUD/ZAR','CAD/SGD',
-'NZD/SGD','SGD/JPY','HKD/JPY','NOK/SEK','SEK/JPY','ZAR/JPY','MXN/JPY'
+  'EUR/USD',
+  'GBP/USD',
+  'USD/JPY',
+  'USD/CHF',
+  'AUD/USD',
+  'USD/CAD',
+  'NZD/USD',
+  'EUR/GBP',
+  'EUR/JPY',
+  'EUR/CHF',
+  'EUR/AUD',
+  'EUR/CAD',
+  'EUR/NZD',
+  'GBP/JPY',
+  'GBP/CHF',
+  'GBP/AUD',
+  'GBP/CAD',
+  'GBP/NZD',
+  'AUD/JPY',
+  'AUD/NZD',
+  'AUD/CAD',
+  'AUD/CHF',
+  'CAD/JPY',
+  'CAD/CHF',
+  'CHF/JPY',
+  'NZD/JPY',
+  'NZD/CAD',
+  'NZD/CHF',
+  'USD/SGD',
+  'USD/HKD',
+  'USD/CNH',
+  'USD/TRY',
+  'USD/MXN',
+  'USD/ZAR',
+  'USD/SEK',
+  'USD/NOK',
+  'USD/DKK',
+  'USD/PLN',
+  'USD/CZK',
+  'USD/HUF',
+  'EUR/PLN',
+  'EUR/SEK',
+  'EUR/NOK',
+  'EUR/DKK',
+  'EUR/TRY',
+  'EUR/ZAR',
+  'GBP/SGD',
+  'GBP/ZAR',
+  'GBP/PLN',
+  'AUD/SGD',
+  'AUD/ZAR',
+  'CAD/SGD',
+  'NZD/SGD',
+  'SGD/JPY',
+  'HKD/JPY',
+  'NOK/SEK',
+  'SEK/JPY',
+  'ZAR/JPY',
+  'MXN/JPY'
 ];
 
 const modules=[
-
-['Старт трейдера','Как устроен рынок и с чего начинать',[
-'Что такое трейдинг','Финансовые рынки','Валютные пары','Цена и котировка','Bid и Ask',
-'Спред','Ликвидность','Волатильность','Таймфреймы','Торговый план'
-]],
-
-['Свечи','Читаем движение цены без перегруза',[
-'Строение свечи','Тело и тени','Бычья свеча','Медвежья свеча','Сила закрытия',
-'Импульс свечи','Последовательности свечей','Локальные экстремумы','Свечные контексты',
-'Практика чтения графика'
-]],
-
-['График','Ориентируемся в структуре движения',[
-'Линия и свечи','Масштаб графика','Тренд','Флэт','Импульс','Коррекция',
-'Высшие максимумы','Низшие минимумы','Структура рынка','Разметка графика'
-]],
-
-['Уровни','Поддержка и сопротивление',[
-'Поддержка','Сопротивление','Зоны вместо линий','Касания','Пробой уровня',
-'Ложный пробой','Ретест','Сила уровня','Зеркальный уровень','Практика уровней'
-]],
-
-['Тренды','Работа с направлением рынка',[
-'Восходящий тренд','Нисходящий тренд','Боковик','Трендовая линия','Канал',
-'Импульс в тренде','Коррекция в тренде','Смена характера','Слабый тренд',
-'Практика трендов'
-]],
-
-['Индикаторы','Инструменты для подтверждения идеи',[
-'Зачем нужны индикаторы','EMA','SMA','RSI','MACD','Momentum',
-'Accelerator Oscillator','Envelopes','Пересечения','Согласование сигналов'
-]],
-
-['EMA','Средние и динамическая структура',[
-'Что показывает EMA','Период EMA','EMA 9','EMA 21','EMA 50','Наклон EMA',
-'Цена и EMA','Пересечение EMA','EMA как фильтр','Практика EMA'
-]],
-
-['RSI','Читаем силу движения',[
-'Что такое RSI','Зона 30','Зона 70','Центральная линия','RSI и тренд',
-'Дивергенция RSI','Ложные экстремумы','RSI как фильтр','Комбинации RSI','Практика RSI'
-]],
-
-['MACD','Импульс и пересечения',[
-'Линии MACD','Сигнальная линия','Гистограмма','Нулевая линия',
-'Пересечение MACD','Сила импульса','Дивергенция MACD','MACD во флэте',
-'MACD в тренде','Практика MACD'
-]],
-
-['Envelopes','Каналы вокруг средней',[
-'Идея Envelopes','Средняя линия','Верхняя граница','Нижняя граница',
-'Выход за границу','Возврат внутрь','Трендовый контекст','Флэтовый контекст',
-'Ошибки Envelopes','Практика Envelopes'
-]],
-
-['Сетапы','Собираем понятные торговые сценарии',[
-'Что такое сетап','Условия входа','Подтверждение','Точка отмены','Сетап на тренд',
-'Сетап на откат','Сетап от уровня','Сетап пробоя','Фильтр времени','Чек-лист сетапа'
-]],
-
-['Сигналы','Разбираем учебные сигналы',[
-'Направление UP','Направление DOWN','Уверенность','Согласование факторов',
-'RSI + EMA','MACD + цена','Уровень + свеча','Импульс + структура',
-'Слабый сигнал','Сильный учебный сигнал'
-]],
-
-['Риск','Главное — сохранять капитал',[
-'Что такое риск','Размер позиции','Лимит потерь','Серия сделок','Риск на идею',
-'Риск и эмоции','Почему нельзя догонять','Дисциплина','Дневной лимит','Чек-лист риска'
-]],
-
-['Психология','Спокойное принятие решений',[
-'Эмоции трейдера','Страх','Жадность','FOMO','Тильт','Ожидания',
-'Убыток как статистика','Пауза','Дневник решений','Психологический чек-лист'
-]],
-
-['Практика','Тренируем навык без спешки',[
-'Распознавание тренда','Поиск уровня','Чтение свечи','Поиск импульса',
-'RSI-фильтр','EMA-фильтр','MACD-фильтр','Сетап','Разбор ошибки','Итоговая тренировка'
-]],
-
-['Продвинутый уровень','Собираем систему в единое целое',[
-'Мультитаймфрейм','Контекст рынка','Слияние факторов','Сила подтверждения',
-'Сценарий A/B','Журнал статистики','Разбор серии','Оптимизация правил',
-'Личный чек-лист','Финальный экзамен'
-]]
-
+[
+ 'Старт трейдера',
+ 'Как устроен рынок и с чего начинать',
+ [
+  'Что такое трейдинг',
+  'Финансовые рынки',
+  'Валютные пары',
+  'Цена и котировка',
+  'Bid и Ask',
+  'Спред',
+  'Ликвидность',
+  'Волатильность',
+  'Таймфреймы',
+  'Торговый план'
+ ]
+],
+[
+ 'Свечи',
+ 'Читаем движение цены без перегруза',
+ [
+  'Строение свечи',
+  'Тело и тени',
+  'Бычья свеча',
+  'Медвежья свеча',
+  'Сила закрытия',
+  'Импульс свечи',
+  'Последовательности свечей',
+  'Локальные экстремумы',
+  'Свечные контексты',
+  'Практика чтения графика'
+ ]
+],
+[
+ 'График',
+ 'Ориентируемся в структуре движения',
+ [
+  'Линия и свечи',
+  'Масштаб графика',
+  'Тренд',
+  'Флэт',
+  'Импульс',
+  'Коррекция',
+  'Высшие максимумы',
+  'Низшие минимумы',
+  'Структура рынка',
+  'Разметка графика'
+ ]
+],
+[
+ 'Уровни',
+ 'Поддержка и сопротивление',
+ [
+  'Поддержка',
+  'Сопротивление',
+  'Зоны вместо линий',
+  'Касания',
+  'Пробой уровня',
+  'Ложный пробой',
+  'Ретест',
+  'Сила уровня',
+  'Зеркальный уровень',
+  'Практика уровней'
+ ]
+],
+[
+ 'Тренды',
+ 'Работа с направлением рынка',
+ [
+  'Восходящий тренд',
+  'Нисходящий тренд',
+  'Боковик',
+  'Трендовая линия',
+  'Канал',
+  'Импульс в тренде',
+  'Коррекция в тренде',
+  'Смена характера',
+  'Слабый тренд',
+  'Практика трендов'
+ ]
+],
+[
+ 'Индикаторы',
+ 'Инструменты для подтверждения идеи',
+ [
+  'Зачем нужны индикаторы',
+  'EMA',
+  'SMA',
+  'RSI',
+  'MACD',
+  'Momentum',
+  'Accelerator Oscillator',
+  'Envelopes',
+  'Пересечения',
+  'Согласование сигналов'
+ ]
+],
+[
+ 'EMA',
+ 'Средние и динамическая структура',
+ [
+  'Что показывает EMA',
+  'Период EMA',
+  'EMA 9',
+  'EMA 21',
+  'EMA 50',
+  'Наклон EMA',
+  'Цена и EMA',
+  'Пересечение EMA',
+  'EMA как фильтр',
+  'Практика EMA'
+ ]
+],
+[
+ 'RSI',
+ 'Читаем силу движения',
+ [
+  'Что такое RSI',
+  'Зона 30',
+  'Зона 70',
+  'Центральная линия',
+  'RSI и тренд',
+  'Дивергенция RSI',
+  'Ложные экстремумы',
+  'RSI как фильтр',
+  'Комбинации RSI',
+  'Практика RSI'
+ ]
+],
+[
+ 'MACD',
+ 'Импульс и пересечения',
+ [
+  'Линии MACD',
+  'Сигнальная линия',
+  'Гистограмма',
+  'Нулевая линия',
+  'Пересечение MACD',
+  'Сила импульса',
+  'Дивергенция MACD',
+  'MACD во флэте',
+  'MACD в тренде',
+  'Практика MACD'
+ ]
+],
+[
+ 'Envelopes',
+ 'Каналы вокруг средней',
+ [
+  'Идея Envelopes',
+  'Средняя линия',
+  'Верхняя граница',
+  'Нижняя граница',
+  'Выход за границу',
+  'Возврат внутрь',
+  'Трендовый контекст',
+  'Флэтовый контекст',
+  'Ошибки Envelopes',
+  'Практика Envelopes'
+ ]
+],
+[
+ 'Сетапы',
+ 'Собираем понятные торговые сценарии',
+ [
+  'Что такое сетап',
+  'Условия входа',
+  'Подтверждение',
+  'Точка отмены',
+  'Сетап на тренд',
+  'Сетап на откат',
+  'Сетап от уровня',
+  'Сетап пробоя',
+  'Фильтр времени',
+  'Чек-лист сетапа'
+ ]
+],
+[
+ 'Сигналы',
+ 'Разбираем учебные сигналы',
+ [
+  'Направление UP',
+  'Направление DOWN',
+  'Уверенность',
+  'Согласование факторов',
+  'RSI + EMA',
+  'MACD + цена',
+  'Уровень + свеча',
+  'Импульс + структура',
+  'Слабый сигнал',
+  'Сильный учебный сигнал'
+ ]
+],
+[
+ 'Риск',
+ 'Главное — сохранять капитал',
+ [
+  'Что такое риск',
+  'Размер позиции',
+  'Лимит потерь',
+  'Серия сделок',
+  'Риск на идею',
+  'Риск и эмоции',
+  'Почему нельзя догонять',
+  'Дисциплина',
+  'Дневной лимит',
+  'Чек-лист риска'
+ ]
+],
+[
+ 'Психология',
+ 'Спокойное принятие решений',
+ [
+  'Эмоции трейдера',
+  'Страх',
+  'Жадность',
+  'FOMO',
+  'Тильт',
+  'Ожидания',
+  'Убыток как статистика',
+  'Пауза',
+  'Дневник решений',
+  'Психологический чек-лист'
+ ]
+],
+[
+ 'Практика',
+ 'Тренируем навык без спешки',
+ [
+  'Распознавание тренда',
+  'Поиск уровня',
+  'Чтение свечи',
+  'Поиск импульса',
+  'RSI-фильтр',
+  'EMA-фильтр',
+  'MACD-фильтр',
+  'Сетап',
+  'Разбор ошибки',
+  'Итоговая тренировка'
+ ]
+],
+[
+ 'Продвинутый уровень',
+ 'Собираем систему в единое целое',
+ [
+  'Мультитаймфрейм',
+  'Контекст рынка',
+  'Слияние факторов',
+  'Сила подтверждения',
+  'Сценарий A/B',
+  'Журнал статистики',
+  'Разбор серии',
+  'Оптимизация правил',
+  'Личный чек-лист',
+  'Финальный экзамен'
+ ]
+]
 ];
 
 const palette=[
-['#8b5cf6','#ec4899'],
-['#3b82f6','#06b6d4'],
-['#f59e0b','#ec4899'],
-['#10b981','#06b6d4']
+ ['#8b5cf6','#ec4899'],
+ ['#3b82f6','#06b6d4'],
+ ['#f59e0b','#ec4899'],
+ ['#10b981','#06b6d4']
 ];
 
+/* =========================================================
+   HELPERS
+========================================================= */
+
 function save(){
-localStorage.setItem('ava_beauty_state',JSON.stringify(state));
+  localStorage.setItem(
+    'ava_beauty_state',
+    JSON.stringify(state)
+  )
 }
 
-function esc(x){
-return String(x??'').replace(/[&<>"']/g,c=>({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#39;'
-}[c]));
+function esc(value){
+  return String(value??'').replace(
+    /[&<>"']/g,
+    char=>({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#39;'
+    }[char])
+  )
 }
 
 function initials(){
-return (state.name||'A').split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+  return (state.name||'A')
+    .split(/\s+/)
+    .slice(0,2)
+    .map(x=>x[0])
+    .join('')
+    .toUpperCase()
 }
 
-function toast(t){
-const e=document.getElementById('toast');
-e.textContent=t;
-e.classList.add('show');
-clearTimeout(window._toast);
-window._toast=setTimeout(()=>e.classList.remove('show'),2600);
+function toast(text){
+  const el=document.getElementById('toast');
+
+  el.textContent=text;
+  el.classList.add('show');
+
+  clearTimeout(window._toastTimer);
+
+  window._toastTimer=setTimeout(
+    ()=>el.classList.remove('show'),
+    2600
+  )
 }
+
+function normalizeUser(value){
+  value=value.trim();
+
+  if(!value)return '';
+
+  return value.startsWith('@')
+    ?value
+    :'@'+value
+}
+
+/* =========================================================
+   ICONS
+========================================================= */
 
 function navIcon(type){
 
-const p={
+  const icons={
+    home:`
+      <path d="M4 11 12 4l8 7v9H4v-9Z"/>
+      <path d="M9 20v-5h6v5"/>
+    `,
 
-home:'<path d="M4 11 12 4l8 7v9H4v-9Z"/><path d="M9 20v-5h6v5"/>',
+    book:`
+      <path d="M4 5.5A3 3 0 0 1 7 3h13v17H7a3 3 0 0 0-3 3V5.5Z"/>
+      <path d="M4 19a3 3 0 0 1 3-3h13"/>
+    `,
 
-book:'<path d="M4 5.5A3 3 0 0 1 7 3h13v17H7a3 3 0 0 0-3 3V5.5Z"/><path d="M4 19a3 3 0 0 1 3-3h13"/>',
+    bot:`
+      <rect x="5" y="8" width="14" height="12" rx="4"/>
+      <path d="M12 4v4"/>
+      <path d="M9 13h.01M15 13h.01"/>
+      <path d="M9 17h6"/>
+      <path d="M3 12h2M19 12h2"/>
+    `,
 
-bot:'<rect x="5" y="8" width="14" height="12" rx="4"/><path d="M12 4v4M9 13h.01M15 13h.01M9 17h6"/><path d="M3 12h2M19 12h2"/>',
+    chat:`
+      <path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v5a3.5 3.5 0 0 1-3.5 3.5H11l-5 4v-4.5a3.5 3.5 0 0 1-1-2.5v-5Z"/>
+      <path d="m8 9 4 3 4-3"/>
+    `,
 
-chat:'<path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v5a3.5 3.5 0 0 1-3.5 3.5H11l-5 4v-4.5a3.5 3.5 0 0 1-1-2.5v-5Z"/><path d="m8 9 4 3 4-3"/>',
+    user:`
+      <circle cx="12" cy="8" r="3.2"/>
+      <path d="M5 20c.8-4 3-6 7-6s6.2 2 7 6"/>
+    `
+  };
 
-user:'<circle cx="12" cy="8" r="3.2"/><path d="M5 20c.8-4 3-6 7-6s6.2 2 7 6"/>'
-
-};
-
-return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${p[type]}</svg>`;
+  return `
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      ${icons[type]}
+    </svg>
+  `
 }
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 function buildNav(){
 
-const side=document.getElementById('sideNav');
-const mob=document.getElementById('mobileNav');
+  const side=document.getElementById('sideNav');
+  const mobile=document.getElementById('mobileNav');
 
-side.innerHTML='';
-mob.innerHTML='';
+  side.innerHTML='';
+  mobile.innerHTML='';
 
-NAV.forEach(([id,label,icon])=>{
+  NAV.forEach(([id,label,icon])=>{
 
-const b=document.createElement('button');
+    const button=document.createElement('button');
 
-b.className='nav-btn';
-b.dataset.page=id;
-b.innerHTML=`<i class="nav-icon">${navIcon(icon)}</i><span>${label}</span>`;
+    button.className='nav-btn';
+    button.dataset.page=id;
 
-side.appendChild(b);
+    button.innerHTML=`
+      <i class="nav-icon">
+        ${navIcon(icon)}
+      </i>
+      <span>${label}</span>
+    `;
 
-const m=document.createElement('button');
+    button.onclick=()=>navigate(id);
 
-m.dataset.page=id;
-m.innerHTML=`<i class="mn-icon">${navIcon(icon)}</i>${label}`;
+    side.appendChild(button);
 
-mob.appendChild(m);
+    const mobileButton=document.createElement('button');
 
-});
+    mobileButton.dataset.page=id;
 
-document.querySelectorAll('[data-page]').forEach(b=>{
-b.addEventListener('click',()=>navigate(b.dataset.page));
-});
+    mobileButton.innerHTML=`
+      <i class="mn-icon">
+        ${navIcon(icon)}
+      </i>
+      ${label}
+    `;
 
+    mobileButton.onclick=()=>navigate(id);
+
+    mobile.appendChild(mobileButton);
+
+  });
+
+  updateNavigation('home');
+}
+
+function updateNavigation(page){
+
+  document.querySelectorAll('[data-page]')
+    .forEach(button=>{
+      button.classList.toggle(
+        'active',
+        button.dataset.page===page
+      )
+    })
 }
 
 function navigate(page){
 
-document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.page')
+    .forEach(pageEl=>{
+      pageEl.classList.remove('active')
+    });
 
-document.getElementById(page).classList.add('active');
+  const target=document.getElementById(page);
 
-document.querySelectorAll('[data-page]').forEach(x=>{
-x.classList.toggle('active',x.dataset.page===page);
-});
+  if(!target)return;
 
-document.getElementById('pageTitle').textContent=
-NAV.find(x=>x[0]===page)?.[1]||'AVA';
+  target.classList.add('active');
 
-if(page==='home')renderHome();
-if(page==='education')renderEducation();
-if(page==='bot')renderBot();
-if(page==='contact')renderContact();
-if(page==='profile')renderProfile();
+  updateNavigation(page);
 
-window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('pageTitle')
+    .textContent=
+      NAV.find(x=>x[0]===page)?.[1]||'AVA';
+
+  if(page==='home')renderHome();
+  if(page==='education')renderEducation();
+  if(page==='bot')renderBot();
+  if(page==='contact')renderContact();
+  if(page==='profile')renderProfile();
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  })
 }
 
-function makeArt(kind,idx=0){
+/* =========================================================
+   ILLUSTRATIONS
+========================================================= */
 
-const [a,b]=palette[idx%palette.length];
+function makeArt(kind,index=0){
 
-if(kind==='chart')
+  const [a,b]=palette[index%palette.length];
 
-return `<svg viewBox="0 0 320 180" fill="none">
-<defs>
-<linearGradient id="g${idx}" x1="0" y1="0" x2="1" y2="1">
-<stop stop-color="${a}"/>
-<stop offset="1" stop-color="${b}"/>
-</linearGradient>
-</defs>
+  if(kind==='chart'){
 
-<path d="M15 145 C50 115 57 130 88 92 S135 110 161 72 S210 92 245 45 S280 58 305 20"
-stroke="url(#g${idx})" stroke-width="7" stroke-linecap="round"/>
+    return `
+      <svg viewBox="0 0 320 180" fill="none">
 
-<path d="M15 155h290" stroke="#fff" opacity=".2"/>
+        <defs>
+          <linearGradient
+            id="chart${index}"
+            x1="0"
+            y1="0"
+            x2="1"
+            y2="1"
+          >
+            <stop stop-color="${a}"/>
+            <stop offset="1" stop-color="${b}"/>
+          </linearGradient>
+        </defs>
 
-<circle cx="245" cy="45" r="8" fill="${b}"/>
+        <path
+          d="
+            M15 145
+            C50 115 57 130 88 92
+            S135 110 161 72
+            S210 92 245 45
+            S280 58 305 20
+          "
+          stroke="url(#chart${index})"
+          stroke-width="7"
+          stroke-linecap="round"
+        />
 
-<path d="M55 140V105M50 110h10M95 119V78M90 84h10M145 100V58M140 65h10M195 82V35M190 42h10M255 60V20M250 27h10"
-stroke="#fff" opacity=".7" stroke-width="3" stroke-linecap="round"/>
+        <path
+          d="M15 155h290"
+          stroke="#fff"
+          opacity=".2"
+        />
 
-</svg>`;
+        <circle
+          cx="245"
+          cy="45"
+          r="8"
+          fill="${b}"
+        />
 
-if(kind==='book')
+        <path
+          d="
+            M55 140V105
+            M50 110h10
+            M95 119V78
+            M90 84h10
+            M145 100V58
+            M140 65h10
+            M195 82V35
+            M190 42h10
+            M255 60V20
+            M250 27h10
+          "
+          stroke="#fff"
+          opacity=".7"
+          stroke-width="3"
+          stroke-linecap="round"
+        />
 
-return `<svg viewBox="0 0 220 150" fill="none">
+      </svg>
+    `
+  }
 
-<path d="M30 30c25-13 48-12 80 4v90c-32-16-55-17-80-4V30Z" fill="${a}"/>
-<path d="M190 30c-25-13-48-12-80 4v90c32-16 55-17 80-4V30Z" fill="${b}"/>
-<path d="M110 34v89" stroke="#fff" opacity=".7" stroke-width="5"/>
+  if(kind==='book'){
 
-<path d="M52 56h38M52 72h45M52 88h32M168 56h-38M168 72h-45M168 88h-32"
-stroke="#fff" opacity=".55" stroke-width="4" stroke-linecap="round"/>
+    return `
+      <svg viewBox="0 0 220 150" fill="none">
 
-</svg>`;
+        <path
+          d="M30 30c25-13 48-12 80 4v90c-32-16-55-17-80-4V30Z"
+          fill="${a}"
+        />
 
-return `<svg viewBox="0 0 220 150" fill="none">
+        <path
+          d="M190 30c-25-13-48-12-80 4v90c32-16 55-17 80-4V30Z"
+          fill="${b}"
+        />
 
-<circle cx="110" cy="76" r="55" fill="${a}" opacity=".9"/>
-<circle cx="110" cy="76" r="42" fill="#21142f"/>
+        <path
+          d="M110 34v89"
+          stroke="#fff"
+          opacity=".7"
+          stroke-width="5"
+        />
 
-<defs>
-<linearGradient id="botg${idx}" x1="70" y1="48" x2="150" y2="106">
-<stop stop-color="${a}"/>
-<stop offset="1" stop-color="${b}"/>
-</linearGradient>
-</defs>
+        <path
+          d="
+            M52 56h38
+            M52 72h45
+            M52 88h32
+            M168 56h-38
+            M168 72h-45
+            M168 88h-32
+          "
+          stroke="#fff"
+          opacity=".55"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
 
-<rect x="70" y="48" width="80" height="58" rx="19" fill="url(#botg${idx})"/>
+      </svg>
+    `
+  }
 
-<circle cx="94" cy="76" r="7" fill="#fff"/>
-<circle cx="126" cy="76" r="7" fill="#fff"/>
+  return `
+    <svg viewBox="0 0 220 150" fill="none">
 
-<path d="M98 91h24" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
-<path d="M110 25v23" stroke="${b}" stroke-width="5"/>
-<circle cx="110" cy="20" r="6" fill="${b}"/>
+      <defs>
+        <linearGradient
+          id="bot${index}"
+          x1="70"
+          y1="48"
+          x2="150"
+          y2="106"
+        >
+          <stop stop-color="${a}"/>
+          <stop offset="1" stop-color="${b}"/>
+        </linearGradient>
+      </defs>
 
-</svg>`;
+      <circle
+        cx="110"
+        cy="76"
+        r="55"
+        fill="${a}"
+        opacity=".9"
+      />
+
+      <circle
+        cx="110"
+        cy="76"
+        r="42"
+        fill="#21142f"
+      />
+
+      <rect
+        x="70"
+        y="48"
+        width="80"
+        height="58"
+        rx="19"
+        fill="url(#bot${index})"
+      />
+
+      <circle cx="94" cy="76" r="7" fill="#fff"/>
+      <circle cx="126" cy="76" r="7" fill="#fff"/>
+
+      <path
+        d="M98 91h24"
+        stroke="#fff"
+        stroke-width="5"
+        stroke-linecap="round"
+      />
+
+      <path
+        d="M110 25v23"
+        stroke="${b}"
+        stroke-width="5"
+      />
+
+      <circle
+        cx="110"
+        cy="20"
+        r="6"
+        fill="${b}"
+      />
+
+    </svg>
+  `
 }
+
+/* =========================================================
+   HOME
+========================================================= */
 
 function renderHome(){
 
-const e=document.getElementById('home');
+  const el=document.getElementById('home');
 
-const pct=Math.min(100,Math.round(state.completed.length/160*100));
+  const percent=Math.min(
+    100,
+    Math.round(
+      state.completed.length/160*100
+    )
+  );
 
-e.innerHTML=`
+  el.innerHTML=`
 
-<div class="hero">
+    <div class="hero">
 
-<div class="hero-card">
+      <div class="hero-card">
 
-<div class="hero-copy">
+        <div class="hero-copy">
 
-<div class="pill" style="background:#ffffff18;color:#fff">
-<i class="dot" style="background:#fff"></i>
-AVA POCKET • EDUCATION
-</div>
+          <div
+            class="pill"
+            style="background:#ffffff18;color:#fff"
+          >
+            <i
+              class="dot"
+              style="background:#fff"
+            ></i>
 
-<h2>Твой путь<br>в трейдинге.</h2>
+            AVA POCKET • EDUCATION
+          </div>
 
-<p>
-Не просто экран с кнопками. Это спокойное пространство, где обучение,
-практика и AVA Bot собраны в одной красивой системе.
-</p>
+          <h2>
+            Твой путь<br>
+            в трейдинге.
+          </h2>
 
-<div class="hero-actions">
+          <p>
+            Не просто экран с кнопками.
+            Это спокойное пространство, где
+            обучение, практика и AVA Bot
+            собраны в одной красивой системе.
+          </p>
 
-<button class="light ripple" onclick="navigate('bot')">
-Перейти к боту
-</button>
+          <div class="hero-actions">
 
-<button class="ghost ripple" onclick="navigate('education')">
-Перейти к обучению
-</button>
+            <button
+              class="light"
+              onclick="navigate('bot')"
+            >
+              Перейти к боту
+            </button>
 
-</div>
+            <button
+              class="ghost"
+              onclick="navigate('education')"
+            >
+              Перейти к обучению
+            </button>
 
-</div>
+          </div>
 
-<div class="hero-art">
-${makeArt('chart',0)}
-</div>
+        </div>
 
-</div>
+        <div class="hero-art">
+          ${makeArt('chart',0)}
+        </div>
 
-<div class="hero-side">
+      </div>
 
-<div class="stat-card">
+      <div class="hero-side">
 
-<div class="eyebrow">ТВОЙ ПРОГРЕСС</div>
+        <div class="stat-card">
 
-<div class="big">${pct}%</div>
+          <div class="eyebrow">
+            ТВОЙ ПРОГРЕСС
+          </div>
 
-<p>
-${state.completed.length} из 160 уроков завершено.
-Иди небольшими шагами — прогресс сохраняется.
-</p>
+          <div class="big">
+            ${percent}%
+          </div>
 
-<div class="progress-line">
-<i style="width:${pct}%"></i>
-</div>
+          <p>
+            ${state.completed.length}
+            из 160 уроков завершено.
+            Иди небольшими шагами —
+            прогресс сохраняется.
+          </p>
 
-</div>
+          <div class="progress-line">
+            <i style="width:${percent}%"></i>
+          </div>
 
-<div class="market-card">
+        </div>
 
-<div class="market-head">
+        <div class="market-card">
 
-<div class="eyebrow">MARKET ACTIVE</div>
+          <div class="market-head">
 
-<span class="pill">
-<i class="dot"></i>
-DEMO
-</span>
+            <div class="eyebrow">
+              MARKET ACTIVE
+            </div>
 
-</div>
+            <span class="pill">
+              <i class="dot"></i>
+              DEMO
+            </span>
 
-<div class="market-pair">EUR/USD</div>
+          </div>
 
-<div class="market-meta">
-<span>Учебный рынок</span>
-<b id="homePrice">1.0842</b>
-</div>
+          <div class="market-pair">
+            EUR/USD
+          </div>
 
-<div class="spark">
-${Array.from({length:12},(_,i)=>
-`<i style="height:${22+((i*17)%60)}%"></i>`
-).join('')}
-</div>
+          <div class="market-meta">
+            <span>Учебный рынок</span>
+            <b id="homePrice">1.0842</b>
+          </div>
 
-</div>
+          <div class="spark">
+            ${Array.from(
+              {length:12},
+              (_,i)=>`
+                <i
+                  style="
+                    height:${22+((i*17)%60)}%;
+                    animation-delay:${i*.08}s
+                  "
+                ></i>
+              `
+            ).join('')}
+          </div>
 
-</div>
-</div>
+        </div>
 
-<div class="section-head">
+      </div>
 
-<div>
-<h3>Путь трейдера</h3>
-<p>Четыре понятных этапа без перегруза</p>
-</div>
+    </div>
 
-</div>
+    <div class="section-head">
 
-<div class="path">
+      <div>
+        <h3>Путь трейдера</h3>
+        <p>
+          Четыре понятных этапа без перегруза
+        </p>
+      </div>
 
-${[
-['1','Старт','Разберись, как устроен рынок и цена.'],
-['2','База','Научись читать свечи, график и уровни.'],
-['3','Практика','Собирай сетапы и проверяй идеи.'],
-['4','Уверенность','Вырабатывай дисциплину и свою систему.']
-].map((x,i)=>
+    </div>
 
-`<div class="path-card">
+    <div class="path">
 
-<div class="n">${x[0]}</div>
-<h4>${x[1]}</h4>
-<p>${x[2]}</p>
+      ${[
+        ['1','Старт','Разберись, как устроен рынок и цена.'],
+        ['2','База','Научись читать свечи, график и уровни.'],
+        ['3','Практика','Собирай сетапы и проверяй идеи.'],
+        ['4','Уверенность','Вырабатывай дисциплину и свою систему.']
+      ].map((item,index)=>`
 
-${makeArt(i===1?'book':'bot',i)}
+        <div class="path-card">
 
-</div>`
+          <div class="n">${item[0]}</div>
 
-).join('')}
+          <h4>${item[1]}</h4>
 
-</div>
+          <p>${item[2]}</p>
 
-<div class="quick">
+          ${makeArt(
+            index===1?'book':'bot',
+            index
+          )}
 
-<div class="quick-card study">
+        </div>
 
-<div>
-<h4>Учёба</h4>
-<p>160 уроков, рисунки, примеры, практика и медленный XP.</p>
-<button onclick="navigate('education')">Открыть обучение</button>
-</div>
+      `).join('')}
 
-<div class="quick-art">
-${makeArt('book',2)}
-</div>
+    </div>
 
-</div>
+    <div class="quick">
 
-<div class="quick-card bot">
+      <div class="quick-card study">
 
-<div>
-<h4>AvaBot</h4>
-<p>Пары сверху, красивый робот ниже и учебный демо-сигнал.</p>
-<button onclick="navigate('bot')">Открыть AvaBot</button>
-</div>
+        <div>
+          <h4>Учёба</h4>
 
-<div class="quick-art">
-${makeArt('bot',1)}
-</div>
+          <p>
+            160 уроков, рисунки, примеры,
+            практика и медленный XP.
+          </p>
 
-</div>
+          <button onclick="navigate('education')">
+            Открыть обучение
+          </button>
+        </div>
 
-</div>
-`;
+        <div class="quick-art">
+          ${makeArt('book',2)}
+        </div>
 
-setInterval(()=>{
+      </div>
 
-const p=document.getElementById('homePrice');
+      <div class="quick-card bot">
 
-if(p)
-p.textContent=(1.0835+Math.random()*.002).toFixed(4);
+        <div>
+          <h4>AvaBot</h4>
 
-},2200);
+          <p>
+            Пары сверху, красивый робот ниже
+            и учебный демо-сигнал.
+          </p>
 
+          <button onclick="navigate('bot')">
+            Открыть AvaBot
+          </button>
+        </div>
+
+        <div class="quick-art">
+          ${makeArt('bot',1)}
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  clearInterval(window.priceTimer);
+
+  window.priceTimer=setInterval(()=>{
+
+    const price=document.getElementById('homePrice');
+
+    if(price){
+      price.textContent=(
+        1.0835+
+        Math.random()*.002
+      ).toFixed(4)
+    }
+
+  },2200)
 }
 
-function lessonData(mi,li){
+/* =========================================================
+   LESSON DATA
+========================================================= */
 
-const [mt,ms,topics]=modules[mi];
-const topic=topics[li];
+function lessonData(moduleIndex,lessonIndex){
 
-const mechanics=[
+  const module=modules[moduleIndex];
+  const topic=module[2][lessonIndex];
 
-`Разбери ${topic.toLowerCase()} через контекст цены, а не через одну кнопку или один показатель. Сначала посмотри, что происходило до текущего момента, затем отметь главное изменение и только после этого делай вывод.`,
+  const texts=[
+    `Разбери ${topic.toLowerCase()} через контекст цены, а не через одну кнопку или один показатель. Сначала посмотри, что происходило до текущего момента, затем отметь главное изменение и только после этого делай вывод.`,
 
-`В учебном сценарии ${topic.toLowerCase()} полезно рассматривать как часть последовательности: контекст → наблюдение → подтверждение → решение. Такой порядок помогает не реагировать на случайную свечу.`,
+    `В учебном сценарии ${topic.toLowerCase()} полезно рассматривать как часть последовательности: контекст → наблюдение → подтверждение → решение. Такой порядок помогает не реагировать на случайную свечу.`,
 
-`Главная задача урока — не запомнить термин, а научиться узнавать его на графике. Сравни несколько похожих ситуаций и обрати внимание, чем сильный сценарий отличается от слабого.`
+    `Главная задача урока — не запомнить термин, а научиться узнавать его на графике. Сравни несколько похожих ситуаций и обрати внимание, чем сильный сценарий отличается от слабого.`
+  ];
 
-];
+  return{
 
-return{
+    module:module[0],
+    title:topic,
 
-mi,
-li,
-module:mt,
-title:topic,
+    lead:
+      `${topic}: практический разбор внутри модуля «${module[0]}».`,
 
-lead:`${topic}: практический разбор внутри модуля «${mt}».`,
+    body:texts[lessonIndex%3],
 
-body:mechanics[li%3],
+    how:
+      `1. Открой график и выбери спокойный масштаб.
+       2. Найди участок, где проявляется ${topic.toLowerCase()}.
+       3. Опиши контекст одним предложением.
+       4. Отметь подтверждение и фактор, который отменит гипотезу.`,
 
-how:`1. Открой график и выбери спокойный масштаб. 2. Найди участок, где проявляется ${topic.toLowerCase()}. 3. Опиши контекст одним предложением. 4. Отметь подтверждение и фактор, который отменит твою гипотезу.`,
+    example:
+      `Пример: цена подходит к знакомой области,
+       появляется изменение поведения свечей,
+       а соседние факторы не противоречат сценарию.
+       Вместо мгновенной реакции сравни этот участок
+       с предыдущими ситуациями и проверь,
+       действительно ли условия совпадают.`,
 
-example:`Пример: цена подходит к знакомой области, появляется изменение поведения свечей, а соседние факторы не противоречат сценарию. Вместо мгновенной реакции сравни этот участок с двумя предыдущими и проверь, действительно ли условия совпадают.`,
+    mistakes:
+      `Не ищи сигнал только потому, что хочется войти.
+       Частая ошибка — вырывать ${topic.toLowerCase()}
+       из контекста, игнорировать движение рынка
+       и принимать единичное совпадение за систему.`,
 
-mistakes:`Не ищи сигнал только потому, что хочется войти. Частая ошибка — вырывать ${topic.toLowerCase()} из контекста, игнорировать движение рынка и принимать единичное совпадение за систему.`,
+    practice:
+      `Практика: найди 3 примера на графике.
+       Для каждого запиши контекст, наблюдение,
+       подтверждение и причину пропустить сценарий.`,
 
-practice:`Практика: найди 3 примера на графике. Для каждого запиши контекст, наблюдение, подтверждение и причину пропустить сценарий.`,
-
-tip:`Ava Tip: если не можешь объяснить идею простыми словами за 20 секунд — сначала разберись в контексте, а уже потом оценивай вход.`,
-
-xp:5
-
-};
-
+    tip:
+      `Ava Tip: если не можешь объяснить идею простыми словами
+       за 20 секунд — сначала разберись в контексте,
+       а уже потом оценивай вход.`
+  }
 }
+
+/* =========================================================
+   EDUCATION
+========================================================= */
 
 function renderEducation(){
 
-const e=document.getElementById('education');
+  const el=document.getElementById('education');
 
-const pct=Math.min(100,Math.round(state.completed.length/160*100));
+  const percent=Math.min(
+    100,
+    Math.round(state.completed.length/160*100)
+  );
 
-e.innerHTML=`
+  el.innerHTML=`
 
-<div class="education-page">
+    <div class="education-page">
 
-<div class="edu-hero">
+      <div class="edu-hero">
 
-<div class="edu-title">
+        <div class="edu-title">
 
-<div class="eyebrow">160 УРОКОВ • 16 МОДУЛЕЙ</div>
+          <div class="eyebrow">
+            160 УРОКОВ • 16 МОДУЛЕЙ
+          </div>
 
-<h2>Обучение,<br>которое хочется<br>открывать.</h2>
+          <h2>
+            Обучение,<br>
+            которое хочется<br>
+            открывать.
+          </h2>
 
-<p>
-Каждый урок — отдельная маленькая история:
-рисунок, объяснение, пример, типичная ошибка и практика.
-XP начисляется только один раз за действительно пройденный урок.
-</p>
+          <p>
+            Каждый урок — отдельная маленькая история:
+            рисунок, объяснение, пример, типичная ошибка
+            и практика. XP начисляется только один раз
+            за действительно пройденный урок.
+          </p>
 
-</div>
+        </div>
 
-<div class="book-card">
+        <div class="book-card">
 
-<div class="eyebrow">ПРОГРЕСС АКАДЕМИИ</div>
+          <div class="eyebrow">
+            ПРОГРЕСС АКАДЕМИИ
+          </div>
 
-<div style="font-size:32px;font-weight:1000;margin-top:8px">
-${state.completed.length}
-<span style="color:#b0a6b8;font-size:16px"> / 160</span>
-</div>
+          <div
+            style="
+              font-size:32px;
+              font-weight:1000;
+              margin-top:8px
+            "
+          >
+            ${state.completed.length}
 
-<div class="progress-line">
-<i style="width:${pct}%"></i>
-</div>
+            <span
+              style="
+                color:#b0a6b8;
+                font-size:16px
+              "
+            >
+              / 160
+            </span>
+          </div>
 
-<div style="font-size:9px;color:#847a87">
-Уровень ${state.level} · ${state.xp} XP
-</div>
+          <div class="progress-line">
+            <i style="width:${percent}%"></i>
+          </div>
 
-</div>
+          <div
+            style="
+              font-size:9px;
+              color:#847a87
+            "
+          >
+            Уровень ${state.level} ·
+            ${state.xp} XP
+          </div>
 
-</div>
+        </div>
 
-<div class="edu-art-strip">
+      </div>
 
-<div class="art-tile">
-<strong>Свечи</strong>
-${makeArt('chart',0)}
-</div>
+      <div class="edu-art-strip">
 
-<div class="art-tile">
-<strong>Структура</strong>
-${makeArt('chart',1)}
-</div>
+        <div class="art-tile">
+          <strong>Свечи</strong>
+          ${makeArt('chart',0)}
+        </div>
 
-<div class="art-tile">
-<strong>Индикаторы</strong>
-${makeArt('book',2)}
-</div>
+        <div class="art-tile">
+          <strong>Структура</strong>
+          ${makeArt('chart',1)}
+        </div>
 
-<div class="art-tile">
-<strong>AVA Practice</strong>
-${makeArt('bot',3)}
-</div>
+        <div class="art-tile">
+          <strong>Индикаторы</strong>
+          ${makeArt('book',2)}
+        </div>
 
-</div>
+        <div class="art-tile">
+          <strong>AVA Practice</strong>
+          ${makeArt('bot',3)}
+        </div>
 
-<div class="edu-toolbar">
+      </div>
 
-<input id="eduSearch" class="search" placeholder="Поиск урока или модуля…">
+      <div class="edu-toolbar">
 
-<select id="moduleFilter" class="module-select">
+        <input
+          id="eduSearch"
+          class="search"
+          placeholder="Поиск урока или модуля…"
+        >
 
-<option value="all">Все модули</option>
+        <select
+          id="moduleFilter"
+          class="module-select"
+        >
+          <option value="all">
+            Все модули
+          </option>
 
-${modules.map((m,i)=>
-`<option value="${i}">${i+1}. ${m[0]}</option>`
-).join('')}
+          ${modules.map(
+            (module,index)=>`
+              <option value="${index}">
+                ${index+1}. ${module[0]}
+              </option>
+            `
+          ).join('')}
 
-</select>
+        </select>
 
-</div>
+      </div>
 
-<div class="modules" id="modulesGrid"></div>
+      <div
+        class="modules"
+        id="modulesGrid"
+      ></div>
 
-</div>
-`;
+    </div>
+  `;
 
-document.getElementById('eduSearch').addEventListener('input',filterEducation);
-document.getElementById('moduleFilter').addEventListener('change',filterEducation);
+  document
+    .getElementById('eduSearch')
+    .addEventListener(
+      'input',
+      filterEducation
+    );
 
-filterEducation();
+  document
+    .getElementById('moduleFilter')
+    .addEventListener(
+      'change',
+      filterEducation
+    );
 
+  filterEducation()
 }
 
 function filterEducation(){
 
-const q=(document.getElementById('eduSearch')?.value||'').toLowerCase();
-const f=document.getElementById('moduleFilter')?.value||'all';
+  const search=(
+    document.getElementById('eduSearch')?.value||''
+  ).toLowerCase();
 
-const grid=document.getElementById('modulesGrid');
+  const filter=
+    document.getElementById('moduleFilter')?.value||'all';
 
-grid.innerHTML='';
+  const grid=document.getElementById('modulesGrid');
 
-modules.forEach((m,mi)=>{
+  if(!grid)return;
 
-if(f!=='all'&&+f!==mi)return;
+  grid.innerHTML='';
 
-const topics=m[2];
+  modules.forEach((module,moduleIndex)=>{
 
-const visible=topics
-.map((t,li)=>({t,li}))
-.filter(x=>(m[0]+' '+x.t).toLowerCase().includes(q));
+    if(
+      filter!=='all' &&
+      Number(filter)!==moduleIndex
+    )return;
 
-if(!visible.length)return;
+    const visible=module[2]
+      .map((title,index)=>({title,index}))
+      .filter(item=>
+        (
+          module[0]+' '+item.title
+        )
+        .toLowerCase()
+        .includes(search)
+      );
 
-const done=topics.filter((_,li)=>
-state.completed.includes(mi*10+li)
-).length;
+    if(!visible.length)return;
 
-const c=document.createElement('article');
+    const done=module[2]
+      .filter(
+        (_,lessonIndex)=>
+          state.completed.includes(
+            moduleIndex*10+lessonIndex
+          )
+      ).length;
 
-c.className='module-card';
+    const card=document.createElement('article');
 
-c.innerHTML=`
+    card.className='module-card';
 
-<div class="module-art">
-${makeArt(mi%3===0?'chart':mi%3===1?'book':'bot',mi)}
-</div>
+    card.innerHTML=`
 
-<div class="module-top">
+      <div class="module-art">
+        ${makeArt(
+          moduleIndex%3===0
+            ?'chart'
+            :moduleIndex%3===1
+              ?'book'
+              :'bot',
+          moduleIndex
+        )}
+      </div>
 
-<div>
+      <div class="module-top">
 
-<div class="eyebrow">
-МОДУЛЬ ${String(mi+1).padStart(2,'0')}
-</div>
+        <div>
 
-<h3>${esc(m[0])}</h3>
+          <div class="eyebrow">
+            МОДУЛЬ
+            ${String(moduleIndex+1).padStart(2,'0')}
+          </div>
 
-<p>${esc(m[1])}</p>
+          <h3>
+            ${esc(module[0])}
+          </h3>
 
-</div>
+          <p>
+            ${esc(module[1])}
+          </p>
 
-<div class="module-badge">
-${done}/10
-</div>
+        </div>
 
-</div>
+        <div class="module-badge">
+          ${done}/10
+        </div>
 
-<div class="lesson-list">
+      </div>
 
-${visible.map(({t,li})=>{
+      <div class="lesson-list">
 
-const id=mi*10+li;
-const d=state.completed.includes(id);
+        ${visible.map(item=>{
 
-return`
+          const lessonId=
+            moduleIndex*10+
+            item.index;
 
-<button class="lesson-row ${d?'done':''}" onclick="openLesson(${id})">
+          const completed=
+            state.completed.includes(
+              lessonId
+            );
 
-<i class="lesson-no">${li+1}</i>
+          return`
 
-<span>${esc(t)}</span>
+            <button
+              class="lesson-row ${completed?'done':''}"
+              onclick="openLesson(${lessonId})"
+            >
 
-<small>${d?'✓ +5 XP':'5 XP'}</small>
+              <i class="lesson-no">
+                ${item.index+1}
+              </i>
 
-</button>
-`;
+              <span>
+                ${esc(item.title)}
+              </span>
 
-}).join('')}
+              <small>
+                ${
+                  completed
+                    ?'✓ +5 XP'
+                    :'5 XP'
+                }
+              </small>
 
-</div>
+            </button>
+          `
 
-`;
+        }).join('')}
 
-grid.appendChild(c);
+      </div>
+    `;
 
-});
+    grid.appendChild(card);
 
+  })
 }
+
+/* =========================================================
+   LESSON READER
+========================================================= */
 
 let currentLesson=0;
 
 function openLesson(id){
 
-currentLesson=id;
+  currentLesson=id;
 
-const mi=Math.floor(id/10);
-const li=id%10;
-const d=lessonData(mi,li);
+  const moduleIndex=
+    Math.floor(id/10);
 
-document.getElementById('readerNo').textContent=`${id+1}/160`;
-document.getElementById('readerModule').textContent=d.module;
-document.getElementById('readerTitle').textContent=d.title;
-document.getElementById('readerLead').textContent=d.lead+' '+d.body;
+  const lessonIndex=id%10;
 
-document.getElementById('readerArt').innerHTML=
-makeArt(mi%3===0?'chart':mi%3===1?'book':'bot',mi);
+  const data=
+    lessonData(
+      moduleIndex,
+      lessonIndex
+    );
 
-document.getElementById('readerGrid').innerHTML=
+  document.getElementById('readerNo')
+    .textContent=
+      `${id+1}/160`;
 
-[
-['Как разобраться',d.how],
-['Пример',d.example],
-['Типичные ошибки',d.mistakes],
-['Практика',d.practice],
-['Ava Tip',d.tip]
-]
+  document.getElementById('readerModule')
+    .textContent=data.module;
 
-.map(x=>
-`<div class="lesson-box">
-<h4>${x[0]}</h4>
-<p>${x[1]}</p>
-</div>`
-).join('')
+  document.getElementById('readerTitle')
+    .textContent=data.title;
 
-+
+  document.getElementById('readerLead')
+    .textContent=
+      data.lead+' '+data.body;
 
-`<div class="lesson-box">
-<h4>Термины урока</h4>
-<p>${d.module} · ${d.title} · контекст · подтверждение · практика</p>
-</div>`;
+  document.getElementById('readerArt')
+    .innerHTML=
+      makeArt(
+        moduleIndex%3===0
+          ?'chart'
+          :moduleIndex%3===1
+            ?'book'
+            :'bot',
+        moduleIndex
+      );
 
-document.getElementById('readerComplete').textContent=
-state.completed.includes(id)
-?'Урок уже пройден ✓'
-:'Завершить урок · +5 XP';
+  document.getElementById('readerGrid')
+    .innerHTML=[
 
-document.getElementById('readerComplete').disabled=
-state.completed.includes(id);
+      ['Как разобраться',data.how],
+      ['Пример',data.example],
+      ['Типичные ошибки',data.mistakes],
+      ['Практика',data.practice],
+      ['Ava Tip',data.tip],
+      [
+        'Термины урока',
+        `${data.module} · ${data.title} · контекст · подтверждение · практика`
+      ]
 
-document.getElementById('readerBookmark').textContent=
-state.bookmarks.includes(id)
-?'★ В закладках'
-:'☆ В закладки';
+    ].map(item=>`
 
-document.getElementById('reader').classList.add('show');
+      <div class="lesson-box">
 
+        <h4>${item[0]}</h4>
+
+        <p>${item[1]}</p>
+
+      </div>
+
+    `).join('');
+
+  const complete=
+    document.getElementById('readerComplete');
+
+  const already=
+    state.completed.includes(id);
+
+  complete.textContent=
+    already
+      ?'Урок уже пройден ✓'
+      :'Завершить урок · +5 XP';
+
+  complete.disabled=already;
+
+  document.getElementById('readerBookmark')
+    .textContent=
+      state.bookmarks.includes(id)
+        ?'★ В закладках'
+        :'☆ В закладки';
+
+  document.getElementById('reader')
+    .classList.add('show')
 }
 
 function completeLesson(){
 
-if(state.completed.includes(currentLesson))return;
+  if(
+    state.completed.includes(
+      currentLesson
+    )
+  )return;
 
-state.completed.push(currentLesson);
-state.xp+=5;
-state.level=1+Math.floor(state.xp/50);
+  state.completed.push(
+    currentLesson
+  );
 
-save();
+  state.xp+=5;
 
-document.getElementById('readerComplete').textContent='Урок уже пройден ✓';
-document.getElementById('readerComplete').disabled=true;
+  state.level=
+    1+
+    Math.floor(
+      state.xp/50
+    );
 
-document.getElementById('xpTop').textContent=state.xp;
+  save();
 
-toast('Урок завершён · +5 XP');
+  document.getElementById('readerComplete')
+    .textContent=
+      'Урок уже пройден ✓';
 
-renderEducation();
+  document.getElementById('readerComplete')
+    .disabled=true;
 
+  updateSide();
+
+  toast('Урок завершён · +5 XP');
+
+  renderEducation()
 }
 
 function toggleBookmark(){
 
-const i=state.bookmarks.indexOf(currentLesson);
+  const index=
+    state.bookmarks.indexOf(
+      currentLesson
+    );
 
-if(i>=0)
-state.bookmarks.splice(i,1);
-else
-state.bookmarks.push(currentLesson);
+  if(index>=0){
+    state.bookmarks.splice(
+      index,
+      1
+    )
+  }else{
+    state.bookmarks.push(
+      currentLesson
+    )
+  }
 
-save();
+  save();
 
-document.getElementById('readerBookmark').textContent=
-state.bookmarks.includes(currentLesson)
-?'★ В закладках'
-:'☆ В закладки';
+  document.getElementById('readerBookmark')
+    .textContent=
+      state.bookmarks.includes(currentLesson)
+        ?'★ В закладках'
+        :'☆ В закладки';
 
+  toast(
+    state.bookmarks.includes(currentLesson)
+      ?'Добавлено в закладки'
+      :'Удалено из закладок'
+  )
 }
 
-function renderBot(){
-
-const e=document.getElementById('bot');
-
-e.innerHTML=`
-
-<div class="bot-page">
-
-<div class="bot-top">
-
-<div class="bot-controls">
-
-<div>
-
-<div class="control-label">Рынок</div>
-
-<div class="segmented">
-
-<button class="market-btn active" data-market="Биржа">
-Биржа
-</button>
-
-<button class="market-btn" data-market="OTC">
-OTC
-</button>
-
-</div>
-
-</div>
-
-<div>
-
-<div class="control-label">Валютная пара</div>
-
-<select class="pair-select" id="pairSelect">
-
-${pairs.map(p=>`<option>${p}</option>`).join('')}
-
-</select>
-
-</div>
-
-<div>
-
-<div class="control-label">Экспирация</div>
-
-<div class="duration">
-
-${[1,2,3,5,10,15].map(x=>
-
-`<button data-duration="${x}" class="${x===1?'active':''}">
-${x} мин
-</button>`
-
-).join('')}
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="bot-stage" id="botStage">
-
-<div class="bot-copy">
-
-<span class="tag">
-AVA BOT · DEMO ENGINE
-</span>
-
-<h2>
-Сначала<br>пара.
-</h2>
-
-<p>
-Выбери инструмент и время сверху.
-Робот анализирует учебный сценарий и покажет направление,
-уверенность и набор факторов.
-Это демонстрация, а не прогноз реального рынка.
-</p>
-
-<button class="generate ripple" id="generateBtn">
-✦ Сгенерировать сигнал
-</button>
-
-<div class="signal-result" id="signalResult"></div>
-
-</div>
-
-<div class="robot-wrap">
-
-<div class="robot">
-
-<div class="robot-ring"></div>
-<div class="scan"></div>
-
-<div class="robot-core">
-
-<div class="antenna"></div>
-
-<div class="robot-face">
-
-<div class="eyes">
-<i class="eye"></i>
-<i class="eye"></i>
-</div>
-
-<div class="mouth"></div>
-
-</div>
-
-</div>
-
-<div class="bot-status">
-● AVA CORE READY
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-`;
-
-document.querySelectorAll('.market-btn').forEach(b=>
-b.onclick=()=>{
-
-document.querySelectorAll('.market-btn')
-.forEach(x=>x.classList.remove('active'));
-
-b.classList.add('active');
-
-});
-
-document.querySelectorAll('.duration button').forEach(b=>
-b.onclick=()=>{
-
-document.querySelectorAll('.duration button')
-.forEach(x=>x.classList.remove('active'));
-
-b.classList.add('active');
-
-});
-
-document.getElementById('generateBtn').onclick=generateSignal;
-
-}
+/* =========================================================
+   BOT
+========================================================= */
 
 let countdownTimer=null;
 
+function renderBot(){
+
+  const el=document.getElementById('bot');
+
+  el.innerHTML=`
+
+    <div class="bot-page">
+
+      <div class="bot-top">
+
+        <div class="bot-controls">
+
+          <div>
+
+            <div class="control-label">
+              Рынок
+            </div>
+
+            <div class="segmented">
+
+              <button
+                class="market-btn active"
+                data-market="Биржа"
+              >
+                Биржа
+              </button>
+
+              <button
+                class="market-btn"
+                data-market="OTC"
+              >
+                OTC
+              </button>
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <div class="control-label">
+              Валютная пара
+            </div>
+
+            <select
+              class="pair-select"
+              id="pairSelect"
+            >
+
+              ${pairs.map(
+                pair=>`
+                  <option>${pair}</option>
+                `
+              ).join('')}
+
+            </select>
+
+          </div>
+
+          <div>
+
+            <div class="control-label">
+              Экспирация
+            </div>
+
+            <div class="duration">
+
+              ${[1,2,3,5,10,15].map(
+                minutes=>`
+
+                  <button
+                    data-duration="${minutes}"
+                    class="${minutes===1?'active':''}"
+                  >
+                    ${minutes} мин
+                  </button>
+
+                `
+              ).join('')}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+        class="bot-stage"
+        id="botStage"
+      >
+
+        <div class="bot-copy">
+
+          <span class="tag">
+            AVA BOT · DEMO ENGINE
+          </span>
+
+          <h2>
+            Сначала<br>
+            пара.
+          </h2>
+
+          <p>
+            Выбери инструмент и время сверху.
+            Робот анализирует учебный сценарий
+            и покажет направление, уверенность
+            и набор факторов.
+            Это демонстрация, а не прогноз
+            реального рынка.
+          </p>
+
+          <button
+            class="generate"
+            id="generateBtn"
+          >
+            ✦ Сгенерировать сигнал
+          </button>
+
+          <div
+            class="signal-result"
+            id="signalResult"
+          ></div>
+
+        </div>
+
+        <div class="robot-wrap">
+
+          <div class="robot">
+
+            <div class="robot-ring"></div>
+
+            <div class="scan"></div>
+
+            <div class="robot-core">
+
+              <div class="antenna"></div>
+
+              <div class="robot-face">
+
+                <div class="eyes">
+                  <i class="eye"></i>
+                  <i class="eye"></i>
+                </div>
+
+                <div class="mouth"></div>
+
+              </div>
+
+            </div>
+
+            <div class="bot-status">
+              ● AVA CORE READY
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  document
+    .querySelectorAll('.market-btn')
+    .forEach(button=>{
+
+      button.onclick=()=>{
+
+        document
+          .querySelectorAll('.market-btn')
+          .forEach(
+            item=>item.classList.remove('active')
+          );
+
+        button.classList.add('active');
+
+        toast(
+          button.dataset.market==='OTC'
+            ?'OTC режим выбран'
+            :'Биржевой режим выбран'
+        )
+      }
+
+    });
+
+  document
+    .querySelectorAll('.duration button')
+    .forEach(button=>{
+
+      button.onclick=()=>{
+
+        document
+          .querySelectorAll('.duration button')
+          .forEach(
+            item=>item.classList.remove('active')
+          );
+
+        button.classList.add('active')
+      }
+
+    });
+
+  document.getElementById('generateBtn')
+    .onclick=generateSignal
+}
+
 function generateSignal(){
 
-const stage=document.getElementById('botStage');
-const res=document.getElementById('signalResult');
+  const stage=
+    document.getElementById('botStage');
 
-const pair=document.getElementById('pairSelect').value;
+  const result=
+    document.getElementById('signalResult');
 
-const dur=
-+document.querySelector('.duration button.active').dataset.duration;
+  const button=
+    document.getElementById('generateBtn');
 
-stage.classList.add('scanning');
+  const pair=
+    document.getElementById('pairSelect')
+      .value;
 
-res.classList.remove('show');
+  const duration=
+    Number(
+      document.querySelector(
+        '.duration button.active'
+      ).dataset.duration
+    );
 
-document.getElementById('generateBtn').disabled=true;
-document.getElementById('generateBtn').textContent='Ava анализирует…';
+  stage.classList.add('scanning');
 
-setTimeout(()=>{
+  result.classList.remove('show');
 
-const up=Math.random()<.6;
-const conf=72+Math.floor(Math.random()*22);
-const rsi=(42+Math.random()*25).toFixed(1);
-const ema=up?'UP':'DOWN';
-const macd=(up?'+':'-')+(0.08+Math.random()*.45).toFixed(2);
-const mom=(up?'+':'-')+(20+Math.floor(Math.random()*55));
+  button.disabled=true;
 
-const expiry=Date.now()+dur*60000;
+  button.textContent=
+    'Ava анализирует…';
 
-state.signals++;
-save();
+  setTimeout(()=>{
 
-stage.classList.remove('scanning');
+    const up=
+      Math.random()<.58;
 
-res.className='signal-result show';
+    const confidence=
+      72+
+      Math.floor(
+        Math.random()*22
+      );
 
-res.innerHTML=`
+    const rsi=
+      (
+        42+
+        Math.random()*25
+      ).toFixed(1);
 
-<div class="result-main">
+    const ema=
+      up?'UP':'DOWN';
 
-<div>
+    const macd=
+      (up?'+':'-')+
+      (
+        .08+
+        Math.random()*.45
+      ).toFixed(2);
 
-<div class="eyebrow">
-${pair} · УЧЕБНЫЙ СЦЕНАРИЙ
-</div>
+    const momentum=
+      (up?'+':'-')+
+      (
+        20+
+        Math.floor(
+          Math.random()*55
+        )
+      );
 
-<div class="direction ${up?'up':'down'}">
-${up?'↑ UP':'↓ DOWN'}
-</div>
+    const expiry=
+      Date.now()+
+      duration*60000;
 
-</div>
+    state.signals++;
 
-<div class="confidence">
-${conf}%<br>
-<small style="color:#8b8190">
-уверенность
-</small>
-</div>
+    save();
 
-</div>
+    stage.classList.remove('scanning');
 
-<div class="metrics">
+    result.className=
+      'signal-result show';
 
-<div class="metric">
-<small>RSI</small>
-<b>${rsi}</b>
-</div>
+    result.innerHTML=`
 
-<div class="metric">
-<small>EMA</small>
-<b>${ema}</b>
-</div>
+      <div class="result-main">
 
-<div class="metric">
-<small>MACD</small>
-<b>${macd}</b>
-</div>
+        <div>
 
-<div class="metric">
-<small>MOMENTUM</small>
-<b>${mom}</b>
-</div>
+          <div class="eyebrow">
+            ${esc(pair)}
+            · УЧЕБНЫЙ СЦЕНАРИЙ
+          </div>
 
-</div>
+          <div
+            class="direction ${up?'up':'down'}"
+          >
+            ${up?'↑ UP':'↓ DOWN'}
+          </div>
 
-<div class="countdown" id="countdown">
-Экспирация через ${dur}:00
-</div>
+        </div>
 
-<div class="demo-note">
-ДЕМО-СИМУЛЯЦИЯ · не финансовая рекомендация.
-Реальный feed не подключён.
-</div>
+        <div class="confidence">
+          ${confidence}%
 
-`;
+          <br>
 
-document.getElementById('generateBtn').disabled=false;
-document.getElementById('generateBtn').textContent='✦ Сгенерировать снова';
+          <small
+            style="color:#8b8190"
+          >
+            уверенность
+          </small>
+        </div>
 
-res.scrollIntoView({
-behavior:'smooth',
-block:'center'
-});
+      </div>
 
-clearInterval(countdownTimer);
+      <div class="metrics">
 
-countdownTimer=setInterval(()=>{
+        <div class="metric">
+          <small>RSI</small>
+          <b>${rsi}</b>
+        </div>
 
-const left=Math.max(0,expiry-Date.now());
+        <div class="metric">
+          <small>EMA</small>
+          <b>${ema}</b>
+        </div>
 
-const c=document.getElementById('countdown');
+        <div class="metric">
+          <small>MACD</small>
+          <b>${macd}</b>
+        </div>
 
-if(!c){
-clearInterval(countdownTimer);
-return;
+        <div class="metric">
+          <small>MOMENTUM</small>
+          <b>${momentum}</b>
+        </div>
+
+      </div>
+
+      <div
+        class="countdown"
+        id="countdown"
+      >
+        Экспирация через
+        ${duration}:00
+      </div>
+
+      <div class="demo-note">
+        ДЕМО-СИМУЛЯЦИЯ ·
+        не финансовая рекомендация.
+        Реальный feed не подключён.
+      </div>
+    `;
+
+    button.disabled=false;
+
+    button.textContent=
+      '✦ Сгенерировать снова';
+
+    result.scrollIntoView({
+      behavior:'smooth',
+      block:'center'
+    });
+
+    clearInterval(
+      countdownTimer
+    );
+
+    countdownTimer=
+      setInterval(()=>{
+
+        const left=
+          Math.max(
+            0,
+            expiry-Date.now()
+          );
+
+        const counter=
+          document.getElementById(
+            'countdown'
+          );
+
+        if(!counter){
+
+          clearInterval(
+            countdownTimer
+          );
+
+          return
+        }
+
+        if(left<=0){
+
+          clearInterval(
+            countdownTimer
+          );
+
+          counter.innerHTML=`
+            <b style="color:#6d28d9">
+              Сценарий завершён ·
+              открой разбор урока
+            </b>
+          `;
+
+          return
+        }
+
+        const minutes=
+          Math.floor(
+            left/60000
+          );
+
+        const seconds=
+          Math.floor(
+            left/1000
+          )%60;
+
+        counter.textContent=
+          `Экспирация через ${minutes}:${
+            String(seconds).padStart(2,'0')
+          }`;
+
+      },250)
+
+  },1300)
 }
 
-if(left<=0){
-
-clearInterval(countdownTimer);
-
-c.innerHTML=
-'<b style="color:#6d28d9">Сценарий завершён · открой разбор урока</b>';
-
-return;
-
-}
-
-const mm=Math.floor(left/60000);
-const ss=Math.floor(left/1000)%60;
-
-c.textContent=
-`Экспирация через ${mm}:${String(ss).padStart(2,'0')}`;
-
-},250);
-
-},1300);
-
-}
+/* =========================================================
+   CONTACT
+========================================================= */
 
 function telegramIcon(){
 
-return `<svg viewBox="0 0 72 72" fill="none">
+  return`
+    <svg
+      viewBox="0 0 72 72"
+      fill="none"
+    >
 
-<circle cx="36" cy="36" r="34" fill="currentColor" opacity=".14"/>
+      <circle
+        cx="36"
+        cy="36"
+        r="34"
+        fill="currentColor"
+        opacity=".14"
+      />
 
-<path d="m19 35 35-14-9 36-10-14-10-4-6-4Z" fill="currentColor"/>
+      <path
+        d="m19 35 35-14-9 36-10-14-10-4-6-4Z"
+        fill="currentColor"
+      />
 
-<path d="m35 43 3-12 11-7"
-stroke="white"
-stroke-width="3"
-stroke-linecap="round"
-stroke-linejoin="round"/>
+      <path
+        d="m35 43 3-12 11-7"
+        stroke="white"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
 
-</svg>`;
-
+    </svg>
+  `
 }
 
 function renderContact(){
 
-document.getElementById('contact').innerHTML=`
+  document.getElementById('contact')
+    .innerHTML=`
 
-<div class="contact-page">
+      <div class="contact-page">
 
-<div class="contact-hero">
+        <div class="contact-hero">
 
-<div class="eyebrow" style="color:#ddd6fe">
-AVA COMMUNITY
-</div>
+          <div
+            class="eyebrow"
+            style="color:#ddd6fe"
+          >
+            AVA COMMUNITY
+          </div>
 
-<h2>Связь со мной.</h2>
+          <h2>
+            Связь со мной.
+          </h2>
 
-<p>
-Здесь всё нужное собрано аккуратно:
-Telegram-канал, личное сообщение и обновления академии.
-Никаких скучных кнопок — каждая карточка со своей иллюстрацией.
-</p>
+          <p>
+            Здесь всё нужное собрано аккуратно:
+            Telegram-канал, личное сообщение
+            и обновления академии.
+            Никаких скучных кнопок —
+            просто нажми на нужную карточку.
+          </p>
 
-<svg viewBox="0 0 250 180" fill="none">
+          <svg
+            viewBox="0 0 250 180"
+            fill="none"
+          >
 
-<circle cx="135" cy="90" r="58" fill="#ffffff12"/>
+            <circle
+              cx="135"
+              cy="90"
+              r="58"
+              fill="#ffffff12"
+            />
 
-<path d="m75 88 105-43-27 94-31-40-31-11-16 0Z"
-fill="#fff" opacity=".92"/>
+            <path
+              d="m75 88 105-43-27 94-31-40-31-11-16 0Z"
+              fill="#fff"
+              opacity=".92"
+            />
 
-<path d="m122 99 8-33 32-18"
-stroke="#7c3aed"
-stroke-width="5"
-stroke-linecap="round"
-stroke-linejoin="round"/>
+            <path
+              d="m122 99 8-33 32-18"
+              stroke="#7c3aed"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
 
-</svg>
+          </svg>
 
-</div>
+        </div>
 
-<div class="contact-grid">
+        <div class="contact-grid">
 
-<article class="contact-card telegram">
+          <article
+            class="contact-card telegram"
+            data-link="https://t.me/+D1kxbrvyGSViZWFi"
+          >
 
-<div class="contact-icon">
-${telegramIcon()}
-</div>
+            <div class="contact-icon">
+              ${telegramIcon()}
+            </div>
 
-<h3>Telegram-канал</h3>
+            <h3>
+              Telegram-канал
+            </h3>
 
-<p>
-Новости, материалы, обновления AVA ACADEMY
-и полезные публикации.
-</p>
+            <p>
+              Новости, материалы, обновления
+              AVA ACADEMY и полезные публикации.
+            </p>
 
-<a href="https://t.me/+D1kxbrvyGSViZWFi"
-target="_blank"
-rel="noopener">
-Открыть канал ↗
-</a>
+            <div class="contact-open">
+              Нажми, чтобы открыть ↗
+            </div>
 
-</article>
+          </article>
 
-<article class="contact-card write">
+          <article
+            class="contact-card write"
+            data-link="https://t.me/m/56bsIaLqZjky"
+          >
 
-<div class="contact-icon">
+            <div class="contact-icon">
 
-<svg viewBox="0 0 72 72" fill="none">
+              <svg
+                viewBox="0 0 72 72"
+                fill="none"
+              >
 
-<path d="M19 20h34a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8H39l-10 8v-8h-10a8 8 0 0 1-8-8V28a8 8 0 0 1 8-8Z"
-stroke="currentColor"
-stroke-width="4"/>
+                <path
+                  d="
+                    M19 20h34
+                    a8 8 0 0 1 8 8v16
+                    a8 8 0 0 1-8 8H39
+                    l-10 8v-8H19
+                    a8 8 0 0 1-8-8V28
+                    a8 8 0 0 1 8-8Z
+                  "
+                  stroke="currentColor"
+                  stroke-width="4"
+                />
 
-<path d="m25 38 8 7 14-15"
-stroke="currentColor"
-stroke-width="4"
-stroke-linecap="round"
-stroke-linejoin="round"/>
+                <path
+                  d="m25 38 8 7 14-15"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
 
-</svg>
+              </svg>
 
-</div>
+            </div>
 
-<h3>Написать мне</h3>
+            <h3>
+              Написать мне
+            </h3>
 
-<p>
-Личный Telegram-контакт для вопросов,
-предложений и обратной связи.
-</p>
+            <p>
+              Личный Telegram-контакт для вопросов,
+              предложений и обратной связи.
+            </p>
 
-<a href="https://t.me/m/56bsIaLqZjky"
-target="_blank"
-rel="noopener">
-Написать ↗
-</a>
+            <div class="contact-open">
+              Нажми, чтобы написать ↗
+            </div>
 
-</article>
+          </article>
 
-<article class="contact-card update">
+          <article
+            class="contact-card update"
+            data-link="https://t.me/+D1kxbrvyGSViZWFi"
+          >
 
-<div class="contact-icon">
+            <div class="contact-icon">
 
-<svg viewBox="0 0 72 72" fill="none">
+              <svg
+                viewBox="0 0 72 72"
+                fill="none"
+              >
 
-<path d="M36 12a24 24 0 1 0 23 29"
-stroke="currentColor"
-stroke-width="5"
-stroke-linecap="round"/>
+                <path
+                  d="M36 12a24 24 0 1 0 23 29"
+                  stroke="currentColor"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                />
 
-<path d="M58 13v20H38"
-stroke="currentColor"
-stroke-width="5"
-stroke-linecap="round"
-stroke-linejoin="round"/>
+                <path
+                  d="M58 13v20H38"
+                  stroke="currentColor"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
 
-<path d="M24 36c2 8 9 12 17 11"
-stroke="currentColor"
-stroke-width="4"
-stroke-linecap="round"/>
+                <path
+                  d="M24 36c2 8 9 12 17 11"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                />
 
-</svg>
+              </svg>
 
-</div>
+            </div>
 
-<h3>Обновления</h3>
+            <h3>
+              Обновления
+            </h3>
 
-<p>
-Следи за новыми версиями академии
-и изменениями прямо в Telegram.
-</p>
+            <p>
+              Следи за новыми версиями академии
+              и изменениями прямо в Telegram.
+            </p>
 
-<a href="https://t.me/+D1kxbrvyGSViZWFi"
-target="_blank"
-rel="noopener">
-Смотреть ↗
-</a>
+            <div class="contact-open">
+              Нажми, чтобы открыть ↗
+            </div>
 
-</article>
+          </article>
 
-</div>
+        </div>
 
-</div>
-`;
+      </div>
+    `;
 
+  document
+    .querySelectorAll('.contact-card')
+    .forEach(card=>{
+
+      card.setAttribute(
+        'role',
+        'link'
+      );
+
+      card.setAttribute(
+        'tabindex',
+        '0'
+      );
+
+      const open=()=>{
+
+        const url=card.dataset.link;
+
+        if(url){
+          window.open(
+            url,
+            '_blank',
+            'noopener,noreferrer'
+          )
+        }
+
+      };
+
+      card.onclick=open;
+
+      card.onkeydown=event=>{
+
+        if(
+          event.key==='Enter'||
+          event.key===' '
+        ){
+          event.preventDefault();
+          open()
+        }
+
+      };
+
+    })
 }
 
-function avatarMarkup(cls='avatar'){
+/* =========================================================
+   PROFILE
+========================================================= */
 
-return state.avatar
-?`<div class="${cls}">
-<img src="${state.avatar}" alt="Аватар">
-</div>`
-:`<div class="${cls}">${esc(initials())}</div>`;
+function avatarMarkup(){
 
+  if(state.avatar){
+
+    return`
+      <div class="big-avatar">
+        <img
+          src="${state.avatar}"
+          alt="Аватар"
+        >
+      </div>
+    `
+  }
+
+  return`
+    <div class="big-avatar">
+      ${esc(initials())}
+    </div>
+  `
 }
 
 function renderProfile(){
 
-document.getElementById('profile').innerHTML=`
+  const el=document.getElementById('profile');
 
-<div class="profile-grid">
+  el.innerHTML=`
 
-<div class="profile-card">
+    <div class="profile-grid">
 
-<div class="profile-main">
+      <div class="profile-card">
 
-${avatarMarkup('big-avatar')}
+        <div class="profile-main">
 
-<div>
+          ${avatarMarkup()}
 
-<div class="profile-name">
-${esc(state.name||'Трейдер')}
-</div>
+          <div>
 
-<div class="profile-nick">
-${esc(state.username||'@ava')}
-</div>
+            <div class="profile-name">
+              ${esc(state.name||'Трейдер')}
+            </div>
 
-</div>
+            <div class="profile-nick">
+              ${esc(state.username||'@ava')}
+            </div>
 
-</div>
+          </div>
 
-<div class="profile-actions">
+        </div>
 
-<button id="changeAvatar">
-Изменить фото
-</button>
+        <div class="profile-actions">
 
-<button class="danger" id="removeAvatar">
-Удалить фото
-</button>
+          <button id="changeAvatar">
+            Изменить фото
+          </button>
 
-</div>
+          <button
+            class="danger"
+            id="removeAvatar"
+          >
+            Удалить фото
+          </button>
 
-<div class="stats">
+        </div>
 
-<div class="stat-mini">
-<small>XP</small>
-<b>${state.xp}</b>
-</div>
+        <div class="stats">
 
-<div class="stat-mini">
-<small>УРОВЕНЬ</small>
-<b>${state.level}</b>
-</div>
+          <div class="stat-mini">
+            <small>XP</small>
+            <b>${state.xp}</b>
+          </div>
 
-<div class="stat-mini">
-<small>УРОКИ</small>
-<b>${state.completed.length}</b>
-</div>
+          <div class="stat-mini">
+            <small>УРОВЕНЬ</small>
+            <b>${state.level}</b>
+          </div>
 
-</div>
+          <div class="stat-mini">
+            <small>УРОКИ</small>
+            <b>${state.completed.length}</b>
+          </div>
 
-</div>
+        </div>
 
-<div class="profile-card">
+      </div>
 
-<div class="eyebrow">
-ПРОФИЛЬ
-</div>
+      <div class="profile-card">
 
-<h3 style="font-size:22px;margin:7px 0 18px">
-Твои данные
-</h3>
+        <div class="eyebrow">
+          ПРОФИЛЬ
+        </div>
 
-<div class="profile-form">
+        <h3
+          style="
+            font-size:22px;
+            margin:7px 0 18px
+          "
+        >
+          Твои данные
+        </h3>
 
-<input id="pName"
-value="${esc(state.name)}"
-placeholder="ФИО">
+        <div class="profile-form">
 
-<input id="pEmail"
-type="email"
-value="${esc(state.email)}"
-placeholder="Email">
+          <input
+            id="pName"
+            value="${esc(state.name)}"
+            placeholder="ФИО"
+          >
 
-<input id="pNick"
-value="${esc(state.username)}"
-placeholder="@username">
+          <input
+            id="pEmail"
+            type="email"
+            value="${esc(state.email)}"
+            placeholder="Email"
+          >
 
-<button class="save-btn" id="saveProfile">
-Сохранить изменения
-</button>
+          <input
+            id="pNick"
+            value="${esc(state.username)}"
+            placeholder="@username"
+          >
 
-</div>
+          <button
+            class="save-btn"
+            id="saveProfile"
+          >
+            Сохранить изменения
+          </button>
 
-<div style="margin-top:20px;padding:15px;border-radius:17px;background:#faf8fc;color:#827888;font-size:9px;line-height:1.6">
+        </div>
 
-XP начисляется медленно:
-+5 только за первый проход каждого урока.
-Это сделано специально, чтобы обучение ощущалось как реальный путь,
-а не гонка уровней.
+        <div
+          style="
+            margin-top:20px;
+            padding:15px;
+            border-radius:17px;
+            background:#faf8fc;
+            color:#827888;
+            font-size:9px;
+            line-height:1.6
+          "
+        >
+          XP начисляется медленно:
+          +5 только за первый проход каждого урока.
+          Это сделано специально, чтобы обучение
+          ощущалось как реальный путь,
+          а не гонка уровней.
+        </div>
 
-</div>
+        <div class="theme-box">
 
-</div>
+          <div class="theme-head">
 
-</div>
-`;
+            <div>
 
-document.getElementById('changeAvatar').onclick=
-()=>document.getElementById('avatarInput').click();
+              <b>
+                Оформление
+              </b>
 
-document.getElementById('removeAvatar').onclick=()=>{
+              <span>
+                Выбери светлый или тёмный режим
+              </span>
 
-state.avatar='';
-save();
-renderProfile();
-updateSide();
+            </div>
 
-toast('Аватар удалён');
+            <button
+              class="theme-toggle ${
+                state.theme==='dark'?'on':''
+              }"
+              id="themeToggle"
+              aria-label="Переключить тему"
+            >
+              <i></i>
+            </button>
 
-};
+          </div>
 
-document.getElementById('saveProfile').onclick=()=>{
+          <div class="theme-modes">
 
-const n=document.getElementById('pName').value.trim();
-const em=document.getElementById('pEmail').value.trim();
-const u=normalizeUser(document.getElementById('pNick').value);
+            <button
+              class="theme-mode ${
+                state.theme!=='dark'?'active':''
+              }"
+              data-theme="light"
+            >
+              <b>☀️ Светлый</b>
+              <small>
+                Чистый режим для учёбы
+              </small>
+            </button>
 
-if(!n||!/^\S+@\S+\.\S+$/.test(em)||!u){
+            <button
+              class="theme-mode ${
+                state.theme==='dark'?'active':''
+              }"
+              data-theme="dark"
+            >
+              <b>🌙 Тёмный</b>
+              <small>
+                Комфортный режим вечером
+              </small>
+            </button>
 
-toast('Проверь данные профиля');
-return;
+          </div>
 
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  document.getElementById('changeAvatar')
+    .onclick=()=>{
+      document.getElementById(
+        'avatarInput'
+      ).click()
+    };
+
+  document.getElementById('removeAvatar')
+    .onclick=()=>{
+
+      state.avatar='';
+
+      save();
+
+      renderProfile();
+      updateSide();
+
+      toast(
+        'Аватар удалён'
+      )
+    };
+
+  document.getElementById('saveProfile')
+    .onclick=()=>{
+
+      const name=
+        document.getElementById(
+          'pName'
+        ).value.trim();
+
+      const email=
+        document.getElementById(
+          'pEmail'
+        ).value.trim();
+
+      const username=
+        normalizeUser(
+          document.getElementById(
+            'pNick'
+          ).value
+        );
+
+      if(
+        !name||
+        !/^\S+@\S+\.\S+$/.test(email)||
+        !username
+      ){
+
+        toast(
+          'Проверь данные профиля'
+        );
+
+        return
+      }
+
+      state.name=name;
+      state.email=email;
+      state.username=username;
+
+      save();
+
+      updateSide();
+
+      toast(
+        'Профиль сохранён'
+      )
+    };
+
+  document.getElementById('themeToggle')
+    .onclick=()=>{
+
+      setTheme(
+        state.theme==='dark'
+          ?'light'
+          :'dark'
+      )
+    };
+
+  document
+    .querySelectorAll('[data-theme]')
+    .forEach(button=>{
+
+      button.onclick=()=>{
+        setTheme(
+          button.dataset.theme
+        )
+      }
+
+    })
 }
 
-state.name=n;
-state.email=em;
-state.username=u;
+/* =========================================================
+   THEME
+========================================================= */
 
-save();
-updateSide();
+function applyTheme(){
 
-toast('Профиль сохранён');
-
-};
-
+  document.body.classList.toggle(
+    'dark-mode',
+    state.theme==='dark'
+  )
 }
 
-function normalizeUser(v){
+function setTheme(theme){
 
-v=v.trim();
+  state.theme=theme;
 
-if(!v)return '';
+  save();
 
-return v.startsWith('@')?v:'@'+v;
+  applyTheme();
 
+  renderProfile();
+
+  toast(
+    theme==='dark'
+      ?'🌙 Тёмный режим включён'
+      :'☀️ Светлый режим включён'
+  )
 }
 
-document.getElementById('avatarInput').addEventListener('change',e=>{
+/* =========================================================
+   AVATAR
+========================================================= */
 
-const f=e.target.files?.[0];
+document
+  .getElementById('avatarInput')
+  .addEventListener(
+    'change',
+    event=>{
 
-if(!f)return;
+      const file=
+        event.target.files?.[0];
 
-if(!f.type.startsWith('image/')){
-return toast('Выбери изображение');
-}
+      if(!file)return;
 
-const r=new FileReader();
+      if(
+        !file.type.startsWith(
+          'image/'
+        )
+      ){
 
-r.onload=()=>{
+        toast(
+          'Выбери изображение'
+        );
 
-state.avatar=r.result;
+        return
+      }
 
-save();
+      const reader=
+        new FileReader();
 
-renderProfile();
-updateSide();
+      reader.onload=()=>{
 
-toast('Аватар обновлён');
+        state.avatar=
+          reader.result;
 
-};
+        save();
 
-r.onerror=()=>{
-toast('Не удалось прочитать изображение');
-};
+        renderProfile();
+        updateSide();
 
-r.readAsDataURL(f);
+        toast(
+          'Аватар обновлён'
+        )
+      };
 
-e.target.value='';
+      reader.onerror=()=>{
 
-});
+        toast(
+          'Не удалось прочитать изображение'
+        )
+      };
+
+      reader.readAsDataURL(file);
+
+      event.target.value=''
+    }
+  );
+
+/* =========================================================
+   SIDE PROFILE
+========================================================= */
 
 function updateSide(){
 
-document.getElementById('sideName').textContent=
-state.name||'Трейдер';
+  document.getElementById(
+    'sideName'
+  ).textContent=
+    state.name||'Трейдер';
 
-document.getElementById('sideNick').textContent=
-state.username||'@ava';
+  document.getElementById(
+    'sideNick'
+  ).textContent=
+    state.username||'@ava';
 
-document.getElementById('sideAvatar').innerHTML=
-state.avatar
-?`<img src="${state.avatar}" alt="">`
-:esc(initials());
+  document.getElementById(
+    'sideAvatar'
+  ).innerHTML=
+    state.avatar
+      ?`
+        <img
+          src="${state.avatar}"
+          alt=""
+        >
+      `
+      :esc(initials());
 
-document.getElementById('xpTop').textContent=state.xp;
-
+  document.getElementById(
+    'xpTop'
+  ).textContent=
+    state.xp
 }
+
+/* =========================================================
+   AUTH
+========================================================= */
 
 function setupAuth(){
 
-document.getElementById('regUsername')
-.addEventListener('input',e=>{
+  document.getElementById(
+    'regUsername'
+  ).addEventListener(
+    'input',
+    event=>{
 
-let v=e.target.value;
+      let value=
+        event.target.value;
 
-if(v&&!v.startsWith('@')){
+      if(
+        value &&
+        !value.startsWith('@')
+      ){
 
-e.target.value='@'+v.replace(/^@/,'');
+        event.target.value=
+          '@'+
+          value.replace(
+            /^@/,
+            ''
+          )
+      }
+    }
+  );
 
+  document.getElementById(
+    'registerForm'
+  ).addEventListener(
+    'submit',
+    event=>{
+
+      event.preventDefault();
+
+      const email=
+        document.getElementById(
+          'regEmail'
+        ).value.trim();
+
+      const name=
+        document.getElementById(
+          'regName'
+        ).value.trim();
+
+      const username=
+        normalizeUser(
+          document.getElementById(
+            'regUsername'
+          ).value
+        );
+
+      const error=
+        document.getElementById(
+          'regError'
+        );
+
+      if(
+        !/^\S+@\S+\.\S+$/.test(email)
+      ){
+
+        error.textContent=
+          'Введи корректный email.';
+
+        return
+      }
+
+      if(name.length<2){
+
+        error.textContent=
+          'Укажи имя и фамилию.';
+
+        return
+      }
+
+      if(username.length<3){
+
+        error.textContent=
+          'Укажи username.';
+
+        return
+      }
+
+      state.registered=true;
+      state.email=email;
+      state.name=name;
+      state.username=username;
+
+      save();
+
+      error.textContent='';
+
+      document.getElementById(
+        'auth'
+      ).classList.add('hidden');
+
+      document.getElementById(
+        'app'
+      ).classList.remove('hidden');
+
+      updateSide();
+
+      navigate('home');
+
+      toast(
+        'Добро пожаловать в AVA ACADEMY'
+      )
+    }
+  )
 }
 
-});
+/* =========================================================
+   AVA AI
+========================================================= */
 
-document.getElementById('registerForm')
-.addEventListener('submit',e=>{
+function avaAnswer(question){
 
-e.preventDefault();
+  const text=
+    question.toLowerCase();
 
-const email=document.getElementById('regEmail').value.trim();
-const name=document.getElementById('regName').value.trim();
-const username=normalizeUser(
-document.getElementById('regUsername').value
+  if(
+    /привет|здрав/.test(text)
+  ){
+
+    return`
+      Привет! Я Ava 👋
+      Могу помочь с уроками, свечами,
+      уровнями, RSI, EMA, MACD
+      или навигацией.
+    `
+  }
+
+  if(/rsi/.test(text)){
+
+    return`
+      RSI помогает оценивать силу движения.
+      В академии сначала изучи зоны 30 и 70,
+      а потом переходи к контексту тренда
+      и фильтрации сценариев.
+    `
+  }
+
+  if(/ema/.test(text)){
+
+    return`
+      EMA показывает сглаженное направление цены.
+      Не используй её как единственный сигнал —
+      сначала оцени структуру и контекст.
+    `
+  }
+
+  if(/свеч|candl/.test(text)){
+
+    return`
+      Начни с модуля «Свечи»:
+      тело, тени, сила закрытия
+      и последовательности.
+      Это хорошая база перед индикаторами.
+    `
+  }
+
+  if(/бот|сигнал/.test(text)){
+
+    return`
+      Открой AvaBot в нижнем меню.
+      Пара и время находятся сверху,
+      робот — ниже.
+      Результаты здесь учебные
+      и не подключены к реальному рынку.
+    `
+  }
+
+  if(/урок|обуч/.test(text)){
+
+    return`
+      В «Учёбе» 160 уроков:
+      16 модулей по 10 занятий.
+      За первый проход урока
+      начисляется +5 XP.
+    `
+  }
+
+  if(/тём|темн|dark/.test(text)){
+
+    return`
+      Тёмный режим находится
+      в разделе «Профиль» → «Оформление».
+      Там можно переключаться
+      между светлым и тёмным режимом.
+    `
+  }
+
+  return`
+    Попробуй спросить:
+    «что такое RSI?»,
+    «как читать свечи?»,
+    «где AvaBot?»,
+    «как включить тёмный режим?»
+    или «с чего начать обучение?»
+  `
+}
+
+document.getElementById(
+  'avaFab'
+).onclick=()=>{
+
+  document.getElementById(
+    'avaPanel'
+  ).classList.toggle(
+    'show'
+  )
+};
+
+document.getElementById(
+  'avaClose'
+).onclick=()=>{
+
+  document.getElementById(
+    'avaPanel'
+  ).classList.remove(
+    'show'
+  )
+};
+
+document.getElementById(
+  'avaForm'
+).addEventListener(
+  'submit',
+  event=>{
+
+    event.preventDefault();
+
+    const input=
+      document.getElementById(
+        'avaInput'
+      );
+
+    const question=
+      input.value.trim();
+
+    if(!question)return;
+
+    const messages=
+      document.getElementById(
+        'avaMessages'
+      );
+
+    messages.insertAdjacentHTML(
+      'beforeend',
+      `
+        <div class="msg user">
+          ${esc(question)}
+        </div>
+      `
+    );
+
+    input.value='';
+
+    setTimeout(()=>{
+
+      messages.insertAdjacentHTML(
+        'beforeend',
+        `
+          <div class="msg bot">
+            ${esc(
+              avaAnswer(question)
+            )}
+          </div>
+        `
+      );
+
+      messages.scrollTop=
+        messages.scrollHeight
+
+    },300);
+
+    messages.scrollTop=
+      messages.scrollHeight
+  }
 );
 
-const err=document.getElementById('regError');
+/* =========================================================
+   READER EVENTS
+========================================================= */
 
-if(!/^\S+@\S+\.\S+$/.test(email)){
+document.getElementById(
+  'readerClose'
+).onclick=()=>{
 
-err.textContent='Введи корректный email.';
-return;
+  document.getElementById(
+    'reader'
+  ).classList.remove(
+    'show'
+  )
+};
 
-}
+document.getElementById(
+  'readerComplete'
+).onclick=
+  completeLesson;
 
-if(name.length<2){
+document.getElementById(
+  'readerBookmark'
+).onclick=
+  toggleBookmark;
 
-err.textContent='Укажи имя и фамилию.';
-return;
+document.getElementById(
+  'reader'
+).addEventListener(
+  'click',
+  event=>{
 
-}
+    if(
+      event.target.id==='reader'
+    ){
 
-if(username.length<3){
+      document.getElementById(
+        'reader'
+      ).classList.remove(
+        'show'
+      )
+    }
 
-err.textContent='Укажи username.';
-return;
-
-}
-
-state.registered=true;
-state.email=email;
-state.name=name;
-state.username=username;
-
-save();
-
-err.textContent='';
-
-document.getElementById('auth').classList.add('hidden');
-document.getElementById('app').classList.remove('hidden');
-document.getElementById('loader').classList.add('out');
-
-updateSide();
-navigate('home');
-
-toast('Добро пожаловать в AVA ACADEMY');
-
-});
-
-}
-
-function avaAnswer(q){
-
-const s=q.toLowerCase();
-
-if(/привет|здрав/.test(s))
-return 'Привет! Я Ava 👋 Могу помочь с уроками, свечами, уровнями, RSI, EMA, MACD или навигацией.';
-
-if(/rsi/.test(s))
-return 'RSI помогает оценивать силу движения. В академии сначала изучи базовые зоны и контекст тренда, а потом переходи к фильтрации сетапов.';
-
-if(/ema/.test(s))
-return 'EMA показывает сглаженное направление цены. Не используй её как единственный сигнал — сначала оцени структуру и контекст.';
-
-if(/свеч|candl/.test(s))
-return 'Начни с уроков модуля «Свечи»: тело, тени, сила закрытия и последовательности. Это хорошая база перед индикаторами.';
-
-if(/бот|сигнал/.test(s))
-return 'Открой AvaBot в нижнем меню. Пара и время находятся сверху, робот — ниже. Результаты здесь учебные и не подключены к реальному рынку.';
-
-if(/урок|обуч/.test(s))
-return 'В «Учёбе» 160 уроков: 16 модулей по 10 занятий. За первый проход урока начисляется +5 XP.';
-
-return 'Попробуй спросить: «что такое RSI?», «как читать свечи?», «где AvaBot?» или «с чего начать обучение?»';
-
-}
-
-document.getElementById('avaFab').onclick=
-()=>document.getElementById('avaPanel').classList.toggle('show');
-
-document.getElementById('avaClose').onclick=
-()=>document.getElementById('avaPanel').classList.remove('show');
-
-document.getElementById('avaForm').addEventListener('submit',e=>{
-
-e.preventDefault();
-
-const inp=document.getElementById('avaInput');
-const q=inp.value.trim();
-
-if(!q)return;
-
-const box=document.getElementById('avaMessages');
-
-box.insertAdjacentHTML(
-'beforeend',
-`<div class="msg user">${esc(q)}</div>`
+  }
 );
 
-inp.value='';
+document.addEventListener(
+  'keydown',
+  event=>{
 
-setTimeout(()=>{
+    if(
+      event.key==='Escape'
+    ){
 
-box.insertAdjacentHTML(
-'beforeend',
-`<div class="msg bot">${esc(avaAnswer(q))}</div>`
+      document.getElementById(
+        'reader'
+      ).classList.remove(
+        'show'
+      );
+
+      document.getElementById(
+        'avaPanel'
+      ).classList.remove(
+        'show'
+      )
+    }
+
+  }
 );
 
-box.scrollTop=box.scrollHeight;
-
-},300);
-
-box.scrollTop=box.scrollHeight;
-
-});
-
-document.getElementById('readerClose').onclick=
-()=>document.getElementById('reader').classList.remove('show');
-
-document.getElementById('readerComplete').onclick=
-completeLesson;
-
-document.getElementById('readerBookmark').onclick=
-toggleBookmark;
-
-document.getElementById('reader').addEventListener('click',e=>{
-
-if(e.target.id==='reader')
-document.getElementById('reader').classList.remove('show');
-
-});
+/* =========================================================
+   BACKGROUND CANDLES
+========================================================= */
 
 function buildCandles(){
 
-const box=document.getElementById('candles');
+  const box=
+    document.getElementById(
+      'candles'
+    );
 
-for(let i=0;i<48;i++){
+  box.innerHTML='';
 
-const c=document.createElement('div');
+  for(
+    let i=0;
+    i<48;
+    i++
+  ){
 
-c.className='candle';
+    const candle=
+      document.createElement(
+        'div'
+      );
 
-const top=8+(i*17)%72;
-const height=18+(i*29)%52;
+    candle.className=
+      'candle';
 
-c.innerHTML=
-`<i style="top:${top-8}%;height:${height+15}%"></i>
-<b style="top:${top}%;height:${height}%"></b>`;
+    const top=
+      8+
+      (i*17)%72;
 
-c.style.animationDelay=`-${i%9}s`;
+    const height=
+      18+
+      (i*29)%52;
 
-box.appendChild(c);
+    candle.innerHTML=`
 
+      <i
+        style="
+          top:${Math.max(0,top-8)}%;
+          height:${height+15}%
+        "
+      ></i>
+
+      <b
+        style="
+          top:${top}%;
+          height:${height}%
+        "
+      ></b>
+
+    `;
+
+    candle.style.animationDelay=
+      `-${i%9}s`;
+
+    box.appendChild(
+      candle
+    )
+  }
 }
 
-}
+/* =========================================================
+   INIT
+========================================================= */
 
 function boot(){
 
-buildCandles();
-buildNav();
-setupAuth();
+  buildCandles();
+  buildNav();
+  setupAuth();
+  applyTheme();
 
-if(state.registered){
+  if(state.registered){
 
-document.getElementById('app').classList.remove('hidden');
+    document.getElementById(
+      'app'
+    ).classList.remove(
+      'hidden'
+    );
 
-updateSide();
-navigate('home');
+    updateSide();
 
-}else{
+    navigate('home');
 
-document.getElementById('auth').classList.remove('hidden');
+  }else{
 
-}
+    document.getElementById(
+      'auth'
+    ).classList.remove(
+      'hidden'
+    )
+  }
 
-setTimeout(()=>
-document.getElementById('loader').classList.add('out')
-,900);
+  setTimeout(()=>{
 
+    document.getElementById(
+      'loader'
+    ).classList.add(
+      'out'
+    )
+
+  },900)
 }
 
 boot();
 
 </script>
+
 </body>
 </html>
