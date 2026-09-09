@@ -2,41 +2,40 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#070a12">
 <title>AVA POCKET — Trading Academy</title>
 
 <style>
 :root{
   --bg:#070a12;
-  --bg2:#0c1220;
+  --bg2:#0b101b;
   --panel:#101827;
   --panel2:#151e30;
-  --panel3:#192338;
+  --panel3:#1b263b;
+  --line:rgba(255,255,255,.075);
 
   --purple:#8b5cf6;
   --purple2:#a78bfa;
   --blue:#3b82f6;
   --cyan:#22d3ee;
-
   --green:#22c55e;
   --green2:#4ade80;
-
   --red:#ef4444;
   --red2:#fb7185;
-
+  --orange:#f97316;
   --yellow:#facc15;
-  --orange:#fb923c;
 
   --text:#f8fafc;
   --muted:#7f8ba3;
-  --muted2:#556177;
+  --muted2:#58657c;
 
-  --line:rgba(255,255,255,.075);
+  --paper:#f7f2e8;
+  --paper2:#eee7db;
+  --ink:#27222c;
 
-  --radius:24px;
-  --shadow:0 25px 80px rgba(0,0,0,.35);
+  --radius:25px;
+  --shadow:0 30px 90px rgba(0,0,0,.38);
 }
 
 *{
@@ -52,16 +51,8 @@ html{
 body{
   min-height:100vh;
   background:
-    radial-gradient(
-      circle at 20% 10%,
-      rgba(124,58,237,.12),
-      transparent 25%
-    ),
-    radial-gradient(
-      circle at 90% 80%,
-      rgba(34,211,238,.07),
-      transparent 25%
-    ),
+    radial-gradient(circle at 10% 0%,rgba(124,58,237,.13),transparent 27%),
+    radial-gradient(circle at 95% 75%,rgba(14,165,233,.07),transparent 28%),
     var(--bg);
   color:var(--text);
   font-family:
@@ -88,9 +79,13 @@ button{
 }
 
 input,
-textarea,
-select{
+select,
+textarea{
   outline:none;
+}
+
+svg{
+  display:block;
 }
 
 .hidden{
@@ -98,118 +93,138 @@ select{
 }
 
 ::-webkit-scrollbar{
-  width:7px;
-}
-
-::-webkit-scrollbar-track{
-  background:#090d17;
+  width:6px;
 }
 
 ::-webkit-scrollbar-thumb{
-  background:#273149;
+  background:#28334a;
   border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+  background:#090d16;
 }
 
 /* =========================================================
    BACKGROUND
 ========================================================= */
 
-.bg{
+.background{
   position:fixed;
   inset:0;
-  pointer-events:none;
   overflow:hidden;
+  pointer-events:none;
   z-index:0;
 }
 
-.bg-grid{
+.grid{
   position:absolute;
   inset:0;
-  opacity:.055;
+  opacity:.045;
   background-image:
-    linear-gradient(
-      rgba(255,255,255,.12) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.12) 1px,
-      transparent 1px
-    );
-  background-size:45px 45px;
+    linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);
+  background-size:48px 48px;
 }
 
-.bg-glow{
+.glow{
   position:absolute;
-  width:450px;
-  height:450px;
+  width:500px;
+  height:500px;
   border-radius:50%;
-  filter:blur(100px);
-  opacity:.12;
-  animation:glowMove 15s ease-in-out infinite;
+  filter:blur(110px);
+  opacity:.08;
+  animation:glow 16s ease-in-out infinite;
 }
 
-.bg-glow.one{
+.glow.a{
   background:#7c3aed;
-  left:-200px;
-  top:-120px;
+  left:-250px;
+  top:-180px;
 }
 
-.bg-glow.two{
+.glow.b{
   background:#0891b2;
-  right:-220px;
+  right:-260px;
   top:35%;
-  animation-delay:5s;
+  animation-delay:4s;
 }
 
-.bg-glow.three{
+.glow.c{
   background:#2563eb;
-  left:40%;
-  bottom:-300px;
-  animation-delay:9s;
+  left:35%;
+  bottom:-350px;
+  animation-delay:8s;
 }
 
-@keyframes glowMove{
-  0%,100%{
-    transform:translate3d(0,0,0) scale(1);
-  }
+@keyframes glow{
   50%{
-    transform:translate3d(35px,-30px,0) scale(1.08);
+    transform:translate(35px,-25px) scale(1.08);
   }
 }
 
-/* animated candles */
+.market-watermark{
+  position:absolute;
+  white-space:nowrap;
+  font-size:clamp(70px,9vw,140px);
+  font-weight:1000;
+  letter-spacing:-8px;
+  color:rgba(255,255,255,.018);
+  transform:rotate(-12deg);
+  animation:watermark 14s ease-in-out infinite;
+}
+
+.market-watermark span{
+  color:rgba(139,92,246,.04);
+}
+
+.market-watermark.one{
+  left:-4%;
+  top:20%;
+}
+
+.market-watermark.two{
+  right:-9%;
+  top:65%;
+  animation-delay:-7s;
+}
+
+@keyframes watermark{
+  50%{
+    transform:translateX(35px) rotate(-12deg);
+  }
+}
 
 .bg-candles{
   position:absolute;
   inset:0;
-  opacity:.13;
+  opacity:.11;
 }
 
 .bg-candle{
   position:absolute;
-  width:5px;
+  width:4px;
   border-radius:3px;
-  animation:candleFloat 7s ease-in-out infinite;
+  animation:candleMove 7s ease-in-out infinite;
 }
 
 .bg-candle:before,
 .bg-candle:after{
   content:"";
   position:absolute;
-  left:2px;
+  left:1px;
   width:1px;
   background:currentColor;
 }
 
 .bg-candle:before{
-  top:-16px;
-  height:13px;
+  height:15px;
+  top:-14px;
 }
 
 .bg-candle:after{
-  bottom:-14px;
-  height:12px;
+  height:14px;
+  bottom:-13px;
 }
 
 .bg-candle.up{
@@ -222,54 +237,10 @@ select{
   background:#ef4444;
 }
 
-@keyframes candleFloat{
-  0%,100%{
-    transform:translateY(0);
-    opacity:.35;
-  }
+@keyframes candleMove{
   50%{
-    transform:translateY(-18px);
-    opacity:.7;
-  }
-}
-
-/* floating AVA POCKET */
-
-.brand-watermark{
-  position:absolute;
-  white-space:nowrap;
-  font-size:110px;
-  font-weight:1000;
-  letter-spacing:-7px;
-  color:rgba(255,255,255,.018);
-  transform:rotate(-13deg);
-  animation:watermarkMove 18s linear infinite;
-}
-
-.brand-watermark span{
-  color:rgba(139,92,246,.04);
-}
-
-.brand-watermark.one{
-  top:18%;
-  left:-5%;
-}
-
-.brand-watermark.two{
-  top:62%;
-  right:-8%;
-  animation-delay:-8s;
-}
-
-@keyframes watermarkMove{
-  0%{
-    transform:translateX(-20px) rotate(-13deg);
-  }
-  50%{
-    transform:translateX(35px) rotate(-13deg);
-  }
-  100%{
-    transform:translateX(-20px) rotate(-13deg);
+    transform:translateY(-15px);
+    opacity:.65;
   }
 }
 
@@ -281,86 +252,69 @@ select{
   position:fixed;
   inset:0;
   z-index:99999;
-  background:#070a12;
   display:flex;
-  align-items:center;
   justify-content:center;
-  transition:.6s ease;
+  align-items:center;
+  background:#070a12;
+  transition:.6s;
 }
 
-.loader-box{
-  width:250px;
+.loader{
   text-align:center;
 }
 
-.loader-avatar{
-  width:84px;
-  height:84px;
+.loader-logo{
+  width:88px;
+  height:88px;
   margin:auto;
-  border-radius:28px;
   display:grid;
   place-items:center;
-  background:
-    linear-gradient(
-      145deg,
-      #a78bfa,
-      #6d28d9,
-      #2563eb
-    );
+  border-radius:29px;
+  background:linear-gradient(145deg,#a78bfa,#5b21b6,#2563eb);
   box-shadow:
     0 0 0 1px rgba(255,255,255,.1),
-    0 25px 70px rgba(124,58,237,.4);
-  animation:loaderPulse 1.5s infinite;
+    0 25px 70px rgba(124,58,237,.35);
+  animation:loaderPulse 1.5s ease-in-out infinite;
 }
 
-.loader-avatar svg{
-  width:45px;
+.loader-logo svg{
+  width:49px;
 }
 
-.loader-name{
-  margin-top:20px;
-  font-size:23px;
+.loader-title{
+  margin-top:19px;
+  font-size:25px;
   font-weight:1000;
-  letter-spacing:4px;
+  letter-spacing:3px;
 }
 
 .loader-sub{
-  margin-top:7px;
-  color:#69758b;
+  margin-top:5px;
+  color:#657188;
   font-size:9px;
   letter-spacing:2px;
 }
 
 .loader-line{
-  margin:25px auto 0;
   width:190px;
   height:3px;
-  background:#182136;
+  margin:24px auto 0;
   border-radius:20px;
+  background:#172033;
   overflow:hidden;
 }
 
 .loader-line i{
   display:block;
-  width:40%;
+  width:38%;
   height:100%;
-  background:
-    linear-gradient(
-      90deg,
-      #8b5cf6,
-      #22d3ee,
-      #22c55e
-    );
-  animation:loaderLine 1.1s infinite;
+  background:linear-gradient(90deg,#8b5cf6,#22d3ee,#22c55e);
+  animation:loaderLine 1.05s infinite;
 }
 
 @keyframes loaderLine{
-  from{
-    transform:translateX(-140%);
-  }
-  to{
-    transform:translateX(380%);
-  }
+  from{transform:translateX(-150%)}
+  to{transform:translateX(420%)}
 }
 
 @keyframes loaderPulse{
@@ -380,19 +334,19 @@ select{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:30px 16px;
+  padding:30px 15px;
 }
 
 .auth-wrap{
-  width:min(1120px,100%);
+  width:min(1200px,100%);
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:65px;
+  grid-template-columns:1fr 420px;
+  gap:70px;
   align-items:center;
 }
 
-.auth-left{
-  padding:25px;
+.auth-showcase{
+  padding:20px;
 }
 
 .logo-row{
@@ -401,95 +355,123 @@ select{
   gap:12px;
 }
 
-.logo-icon{
-  width:49px;
-  height:49px;
-  border-radius:16px;
+.logo{
+  width:52px;
+  height:52px;
+  border-radius:17px;
   display:grid;
   place-items:center;
-  background:
-    linear-gradient(
-      145deg,
-      #a78bfa,
-      #6d28d9
-    );
-  box-shadow:
-    0 12px 35px rgba(124,58,237,.3);
+  background:linear-gradient(145deg,#a78bfa,#5b21b6);
+  box-shadow:0 14px 40px rgba(124,58,237,.3);
 }
 
-.logo-icon svg{
-  width:28px;
+.logo svg{
+  width:31px;
 }
 
-.logo-title{
+.logo-name{
+  font-size:16px;
   font-weight:1000;
   letter-spacing:2px;
 }
 
 .logo-sub{
-  color:#657188;
+  color:#66728a;
   font-size:8px;
   margin-top:3px;
-  letter-spacing:1.4px;
+  letter-spacing:1.5px;
 }
 
-.auth-title{
+.auth-heading{
   margin-top:55px;
-  font-size:clamp(48px,6vw,76px);
+  font-size:clamp(48px,6vw,80px);
   line-height:.92;
   letter-spacing:-5px;
   font-weight:1000;
 }
 
-.auth-title span{
+.auth-heading span{
   display:block;
   color:transparent;
-  background:
-    linear-gradient(
-      90deg,
-      #c4b5fd,
-      #38bdf8,
-      #4ade80
-    );
+  background:linear-gradient(90deg,#c4b5fd,#38bdf8,#4ade80);
   -webkit-background-clip:text;
   background-clip:text;
 }
 
-.auth-description{
-  max-width:600px;
-  color:#8490a6;
+.auth-text{
+  max-width:590px;
+  margin-top:23px;
+  color:#8692a8;
   font-size:13px;
   line-height:1.75;
-  margin-top:23px;
 }
 
-.auth-tags{
+.auth-pills{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
   margin-top:24px;
 }
 
-.auth-tag{
+.auth-pill{
   padding:9px 12px;
   border-radius:999px;
+  color:#b5bfce;
   background:rgba(255,255,255,.035);
   border:1px solid var(--line);
-  color:#aeb8c9;
   font-size:9px;
   font-weight:900;
 }
 
+.auth-chart{
+  position:relative;
+  height:190px;
+  max-width:650px;
+  margin-top:30px;
+  border-radius:25px;
+  overflow:hidden;
+  background:
+    linear-gradient(145deg,#121b2e,#090e18);
+  border:1px solid var(--line);
+}
+
+.auth-chart-grid{
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+  background-size:45px 45px;
+  opacity:.35;
+}
+
+.auth-chart svg{
+  position:absolute;
+  inset:20px;
+  width:calc(100% - 40px);
+  height:calc(100% - 40px);
+}
+
+.auth-chart path{
+  fill:none;
+  stroke:#38bdf8;
+  stroke-width:3;
+  stroke-linecap:round;
+  stroke-dasharray:900;
+  stroke-dashoffset:900;
+  animation:chartDraw 4s ease forwards infinite alternate;
+}
+
+@keyframes chartDraw{
+  to{stroke-dashoffset:0}
+}
+
 .auth-card{
-  padding:30px;
+  padding:31px;
   border-radius:30px;
   background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.085),
-      rgba(255,255,255,.025)
-    );
-  border:1px solid rgba(255,255,255,.09);
+    linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
+  border:1px solid rgba(255,255,255,.1);
   box-shadow:var(--shadow);
   backdrop-filter:blur(25px);
 }
@@ -499,15 +481,15 @@ select{
   font-weight:1000;
 }
 
-.auth-card p{
+.auth-card-desc{
   margin-top:6px;
-  color:#707d94;
-  font-size:10px;
-  line-height:1.5;
+  color:#737f95;
+  font-size:9px;
+  line-height:1.6;
 }
 
 .auth-form{
-  margin-top:25px;
+  margin-top:24px;
 }
 
 .field{
@@ -517,19 +499,19 @@ select{
 .field label{
   display:block;
   margin-bottom:7px;
-  color:#aeb7c7;
+  color:#abb5c7;
   font-size:9px;
   font-weight:900;
 }
 
 .field input{
   width:100%;
-  height:52px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:#0b1120;
-  color:white;
+  height:53px;
   padding:0 14px;
+  border-radius:14px;
+  color:white;
+  background:#0a101d;
+  border:1px solid var(--line);
   transition:.2s;
 }
 
@@ -538,76 +520,66 @@ select{
   box-shadow:0 0 0 4px rgba(139,92,246,.1);
 }
 
-.username-wrap{
+.username{
   position:relative;
 }
 
-.username-wrap span{
+.username span{
   position:absolute;
   left:14px;
   top:50%;
   transform:translateY(-50%);
-  color:#8b5cf6;
+  color:#a78bfa;
   font-weight:1000;
 }
 
-.username-wrap input{
-  padding-left:31px;
+.username input{
+  padding-left:30px;
 }
 
-.google-button{
+.google{
   width:100%;
   height:51px;
-  border-radius:14px;
-  background:#fff;
-  color:#111827;
-  font-size:11px;
-  font-weight:950;
+  margin-bottom:11px;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
-  margin-bottom:11px;
+  border-radius:14px;
+  background:#fff;
+  color:#111827;
+  font-size:10px;
+  font-weight:1000;
 }
 
 .google-icon{
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  font-weight:1000;
+  font-size:17px;
   color:#4285f4;
+  font-weight:1000;
 }
 
-.register-button{
+.submit{
   width:100%;
   height:55px;
   border-radius:15px;
   color:white;
-  background:
-    linear-gradient(
-      100deg,
-      #7c3aed,
-      #4f46e5,
-      #2563eb
-    );
-  font-size:11px;
+  background:linear-gradient(100deg,#7c3aed,#4f46e5,#2563eb);
+  box-shadow:0 15px 38px rgba(79,70,229,.28);
+  font-size:10px;
   font-weight:1000;
-  box-shadow:0 15px 35px rgba(79,70,229,.27);
-  transition:.25s;
+  transition:.2s;
 }
 
-.register-button:hover{
+.submit:hover{
   transform:translateY(-2px);
 }
 
 .auth-note{
+  margin-top:12px;
+  color:#535f75;
+  font-size:7px;
   text-align:center;
-  color:#515d73;
-  font-size:8px;
   line-height:1.5;
-  margin-top:13px;
 }
 
 /* =========================================================
@@ -616,14 +588,14 @@ select{
 
 #app{
   position:relative;
-  z-index:2;
+  z-index:1;
   min-height:100vh;
 }
 
 .shell{
   min-height:100vh;
   display:grid;
-  grid-template-columns:245px 1fr;
+  grid-template-columns:250px 1fr;
 }
 
 /* =========================================================
@@ -635,67 +607,70 @@ select{
   left:0;
   top:0;
   bottom:0;
-  width:245px;
+  width:250px;
+  z-index:100;
   padding:20px 14px;
-  background:
-    linear-gradient(
-      180deg,
-      #090d18,
-      #0a0f1b
-    );
-  border-right:1px solid var(--line);
   display:flex;
   flex-direction:column;
-  z-index:100;
+  background:linear-gradient(180deg,#090d18,#0a0f1a);
+  border-right:1px solid var(--line);
 }
 
-.sidebar-logo{
+.sidebar-brand{
   display:flex;
   align-items:center;
   gap:11px;
-  padding:4px 7px 24px;
+  padding:4px 8px 24px;
 }
 
-.sidebar-logo .logo-icon{
-  width:42px;
-  height:42px;
+.sidebar-logo{
+  width:43px;
+  height:43px;
   border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#a78bfa,#5b21b6);
 }
 
-.sidebar-logo strong{
+.sidebar-logo svg{
+  width:27px;
+}
+
+.sidebar-brand strong{
+  display:block;
   font-size:12px;
   letter-spacing:1.5px;
 }
 
-.sidebar-logo small{
+.sidebar-brand small{
   display:block;
-  color:#58647b;
-  font-size:7px;
   margin-top:3px;
+  color:#58647a;
+  font-size:7px;
 }
 
-.nav-title{
-  color:#4f5b71;
-  font-size:8px;
+.sidebar-label{
+  padding:8px 10px;
+  color:#4e5a71;
+  font-size:7px;
   letter-spacing:2px;
   font-weight:1000;
-  padding:8px 10px;
 }
 
-.nav{
+.sidebar-nav{
   display:grid;
-  gap:5px;
+  gap:4px;
 }
 
 .nav-btn{
-  min-height:49px;
-  border-radius:14px;
+  min-height:50px;
   padding:0 12px;
   display:flex;
   align-items:center;
   gap:11px;
+  border-radius:14px;
   background:transparent;
-  color:#707c93;
+  color:#717d94;
   text-align:left;
   font-size:10px;
   font-weight:900;
@@ -715,12 +690,7 @@ select{
 
 .nav-btn.active{
   color:white;
-  background:
-    linear-gradient(
-      100deg,
-      rgba(139,92,246,.19),
-      rgba(59,130,246,.055)
-    );
+  background:linear-gradient(100deg,rgba(139,92,246,.2),rgba(59,130,246,.045));
   box-shadow:inset 3px 0 #8b5cf6;
 }
 
@@ -728,63 +698,50 @@ select{
   margin-top:auto;
 }
 
-.coins-box{
+.wallet{
   padding:15px;
   border-radius:19px;
   background:
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(250,204,21,.12),
-      transparent 35%
-    ),
+    radial-gradient(circle at 90% 10%,rgba(250,204,21,.12),transparent 38%),
     #111827;
   border:1px solid var(--line);
 }
 
-.coins-box small{
-  color:#657188;
+.wallet small{
+  color:#68748b;
   font-size:7px;
   font-weight:1000;
   letter-spacing:1px;
 }
 
-.coins-value{
+.wallet strong{
+  display:block;
   margin-top:5px;
-  font-size:22px;
-  font-weight:1000;
   color:#facc15;
-}
-
-.coins-value span{
-  font-size:8px;
-  color:#7c7568;
+  font-size:22px;
 }
 
 .side-user{
   margin-top:8px;
-  padding:10px;
-  border-radius:15px;
-  background:#0f1625;
+  padding:9px;
   display:flex;
   align-items:center;
   gap:9px;
+  border-radius:15px;
+  background:#101725;
   cursor:pointer;
 }
 
 .avatar{
-  width:36px;
-  height:36px;
-  border-radius:11px;
+  width:37px;
+  height:37px;
+  flex:none;
   display:grid;
   place-items:center;
   overflow:hidden;
-  background:
-    linear-gradient(
-      145deg,
-      #8b5cf6,
-      #2563eb
-    );
+  border-radius:11px;
   color:white;
+  background:linear-gradient(145deg,#8b5cf6,#2563eb);
   font-size:10px;
   font-weight:1000;
 }
@@ -810,7 +767,7 @@ select{
 .side-user-text small{
   display:block;
   margin-top:2px;
-  color:#59657c;
+  color:#59657b;
   font-size:7px;
 }
 
@@ -824,28 +781,28 @@ select{
 }
 
 .topbar{
-  height:72px;
+  height:70px;
   position:sticky;
   top:0;
   z-index:90;
-  padding:0 32px;
+  padding:0 31px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:rgba(7,10,18,.91);
+  background:rgba(7,10,18,.9);
   backdrop-filter:blur(20px);
   border-bottom:1px solid var(--line);
 }
 
 .top-title{
-  font-size:15px;
+  font-size:14px;
   font-weight:1000;
 }
 
-.top-sub{
-  color:#5f6b82;
-  font-size:8px;
+.top-subtitle{
   margin-top:3px;
+  color:#5e6b82;
+  font-size:7px;
 }
 
 .top-actions{
@@ -857,17 +814,17 @@ select{
 .top-coins{
   padding:9px 12px;
   border-radius:999px;
-  background:#101827;
-  border:1px solid var(--line);
   color:#facc15;
-  font-size:10px;
+  background:#111827;
+  border:1px solid var(--line);
+  font-size:9px;
   font-weight:1000;
 }
 
 .top-avatar{
-  width:38px;
-  height:38px;
-  border-radius:12px;
+  width:37px;
+  height:37px;
+  border-radius:11px;
   overflow:hidden;
   cursor:pointer;
 }
@@ -878,23 +835,23 @@ select{
 }
 
 .content{
+  padding:27px 31px 100px;
   max-width:1600px;
-  padding:27px 32px 100px;
 }
 
 .screen{
   display:none;
-  animation:pageIn .35s ease;
+  animation:screenIn .35s ease;
 }
 
 .screen.active{
   display:block;
 }
 
-@keyframes pageIn{
+@keyframes screenIn{
   from{
     opacity:0;
-    transform:translateY(8px);
+    transform:translateY(7px);
   }
   to{
     opacity:1;
@@ -906,267 +863,237 @@ select{
    HOME
 ========================================================= */
 
-.hero{
-  min-height:470px;
+.home-hero{
+  min-height:475px;
   display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:17px;
+  grid-template-columns:.82fr 1.18fr;
+  gap:15px;
 }
 
-.hero-copy{
-  padding:35px 15px;
+.home-copy{
+  padding:32px 12px;
   display:flex;
   justify-content:center;
   flex-direction:column;
 }
 
-.live-badge{
+.live{
   width:max-content;
   padding:7px 10px;
   border-radius:999px;
-  background:rgba(139,92,246,.09);
-  border:1px solid rgba(139,92,246,.17);
   color:#c4b5fd;
-  font-size:8px;
+  background:rgba(139,92,246,.08);
+  border:1px solid rgba(139,92,246,.17);
+  font-size:7px;
   font-weight:1000;
   letter-spacing:1px;
 }
 
-.live-dot{
+.live i{
   display:inline-block;
   width:6px;
   height:6px;
+  margin-right:5px;
   border-radius:50%;
   background:#22c55e;
   box-shadow:0 0 12px #22c55e;
-  margin-right:5px;
 }
 
-.hero h1{
-  margin-top:22px;
-  font-size:clamp(42px,5vw,70px);
-  line-height:.93;
+.home-copy h1{
+  margin-top:21px;
+  font-size:clamp(45px,5vw,72px);
+  line-height:.91;
   letter-spacing:-4px;
   font-weight:1000;
 }
 
-.hero h1 span{
+.home-copy h1 span{
   display:block;
   color:transparent;
-  background:
-    linear-gradient(
-      90deg,
-      #c4b5fd,
-      #38bdf8
-    );
+  background:linear-gradient(90deg,#c4b5fd,#38bdf8);
   -webkit-background-clip:text;
   background-clip:text;
 }
 
-.hero p{
-  max-width:530px;
-  margin-top:19px;
+.home-copy p{
+  max-width:550px;
+  margin-top:20px;
   color:#8490a5;
-  font-size:12px;
-  line-height:1.7;
+  font-size:11px;
+  line-height:1.75;
 }
 
-.hero-actions{
+.home-actions{
   display:flex;
-  flex-wrap:wrap;
   gap:8px;
-  margin-top:23px;
+  margin-top:22px;
+}
+
+.primary,
+.secondary{
+  min-height:45px;
+  padding:0 16px;
+  border-radius:13px;
+  font-size:8px;
+  font-weight:1000;
 }
 
 .primary{
-  min-height:46px;
-  padding:0 17px;
-  border-radius:13px;
   color:white;
-  background:
-    linear-gradient(
-      100deg,
-      #7c3aed,
-      #4f46e5
-    );
-  font-size:9px;
-  font-weight:1000;
-  box-shadow:0 14px 35px rgba(79,70,229,.25);
+  background:linear-gradient(100deg,#7c3aed,#4f46e5);
+  box-shadow:0 15px 35px rgba(79,70,229,.25);
 }
 
 .secondary{
-  min-height:46px;
-  padding:0 17px;
-  border-radius:13px;
-  color:#b8c1d0;
+  color:#aeb8c9;
   background:rgba(255,255,255,.035);
   border:1px solid var(--line);
-  font-size:9px;
-  font-weight:900;
 }
 
-.market-card{
+/* =========================================================
+   HOME MARKET
+========================================================= */
+
+.market-scene{
   position:relative;
+  min-height:475px;
   overflow:hidden;
   border-radius:28px;
-  min-height:470px;
   background:
-    radial-gradient(
-      circle at 70% 15%,
-      rgba(34,211,238,.12),
-      transparent 27%
-    ),
-    linear-gradient(
-      145deg,
-      #111b30,
-      #080e18
-    );
+    radial-gradient(circle at 70% 10%,rgba(34,211,238,.12),transparent 28%),
+    linear-gradient(145deg,#111a2e,#080e18);
   border:1px solid var(--line);
   box-shadow:var(--shadow);
 }
 
 .market-header{
   position:absolute;
+  top:18px;
   left:20px;
   right:20px;
-  top:18px;
-  z-index:4;
+  z-index:5;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 
 .market-brand{
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:9px;
 }
 
-.market-mark{
-  width:31px;
-  height:31px;
-  border-radius:10px;
+.market-logo{
+  width:34px;
+  height:34px;
+  border-radius:11px;
   display:grid;
   place-items:center;
-  background:
-    linear-gradient(
-      145deg,
-      #9f7aea,
-      #6d28d9
-    );
+  color:white;
+  background:linear-gradient(145deg,#a78bfa,#5b21b6);
+  font-size:13px;
   font-weight:1000;
-  font-size:14px;
 }
 
 .market-brand strong{
+  display:block;
   font-size:10px;
   letter-spacing:1px;
 }
 
 .market-brand small{
   display:block;
-  color:#5f6b81;
-  font-size:6px;
   margin-top:2px;
+  color:#5d6a81;
+  font-size:6px;
 }
 
 .market-status{
   padding:7px 9px;
   border-radius:999px;
-  background:rgba(5,10,18,.7);
+  color:#68758c;
+  background:rgba(4,9,17,.7);
   border:1px solid var(--line);
-  color:#7f8ba0;
-  font-size:7px;
+  font-size:6px;
 }
 
-.chart-area{
+.market-chart{
   position:absolute;
-  left:25px;
-  right:25px;
-  top:72px;
-  bottom:35px;
+  inset:75px 25px 25px;
 }
 
-.chart-grid{
+.market-grid{
   position:absolute;
   inset:0;
-  opacity:.13;
+  opacity:.16;
   background-image:
-    linear-gradient(
-      rgba(255,255,255,.08) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.08) 1px,
-      transparent 1px
-    );
-  background-size:45px 45px;
+    linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);
+  background-size:50px 50px;
 }
 
-.chart-svg{
+.market-chart svg{
   position:absolute;
-  inset:20px 0 0;
+  inset:15px 0 0;
   width:100%;
-  height:80%;
+  height:78%;
 }
 
-.chart-line{
+.market-line{
   fill:none;
   stroke:#38bdf8;
-  stroke-width:2.5;
+  stroke-width:2.7;
   stroke-linecap:round;
   stroke-dasharray:1000;
   stroke-dashoffset:1000;
   animation:chartDraw 4s ease forwards infinite alternate;
 }
 
-@keyframes chartDraw{
-  to{
-    stroke-dashoffset:0;
-  }
+.market-area{
+  fill:url(#chartGradient);
+  opacity:.18;
 }
 
-.floating-info{
+.market-floating{
   position:absolute;
-  z-index:5;
+  z-index:6;
   padding:10px 12px;
   border-radius:13px;
-  background:rgba(7,12,22,.91);
+  background:rgba(6,11,20,.9);
   border:1px solid var(--line);
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
-  animation:floatInfo 4s ease-in-out infinite;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
+  animation:floatCard 4s ease-in-out infinite;
 }
 
-.floating-info small{
-  color:#647087;
-  font-size:7px;
+.market-floating small{
+  color:#657188;
+  font-size:6px;
 }
 
-.floating-info strong{
+.market-floating strong{
   display:block;
   margin-top:3px;
-  font-size:12px;
+  font-size:11px;
 }
 
-.floating-info.one{
-  top:75px;
-  left:22px;
+.market-floating.one{
+  top:83px;
+  left:23px;
 }
 
-.floating-info.two{
+.market-floating.two{
   right:22px;
-  bottom:45px;
+  top:115px;
   animation-delay:1.2s;
 }
 
-.floating-info.three{
-  right:28px;
-  top:105px;
+.market-floating.three{
+  right:24px;
+  bottom:44px;
   animation-delay:2s;
 }
 
-@keyframes floatInfo{
+@keyframes floatCard{
   50%{
     transform:translateY(-7px);
   }
@@ -1176,205 +1103,206 @@ select{
    STATS
 ========================================================= */
 
-.stats{
-  margin-top:15px;
+.home-stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:11px;
+  gap:10px;
+  margin-top:14px;
 }
 
-.stat{
-  min-height:115px;
-  border-radius:20px;
-  padding:17px;
-  border:1px solid var(--line);
+.home-stat{
+  min-height:112px;
+  padding:16px;
+  border-radius:19px;
   background:#111827;
+  border:1px solid var(--line);
 }
 
 .stat-icon{
-  width:32px;
-  height:32px;
+  width:31px;
+  height:31px;
   border-radius:10px;
   display:grid;
   place-items:center;
-  background:#21183a;
   color:#c4b5fd;
+  background:#211a38;
 }
 
-.stat:nth-child(2) .stat-icon{
+.home-stat:nth-child(2) .stat-icon{
   color:#67e8f9;
-  background:#12333d;
+  background:#12303a;
 }
 
-.stat:nth-child(3) .stat-icon{
-  color:#fcd34d;
-  background:#3b2c14;
+.home-stat:nth-child(3) .stat-icon{
+  color:#facc15;
+  background:#362a14;
 }
 
-.stat:nth-child(4) .stat-icon{
+.home-stat:nth-child(4) .stat-icon{
   color:#86efac;
-  background:#123524;
+  background:#123424;
 }
 
-.stat small{
+.home-stat small{
   display:block;
-  margin-top:9px;
-  color:#68748b;
+  margin-top:8px;
+  color:#66738a;
   font-size:7px;
   font-weight:900;
 }
 
-.stat strong{
+.home-stat strong{
   display:block;
   margin-top:3px;
-  font-size:23px;
+  font-size:22px;
   font-weight:1000;
 }
 
-.stat span{
-  color:#606c82;
+.home-stat span{
+  color:#5e6a81;
   font-size:7px;
 }
 
 /* =========================================================
-   FEATURE CARDS
+   FEATURES
 ========================================================= */
 
 .section-head{
-  margin:32px 0 14px;
+  margin:31px 0 13px;
   display:flex;
   align-items:end;
   justify-content:space-between;
 }
 
 .section-head h2{
-  font-size:22px;
+  font-size:20px;
   font-weight:1000;
 }
 
 .section-head p{
-  color:#657188;
-  font-size:8px;
-  margin-top:4px;
+  margin-top:3px;
+  color:#647087;
+  font-size:7px;
 }
 
 .feature-grid{
   display:grid;
-  grid-template-columns:1.15fr .85fr;
+  grid-template-columns:1.1fr .9fr;
   gap:12px;
 }
 
 .feature{
-  min-height:245px;
-  border-radius:23px;
-  padding:22px;
   position:relative;
+  min-height:235px;
   overflow:hidden;
+  padding:22px;
+  border-radius:23px;
   border:1px solid var(--line);
 }
 
-.feature.ai{
-  background:
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(139,92,246,.19),
-      transparent 35%
-    ),
-    linear-gradient(
-      145deg,
-      #1d1632,
-      #101727
-    );
-}
-
-.feature.bot{
-  background:
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(34,211,238,.16),
-      transparent 35%
-    ),
-    linear-gradient(
-      145deg,
-      #0e2934,
-      #101727
-    );
-}
-
 .feature h3{
-  font-size:19px;
+  font-size:18px;
   font-weight:1000;
 }
 
 .feature p{
-  max-width:400px;
-  margin-top:8px;
-  color:#8490a5;
+  max-width:440px;
+  margin-top:7px;
+  color:#7e8aa0;
   font-size:9px;
-  line-height:1.6;
+  line-height:1.65;
 }
 
 .feature button{
   position:absolute;
-  bottom:20px;
   left:20px;
-  min-height:39px;
+  bottom:19px;
+  min-height:38px;
   padding:0 13px;
   border-radius:11px;
-  color:white;
-  background:rgba(255,255,255,.08);
+  color:#fff;
+  background:rgba(255,255,255,.07);
   border:1px solid var(--line);
-  font-size:8px;
+  font-size:7px;
   font-weight:1000;
 }
 
-.ai-face{
-  position:absolute;
-  right:25px;
-  bottom:20px;
-  width:145px;
-  height:145px;
-  border-radius:42px;
+.feature.ai{
   background:
-    linear-gradient(
-      145deg,
-      #8b5cf6,
-      #2563eb
-    );
-  box-shadow:
-    0 25px 60px rgba(79,70,229,.3);
+    radial-gradient(circle at 90% 10%,rgba(139,92,246,.2),transparent 37%),
+    linear-gradient(145deg,#1c1530,#101727);
+}
+
+.feature.bot{
+  background:
+    radial-gradient(circle at 90% 10%,rgba(34,211,238,.15),transparent 37%),
+    linear-gradient(145deg,#0c2832,#101727);
+}
+
+/* Ava face */
+
+.ava-face{
+  position:absolute;
+  width:132px;
+  height:132px;
+  right:25px;
+  bottom:17px;
+  border-radius:39px;
   display:grid;
   place-items:center;
+  background:linear-gradient(145deg,#a78bfa,#2563eb);
+  box-shadow:0 25px 60px rgba(79,70,229,.3);
   transform:rotate(7deg);
   animation:avaFloat 4s ease-in-out infinite;
 }
 
-.ai-face:before,
-.ai-face:after{
-  content:"";
+.ava-eye{
   position:absolute;
-  width:12px;
-  height:20px;
+  top:47px;
+  width:11px;
+  height:17px;
   border-radius:8px;
   background:#fff;
-  top:50px;
 }
 
-.ai-face:before{
-  left:40px;
+.ava-eye.left{
+  left:38px;
 }
 
-.ai-face:after{
-  right:40px;
+.ava-eye.right{
+  right:38px;
 }
 
-.ai-mouth{
+.ava-mouth{
   position:absolute;
-  bottom:38px;
-  width:42px;
-  height:15px;
+  bottom:32px;
+  width:37px;
+  height:13px;
   border-bottom:3px solid white;
-  border-radius:0 0 30px 30px;
+  border-radius:0 0 25px 25px;
+}
+
+.ava-antenna{
+  position:absolute;
+  top:-15px;
+  left:50%;
+  width:2px;
+  height:17px;
+  background:#a78bfa;
+  transform:translateX(-50%);
+}
+
+.ava-antenna:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-4px;
+  width:8px;
+  height:8px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:#22d3ee;
+  box-shadow:0 0 16px #22d3ee;
 }
 
 @keyframes avaFloat{
@@ -1383,252 +1311,292 @@ select{
   }
 }
 
-.bot-visual{
+/* BOT */
+
+.bot-robot{
   position:absolute;
-  right:20px;
-  bottom:15px;
-  width:210px;
-  height:160px;
+  right:24px;
+  bottom:17px;
+  width:185px;
+  height:165px;
 }
 
-.bot-ring{
+.robot-ring{
   position:absolute;
-  width:135px;
-  height:135px;
-  left:35px;
-  top:10px;
-  border:1px solid rgba(34,211,238,.3);
+  width:140px;
+  height:140px;
+  left:23px;
+  top:8px;
+  border:1px solid rgba(34,211,238,.27);
   border-radius:50%;
   animation:ringRotate 7s linear infinite;
 }
 
-.bot-ring:before{
+.robot-ring:before{
   content:"";
   position:absolute;
   inset:14px;
-  border:1px dashed rgba(139,92,246,.3);
+  border:1px dashed rgba(139,92,246,.35);
   border-radius:50%;
 }
 
-@keyframes ringRotate{
-  to{
-    transform:rotate(360deg);
-  }
+.robot-head{
+  position:absolute;
+  left:57px;
+  top:38px;
+  width:72px;
+  height:72px;
+  border-radius:23px;
+  background:linear-gradient(145deg,#22d3ee,#2563eb);
+  box-shadow:
+    0 0 45px rgba(34,211,238,.22),
+    inset 0 0 0 2px rgba(255,255,255,.1);
+  animation:robotFloat 3s ease-in-out infinite;
 }
 
-.bot-core{
+.robot-ear{
   position:absolute;
-  width:66px;
-  height:66px;
-  left:70px;
-  top:45px;
-  border-radius:20px;
+  top:23px;
+  width:8px;
+  height:26px;
+  border-radius:6px;
+  background:#22d3ee;
+}
+
+.robot-ear.left{
+  left:-7px;
+}
+
+.robot-ear.right{
+  right:-7px;
+}
+
+.robot-eye{
+  position:absolute;
+  top:23px;
+  width:10px;
+  height:13px;
+  border-radius:5px;
+  background:#fff;
+  box-shadow:0 0 9px rgba(255,255,255,.5);
+}
+
+.robot-eye.left{
+  left:19px;
+}
+
+.robot-eye.right{
+  right:19px;
+}
+
+.robot-mouth{
+  position:absolute;
+  left:23px;
+  bottom:14px;
+  width:26px;
+  height:9px;
+  border-bottom:2px solid white;
+  border-radius:0 0 15px 15px;
+}
+
+.robot-body{
+  position:absolute;
+  left:68px;
+  top:105px;
+  width:50px;
+  height:39px;
+  border-radius:13px;
+  background:#1b3850;
+  border:1px solid rgba(34,211,238,.25);
+}
+
+.robot-body:after{
+  content:"AVA";
+  position:absolute;
+  inset:0;
   display:grid;
   place-items:center;
-  background:
-    linear-gradient(
-      145deg,
-      #22d3ee,
-      #2563eb
-    );
-  box-shadow:
-    0 0 45px rgba(34,211,238,.25);
+  color:#67e8f9;
+  font-size:7px;
+  font-weight:1000;
+  letter-spacing:1px;
 }
 
-.bot-core span{
-  font-weight:1000;
+@keyframes ringRotate{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes robotFloat{
+  50%{
+    transform:translateY(-5px);
+  }
 }
 
 /* =========================================================
    EDUCATION
 ========================================================= */
 
-.education{
-  margin:-27px -32px -100px;
-  min-height:calc(100vh - 72px);
-  padding:31px 32px 110px;
-  color:#28232d;
+.education-page{
+  margin:-27px -31px -100px;
+  min-height:calc(100vh - 70px);
+  padding:30px 31px 110px;
+  color:var(--ink);
   background:
-    radial-gradient(
-      circle at 80% 0%,
-      rgba(139,92,246,.12),
-      transparent 25%
-    ),
-    linear-gradient(
-      135deg,
-      #faf7f0,
-      #ece6da
-    );
+    radial-gradient(circle at 85% 0%,rgba(139,92,246,.12),transparent 25%),
+    linear-gradient(135deg,#faf7f0,#ebe3d7);
 }
 
-.edu-top{
+.education-intro{
   display:grid;
   grid-template-columns:1fr 280px;
-  gap:20px;
+  gap:18px;
   align-items:end;
 }
 
 .edu-label{
   color:#7653bf;
-  font-size:8px;
+  font-size:7px;
   font-weight:1000;
   letter-spacing:2px;
 }
 
-.edu-top h1{
+.education-intro h1{
+  max-width:800px;
   margin-top:7px;
-  font-size:clamp(38px,4vw,57px);
-  line-height:.94;
+  font-size:clamp(38px,4.5vw,60px);
+  line-height:.93;
   letter-spacing:-3px;
   font-weight:1000;
 }
 
-.edu-top p{
-  max-width:680px;
-  color:#777168;
-  font-size:10px;
-  line-height:1.7;
+.education-intro p{
+  max-width:760px;
   margin-top:10px;
+  color:#756f68;
+  font-size:10px;
+  line-height:1.75;
 }
 
-.edu-progress{
-  padding:17px;
-  border-radius:20px;
+.edu-progress-card{
+  padding:16px;
+  border-radius:19px;
   background:#fffdf8;
-  border:1px solid #dfd7ca;
+  border:1px solid #ddd5c8;
 }
 
 .edu-progress-head{
   display:flex;
   justify-content:space-between;
-  color:#797268;
-  font-size:8px;
-  font-weight:900;
+  color:#777067;
+  font-size:7px;
+  font-weight:1000;
 }
 
 .edu-progress-head strong{
   color:#7653bf;
 }
 
-.progress-bar{
+.progress{
   height:7px;
   margin-top:8px;
-  border-radius:20px;
-  background:#e5ddd0;
   overflow:hidden;
+  border-radius:20px;
+  background:#e3dace;
 }
 
-.progress-bar i{
+.progress i{
   display:block;
   width:0;
   height:100%;
   border-radius:20px;
-  background:
-    linear-gradient(
-      90deg,
-      #8b5cf6,
-      #3b82f6
-    );
+  background:linear-gradient(90deg,#8b5cf6,#3b82f6);
   transition:.5s;
 }
 
-.edu-tools{
-  margin-top:23px;
+.education-toolbar{
   display:flex;
   gap:8px;
+  margin-top:22px;
+}
+
+.edu-search,
+.edu-filter{
+  height:46px;
+  border-radius:13px;
+  color:#342f36;
+  background:#fffdf8;
+  border:1px solid #ddd5c8;
 }
 
 .edu-search{
   flex:1;
-  height:47px;
-  border-radius:13px;
-  border:1px solid #ddd5c8;
-  background:#fffdf8;
-  color:#332d36;
   padding:0 13px;
 }
 
 .edu-filter{
-  width:180px;
-  border-radius:13px;
-  border:1px solid #ddd5c8;
-  background:#fffdf8;
-  color:#443d47;
-  padding:0 10px;
+  width:200px;
+  padding:0 11px;
 }
 
 .modules{
-  margin-top:23px;
   display:grid;
-  gap:13px;
+  gap:12px;
+  margin-top:21px;
 }
 
 .module{
-  border-radius:21px;
-  background:#fffdf9;
-  border:1px solid #dfd7ca;
-  box-shadow:0 12px 40px rgba(73,55,33,.05);
   overflow:hidden;
+  border-radius:20px;
+  background:#fffdf9;
+  border:1px solid #ded5c8;
+  box-shadow:0 10px 35px rgba(80,60,35,.045);
 }
 
 .module-head{
-  min-height:76px;
-  padding:13px 16px;
+  min-height:75px;
+  padding:12px 15px;
   display:flex;
   align-items:center;
-  gap:13px;
+  gap:12px;
   cursor:pointer;
 }
 
-.module-num{
+.module-number{
   width:45px;
   height:45px;
-  border-radius:14px;
+  flex:none;
   display:grid;
   place-items:center;
-  color:white;
-  font-size:11px;
+  border-radius:14px;
+  color:#fff;
+  background:linear-gradient(145deg,#8b5cf6,#5b21b6);
+  font-size:10px;
   font-weight:1000;
-  background:
-    linear-gradient(
-      145deg,
-      #8b5cf6,
-      #5b21b6
-    );
 }
 
-.module:nth-child(3n+2) .module-num{
-  background:
-    linear-gradient(
-      145deg,
-      #38bdf8,
-      #2563eb
-    );
+.module:nth-child(3n+2) .module-number{
+  background:linear-gradient(145deg,#38bdf8,#2563eb);
 }
 
-.module:nth-child(3n) .module-num{
-  background:
-    linear-gradient(
-      145deg,
-      #fb923c,
-      #dc2626
-    );
+.module:nth-child(3n) .module-number{
+  background:linear-gradient(145deg,#fb923c,#dc2626);
 }
 
-.module-title{
+.module-info{
   flex:1;
+  min-width:0;
 }
 
-.module-title strong{
+.module-info strong{
   display:block;
-  font-size:13px;
+  font-size:12px;
 }
 
-.module-title small{
+.module-info small{
   display:block;
   margin-top:3px;
-  color:#8b837a;
-  font-size:8px;
+  color:#8a8279;
+  font-size:7px;
 }
 
 .module-percent{
@@ -1638,7 +1606,7 @@ select{
 }
 
 .module-arrow{
-  color:#8d867e;
+  color:#8a8279;
   transition:.2s;
 }
 
@@ -1646,89 +1614,88 @@ select{
   transform:rotate(180deg);
 }
 
-.lessons{
+.module-lessons{
   display:none;
   grid-template-columns:1fr 1fr;
   gap:8px;
-  padding:0 12px 12px;
+  padding:0 11px 11px;
 }
 
-.module.open .lessons{
+.module.open .module-lessons{
   display:grid;
 }
 
 .lesson{
-  min-height:78px;
+  min-height:75px;
   padding:10px;
-  border-radius:15px;
-  border:1px solid #e6ded2;
-  background:#fbf8f1;
   display:flex;
   align-items:center;
   gap:9px;
+  border-radius:14px;
+  background:#fbf8f1;
+  border:1px solid #e5ddd1;
   cursor:pointer;
   transition:.2s;
 }
 
 .lesson:hover{
   transform:translateY(-2px);
-  box-shadow:0 8px 25px rgba(66,51,30,.08);
+  box-shadow:0 8px 22px rgba(70,50,25,.07);
 }
 
 .lesson.completed{
   background:#f0faf3;
-  border-color:#b9dfc5;
+  border-color:#b8dec3;
 }
 
 .lesson-number{
-  width:35px;
-  height:35px;
+  width:34px;
+  height:34px;
   flex:none;
-  border-radius:10px;
   display:grid;
   place-items:center;
-  background:#ece5da;
-  color:#71685f;
-  font-size:9px;
+  border-radius:10px;
+  color:#766e66;
+  background:#ece4d9;
+  font-size:8px;
   font-weight:1000;
 }
 
 .lesson.completed .lesson-number{
-  color:white;
+  color:#fff;
   background:#16a34a;
 }
 
-.lesson-info{
+.lesson-text{
   min-width:0;
-  flex:1;
 }
 
-.lesson-info strong{
+.lesson-text strong{
   display:block;
-  font-size:9px;
-  line-height:1.35;
+  font-size:8px;
+  line-height:1.4;
 }
 
-.lesson-info small{
+.lesson-text small{
   display:block;
   margin-top:4px;
-  color:#968d82;
-  font-size:7px;
+  color:#958d83;
+  font-size:6px;
 }
 
 /* =========================================================
-   READER
+   LESSON READER
 ========================================================= */
 
 .reader-overlay{
   position:fixed;
   inset:0;
-  z-index:500;
+  z-index:600;
   display:none;
   align-items:center;
   justify-content:center;
-  padding:18px;
-  background:rgba(2,5,10,.8);
+  padding:16px;
+  background:rgba(2,5,10,.82);
   backdrop-filter:blur(12px);
 }
 
@@ -1737,13 +1704,13 @@ select{
 }
 
 .reader{
-  width:min(1100px,100%);
+  width:min(1120px,100%);
   max-height:94vh;
   overflow:auto;
   border-radius:27px;
+  color:#28222c;
   background:#f8f3e9;
-  color:#29232f;
-  box-shadow:0 40px 120px rgba(0,0,0,.55);
+  box-shadow:0 40px 120px rgba(0,0,0,.6);
 }
 
 .reader-top{
@@ -1751,33 +1718,33 @@ select{
   position:sticky;
   top:0;
   z-index:5;
+  padding:0 20px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 20px;
-  background:rgba(248,243,233,.97);
-  border-bottom:1px solid #e1d9cc;
+  background:rgba(248,243,233,.98);
+  border-bottom:1px solid #e1d8ca;
 }
 
 .reader-label{
   color:#7653bf;
-  font-size:8px;
+  font-size:7px;
   font-weight:1000;
-  letter-spacing:1.4px;
+  letter-spacing:1.5px;
 }
 
 .reader-counter{
-  color:#81796f;
-  font-size:7px;
   margin-top:3px;
+  color:#81786f;
+  font-size:7px;
 }
 
 .reader-close{
   width:35px;
   height:35px;
-  border-radius:10px;
+  border-radius:11px;
+  color:#665e65;
   background:#e9e1d5;
-  color:#625b63;
 }
 
 .reader-main{
@@ -1786,37 +1753,40 @@ select{
 
 .reader-grid{
   display:grid;
-  grid-template-columns:.9fr 1.1fr;
+  grid-template-columns:.85fr 1.15fr;
   gap:28px;
 }
 
-.reader-art{
-  min-height:330px;
-  border-radius:23px;
-  overflow:hidden;
+.reader-illustration{
   position:relative;
+  min-height:350px;
+  overflow:hidden;
+  border-radius:23px;
   background:
-    radial-gradient(
-      circle at 50% 40%,
-      rgba(139,92,246,.2),
-      transparent 40%
-    ),
-    #e9e1d5;
+    radial-gradient(circle at 50% 35%,rgba(139,92,246,.22),transparent 42%),
+    #ebe3d7;
   border:1px solid #ddd4c5;
 }
 
-.reader-chart{
+.reader-illustration:before{
+  content:"";
   position:absolute;
   inset:35px;
+  background-image:
+    linear-gradient(rgba(80,70,60,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(80,70,60,.08) 1px,transparent 1px);
+  background-size:45px 45px;
 }
 
-.reader-chart svg{
-  width:100%;
-  height:100%;
+.reader-illustration svg{
+  position:absolute;
+  inset:30px;
+  width:calc(100% - 60px);
+  height:calc(100% - 60px);
 }
 
 .reader-text h2{
-  font-size:38px;
+  font-size:39px;
   line-height:1;
   letter-spacing:-2px;
 }
@@ -1824,65 +1794,63 @@ select{
 .reader-lead{
   margin-top:13px;
   color:#756e66;
-  font-size:11px;
-  line-height:1.75;
+  font-size:10px;
+  line-height:1.8;
 }
 
 .reader-section{
   margin-top:18px;
-  padding:14px;
+  padding:15px;
   border-radius:15px;
   background:#fffdf8;
-  border:1px solid #e6ded2;
+  border:1px solid #e5ddd1;
 }
 
 .reader-section h4{
-  font-size:10px;
-}
-
-.reader-section p{
-  margin-top:6px;
-  color:#716a63;
   font-size:9px;
-  line-height:1.6;
 }
 
 .reader-points{
-  margin-top:9px;
   display:grid;
-  gap:7px;
+  gap:8px;
+  margin-top:10px;
 }
 
 .reader-point{
   display:flex;
   gap:8px;
-  align-items:flex-start;
-  color:#665f68;
-  font-size:9px;
-  line-height:1.5;
+  color:#68615b;
+  font-size:8px;
+  line-height:1.55;
 }
 
-.reader-point i{
+.reader-point-number{
   width:20px;
   height:20px;
   flex:none;
-  border-radius:7px;
   display:grid;
   place-items:center;
-  color:white;
+  border-radius:7px;
+  color:#fff;
   background:#7653bf;
-  font-style:normal;
   font-size:7px;
   font-weight:1000;
 }
 
+.reader-tip{
+  margin-top:7px;
+  color:#706860;
+  font-size:8px;
+  line-height:1.6;
+}
+
 .reader-footer{
-  margin-top:28px;
-  padding-top:17px;
-  border-top:1px solid #e1d9cc;
+  margin-top:27px;
+  padding-top:16px;
   display:flex;
   justify-content:space-between;
   gap:8px;
+  border-top:1px solid #e1d8ca;
 }
 
 .reader-actions{
@@ -1890,107 +1858,99 @@ select{
   gap:7px;
 }
 
-.reader-button{
-  min-height:41px;
+.reader-btn{
+  min-height:40px;
   padding:0 13px;
   border-radius:11px;
-  font-size:8px;
+  font-size:7px;
   font-weight:1000;
 }
 
-.reader-button.gray{
+.reader-btn.gray{
+  color:#625a61;
   background:#e8e0d4;
-  color:#5e5660;
 }
 
-.reader-button.green{
-  background:#16a34a;
+.reader-btn.green{
   color:white;
+  background:#16a34a;
 }
 
 /* =========================================================
-   SIGNAL
+   AVA BOT
 ========================================================= */
 
 .signal-page{
-  margin:-27px -32px -100px;
-  min-height:calc(100vh - 72px);
-  padding:27px 32px 110px;
+  margin:-27px -31px -100px;
+  min-height:calc(100vh - 70px);
+  padding:28px 31px 110px;
   background:
-    radial-gradient(
-      circle at 75% 0%,
-      rgba(124,58,237,.15),
-      transparent 28%
-    ),
+    radial-gradient(circle at 75% 0%,rgba(124,58,237,.14),transparent 28%),
     #080d18;
 }
 
-.signal-wrap{
+.signal-container{
   max-width:1250px;
   margin:auto;
 }
 
-.signal-head{
+.signal-title{
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:15px;
-  margin-bottom:14px;
+  justify-content:space-between;
+  margin-bottom:13px;
 }
 
 .signal-brand{
   display:flex;
   align-items:center;
-  gap:11px;
+  gap:12px;
 }
 
-.signal-icon{
-  width:48px;
-  height:48px;
-  border-radius:15px;
+.signal-brand-icon{
+  width:50px;
+  height:50px;
   display:grid;
   place-items:center;
-  background:
-    linear-gradient(
-      145deg,
-      #a78bfa,
-      #6d28d9
-    );
-  box-shadow:0 12px 35px rgba(124,58,237,.25);
+  border-radius:16px;
+  background:linear-gradient(145deg,#a78bfa,#5b21b6);
+  box-shadow:0 15px 40px rgba(124,58,237,.28);
 }
 
-.signal-icon svg{
-  width:28px;
+.signal-brand-icon svg{
+  width:30px;
 }
 
-.signal-brand h2{
-  font-size:16px;
+.signal-brand h1{
+  font-size:21px;
+  font-weight:1000;
+  letter-spacing:-.5px;
 }
 
 .signal-brand p{
   margin-top:3px;
   color:#5f6b81;
-  font-size:8px;
+  font-size:7px;
 }
 
-.signal-live{
+.system-status{
   padding:8px 10px;
   border-radius:999px;
-  background:#0e1626;
+  color:#718097;
+  background:#0d1626;
   border:1px solid var(--line);
-  color:#8a95aa;
   font-size:7px;
   font-weight:1000;
 }
 
-.signal-live i{
+.system-status i{
   display:inline-block;
   width:6px;
   height:6px;
+  margin-right:5px;
   border-radius:50%;
   background:#22c55e;
   box-shadow:0 0 10px #22c55e;
-  margin-right:5px;
 }
 
 .signal-layout{
@@ -2002,24 +1962,19 @@ select{
 .signal-controls{
   padding:20px;
   border-radius:25px;
-  background:
-    linear-gradient(
-      145deg,
-      #11192b,
-      #0b1220
-    );
+  background:linear-gradient(145deg,#11192b,#0b1220);
   border:1px solid var(--line);
 }
 
-.signal-controls h3{
-  font-size:16px;
+.signal-controls h2{
+  font-size:17px;
 }
 
 .signal-controls > p{
-  color:#68758c;
-  font-size:8px;
-  line-height:1.5;
   margin-top:5px;
+  color:#68758c;
+  font-size:7px;
+  line-height:1.6;
 }
 
 .control{
@@ -2028,11 +1983,10 @@ select{
 
 .control-label{
   margin-bottom:7px;
-  color:#67748b;
+  color:#66738a;
   font-size:7px;
   font-weight:1000;
-  letter-spacing:1.2px;
-  text-transform:uppercase;
+  letter-spacing:1.3px;
 }
 
 .market-buttons{
@@ -2041,157 +1995,138 @@ select{
   gap:7px;
 }
 
-.market-button{
-  height:47px;
-  border-radius:13px;
+.market-btn{
+  height:46px;
+  border-radius:12px;
+  color:#758198;
   background:#0d1626;
-  border:1px solid rgba(255,255,255,.055);
-  color:#78849a;
-  font-size:9px;
+  border:1px solid rgba(255,255,255,.05);
+  font-size:8px;
   font-weight:1000;
 }
 
-.market-button.active{
+.market-btn.active{
   color:#67e8f9;
-  border-color:rgba(34,211,238,.28);
   background:#123548;
+  border-color:rgba(34,211,238,.3);
 }
 
-.market-button.otc.active{
+.market-btn.otc.active{
   color:#fdba74;
-  border-color:rgba(249,115,22,.3);
   background:#352318;
+  border-color:rgba(249,115,22,.3);
 }
 
 .pair-select{
   width:100%;
-  height:48px;
-  border-radius:13px;
-  border:1px solid var(--line);
-  background:#0b1322;
-  color:white;
+  height:47px;
   padding:0 12px;
+  border-radius:12px;
+  color:white;
+  background:#0b1322;
+  border:1px solid var(--line);
 }
 
-.duration-grid{
+.duration-buttons{
   display:grid;
   grid-template-columns:repeat(6,1fr);
   gap:4px;
 }
 
-.duration{
-  height:38px;
+.duration-btn{
+  height:37px;
   border-radius:9px;
-  background:#0d1626;
   color:#748097;
+  background:#0d1626;
   border:1px solid rgba(255,255,255,.05);
   font-size:7px;
   font-weight:1000;
 }
 
-.duration.active{
+.duration-btn.active{
   color:white;
   background:#4f46e5;
 }
 
-.generate{
+.generate-btn{
+  position:relative;
   width:100%;
-  height:56px;
+  height:57px;
   margin-top:18px;
+  overflow:hidden;
   border-radius:15px;
   color:white;
-  background:
-    linear-gradient(
-      100deg,
-      #7c3aed,
-      #4f46e5,
-      #2563eb
-    );
-  font-size:10px;
-  font-weight:1000;
+  background:linear-gradient(100deg,#7c3aed,#4f46e5,#2563eb);
   box-shadow:0 16px 40px rgba(79,70,229,.28);
-  position:relative;
-  overflow:hidden;
+  font-size:9px;
+  font-weight:1000;
 }
 
-.generate.loading{
+.generate-btn.loading{
   pointer-events:none;
 }
 
-.generate.loading:after{
+.generate-btn.loading:after{
   content:"";
   position:absolute;
-  left:-100%;
   top:0;
   bottom:0;
+  left:-100%;
   width:70%;
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.3),
-      transparent
-    );
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
   animation:buttonScan 1s infinite;
 }
 
 @keyframes buttonScan{
-  to{
-    left:140%;
-  }
+  to{left:140%}
 }
 
 .disclaimer{
-  margin-top:12px;
+  margin-top:11px;
   color:#4e5a70;
-  font-size:7px;
-  line-height:1.5;
   text-align:center;
+  font-size:6px;
+  line-height:1.55;
 }
 
-/* signal result */
+/* BOT RESULT */
 
 .signal-result{
-  min-height:570px;
   position:relative;
+  min-height:575px;
   overflow:hidden;
   border-radius:27px;
   background:
-    radial-gradient(
-      circle at 50% 30%,
-      rgba(59,130,246,.08),
-      transparent 35%
-    ),
+    radial-gradient(circle at 50% 40%,rgba(59,130,246,.07),transparent 38%),
     #0a101c;
   border:1px solid var(--line);
 }
 
-.result-top{
+.result-header{
   position:absolute;
   top:17px;
   left:20px;
   right:20px;
-  z-index:4;
+  z-index:5;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 
-.result-top small{
-  color:#657188;
-  font-size:7px;
+.result-header small{
+  color:#5f6b81;
+  font-size:6px;
+  letter-spacing:1px;
 }
 
-.result-top strong{
+.result-header strong{
+  color:#d5dce7;
   font-size:8px;
 }
 
 .result-chart{
   position:absolute;
-  left:30px;
-  right:30px;
-  top:65px;
-  bottom:25px;
+  inset:58px 25px 20px;
 }
 
 .result-chart svg{
@@ -2199,99 +2134,149 @@ select{
   height:100%;
 }
 
-.result-grid{
-  stroke:rgba(255,255,255,.07);
+.result-grid-line{
+  stroke:rgba(255,255,255,.065);
   stroke-width:1;
 }
 
 .result-candle{
-  animation:candlePulse 2.5s ease-in-out infinite;
+  animation:resultCandle 2.4s ease-in-out infinite;
 }
 
-@keyframes candlePulse{
-  50%{
-    opacity:.65;
-  }
+@keyframes resultCandle{
+  50%{opacity:.65}
 }
 
-.result-center{
+/* central actual robot */
+
+.bot-center{
   position:absolute;
   left:50%;
   top:50%;
+  width:235px;
+  min-height:220px;
   transform:translate(-50%,-50%);
-  width:210px;
-  min-height:190px;
-  border-radius:30px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  background:
-    rgba(8,13,24,.9);
+  border-radius:31px;
+  background:rgba(7,12,22,.91);
   border:1px solid rgba(255,255,255,.1);
-  box-shadow:
-    0 25px 70px rgba(0,0,0,.4);
-  backdrop-filter:blur(15px);
-  transition:.4s;
+  box-shadow:0 25px 75px rgba(0,0,0,.45);
+  backdrop-filter:blur(16px);
+  transition:.35s;
 }
 
-.result-center.scanning{
+.bot-center.scanning{
   box-shadow:
-    0 0 0 1px rgba(139,92,246,.25),
-    0 0 70px rgba(139,92,246,.18);
+    0 0 0 1px rgba(139,92,246,.3),
+    0 0 80px rgba(139,92,246,.18);
 }
 
-.bot-avatar{
-  width:65px;
-  height:65px;
-  border-radius:20px;
-  display:grid;
-  place-items:center;
-  background:
-    linear-gradient(
-      145deg,
-      #8b5cf6,
-      #2563eb
-    );
-  box-shadow:0 12px 35px rgba(79,70,229,.3);
+.bot-large{
   position:relative;
+  width:77px;
+  height:77px;
+  border-radius:25px;
+  background:linear-gradient(145deg,#22d3ee,#2563eb);
+  box-shadow:
+    0 15px 45px rgba(34,211,238,.22),
+    inset 0 0 0 2px rgba(255,255,255,.08);
+  animation:botFloat 3s ease-in-out infinite;
 }
 
-.bot-avatar:before,
-.bot-avatar:after{
+.bot-large:before,
+.bot-large:after{
   content:"";
   position:absolute;
-  width:8px;
-  height:12px;
-  border-radius:5px;
+  top:25px;
+  width:11px;
+  height:15px;
+  border-radius:6px;
   background:white;
-  top:21px;
+  box-shadow:0 0 9px rgba(255,255,255,.4);
 }
 
-.bot-avatar:before{
-  left:18px;
+.bot-large:before{
+  left:20px;
 }
 
-.bot-avatar:after{
-  right:18px;
+.bot-large:after{
+  right:20px;
 }
 
-.bot-smile{
+.bot-large-mouth{
   position:absolute;
-  bottom:13px;
-  width:25px;
-  height:8px;
+  bottom:15px;
+  left:26px;
+  width:26px;
+  height:10px;
   border-bottom:2px solid white;
-  border-radius:0 0 20px 20px;
+  border-radius:0 0 15px 15px;
+}
+
+.bot-large-antenna{
+  position:absolute;
+  left:50%;
+  top:-17px;
+  width:2px;
+  height:18px;
+  transform:translateX(-50%);
+  background:#22d3ee;
+}
+
+.bot-large-antenna:after{
+  content:"";
+  position:absolute;
+  top:-5px;
+  left:50%;
+  width:8px;
+  height:8px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:#a78bfa;
+  box-shadow:0 0 16px #a78bfa;
+}
+
+@keyframes botFloat{
+  50%{transform:translateY(-5px)}
 }
 
 .bot-status{
-  margin-top:10px;
-  color:#77849b;
+  margin-top:12px;
+  color:#7c899f;
   font-size:7px;
   font-weight:1000;
-  letter-spacing:1px;
+  letter-spacing:1.2px;
   text-transform:uppercase;
+}
+
+.scan-lines{
+  width:150px;
+  height:4px;
+  margin-top:10px;
+  overflow:hidden;
+  border-radius:20px;
+  background:#1b263a;
+  opacity:0;
+}
+
+.scanning .scan-lines{
+  opacity:1;
+}
+
+.scan-lines i{
+  display:block;
+  width:35%;
+  height:100%;
+  background:linear-gradient(90deg,#8b5cf6,#22d3ee);
+  animation:scanLine 1s infinite;
+}
+
+@keyframes scanLine{
+  from{transform:translateX(-150%)}
+  to{transform:translateX(450%)}
 }
 
 .signal-final{
@@ -2301,13 +2286,13 @@ select{
 
 .signal-final.show{
   display:block;
-  animation:signalAppear .45s ease;
+  animation:resultIn .5s ease;
 }
 
-@keyframes signalAppear{
+@keyframes resultIn{
   from{
     opacity:0;
-    transform:scale(.8);
+    transform:scale(.78);
   }
   to{
     opacity:1;
@@ -2315,47 +2300,49 @@ select{
   }
 }
 
-.signal-direction{
+.direction{
   font-size:31px;
   font-weight:1000;
   letter-spacing:-1px;
 }
 
-.signal-direction.up{
+.direction.up{
   color:#4ade80;
+  text-shadow:0 0 25px rgba(74,222,128,.2);
 }
 
-.signal-direction.down{
+.direction.down{
   color:#fb7185;
+  text-shadow:0 0 25px rgba(251,113,133,.2);
 }
 
 .signal-meta{
-  margin-top:4px;
+  margin-top:5px;
   color:#748097;
   font-size:7px;
 }
 
-.signal-confidence{
-  margin-top:10px;
-  font-size:8px;
-  color:#aeb8c9;
+.confidence-text{
+  margin-top:11px;
+  color:#9ca8ba;
+  font-size:7px;
 }
 
-.confidence-bar{
-  width:140px;
+.confidence{
+  width:150px;
   height:5px;
   margin:7px auto 0;
-  border-radius:20px;
   overflow:hidden;
-  background:#202a3c;
+  border-radius:20px;
+  background:#202a3d;
 }
 
-.confidence-bar i{
+.confidence i{
   display:block;
+  width:0;
   height:100%;
   border-radius:20px;
   background:#22c55e;
-  width:0;
   transition:1s;
 }
 
@@ -2364,63 +2351,75 @@ select{
 ========================================================= */
 
 .ai-page{
-  max-width:1000px;
+  max-width:1050px;
   margin:auto;
 }
 
-.ai-hero{
+.ai-banner{
+  position:relative;
+  overflow:hidden;
   padding:25px;
   border-radius:27px;
   background:
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(139,92,246,.2),
-      transparent 35%
-    ),
-    linear-gradient(
-      145deg,
-      #11182a,
-      #0b111e
-    );
+    radial-gradient(circle at 90% 10%,rgba(139,92,246,.2),transparent 34%),
+    linear-gradient(145deg,#131a2c,#0c1321);
   border:1px solid var(--line);
 }
 
-.ai-hero-row{
+.ai-identity{
   display:flex;
   align-items:center;
-  gap:16px;
+  gap:15px;
 }
 
-.ai-big{
+.ai-avatar{
+  position:relative;
   width:68px;
   height:68px;
-  border-radius:22px;
   display:grid;
   place-items:center;
-  flex:none;
-  background:
-    linear-gradient(
-      145deg,
-      #a78bfa,
-      #2563eb
-    );
-  box-shadow:0 18px 45px rgba(79,70,229,.3);
+  border-radius:22px;
+  background:linear-gradient(145deg,#a78bfa,#2563eb);
+  box-shadow:0 17px 45px rgba(79,70,229,.3);
 }
 
-.ai-big span{
+.ai-avatar:before,
+.ai-avatar:after{
+  content:"";
+  position:absolute;
+  top:22px;
+  width:9px;
+  height:14px;
+  border-radius:5px;
+  background:#fff;
+}
+
+.ai-avatar:before{
+  left:18px;
+}
+
+.ai-avatar:after{
+  right:18px;
+}
+
+.ai-avatar-mouth{
+  position:absolute;
+  bottom:13px;
+  width:25px;
+  height:8px;
+  border-bottom:2px solid white;
+  border-radius:0 0 20px 20px;
+}
+
+.ai-identity h1{
   font-size:25px;
   font-weight:1000;
 }
 
-.ai-hero h1{
-  font-size:26px;
-  font-weight:1000;
-}
-
-.ai-hero p{
-  color:#77849a;
-  font-size:9px;
-  margin-top:5px;
+.ai-identity p{
+  margin-top:4px;
+  color:#737f95;
+  font-size:8px;
 }
 
 .quick-questions{
@@ -2436,89 +2435,85 @@ select{
   color:#aeb8c9;
   background:rgba(255,255,255,.035);
   border:1px solid var(--line);
-  font-size:8px;
+  font-size:7px;
   font-weight:900;
 }
 
 .chat{
-  margin-top:13px;
-  min-height:500px;
+  min-height:530px;
+  margin-top:12px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
   border-radius:25px;
   background:#0d1422;
   border:1px solid var(--line);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
 }
 
 .messages{
   flex:1;
+  max-height:550px;
   padding:18px;
   overflow:auto;
   display:flex;
   flex-direction:column;
-  gap:11px;
-  max-height:550px;
+  gap:10px;
 }
 
 .message{
-  max-width:75%;
+  max-width:78%;
   padding:12px 14px;
   border-radius:16px;
-  font-size:9px;
-  line-height:1.65;
+  font-size:8px;
+  line-height:1.7;
 }
 
 .message.ava{
   align-self:flex-start;
+  color:#c4ccda;
   background:#151e30;
   border:1px solid var(--line);
-  color:#c4ccda;
 }
 
 .message.user{
   align-self:flex-end;
-  background:
-    linear-gradient(
-      100deg,
-      #6d28d9,
-      #2563eb
-    );
   color:white;
+  background:linear-gradient(100deg,#6d28d9,#2563eb);
 }
 
 .chat-input{
-  padding:11px;
   display:flex;
   gap:7px;
+  padding:11px;
   border-top:1px solid var(--line);
 }
 
 .chat-input textarea{
   flex:1;
-  height:45px;
+  height:46px;
   resize:none;
-  border-radius:13px;
-  background:#0a101c;
-  color:white;
-  border:1px solid var(--line);
   padding:12px;
-  font-size:9px;
+  border-radius:13px;
+  color:white;
+  background:#0a101c;
+  border:1px solid var(--line);
+  font-size:8px;
 }
 
 .chat-send{
   width:47px;
-  height:45px;
+  height:46px;
   border-radius:13px;
   color:white;
   background:#4f46e5;
+  font-size:16px;
 }
 
 /* =========================================================
    PRACTICE
 ========================================================= */
 
-.practice{
+.practice-page{
   max-width:1000px;
   margin:auto;
 }
@@ -2526,28 +2521,23 @@ select{
 .practice-card{
   padding:27px;
   border-radius:27px;
-  background:
-    linear-gradient(
-      145deg,
-      #11192b,
-      #0b1220
-    );
+  background:linear-gradient(145deg,#121a2c,#0b1220);
   border:1px solid var(--line);
 }
 
 .practice-card h1{
-  font-size:28px;
+  font-size:29px;
   font-weight:1000;
 }
 
 .practice-card > p{
-  margin-top:6px;
-  color:#738097;
-  font-size:9px;
+  margin-top:5px;
+  color:#748097;
+  font-size:8px;
 }
 
 .quiz{
-  margin-top:23px;
+  margin-top:22px;
   padding:20px;
   border-radius:20px;
   background:#0a101c;
@@ -2555,7 +2545,7 @@ select{
 }
 
 .quiz-question{
-  font-size:15px;
+  font-size:14px;
   line-height:1.5;
   font-weight:900;
 }
@@ -2568,53 +2558,53 @@ select{
 }
 
 .answer{
-  min-height:55px;
+  min-height:54px;
   padding:10px;
   border-radius:13px;
+  color:#aeb8c8;
   background:#111827;
   border:1px solid var(--line);
-  color:#aeb8c8;
   text-align:left;
-  font-size:9px;
+  font-size:8px;
   transition:.2s;
 }
 
 .answer:hover{
-  border-color:#8b5cf6;
   color:white;
+  border-color:#8b5cf6;
 }
 
 .answer.correct{
+  color:#86efac;
   background:#10351f;
   border-color:#22c55e;
-  color:#86efac;
 }
 
 .answer.wrong{
+  color:#fca5a5;
   background:#391722;
   border-color:#ef4444;
-  color:#fca5a5;
 }
 
 .quiz-bottom{
   margin-top:15px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 
 .quiz-score{
   color:#657188;
-  font-size:8px;
+  font-size:7px;
 }
 
 .next-question{
   min-height:39px;
   padding:0 13px;
   border-radius:11px;
-  background:#4f46e5;
   color:white;
-  font-size:8px;
+  background:#4f46e5;
+  font-size:7px;
   font-weight:1000;
 }
 
@@ -2622,46 +2612,60 @@ select{
    COMMUNITY
 ========================================================= */
 
-.community{
+.community-page{
   max-width:1000px;
   margin:auto;
 }
 
-.community-hero{
-  padding:27px;
+.community-heading{
+  position:relative;
+  overflow:hidden;
+  padding:29px;
   border-radius:27px;
   background:
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(34,211,238,.12),
-      transparent 30%
-    ),
-    #111827;
+    radial-gradient(circle at 90% 10%,rgba(34,211,238,.13),transparent 32%),
+    linear-gradient(145deg,#121b2c,#0c1320);
   border:1px solid var(--line);
 }
 
-.community-hero h1{
-  font-size:30px;
+.community-heading h1{
+  font-size:34px;
   font-weight:1000;
+  letter-spacing:-1.5px;
 }
 
-.community-hero p{
-  max-width:600px;
+.community-heading p{
+  max-width:650px;
   margin-top:7px;
   color:#758197;
   font-size:9px;
   line-height:1.7;
 }
 
-.community-grid{
-  margin-top:13px;
+.connection-status{
+  position:absolute;
+  right:25px;
+  top:25px;
+  padding:8px 10px;
+  border-radius:999px;
+  color:#86efac;
+  background:#123323;
+  border:1px solid rgba(34,197,94,.18);
+  font-size:7px;
+  font-weight:1000;
+}
+
+.community-cards{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
+  margin-top:13px;
 }
 
 .community-card{
-  min-height:210px;
+  position:relative;
+  min-height:235px;
+  overflow:hidden;
   padding:22px;
   border-radius:22px;
   background:#101827;
@@ -2669,252 +2673,345 @@ select{
 }
 
 .community-card h3{
-  font-size:16px;
+  font-size:17px;
 }
 
 .community-card p{
+  max-width:390px;
   margin-top:8px;
   color:#748097;
-  font-size:9px;
-  line-height:1.65;
+  font-size:8px;
+  line-height:1.7;
 }
 
 .community-button{
-  margin-top:18px;
+  position:absolute;
+  left:20px;
+  bottom:20px;
   min-height:42px;
   padding:0 14px;
   border-radius:12px;
   color:white;
   background:#4f46e5;
-  font-size:8px;
+  font-size:7px;
   font-weight:1000;
+}
+
+.telegram-art{
+  position:absolute;
+  right:25px;
+  top:35px;
+  width:95px;
+  height:95px;
+  display:grid;
+  place-items:center;
+  border-radius:30px;
+  background:linear-gradient(145deg,#38bdf8,#2563eb);
+  box-shadow:0 20px 50px rgba(37,99,235,.25);
+  transform:rotate(7deg);
+}
+
+.telegram-art svg{
+  width:47px;
+}
+
+.update-art{
+  position:absolute;
+  right:25px;
+  top:35px;
+  width:95px;
+  height:95px;
+  display:grid;
+  place-items:center;
+  border-radius:30px;
+  background:linear-gradient(145deg,#8b5cf6,#6d28d9);
+  box-shadow:0 20px 50px rgba(109,40,217,.25);
+  transform:rotate(-7deg);
+  font-size:35px;
 }
 
 /* =========================================================
    PROFILE
 ========================================================= */
 
-.profile{
-  max-width:1000px;
+.profile-page{
+  max-width:1050px;
   margin:auto;
 }
 
 .profile-top{
   display:grid;
-  grid-template-columns:1fr 250px;
+  grid-template-columns:1fr 280px;
   gap:13px;
 }
 
-.profile-card{
+.profile-main-card{
   padding:25px;
-  border-radius:25px;
-  background:
-    linear-gradient(
-      145deg,
-      #131c2e,
-      #0d1422
-    );
+  border-radius:26px;
+  background:linear-gradient(145deg,#131c2e,#0d1422);
   border:1px solid var(--line);
 }
 
-.profile-identity{
+.profile-user{
   display:flex;
   align-items:center;
   gap:16px;
 }
 
-.profile-avatar-large{
-  width:88px;
-  height:88px;
-  border-radius:27px;
-  overflow:hidden;
+.profile-avatar{
+  position:relative;
+  width:91px;
+  height:91px;
   flex:none;
-  background:
-    linear-gradient(
-      145deg,
-      #8b5cf6,
-      #2563eb
-    );
   display:grid;
   place-items:center;
-  font-size:24px;
+  overflow:hidden;
+  border-radius:28px;
+  color:white;
+  background:linear-gradient(145deg,#8b5cf6,#2563eb);
+  font-size:25px;
   font-weight:1000;
+  box-shadow:0 20px 50px rgba(79,70,229,.25);
 }
 
-.profile-avatar-large img{
+.profile-avatar img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-.profile-name{
-  font-size:23px;
+.profile-user-text h1{
+  font-size:25px;
   font-weight:1000;
 }
 
-.profile-nick{
+.profile-nickname{
   margin-top:3px;
   color:#657188;
-  font-size:9px;
-}
-
-.profile-level{
-  margin-top:11px;
-}
-
-.profile-level-head{
-  display:flex;
-  justify-content:space-between;
-  color:#78849a;
   font-size:8px;
 }
 
-.profile-level-head strong{
+.level{
+  margin-top:12px;
+}
+
+.level-head{
+  width:270px;
+  max-width:100%;
+  display:flex;
+  justify-content:space-between;
+  color:#78849a;
+  font-size:7px;
+}
+
+.level-head strong{
   color:white;
 }
 
 .level-bar{
-  margin-top:6px;
   width:270px;
   max-width:100%;
   height:6px;
-  border-radius:20px;
+  margin-top:6px;
   overflow:hidden;
+  border-radius:20px;
   background:#202a3d;
 }
 
 .level-bar i{
   display:block;
-  width:25%;
+  width:0;
   height:100%;
   border-radius:20px;
-  background:
-    linear-gradient(
-      90deg,
-      #8b5cf6,
-      #22d3ee
-    );
+  background:linear-gradient(90deg,#8b5cf6,#22d3ee);
 }
 
 .edit-profile{
-  margin-top:15px;
-  min-height:40px;
-  padding:0 13px;
+  min-height:38px;
+  margin-top:13px;
+  padding:0 12px;
   border-radius:11px;
+  color:#b8c1d0;
   background:#171f31;
-  color:#b9c2d1;
   border:1px solid var(--line);
-  font-size:8px;
-  font-weight:1000;
-}
-
-.profile-coins{
-  padding:22px;
-  border-radius:25px;
-  background:
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(250,204,21,.14),
-      transparent 40%
-    ),
-    #151b27;
-  border:1px solid var(--line);
-}
-
-.profile-coins small{
-  color:#69758c;
   font-size:7px;
   font-weight:1000;
 }
 
-.profile-coins strong{
-  display:block;
-  margin-top:7px;
-  color:#facc15;
-  font-size:27px;
+.profile-wallet{
+  padding:22px;
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(250,204,21,.15),transparent 40%),
+    #171c28;
+  border:1px solid var(--line);
 }
 
-.bonus{
-  margin-top:13px;
-  width:100%;
-  height:40px;
-  border-radius:11px;
-  background:#2a2517;
-  color:#facc15;
-  font-size:8px;
+.profile-wallet small{
+  color:#68748b;
+  font-size:7px;
   font-weight:1000;
 }
 
-.profile-stats{
-  margin-top:13px;
+.profile-wallet strong{
+  display:block;
+  margin-top:7px;
+  color:#facc15;
+  font-size:30px;
+}
+
+.daily-bonus{
+  width:100%;
+  height:41px;
+  margin-top:15px;
+  border-radius:11px;
+  color:#19160e;
+  background:#facc15;
+  font-size:7px;
+  font-weight:1000;
+}
+
+.daily-bonus.disabled{
+  opacity:.4;
+  pointer-events:none;
+}
+
+.profile-stat-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:9px;
+  gap:10px;
+  margin-top:13px;
 }
 
 .profile-stat{
-  padding:17px;
-  border-radius:18px;
+  min-height:105px;
+  padding:16px;
+  border-radius:19px;
   background:#101827;
   border:1px solid var(--line);
 }
 
 .profile-stat small{
-  color:#637087;
+  color:#647087;
   font-size:7px;
 }
 
 .profile-stat strong{
   display:block;
   margin-top:5px;
-  font-size:19px;
+  font-size:24px;
+}
+
+.profile-stat span{
+  color:#5d6980;
+  font-size:7px;
+}
+
+.profile-panels{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:13px;
+}
+
+.profile-panel{
+  padding:21px;
+  border-radius:22px;
+  background:#0f1626;
+  border:1px solid var(--line);
+}
+
+.profile-panel h2{
+  font-size:16px;
+}
+
+.route{
+  display:grid;
+  grid-template-columns:34px 1fr auto;
+  align-items:center;
+  gap:8px;
+  margin-top:12px;
+}
+
+.route-icon{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  color:#758197;
+  background:#182239;
+  font-size:8px;
+  font-weight:1000;
+}
+
+.route.done .route-icon{
+  color:#86efac;
+  background:#123b29;
+}
+
+.route-name strong{
+  display:block;
+  font-size:8px;
+}
+
+.route-name small{
+  display:block;
+  margin-top:2px;
+  color:#5e6b81;
+  font-size:6px;
+}
+
+.route-percent{
+  color:#77849a;
+  font-size:7px;
 }
 
 .achievements{
-  margin-top:13px;
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:9px;
+  gap:7px;
+  margin-top:14px;
 }
 
 .achievement{
-  min-height:120px;
-  padding:15px;
-  border-radius:17px;
-  background:#111827;
-  border:1px solid var(--line);
-  text-align:center;
+  min-height:105px;
+  padding:12px;
+  border-radius:14px;
+  background:#121b2e;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.achievement.locked{
+  opacity:.3;
 }
 
 .achievement-icon{
-  width:38px;
-  height:38px;
-  margin:auto;
-  border-radius:12px;
+  width:31px;
+  height:31px;
   display:grid;
   place-items:center;
-  background:#2c2148;
-  color:#c4b5fd;
+  border-radius:9px;
+  color:#facc15;
+  background:#342b15;
 }
 
 .achievement strong{
   display:block;
-  margin-top:9px;
-  font-size:8px;
+  margin-top:7px;
+  font-size:7px;
 }
 
 .achievement small{
   display:block;
-  margin-top:3px;
-  color:#657188;
-  font-size:7px;
+  margin-top:2px;
+  color:#5d6980;
+  font-size:6px;
 }
 
-.achievement.locked{
-  opacity:.35;
-}
-
-/* profile edit modal */
+/* =========================================================
+   PROFILE MODAL
+========================================================= */
 
 .modal{
   position:fixed;
@@ -2923,7 +3020,7 @@ select{
   display:none;
   align-items:center;
   justify-content:center;
-  padding:16px;
+  padding:15px;
   background:rgba(2,5,10,.8);
   backdrop-filter:blur(12px);
 }
@@ -2933,7 +3030,7 @@ select{
 }
 
 .modal-card{
-  width:min(440px,100%);
+  width:min(430px,100%);
   padding:24px;
   border-radius:25px;
   background:#111827;
@@ -2948,7 +3045,7 @@ select{
 .modal-card p{
   margin-top:5px;
   color:#69758b;
-  font-size:8px;
+  font-size:7px;
 }
 
 .modal-field{
@@ -2957,103 +3054,140 @@ select{
 
 .modal-field label{
   display:block;
-  color:#8894aa;
-  font-size:8px;
-  font-weight:900;
   margin-bottom:6px;
+  color:#8995a9;
+  font-size:7px;
+  font-weight:900;
 }
 
 .modal-field input{
   width:100%;
-  height:47px;
+  height:46px;
+  padding:0 12px;
   border-radius:12px;
+  color:white;
   background:#0a101c;
   border:1px solid var(--line);
-  color:white;
-  padding:0 12px;
-  font-size:9px;
+  font-size:8px;
 }
 
 .avatar-upload{
-  margin-top:14px;
-  min-height:45px;
   width:100%;
+  height:44px;
+  margin-top:13px;
   border-radius:12px;
-  background:#171f31;
   color:#b8c1d0;
+  background:#171f31;
   border:1px solid var(--line);
-  font-size:8px;
+  font-size:7px;
   font-weight:900;
 }
 
 .modal-actions{
-  margin-top:17px;
   display:flex;
   gap:7px;
+  margin-top:16px;
 }
 
 .modal-actions button{
   flex:1;
-  height:43px;
+  height:42px;
   border-radius:11px;
-  font-size:8px;
+  font-size:7px;
   font-weight:1000;
 }
 
-.modal-cancel{
+.cancel{
+  color:#a0aabd;
   background:#1b2434;
-  color:#9aa5b7;
 }
 
-.modal-save{
-  background:#4f46e5;
+.save-profile{
   color:white;
+  background:#4f46e5;
 }
 
 /* =========================================================
-   MOBILE NAV
+   MOBILE
 ========================================================= */
 
-.mobile-nav{
+.mobile-navigation{
   display:none;
 }
 
-/* =========================================================
-   TOAST
-========================================================= */
-
 #toast{
   position:fixed;
-  left:50%;
-  bottom:28px;
-  transform:translate(-50%,20px);
+  right:20px;
+  bottom:20px;
   z-index:2000;
-  padding:11px 15px;
-  border-radius:13px;
+  max-width:330px;
+  padding:12px 15px;
+  border-radius:14px;
+  color:#e9eef7;
   background:#151d2c;
   border:1px solid var(--line);
-  box-shadow:0 15px 45px rgba(0,0,0,.4);
-  color:#e8edf5;
+  box-shadow:0 20px 55px rgba(0,0,0,.4);
   font-size:8px;
   font-weight:900;
   opacity:0;
+  transform:translateY(15px);
   pointer-events:none;
   transition:.25s;
 }
 
 #toast.show{
   opacity:1;
-  transform:translate(-50%,0);
+  transform:none;
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media(max-width:1000px){
+@media(max-width:1100px){
 
   .shell{
+    grid-template-columns:78px 1fr;
+  }
+
+  .sidebar{
+    width:78px;
+    padding:17px 9px;
+  }
+
+  .sidebar-brand{
+    justify-content:center;
+  }
+
+  .sidebar-brand>div:last-child,
+  .sidebar-label,
+  .nav-btn span,
+  .sidebar-bottom{
+    display:none;
+  }
+
+  .nav-btn{
+    justify-content:center;
+    padding:0;
+  }
+
+  .home-hero{
     grid-template-columns:1fr;
+  }
+
+  .home-copy{
+    padding:20px 5px;
+  }
+
+  .market-scene{
+    min-height:390px;
+  }
+}
+
+@media(max-width:850px){
+
+  body{
+    padding-bottom:72px;
+  }
+
+  .shell{
+    display:block;
   }
 
   .sidebar{
@@ -3061,30 +3195,80 @@ select{
   }
 
   .main{
-    grid-column:1;
+    width:100%;
   }
 
   .topbar{
-    padding:0 17px;
+    height:64px;
+    padding:0 14px;
+  }
+
+  .top-subtitle{
+    display:none;
   }
 
   .content{
-    padding:18px 13px 100px;
+    padding:17px 13px 90px;
   }
 
-  .hero{
-    grid-template-columns:1fr;
+  .mobile-navigation{
+    position:fixed;
+    left:7px;
+    right:7px;
+    bottom:7px;
+    height:64px;
+    z-index:300;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    padding:4px;
+    border-radius:21px;
+    background:rgba(9,14,26,.97);
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 15px 55px rgba(0,0,0,.55);
+    backdrop-filter:blur(20px);
   }
 
-  .hero-copy{
-    padding:20px 5px;
+  .mobile-navigation button{
+    display:grid;
+    place-items:center;
+    align-content:center;
+    gap:3px;
+    border-radius:15px;
+    color:#637087;
+    background:transparent;
+    font-size:6px;
+    font-weight:1000;
   }
 
-  .market-card{
-    min-height:330px;
+  .mobile-navigation button.active{
+    color:#c4b5fd;
+    background:rgba(139,92,246,.08);
   }
 
-  .stats{
+  .mobile-navigation svg{
+    width:21px;
+    height:21px;
+  }
+
+  .mobile-navigation button.active svg{
+    animation:navPop .3s ease;
+  }
+
+  @keyframes navPop{
+    50%{
+      transform:translateY(-3px) scale(1.12);
+    }
+  }
+
+  .home-copy h1{
+    font-size:45px;
+  }
+
+  .market-scene{
+    min-height:310px;
+  }
+
+  .home-stats{
     grid-template-columns:1fr 1fr;
   }
 
@@ -3092,229 +3276,171 @@ select{
     grid-template-columns:1fr;
   }
 
-  .education,
+  .education-page,
   .signal-page{
-    margin:-18px -13px -100px;
+    margin:-17px -13px -90px;
     padding:23px 13px 105px;
   }
 
-  .edu-top{
+  .education-intro{
     grid-template-columns:1fr;
   }
 
-  .lessons{
+  .module-lessons{
     grid-template-columns:1fr;
   }
 
-  .signal-layout{
-    grid-template-columns:1fr;
+  .education-toolbar{
+    flex-direction:column;
   }
 
-  .profile-top{
-    grid-template-columns:1fr;
+  .edu-filter{
+    width:100%;
   }
 
-  .profile-stats{
-    grid-template-columns:1fr 1fr;
+  .reader-overlay{
+    padding:9px;
   }
 
-  .achievements{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .mobile-nav{
-    position:fixed;
-    left:10px;
-    right:10px;
-    bottom:9px;
-    height:67px;
-    z-index:150;
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    align-items:center;
-    padding:5px;
-    border-radius:21px;
-    background:rgba(10,15,26,.94);
-    border:1px solid rgba(255,255,255,.09);
-    backdrop-filter:blur(20px);
-    box-shadow:0 15px 55px rgba(0,0,0,.5);
-  }
-
-  .mobile-nav button{
-    height:55px;
-    border-radius:15px;
-    background:transparent;
-    color:#657188;
-    font-size:7px;
-    font-weight:1000;
-  }
-
-  .mobile-nav button.active{
-    color:#c4b5fd;
-    background:rgba(139,92,246,.08);
-  }
-
-  .mobile-nav svg{
-    width:21px;
-    height:21px;
-    margin:auto auto 3px;
-  }
-
-  .auth-wrap{
-    grid-template-columns:1fr;
-    gap:20px;
-    width:min(600px,100%);
-  }
-
-  .auth-left{
-    text-align:center;
-    padding:10px;
-  }
-
-  .logo-row{
-    justify-content:center;
-  }
-
-  .auth-title{
-    margin-top:32px;
-    font-size:49px;
-    letter-spacing:-3px;
-  }
-
-  .auth-description{
-    margin-left:auto;
-    margin-right:auto;
-  }
-
-  .auth-tags{
-    justify-content:center;
-  }
-
-  .ai-face{
-    width:115px;
-    height:115px;
-  }
-
-  .bot-visual{
-    opacity:.55;
+  .reader-main{
+    padding:21px;
   }
 
   .reader-grid{
     grid-template-columns:1fr;
   }
 
-  .reader-art{
-    min-height:230px;
-  }
-}
-
-@media(max-width:500px){
-
-  .top-title{
-    font-size:13px;
+  .reader-illustration{
+    min-height:240px;
   }
 
-  .top-sub{
-    display:none;
+  .reader-text h2{
+    font-size:32px;
   }
 
-  .top-coins{
-    display:none;
-  }
-
-  .hero h1{
-    font-size:43px;
-    letter-spacing:-2.5px;
-  }
-
-  .hero p{
-    font-size:11px;
-  }
-
-  .market-card{
-    min-height:285px;
-  }
-
-  .floating-info{
-    transform:scale(.85);
-  }
-
-  .stats{
-    gap:7px;
-  }
-
-  .stat{
-    min-height:105px;
-    padding:13px;
-  }
-
-  .stat strong{
-    font-size:20px;
-  }
-
-  .feature{
-    min-height:225px;
-  }
-
-  .ai-face{
-    width:100px;
-    height:100px;
-    border-radius:30px;
-  }
-
-  .bot-visual{
-    right:-25px;
-    transform:scale(.8);
-  }
-
-  .duration-grid{
-    grid-template-columns:repeat(3,1fr);
+  .signal-layout{
+    grid-template-columns:1fr;
   }
 
   .signal-result{
     min-height:480px;
   }
 
-  .result-center{
-    width:185px;
-  }
-
-  .answers{
+  .profile-top{
     grid-template-columns:1fr;
   }
 
-  .community-grid{
-    grid-template-columns:1fr;
-  }
-
-  .profile-identity{
-    align-items:flex-start;
-  }
-
-  .profile-avatar-large{
-    width:70px;
-    height:70px;
-    border-radius:22px;
-  }
-
-  .profile-name{
-    font-size:19px;
-  }
-
-  .profile-stats{
+  .profile-stat-grid{
     grid-template-columns:1fr 1fr;
+  }
+
+  .profile-panels{
+    grid-template-columns:1fr;
   }
 
   .achievements{
     grid-template-columns:1fr 1fr;
   }
 
-  .reader-main{
-    padding:20px;
+  .community-cards{
+    grid-template-columns:1fr;
   }
 
-  .reader-text h2{
-    font-size:31px;
+  .auth-wrap{
+    grid-template-columns:1fr;
+    width:min(600px,100%);
+    gap:25px;
+  }
+
+  .auth-showcase{
+    text-align:center;
+  }
+
+  .logo-row{
+    justify-content:center;
+  }
+
+  .auth-heading{
+    margin-top:32px;
+    font-size:49px;
+  }
+
+  .auth-text{
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .auth-pills{
+    justify-content:center;
+  }
+
+  .auth-chart{
+    display:none;
+  }
+}
+
+@media(max-width:500px){
+
+  .top-coins{
+    display:none;
+  }
+
+  .home-actions{
+    flex-direction:column;
+  }
+
+  .primary,
+  .secondary{
+    width:100%;
+  }
+
+  .home-copy h1{
+    font-size:42px;
+    letter-spacing:-2.5px;
+  }
+
+  .market-floating{
+    transform:scale(.82);
+  }
+
+  .duration-buttons{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .bot-center{
+    width:195px;
+  }
+
+  .direction{
+    font-size:26px;
+  }
+
+  .answers{
+    grid-template-columns:1fr;
+  }
+
+  .connection-status{
+    position:static;
+    display:inline-block;
+    margin-top:15px;
+  }
+
+  .profile-user{
+    align-items:flex-start;
+  }
+
+  .profile-avatar{
+    width:76px;
+    height:76px;
+    border-radius:23px;
+  }
+
+  .profile-user-text h1{
+    font-size:21px;
+  }
+
+  .achievements{
+    grid-template-columns:1fr 1fr;
   }
 
   .reader-footer{
@@ -3325,12 +3451,22 @@ select{
     width:100%;
   }
 
-  .reader-button{
+  .reader-btn{
     flex:1;
   }
 
   .auth-card{
     padding:23px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *:before,
+  *:after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
   }
 }
 </style>
@@ -3342,23 +3478,26 @@ select{
      BACKGROUND
 ======================================================= -->
 
-<div class="bg">
+<div class="background">
 
-  <div class="bg-grid"></div>
+  <div class="grid"></div>
 
-  <div class="bg-glow one"></div>
-  <div class="bg-glow two"></div>
-  <div class="bg-glow three"></div>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+  <div class="glow c"></div>
 
-  <div class="brand-watermark one">
+  <div class="market-watermark one">
     AVA <span>POCKET</span>
   </div>
 
-  <div class="brand-watermark two">
+  <div class="market-watermark two">
     AVA <span>POCKET</span>
   </div>
 
-  <div class="bg-candles" id="backgroundCandles"></div>
+  <div
+    id="bgCandles"
+    class="bg-candles">
+  </div>
 
 </div>
 
@@ -3368,19 +3507,19 @@ select{
 
 <div id="loader">
 
-  <div class="loader-box">
+  <div class="loader">
 
-    <div class="loader-avatar">
+    <div class="loader-logo">
 
       <svg viewBox="0 0 50 50" fill="none">
         <path
-          d="M12 31L20 23L26 29L38 15"
+          d="M9 32L18 23L25 30L40 12"
           stroke="white"
           stroke-width="4"
           stroke-linecap="round"
           stroke-linejoin="round"/>
         <path
-          d="M31 15H38V22"
+          d="M32 12H40V20"
           stroke="white"
           stroke-width="4"
           stroke-linecap="round"
@@ -3389,7 +3528,9 @@ select{
 
     </div>
 
-    <div class="loader-name">AVA POCKET</div>
+    <div class="loader-title">
+      AVA POCKET
+    </div>
 
     <div class="loader-sub">
       TRADING ACADEMY
@@ -3407,78 +3548,106 @@ select{
      AUTH
 ======================================================= -->
 
-<section id="auth" class="hidden">
+<section
+  id="auth"
+  class="hidden">
 
   <div class="auth-wrap">
 
-    <div class="auth-left">
+    <div class="auth-showcase">
 
       <div class="logo-row">
 
-        <div class="logo-icon">
+        <div class="logo">
 
           <svg viewBox="0 0 50 50" fill="none">
             <path
-              d="M10 31L19 22L26 29L40 12"
+              d="M9 32L18 23L25 30L40 12"
               stroke="white"
               stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"/>
+              stroke-linecap="round"/>
             <path
               d="M32 12H40V20"
               stroke="white"
               stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"/>
+              stroke-linecap="round"/>
           </svg>
 
         </div>
 
         <div>
-          <div class="logo-title">
+
+          <div class="logo-name">
             AVA POCKET
           </div>
 
           <div class="logo-sub">
             TRADING ACADEMY
           </div>
+
         </div>
 
       </div>
 
-      <h1 class="auth-title">
+      <h1 class="auth-heading">
         Учись.
         <span>Анализируй.</span>
         Расти.
       </h1>
 
-      <p class="auth-description">
-        Интерактивная академия трейдинга с обучением,
-        практикой, Ava AI и учебным генератором
-        рыночных сценариев.
+      <p class="auth-text">
+        Интерактивная академия трейдинга с Ava AI,
+        Ava Bot, большой системой обучения,
+        практическими заданиями и визуальным
+        симулятором рыночных сценариев.
       </p>
 
-      <div class="auth-tags">
+      <div class="auth-pills">
 
-        <div class="auth-tag">
-          160+ уроков
+        <div class="auth-pill">
+          160 уроков
         </div>
 
-        <div class="auth-tag">
+        <div class="auth-pill">
           Ava AI
         </div>
 
-        <div class="auth-tag">
+        <div class="auth-pill">
           Ava Bot
         </div>
 
-        <div class="auth-tag">
-          Практика
+        <div class="auth-pill">
+          Forex / OTC
         </div>
 
-        <div class="auth-tag">
-          XP & Coins
+        <div class="auth-pill">
+          XP / AVA Coins
         </div>
+
+      </div>
+
+      <div class="auth-chart">
+
+        <div class="auth-chart-grid"></div>
+
+        <svg
+          viewBox="0 0 700 250"
+          preserveAspectRatio="none">
+
+          <path
+            d="
+            M0 205
+            C35 190 55 215 90 180
+            S135 130 175 160
+            S220 205 255 145
+            S305 115 345 130
+            S390 90 425 112
+            S475 65 515 88
+            S565 52 610 70
+            S655 30 700 20
+            "/>
+
+        </svg>
 
       </div>
 
@@ -3490,16 +3659,18 @@ select{
         Создать профиль
       </h2>
 
-      <p>
-        Заполни данные один раз — прогресс будет
-        сохраняться на этом устройстве.
+      <p class="auth-card-desc">
+        Твои данные и прогресс сохраняются
+        локально на устройстве.
       </p>
 
-      <form id="registerForm" class="auth-form">
+      <form
+        id="registerForm"
+        class="auth-form">
 
         <button
           type="button"
-          class="google-button"
+          class="google"
           id="googleButton">
 
           <span class="google-icon">
@@ -3519,6 +3690,7 @@ select{
           <input
             id="nameInput"
             required
+            autocomplete="name"
             placeholder="Имя и фамилия">
 
         </div>
@@ -3529,23 +3701,25 @@ select{
             USERNAME
           </label>
 
-          <div class="username-wrap">
+          <div class="username">
 
-            <span>@</span>
+            <span>
+              @
+            </span>
 
             <input
               id="nicknameInput"
               required
-              placeholder="username"
-              autocomplete="off">
+              autocomplete="off"
+              placeholder="username">
 
           </div>
 
         </div>
 
         <button
-          type="submit"
-          class="register-button">
+          class="submit"
+          type="submit">
 
           Войти в AVA POCKET →
 
@@ -3554,9 +3728,9 @@ select{
       </form>
 
       <div class="auth-note">
-        Это локальная демонстрационная регистрация.
-        Для настоящей авторизации Google потребуется
-        подключение OAuth и серверная часть.
+        Реальный Google OAuth требует подключения
+        серверной авторизации. Здесь используется
+        локальная демонстрационная регистрация.
       </div>
 
     </div>
@@ -3569,38 +3743,37 @@ select{
      APP
 ======================================================= -->
 
-<div id="app" class="hidden">
+<div
+  id="app"
+  class="hidden">
 
   <div class="shell">
 
-    <!-- ===================================================
-         SIDEBAR
-    =================================================== -->
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
-      <div class="sidebar-logo">
+      <div class="sidebar-brand">
 
-        <div class="logo-icon">
+        <div class="sidebar-logo">
 
           <svg viewBox="0 0 50 50" fill="none">
             <path
-              d="M10 31L19 22L26 29L40 12"
+              d="M9 32L18 23L25 30L40 12"
               stroke="white"
               stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"/>
+              stroke-linecap="round"/>
             <path
               d="M32 12H40V20"
               stroke="white"
               stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"/>
+              stroke-linecap="round"/>
           </svg>
 
         </div>
 
         <div>
+
           <strong>
             AVA POCKET
           </strong>
@@ -3608,15 +3781,16 @@ select{
           <small>
             TRADING ACADEMY
           </small>
+
         </div>
 
       </div>
 
-      <div class="nav-title">
+      <div class="sidebar-label">
         ОСНОВНОЕ
       </div>
 
-      <nav class="nav">
+      <nav class="sidebar-nav">
 
         <button
           class="nav-btn active"
@@ -3633,7 +3807,9 @@ select{
               stroke-width="1.7"/>
           </svg>
 
-          Главная
+          <span>
+            Главная
+          </span>
 
         </button>
 
@@ -3653,7 +3829,9 @@ select{
               stroke-linecap="round"/>
           </svg>
 
-          Обучение
+          <span>
+            Обучение
+          </span>
 
         </button>
 
@@ -3675,7 +3853,9 @@ select{
               stroke-linecap="round"/>
           </svg>
 
-          Ava Bot
+          <span>
+            Ava Bot
+          </span>
 
         </button>
 
@@ -3695,12 +3875,12 @@ select{
             <circle
               cx="9"
               cy="12"
-              r="1.2"
+              r="1.1"
               fill="currentColor"/>
             <circle
               cx="15"
               cy="12"
-              r="1.2"
+              r="1.1"
               fill="currentColor"/>
             <path
               d="M9 16C10 17 14 17 15 16"
@@ -3713,7 +3893,9 @@ select{
               stroke-width="1.7"/>
           </svg>
 
-          Ava AI
+          <span>
+            Ava AI
+          </span>
 
         </button>
 
@@ -3733,7 +3915,9 @@ select{
               stroke-linecap="round"/>
           </svg>
 
-          Практика
+          <span>
+            Практика
+          </span>
 
         </button>
 
@@ -3748,7 +3932,9 @@ select{
               stroke-width="1.7"/>
           </svg>
 
-          Связь
+          <span>
+            Связь
+          </span>
 
         </button>
 
@@ -3756,21 +3942,15 @@ select{
 
       <div class="sidebar-bottom">
 
-        <div class="coins-box">
+        <div class="wallet">
 
           <small>
             AVA COINS
           </small>
 
-          <div class="coins-value">
-            <span id="sideCoins">
-              100
-            </span>
-
-            <span>
-              AC
-            </span>
-          </div>
+          <strong id="sideCoins">
+            100
+          </strong>
 
         </div>
 
@@ -3802,9 +3982,7 @@ select{
 
     </aside>
 
-    <!-- ===================================================
-         MAIN
-    =================================================== -->
+    <!-- MAIN -->
 
     <main class="main">
 
@@ -3813,14 +3991,14 @@ select{
         <div>
 
           <div
-            class="top-title"
-            id="topTitle">
+            id="topTitle"
+            class="top-title">
             Главная
           </div>
 
           <div
-            class="top-sub"
-            id="topSub">
+            id="topSubtitle"
+            class="top-subtitle">
             Твоя академия трейдинга
           </div>
 
@@ -3840,8 +4018,8 @@ select{
             data-page="profile">
 
             <div
-              class="avatar"
-              id="topAvatar">
+              id="topAvatar"
+              class="avatar">
               A
             </div>
 
@@ -3853,20 +4031,20 @@ select{
 
       <div class="content">
 
-        <!-- ===============================================
+        <!-- =================================================
              HOME
-        ================================================ -->
+        ================================================== -->
 
         <section
           id="page-home"
           class="screen active">
 
-          <div class="hero">
+          <div class="home-hero">
 
-            <div class="hero-copy">
+            <div class="home-copy">
 
-              <div class="live-badge">
-                <span class="live-dot"></span>
+              <div class="live">
+                <i></i>
                 AVA SYSTEM ONLINE
               </div>
 
@@ -3877,12 +4055,13 @@ select{
               </h1>
 
               <p>
-                Обучение, практика, Ava AI и учебный
-                генератор сценариев рынка — всё в одном
-                аккуратном пространстве.
+                Изучай рынок шаг за шагом. Читай
+                полноценные уроки, спрашивай Ava,
+                тренируйся и используй Ava Bot для
+                учебной симуляции сценариев.
               </p>
 
-              <div class="hero-actions">
+              <div class="home-actions">
 
                 <button
                   class="primary"
@@ -3900,24 +4079,26 @@ select{
 
             </div>
 
-            <div class="market-card">
+            <div class="market-scene">
 
               <div class="market-header">
 
                 <div class="market-brand">
 
-                  <div class="market-mark">
-                    P
+                  <div class="market-logo">
+                    A
                   </div>
 
                   <div>
+
                     <strong>
                       AVA POCKET
                     </strong>
 
                     <small>
-                      MARKET SIMULATOR
+                      MARKET EXPERIENCE
                     </small>
+
                   </div>
 
                 </div>
@@ -3928,34 +4109,68 @@ select{
 
               </div>
 
-              <div class="chart-area">
+              <div class="market-chart">
 
-                <div class="chart-grid"></div>
+                <div class="market-grid"></div>
 
                 <svg
-                  class="chart-svg"
-                  viewBox="0 0 600 300"
+                  viewBox="0 0 700 320"
                   preserveAspectRatio="none">
 
+                  <defs>
+
+                    <linearGradient
+                      id="chartGradient"
+                      x1="0"
+                      x2="0"
+                      y1="0"
+                      y2="1">
+
+                      <stop
+                        offset="0"
+                        stop-color="#38bdf8"/>
+
+                      <stop
+                        offset="1"
+                        stop-color="#38bdf8"
+                        stop-opacity="0"/>
+
+                    </linearGradient>
+
+                  </defs>
+
                   <path
-                    class="chart-line"
+                    class="market-area"
                     d="
-                    M0 220
-                    C35 200 55 230 85 190
-                    S125 150 160 175
-                    S205 220 235 160
-                    S285 130 315 145
-                    S355 110 385 125
-                    S425 90 455 105
-                    S500 65 535 95
-                    S565 55 600 30
-                    "/>
+                    M0 250
+                    C50 225 70 250 110 205
+                    S170 160 215 190
+                    S260 230 305 155
+                    S360 130 405 150
+                    S450 105 490 125
+                    S540 75 580 105
+                    S640 45 700 25
+                    L700 320
+                    L0 320
+                    Z"/>
+
+                  <path
+                    class="market-line"
+                    d="
+                    M0 250
+                    C50 225 70 250 110 205
+                    S170 160 215 190
+                    S260 230 305 155
+                    S360 130 405 150
+                    S450 105 490 125
+                    S540 75 580 105
+                    S640 45 700 25"/>
 
                 </svg>
 
               </div>
 
-              <div class="floating-info one">
+              <div class="market-floating one">
 
                 <small>
                   EUR/USD
@@ -3967,10 +4182,22 @@ select{
 
               </div>
 
-              <div class="floating-info two">
+              <div class="market-floating two">
 
                 <small>
-                  AVA ANALYSIS
+                  AVA BOT
+                </small>
+
+                <strong>
+                  READY
+                </strong>
+
+              </div>
+
+              <div class="market-floating three">
+
+                <small>
+                  MARKET
                 </small>
 
                 <strong>
@@ -3979,25 +4206,13 @@ select{
 
               </div>
 
-              <div class="floating-info three">
-
-                <small>
-                  MARKET
-                </small>
-
-                <strong>
-                  OPEN
-                </strong>
-
-              </div>
-
             </div>
 
           </div>
 
-          <div class="stats">
+          <div class="home-stats">
 
-            <div class="stat">
+            <div class="home-stat">
 
               <div class="stat-icon">
                 ◈
@@ -4017,7 +4232,7 @@ select{
 
             </div>
 
-            <div class="stat">
+            <div class="home-stat">
 
               <div class="stat-icon">
                 ✦
@@ -4037,7 +4252,7 @@ select{
 
             </div>
 
-            <div class="stat">
+            <div class="home-stat">
 
               <div class="stat-icon">
                 🟡
@@ -4057,7 +4272,7 @@ select{
 
             </div>
 
-            <div class="stat">
+            <div class="home-stat">
 
               <div class="stat-icon">
                 🔥
@@ -4082,13 +4297,15 @@ select{
           <div class="section-head">
 
             <div>
+
               <h2>
                 Твои инструменты
               </h2>
 
               <p>
-                Всё необходимое для обучения
+                Всё необходимое внутри AVA POCKET
               </p>
+
             </div>
 
           </div>
@@ -4102,18 +4319,21 @@ select{
               </h3>
 
               <p>
-                Персональный помощник внутри академии.
-                Спрашивай про свечи, индикаторы,
-                тренды, риск-менеджмент и обучение.
+                Персональный помощник. Спрашивай про
+                свечи, тренды, RSI, уровни, риск,
+                Price Action и любые уроки академии.
               </p>
 
               <button data-page="ai">
                 Спросить Ava →
               </button>
 
-              <div class="ai-face">
+              <div class="ava-face">
 
-                <div class="ai-mouth"></div>
+                <div class="ava-antenna"></div>
+                <div class="ava-eye left"></div>
+                <div class="ava-eye right"></div>
+                <div class="ava-mouth"></div>
 
               </div>
 
@@ -4126,22 +4346,32 @@ select{
               </h3>
 
               <p>
-                Учебный генератор сценария. Выбери
-                валютную пару и таймфрейм, после чего
-                Ava проведёт визуальную симуляцию анализа.
+                Полноценный визуальный робот-сканер.
+                Выбери валютную пару, рынок и время,
+                после чего наблюдай процесс анализа.
               </p>
 
               <button data-page="signal">
-                Запустить анализ →
+                Запустить Ava Bot →
               </button>
 
-              <div class="bot-visual">
+              <div class="bot-robot">
 
-                <div class="bot-ring"></div>
+                <div class="robot-ring"></div>
 
-                <div class="bot-core">
-                  AVA
+                <div class="robot-head">
+
+                  <div class="robot-ear left"></div>
+                  <div class="robot-ear right"></div>
+
+                  <div class="robot-eye left"></div>
+                  <div class="robot-eye right"></div>
+
+                  <div class="robot-mouth"></div>
+
                 </div>
+
+                <div class="robot-body"></div>
 
               </div>
 
@@ -4151,17 +4381,17 @@ select{
 
         </section>
 
-        <!-- ===============================================
+        <!-- =================================================
              EDUCATION
-        ================================================ -->
+        ================================================== -->
 
         <section
           id="page-education"
           class="screen">
 
-          <div class="education">
+          <div class="education-page">
 
-            <div class="edu-top">
+            <div class="education-intro">
 
               <div>
 
@@ -4170,21 +4400,21 @@ select{
                 </div>
 
                 <h1>
-                  Обучение,
-                  которое можно
-                  пройти до конца.
+                  Полный путь
+                  от основ
+                  до системы.
                 </h1>
 
                 <p>
-                  От базовых понятий до технического анализа,
-                  свечных моделей, индикаторов, психологии,
-                  управления риском и практического разбора
-                  рыночных сценариев.
+                  16 модулей и 160 уроков: основы рынка,
+                  японские свечи, структура, уровни,
+                  индикаторы, Price Action, риск-менеджмент,
+                  психология, торговый план и практика.
                 </p>
 
               </div>
 
-              <div class="edu-progress">
+              <div class="edu-progress-card">
 
                 <div class="edu-progress-head">
 
@@ -4198,7 +4428,7 @@ select{
 
                 </div>
 
-                <div class="progress-bar">
+                <div class="progress">
                   <i id="eduProgress"></i>
                 </div>
 
@@ -4206,7 +4436,7 @@ select{
 
             </div>
 
-            <div class="edu-tools">
+            <div class="education-toolbar">
 
               <input
                 id="lessonSearch"
@@ -4234,9 +4464,9 @@ select{
 
         </section>
 
-        <!-- ===============================================
-             SIGNAL
-        ================================================ -->
+        <!-- =================================================
+             AVA BOT
+        ================================================== -->
 
         <section
           id="page-signal"
@@ -4244,22 +4474,22 @@ select{
 
           <div class="signal-page">
 
-            <div class="signal-wrap">
+            <div class="signal-container">
 
-              <div class="signal-head">
+              <div class="signal-title">
 
                 <div class="signal-brand">
 
-                  <div class="signal-icon">
+                  <div class="signal-brand-icon">
 
                     <svg viewBox="0 0 50 50" fill="none">
                       <path
-                        d="M9 34L17 26L24 31L40 13"
+                        d="M8 35L17 26L24 31L41 12"
                         stroke="white"
                         stroke-width="4"
                         stroke-linecap="round"/>
                       <path
-                        d="M32 13H40V21"
+                        d="M33 12H41V20"
                         stroke="white"
                         stroke-width="4"
                         stroke-linecap="round"/>
@@ -4269,19 +4499,19 @@ select{
 
                   <div>
 
-                    <h2>
+                    <h1>
                       Ava Bot
-                    </h2>
+                    </h1>
 
                     <p>
-                      Учебный генератор рыночных сценариев
+                      Робот-сканер учебных рыночных сценариев
                     </p>
 
                   </div>
 
                 </div>
 
-                <div class="signal-live">
+                <div class="system-status">
                   <i></i>
                   SYSTEM READY
                 </div>
@@ -4292,13 +4522,13 @@ select{
 
                 <div class="signal-controls">
 
-                  <h3>
-                    Настройка анализа
-                  </h3>
+                  <h2>
+                    Настройка Ava Bot
+                  </h2>
 
                   <p>
-                    Выбери параметры сценария и запусти
-                    визуальную симуляцию анализа.
+                    Выбери рынок, валютную пару и
+                    продолжительность сценария.
                   </p>
 
                   <div class="control">
@@ -4310,13 +4540,13 @@ select{
                     <div class="market-buttons">
 
                       <button
-                        class="market-button active"
+                        class="market-btn active"
                         data-market="exchange">
-                        Forex
+                        БИРЖА
                       </button>
 
                       <button
-                        class="market-button otc"
+                        class="market-btn otc"
                         data-market="otc">
                         OTC
                       </button>
@@ -4341,45 +4571,45 @@ select{
                   <div class="control">
 
                     <div class="control-label">
-                      ВРЕМЯ
+                      ВРЕМЯ СЦЕНАРИЯ
                     </div>
 
-                    <div class="duration-grid">
+                    <div class="duration-buttons">
 
                       <button
-                        class="duration active"
+                        class="duration-btn active"
                         data-duration="1">
                         1M
                       </button>
 
                       <button
-                        class="duration"
+                        class="duration-btn"
                         data-duration="2">
                         2M
                       </button>
 
                       <button
-                        class="duration"
+                        class="duration-btn"
+                        data-duration="3">
+                        3M
+                      </button>
+
+                      <button
+                        class="duration-btn"
                         data-duration="5">
                         5M
                       </button>
 
                       <button
-                        class="duration"
+                        class="duration-btn"
+                        data-duration="10">
+                        10M
+                      </button>
+
+                      <button
+                        class="duration-btn"
                         data-duration="15">
                         15M
-                      </button>
-
-                      <button
-                        class="duration"
-                        data-duration="30">
-                        30M
-                      </button>
-
-                      <button
-                        class="duration"
-                        data-duration="60">
-                        1H
                       </button>
 
                     </div>
@@ -4388,26 +4618,26 @@ select{
 
                   <button
                     id="generateSignal"
-                    class="generate">
+                    class="generate-btn">
 
-                    ✦ Сгенерировать сценарий
+                    ✦ ЗАПУСТИТЬ AVA BOT
 
                   </button>
 
                   <div class="disclaimer">
-                    Ava Bot создаёт учебную симуляцию.
-                    Результат не является финансовым
-                    прогнозом или гарантией сделки.
+                    Ava Bot создаёт учебный симулированный
+                    сценарий. Это не финансовый прогноз
+                    и не гарантия результата.
                   </div>
 
                 </div>
 
                 <div class="signal-result">
 
-                  <div class="result-top">
+                  <div class="result-header">
 
                     <small>
-                      AVA MARKET SCANNER
+                      AVA BOT · MARKET SCANNER
                     </small>
 
                     <strong id="resultPair">
@@ -4429,30 +4659,34 @@ select{
 
                       <path
                         id="resultTrend"
-                        d=""
                         fill="none"
                         stroke="#8b5cf6"
                         stroke-width="3"
-                        opacity=".75"/>
+                        opacity=".7"/>
 
                     </svg>
 
                   </div>
 
                   <div
-                    id="resultCenter"
-                    class="result-center">
+                    id="botCenter"
+                    class="bot-center">
 
-                    <div class="bot-avatar">
+                    <div class="bot-large">
 
-                      <div class="bot-smile"></div>
+                      <div class="bot-large-antenna"></div>
+                      <div class="bot-large-mouth"></div>
 
                     </div>
 
                     <div
                       id="botStatus"
                       class="bot-status">
-                      Ava Bot готов
+                      AVA BOT ГОТОВ
+                    </div>
+
+                    <div class="scan-lines">
+                      <i></i>
                     </div>
 
                     <div
@@ -4460,8 +4694,8 @@ select{
                       class="signal-final">
 
                       <div
-                        id="signalDirection"
-                        class="signal-direction">
+                        id="direction"
+                        class="direction">
                       </div>
 
                       <div
@@ -4469,11 +4703,11 @@ select{
                         class="signal-meta">
                       </div>
 
-                      <div class="signal-confidence">
+                      <div class="confidence-text">
                         Уверенность сценария
                       </div>
 
-                      <div class="confidence-bar">
+                      <div class="confidence">
                         <i id="confidenceBar"></i>
                       </div>
 
@@ -4491,9 +4725,9 @@ select{
 
         </section>
 
-        <!-- ===============================================
-             AI
-        ================================================ -->
+        <!-- =================================================
+             AVA AI
+        ================================================== -->
 
         <section
           id="page-ai"
@@ -4501,14 +4735,14 @@ select{
 
           <div class="ai-page">
 
-            <div class="ai-hero">
+            <div class="ai-banner">
 
-              <div class="ai-hero-row">
+              <div class="ai-identity">
 
-                <div class="ai-big">
-                  <span>
-                    A
-                  </span>
+                <div class="ai-avatar">
+
+                  <div class="ai-avatar-mouth"></div>
+
                 </div>
 
                 <div>
@@ -4518,7 +4752,7 @@ select{
                   </h1>
 
                   <p>
-                    Твой AI-помощник внутри AVA POCKET
+                    AI-помощник и преподаватель AVA POCKET
                   </p>
 
                 </div>
@@ -4544,7 +4778,7 @@ select{
                 </button>
 
                 <button class="quick">
-                  Объясни поддержку
+                  Что такое поддержка?
                 </button>
 
               </div>
@@ -4558,11 +4792,12 @@ select{
                 class="messages">
 
                 <div class="message ava">
-                  Привет 👋 Я Ava. Я могу объяснить
-                  тебе трейдинг простыми словами, разобрать
-                  свечи, индикаторы, тренды, уровни,
-                  риск-менеджмент и помочь пройти обучение.
-                  Задавай любой вопрос.
+                  Привет 👋 Я Ava. Я могу объяснять
+                  сложные вещи простыми словами и
+                  помогать тебе проходить академию.
+                  Спроси меня про свечи, тренд, уровни,
+                  RSI, EMA, MACD, Price Action,
+                  психологию или риск-менеджмент.
                 </div>
 
               </div>
@@ -4587,15 +4822,15 @@ select{
 
         </section>
 
-        <!-- ===============================================
+        <!-- =================================================
              PRACTICE
-        ================================================ -->
+        ================================================== -->
 
         <section
           id="page-practice"
           class="screen">
 
-          <div class="practice">
+          <div class="practice-page">
 
             <div class="practice-card">
 
@@ -4604,7 +4839,7 @@ select{
               </h1>
 
               <p>
-                Проверяй знания и получай XP.
+                Отвечай на вопросы и получай XP.
               </p>
 
               <div class="quiz">
@@ -4612,13 +4847,11 @@ select{
                 <div
                   id="quizQuestion"
                   class="quiz-question">
-                  Что показывает тело японской свечи?
                 </div>
 
                 <div
                   id="answers"
                   class="answers">
-
                 </div>
 
                 <div class="quiz-bottom">
@@ -4626,7 +4859,6 @@ select{
                   <div
                     id="quizScore"
                     class="quiz-score">
-                    Вопрос 1
                   </div>
 
                   <button
@@ -4645,32 +4877,35 @@ select{
 
         </section>
 
-        <!-- ===============================================
+        <!-- =================================================
              COMMUNITY
-        ================================================ -->
+        ================================================== -->
 
         <section
           id="page-community"
           class="screen">
 
-          <div class="community">
+          <div class="community-page">
 
-            <div class="community-hero">
+            <div class="community-heading">
 
               <h1>
-                Связь с AVA
+                Связь со мной
               </h1>
 
               <p>
-                Здесь будут новости академии, обновления,
-                новые уроки, тесты и полезные материалы.
-                Раздел подготовлен так, чтобы позже сюда
-                можно было подключить реальные каналы связи.
+                Все важные ссылки, поддержка, новости
+                AVA POCKET и будущие обновления
+                приложения собраны здесь в одном месте.
               </p>
+
+              <div class="connection-status">
+                ● СВЯЗЬ ДОСТУПНА
+              </div>
 
             </div>
 
-            <div class="community-grid">
+            <div class="community-cards">
 
               <div class="community-card">
 
@@ -4679,15 +4914,31 @@ select{
                 </h3>
 
                 <p>
-                  Кнопка для перехода в твой Telegram-
-                  канал или чат поддержки.
+                  Здесь можно разместить твою
+                  личную ссылку, Telegram-канал,
+                  поддержку или закрытое сообщество.
                 </p>
 
                 <button
-                  class="community-button"
-                  id="telegramButton">
-                  Открыть Telegram
+                  id="telegramButton"
+                  class="community-button">
+                  Открыть Telegram →
                 </button>
+
+                <div class="telegram-art">
+
+                  <svg viewBox="0 0 50 50" fill="none">
+                    <path
+                      d="M42 8L8 21L21 26L26 42L42 8Z"
+                      fill="white"
+                      opacity=".95"/>
+                    <path
+                      d="M21 26L31 19L26 42"
+                      stroke="#2563eb"
+                      stroke-width="2"/>
+                  </svg>
+
+                </div>
 
               </div>
 
@@ -4698,15 +4949,20 @@ select{
                 </h3>
 
                 <p>
-                  Проверка текущей версии приложения
-                  и уведомление о новых функциях.
+                  Новые уроки, функции Ava Bot,
+                  улучшения интерфейса и другие
+                  обновления академии.
                 </p>
 
                 <button
-                  class="community-button"
-                  id="updatesButton">
-                  Проверить обновления
+                  id="updatesButton"
+                  class="community-button">
+                  Проверить обновления →
                 </button>
+
+                <div class="update-art">
+                  ✦
+                </div>
 
               </div>
 
@@ -4716,45 +4972,43 @@ select{
 
         </section>
 
-        <!-- ===============================================
+        <!-- =================================================
              PROFILE
-        ================================================ -->
+        ================================================== -->
 
         <section
           id="page-profile"
           class="screen">
 
-          <div class="profile">
+          <div class="profile-page">
 
             <div class="profile-top">
 
-              <div class="profile-card">
+              <div class="profile-main-card">
 
-                <div class="profile-identity">
+                <div class="profile-user">
 
                   <div
                     id="profileAvatar"
-                    class="profile-avatar-large">
+                    class="profile-avatar">
                     A
                   </div>
 
-                  <div>
+                  <div class="profile-user-text">
 
-                    <div
-                      id="profileName"
-                      class="profile-name">
+                    <h1 id="profileName">
                       Студент
-                    </div>
+                    </h1>
 
                     <div
                       id="profileNickname"
-                      class="profile-nick">
+                      class="profile-nickname">
                       @student
                     </div>
 
-                    <div class="profile-level">
+                    <div class="level">
 
-                      <div class="profile-level-head">
+                      <div class="level-head">
 
                         <span>
                           Уровень
@@ -4787,7 +5041,7 @@ select{
 
               </div>
 
-              <div class="profile-coins">
+              <div class="profile-wallet">
 
                 <small>
                   AVA COINS
@@ -4799,15 +5053,15 @@ select{
 
                 <button
                   id="dailyBonus"
-                  class="bonus">
-                  🎁 Получить +25
+                  class="daily-bonus">
+                  🎁 Получить +25 Coins
                 </button>
 
               </div>
 
             </div>
 
-            <div class="profile-stats">
+            <div class="profile-stat-grid">
 
               <div class="profile-stat">
 
@@ -4819,17 +5073,25 @@ select{
                   0
                 </strong>
 
+                <span>
+                  завершено
+                </span>
+
               </div>
 
               <div class="profile-stat">
 
                 <small>
-                  СИГНАЛЫ
+                  AVA BOT
                 </small>
 
                 <strong id="profileSignals">
                   0
                 </strong>
+
+                <span>
+                  анализов
+                </span>
 
               </div>
 
@@ -4843,6 +5105,10 @@ select{
                   0
                 </strong>
 
+                <span>
+                  вопросов
+                </span>
+
               </div>
 
               <div class="profile-stat">
@@ -4855,27 +5121,41 @@ select{
                   1
                 </strong>
 
+                <span>
+                  дней
+                </span>
+
               </div>
 
             </div>
 
-            <div class="section-head">
+            <div class="profile-panels">
 
-              <div>
+              <div class="profile-panel">
+
+                <h2>
+                  Твой путь
+                </h2>
+
+                <div id="learningRoute">
+
+                </div>
+
+              </div>
+
+              <div class="profile-panel">
+
                 <h2>
                   Достижения
                 </h2>
 
-                <p>
-                  Твои результаты в AVA POCKET
-                </p>
+                <div
+                  id="achievements"
+                  class="achievements">
+                </div>
+
               </div>
 
-            </div>
-
-            <div
-              id="achievements"
-              class="achievements">
             </div>
 
           </div>
@@ -4892,7 +5172,7 @@ select{
        MOBILE NAV
   ====================================================== -->
 
-  <nav class="mobile-nav">
+  <nav class="mobile-navigation">
 
     <button
       class="active"
@@ -4901,6 +5181,10 @@ select{
       <svg viewBox="0 0 24 24" fill="none">
         <path
           d="M4 11L12 4L20 11V20H4V11Z"
+          stroke="currentColor"
+          stroke-width="1.7"/>
+        <path
+          d="M9 20V14H15V20"
           stroke="currentColor"
           stroke-width="1.7"/>
       </svg>
@@ -4914,6 +5198,10 @@ select{
       <svg viewBox="0 0 24 24" fill="none">
         <path
           d="M5 4H19V20H5V4Z"
+          stroke="currentColor"
+          stroke-width="1.7"/>
+        <path
+          d="M8 8H16M8 12H16M8 16H13"
           stroke="currentColor"
           stroke-width="1.7"/>
       </svg>
@@ -4935,30 +5223,16 @@ select{
 
     </button>
 
-    <button data-page="ai">
+    <button data-page="community">
 
       <svg viewBox="0 0 24 24" fill="none">
-        <rect
-          x="5"
-          y="6"
-          width="14"
-          height="13"
-          rx="4"
+        <path
+          d="M5 5H19V16H14L10 20V16H5V5Z"
           stroke="currentColor"
           stroke-width="1.7"/>
-        <circle
-          cx="9"
-          cy="12"
-          r="1"
-          fill="currentColor"/>
-        <circle
-          cx="15"
-          cy="12"
-          r="1"
-          fill="currentColor"/>
       </svg>
 
-      Ava
+      Связь
 
     </button>
 
@@ -5027,32 +5301,8 @@ select{
       <div class="reader-grid">
 
         <div
-          id="readerArt"
-          class="reader-art">
-
-          <div class="reader-chart">
-
-            <svg
-              viewBox="0 0 500 300"
-              preserveAspectRatio="none">
-
-              <path
-                d="M0 230
-                   C40 210 70 240 100 190
-                   S150 145 190 175
-                   S230 215 260 150
-                   S315 125 345 145
-                   S390 90 420 110
-                   S455 60 500 40"
-                fill="none"
-                stroke="#7653bf"
-                stroke-width="4"
-                stroke-linecap="round"/>
-
-            </svg>
-
-          </div>
-
+          id="readerIllustration"
+          class="reader-illustration">
         </div>
 
         <div class="reader-text">
@@ -5085,10 +5335,11 @@ select{
               💜 Совет Ava
             </h4>
 
-            <p id="avaLessonTip">
-              Не спеши переходить дальше.
-              Сначала убедись, что ты действительно
-              понял принцип.
+            <p
+              id="avaLessonTip"
+              class="reader-tip">
+              Сначала пойми принцип, а затем
+              переходи к практике.
             </p>
 
           </div>
@@ -5103,13 +5354,13 @@ select{
 
           <button
             id="previousLesson"
-            class="reader-button gray">
+            class="reader-btn gray">
             ← Назад
           </button>
 
           <button
             id="nextLesson"
-            class="reader-button gray">
+            class="reader-btn gray">
             Далее →
           </button>
 
@@ -5119,13 +5370,13 @@ select{
 
           <button
             id="bookmarkLesson"
-            class="reader-button gray">
+            class="reader-btn gray">
             ☆ Сохранить
           </button>
 
           <button
             id="completeLesson"
-            class="reader-button green">
+            class="reader-btn green">
             Завершить урок
           </button>
 
@@ -5197,13 +5448,13 @@ select{
 
       <button
         id="modalCancel"
-        class="modal-cancel">
+        class="cancel">
         Отмена
       </button>
 
       <button
         id="modalSave"
-        class="modal-save">
+        class="save-profile">
         Сохранить
       </button>
 
@@ -5218,19 +5469,18 @@ select{
 <script>
 
 /* =========================================================
-   AVA POCKET V6
    CORE
 ========================================================= */
 
 "use strict";
 
-const STORAGE_KEY = "ava_pocket_v6";
+const STORAGE_KEY = "AVA_POCKET_MASTER_V1";
 
-const $ = selector =>
-  document.querySelector(selector);
+const $ = s => document.querySelector(s);
 
-const $$ = selector =>
-  Array.from(document.querySelectorAll(selector));
+const $$ = s => Array.from(
+  document.querySelectorAll(s)
+);
 
 
 /* =========================================================
@@ -5282,26 +5532,16 @@ function loadState(){
     const raw =
       localStorage.getItem(STORAGE_KEY);
 
-    if(!raw){
+    if(raw){
 
-      state = defaultState();
-
-      return;
+      state = {
+        ...defaultState(),
+        ...JSON.parse(raw)
+      };
 
     }
 
-    state = {
-      ...defaultState(),
-      ...JSON.parse(raw)
-    };
-
-    if(!Array.isArray(state.completedLessons))
-      state.completedLessons = [];
-
-    if(!Array.isArray(state.bookmarkedLessons))
-      state.bookmarkedLessons = [];
-
-  }catch(error){
+  }catch(e){
 
     state = defaultState();
 
@@ -5323,19 +5563,23 @@ function save(){
    BACKGROUND CANDLES
 ========================================================= */
 
-function createBackgroundCandles(){
+function createBackground(){
 
-  const holder =
-    $("#backgroundCandles");
+  const box =
+    $("#bgCandles");
 
-  for(let i=0;i<65;i++){
+  for(let i=0;i<70;i++){
 
     const candle =
       document.createElement("div");
 
     candle.className =
       "bg-candle " +
-      (Math.random() > .5 ? "up" : "down");
+      (
+        Math.random() > .5
+          ? "up"
+          : "down"
+      );
 
     candle.style.left =
       Math.random()*100 + "%";
@@ -5344,15 +5588,15 @@ function createBackgroundCandles(){
       Math.random()*100 + "%";
 
     candle.style.height =
-      15 + Math.random()*55 + "px";
+      12 + Math.random()*55 + "px";
 
     candle.style.animationDelay =
       (-Math.random()*7) + "s";
 
     candle.style.animationDuration =
-      (5 + Math.random()*6) + "s";
+      (5+Math.random()*6) + "s";
 
-    holder.appendChild(candle);
+    box.appendChild(candle);
 
   }
 
@@ -5362,56 +5606,6 @@ function createBackgroundCandles(){
 /* =========================================================
    AUTH
 ========================================================= */
-
-function register(event){
-
-  event.preventDefault();
-
-  const name =
-    $("#nameInput").value.trim();
-
-  let nickname =
-    $("#nicknameInput").value.trim();
-
-  if(!name){
-
-    showToast("Введи ФИО");
-
-    return;
-
-  }
-
-  if(!nickname){
-
-    showToast("Введи username");
-
-    return;
-
-  }
-
-  nickname =
-    nickname.replace(/^@+/,"");
-
-  nickname =
-    nickname.replace(/\s+/g,"");
-
-  state.registered = true;
-
-  state.name = name;
-
-  state.nickname = "@" + nickname;
-
-  state.lastVisit = getToday();
-
-  save();
-
-  showApp();
-
-  showToast(
-    "Добро пожаловать в AVA POCKET ✦"
-  );
-
-}
 
 $("#nicknameInput")
   .addEventListener(
@@ -5432,7 +5626,71 @@ $("#googleButton")
     ()=>{
 
       showToast(
-        "Google OAuth подключается через backend"
+        "Google OAuth готов для подключения через backend"
+      );
+
+    }
+  );
+
+$("#registerForm")
+  .addEventListener(
+    "submit",
+    event=>{
+
+      event.preventDefault();
+
+      const name =
+        $("#nameInput")
+          .value
+          .trim();
+
+      let nickname =
+        $("#nicknameInput")
+          .value
+          .trim();
+
+      if(!name){
+
+        showToast(
+          "Введи ФИО"
+        );
+
+        return;
+
+      }
+
+      if(!nickname){
+
+        showToast(
+          "Введи username"
+        );
+
+        return;
+
+      }
+
+      nickname =
+        nickname
+          .replace(/^@+/,"")
+          .replace(/\s+/g,"");
+
+      state.registered = true;
+
+      state.name =
+        name;
+
+      state.nickname =
+        "@" + nickname;
+
+      state.lastVisit =
+        today();
+
+      save();
+
+      showApp();
+
+      showToast(
+        "Добро пожаловать в AVA POCKET ✦"
       );
 
     }
@@ -5440,10 +5698,10 @@ $("#googleButton")
 
 
 /* =========================================================
-   PAGE DATA
+   NAVIGATION
 ========================================================= */
 
-const pageData = {
+const pages = {
 
   home:[
     "Главная",
@@ -5452,17 +5710,17 @@ const pageData = {
 
   education:[
     "Обучение",
-    "Путь от основ до продвинутого анализа"
+    "160 уроков от основ до продвинутого анализа"
   ],
 
   signal:[
     "Ava Bot",
-    "Учебный генератор рыночных сценариев"
+    "Робот-сканер учебных рыночных сценариев"
   ],
 
   ai:[
     "Ava AI",
-    "Твой интеллектуальный помощник"
+    "Твой персональный помощник"
   ],
 
   practice:[
@@ -5472,7 +5730,7 @@ const pageData = {
 
   community:[
     "Связь",
-    "AVA — новости и связь"
+    "Связь со мной и новости AVA"
   ],
 
   profile:[
@@ -5484,13 +5742,14 @@ const pageData = {
 
 function navigate(page){
 
-  if(!pageData[page])
+  if(!pages[page])
     page = "home";
 
   $$(".screen")
-    .forEach(screen=>{
-      screen.classList.remove("active");
-    });
+    .forEach(
+      el =>
+        el.classList.remove("active")
+    );
 
   const target =
     $("#page-" + page);
@@ -5499,344 +5758,227 @@ function navigate(page){
     target.classList.add("active");
 
   $$("[data-page]")
-    .forEach(button=>{
-      button.classList.toggle(
-        "active",
-        button.dataset.page === page
-      );
-    });
+    .forEach(
+      el =>
+        el.classList.toggle(
+          "active",
+          el.dataset.page === page
+        )
+    );
 
   $("#topTitle").textContent =
-    pageData[page][0];
+    pages[page][0];
 
-  $("#topSub").textContent =
-    pageData[page][1];
+  $("#topSubtitle").textContent =
+    pages[page][1];
 
-  state.currentPage = page;
+  state.currentPage =
+    page;
 
   save();
 
-  window.scrollTo({
-    top:0,
-    behavior:"instant"
-  });
+  window.scrollTo(0,0);
 
 }
 
 
+document.addEventListener(
+  "click",
+  event=>{
+
+    const element =
+      event.target.closest(
+        "[data-page]"
+      );
+
+    if(!element)
+      return;
+
+    navigate(
+      element.dataset.page
+    );
+
+  }
+);
+
+
 /* =========================================================
-   LESSON DATABASE
+   LESSONS
 ========================================================= */
 
 const moduleNames = [
 
   "Основы трейдинга",
-
   "Японские свечи",
-
   "Тренд и структура рынка",
-
   "Поддержка и сопротивление",
-
   "Индикаторы",
-
   "Графический анализ",
-
   "Price Action",
-
   "Риск-менеджмент",
-
   "Психология трейдера",
-
   "Торговый план",
-
   "Продвинутый анализ",
-
   "Практика сценариев",
-
   "Разбор ошибок",
-
   "Системный подход",
-
   "Финальная подготовка",
-
   "AVA MASTER"
 
 ];
 
-const lessonTopics = [
+const topicSets = [
 
   [
-
     "Что такое трейдинг",
-
     "Как устроен финансовый рынок",
-
     "Цена и её движение",
-
     "Покупатель и продавец",
-
     "Ликвидность",
-
     "Волатильность",
-
     "Таймфреймы",
-
     "Торговые сессии",
-
     "Основные валюты",
-
     "Первые правила трейдера"
-
   ],
 
   [
-
     "Что такое японская свеча",
-
     "Open, High, Low, Close",
-
     "Тело свечи",
-
     "Тени свечи",
-
     "Бычья свеча",
-
     "Медвежья свеча",
-
     "Доджи",
-
     "Поглощение",
-
     "Пин-бар",
-
     "Комбинации свечей"
-
   ],
 
   [
-
     "Что такое тренд",
-
     "Восходящий тренд",
-
     "Нисходящий тренд",
-
     "Флэт",
-
     "Higher High",
-
     "Higher Low",
-
     "Lower High",
-
     "Lower Low",
-
     "Смена структуры",
-
     "Подтверждение тренда"
-
   ],
 
   [
-
     "Что такое поддержка",
-
     "Что такое сопротивление",
-
     "Зоны вместо линий",
-
     "Сильные уровни",
-
     "Повторное тестирование",
-
     "Пробой уровня",
-
     "Ложный пробой",
-
     "Ретест",
-
     "Объём и уровень",
-
     "Практический поиск зон"
-
   ],
 
   [
-
     "Что такое индикатор",
-
     "Moving Average",
-
     "RSI",
-
     "MACD",
-
     "Stochastic",
-
     "Bollinger Bands",
-
     "Envelopes",
-
     "Accelerator Oscillator",
-
     "Сочетание индикаторов",
-
     "Ошибки использования индикаторов"
-
   ],
 
   [
-
     "Линии тренда",
-
     "Каналы",
-
     "Треугольники",
-
     "Флаги",
-
     "Фигуры разворота",
-
     "Двойная вершина",
-
     "Двойное дно",
-
     "Голова и плечи",
-
     "Пробой фигуры",
-
     "Практический анализ"
-
   ],
 
   [
-
     "Основы Price Action",
-
     "Импульс",
-
     "Коррекция",
-
     "Отбой",
-
     "Пробой",
-
     "Ретест",
-
     "Свеча подтверждения",
-
     "Контекст рынка",
-
     "Сценарии входа",
-
     "Когда не входить"
-
   ],
 
   [
-
     "Что такое риск",
-
     "Риск на сделку",
-
     "Размер позиции",
-
     "Стоп-лосс",
-
     "Соотношение риск/прибыль",
-
     "Дневной лимит",
-
     "Серия убытков",
-
     "Защита капитала",
-
     "Торговый журнал",
-
     "Правила дисциплины"
-
   ],
 
   [
-
     "Эмоции трейдера",
-
     "Страх",
-
     "Жадность",
-
     "FOMO",
-
     "Тильт",
-
     "Овертрейдинг",
-
     "Умение ждать",
-
     "Принятие убытка",
-
     "Дисциплина",
-
     "Психологическая устойчивость"
-
   ],
 
   [
-
     "Что такое торговый план",
-
     "Выбор рынка",
-
     "Выбор таймфрейма",
-
     "Условия входа",
-
     "Условия выхода",
-
     "Фильтр сделок",
-
     "Рабочие часы",
-
     "Журналирование",
-
     "Анализ результатов",
-
     "Корректировка системы"
-
   ]
 
 ];
 
+while(topicSets.length < 16){
 
-/* Generate remaining modules */
+  const m =
+    topicSets.length + 1;
 
-while(lessonTopics.length < 16){
-
-  const moduleIndex =
-    lessonTopics.length;
-
-  lessonTopics.push(
-
+  topicSets.push(
     Array.from(
       {length:10},
       (_,i)=>
-        "Продвинутый урок " +
-        (i+1) +
-        " · Модуль " +
-        (moduleIndex+1)
+        `Продвинутый разбор · урок ${i+1} · модуль ${m}`
     )
-
   );
 
 }
 
-
-/* Build lessons */
-
 const lessons = [];
 
-lessonTopics.forEach(
+topicSets.forEach(
   (topics,moduleIndex)=>{
 
     topics.forEach(
@@ -5856,15 +5998,13 @@ lessonTopics.forEach(
           title,
 
           lead:
-            createLessonLead(
+            lessonLead(
               title,
               moduleIndex
             ),
 
           tip:
-            createLessonTip(
-              title
-            )
+            lessonTip(title)
 
         });
 
@@ -5875,31 +6015,28 @@ lessonTopics.forEach(
 );
 
 
-function createLessonLead(
-  title,
-  moduleIndex
-){
+function lessonLead(title,module){
 
-  const leads = [
+  const templates = [
 
-    `В этом уроке Ava объяснит тему «${title}» простым языком и покажет, как она связана с общей структурой рынка.`,
+    `Разберём тему «${title}» с самого начала. Ava покажет, что означает этот принцип и почему он важен для понимания движения цены.`,
 
-    `Главная задача урока — не просто запомнить определение «${title}», а научиться видеть этот принцип на графике.`,
+    `В этом уроке тема «${title}» рассматривается не как отдельное определение, а как часть общей картины рынка.`,
 
-    `Разберём «${title}» пошагово: от базовой идеи до практического применения в учебном сценарии.`
+    `Главная цель урока «${title}» — научиться распознавать этот принцип на графике и понимать его контекст.`
 
   ];
 
-  return leads[
-    moduleIndex % leads.length
+  return templates[
+    module % templates.length
   ];
 
 }
 
 
-function createLessonTip(title){
+function lessonTip(title){
 
-  return `Ava советует: не пытайся использовать «${title}» отдельно от контекста. Сначала посмотри на структуру рынка, затем оцени подтверждения и только после этого делай вывод.`;
+  return `Совет Ava: не спеши использовать «${title}» как самостоятельный сигнал. Сначала оцени структуру рынка, контекст и подтверждение.`;
 
 }
 
@@ -5910,10 +6047,10 @@ function createLessonTip(title){
 
 function renderEducation(){
 
-  const modules =
+  const holder =
     $("#modules");
 
-  modules.innerHTML = "";
+  holder.innerHTML = "";
 
   moduleNames.forEach(
     (moduleName,moduleIndex)=>{
@@ -5921,7 +6058,8 @@ function renderEducation(){
       const moduleLessons =
         lessons.filter(
           lesson =>
-            lesson.moduleIndex === moduleIndex
+            lesson.moduleIndex ===
+            moduleIndex
         );
 
       const completed =
@@ -5941,7 +6079,8 @@ function renderEducation(){
       const module =
         document.createElement("div");
 
-      module.className = "module";
+      module.className =
+        "module";
 
       module.dataset.module =
         moduleIndex;
@@ -5950,18 +6089,18 @@ function renderEducation(){
 
         <div class="module-head">
 
-          <div class="module-num">
+          <div class="module-number">
             ${moduleIndex+1}
           </div>
 
-          <div class="module-title">
+          <div class="module-info">
 
             <strong>
               ${moduleName}
             </strong>
 
             <small>
-              ${moduleLessons.length} уроков ·
+              10 уроков ·
               ${completed} завершено
             </small>
 
@@ -5977,30 +6116,30 @@ function renderEducation(){
 
         </div>
 
-        <div class="lessons">
+        <div class="module-lessons">
 
           ${moduleLessons.map(
             lesson => `
 
               <div
                 class="lesson ${
-                  state.completedLessons.includes(
-                    lesson.id
-                  ) ? "completed" : ""
+                  state.completedLessons
+                    .includes(lesson.id)
+                    ? "completed"
+                    : ""
                 }"
                 data-lesson="${lesson.id}">
 
                 <div class="lesson-number">
                   ${
-                    state.completedLessons.includes(
-                      lesson.id
-                    )
-                    ? "✓"
-                    : lesson.lessonIndex+1
+                    state.completedLessons
+                      .includes(lesson.id)
+                      ? "✓"
+                      : lesson.lessonIndex+1
                   }
                 </div>
 
-                <div class="lesson-info">
+                <div class="lesson-text">
 
                   <strong>
                     ${lesson.title}
@@ -6008,9 +6147,8 @@ function renderEducation(){
 
                   <small>
                     ${
-                      state.completedLessons.includes(
-                        lesson.id
-                      )
+                      state.completedLessons
+                        .includes(lesson.id)
                       ? "Урок завершён"
                       : "Открыть урок"
                     }
@@ -6027,7 +6165,7 @@ function renderEducation(){
 
       `;
 
-      modules.appendChild(module);
+      holder.appendChild(module);
 
     }
   );
@@ -6054,15 +6192,15 @@ function renderEducation(){
 
 function updateEducationProgress(){
 
-  const completed =
-    state.completedLessons.length;
-
   const total =
     lessons.length;
 
+  const done =
+    state.completedLessons.length;
+
   const percent =
     Math.round(
-      completed / total * 100
+      done / total * 100
     );
 
   $("#eduPercent").textContent =
@@ -6074,68 +6212,15 @@ function updateEducationProgress(){
 }
 
 
-/* =========================================================
-   LESSON FILTER
-========================================================= */
-
-function filterLessons(){
-
-  const search =
-    $("#lessonSearch")
-      .value
-      .trim()
-      .toLowerCase();
-
-  const moduleFilter =
-    $("#moduleFilter").value;
-
-  $$(".module")
-    .forEach(module=>{
-
-      const moduleIndex =
-        module.dataset.module;
-
-      const matchesModule =
-        moduleFilter === "all" ||
-        moduleFilter === moduleIndex;
-
-      let anyLesson = false;
-
-      module
-        .querySelectorAll(".lesson")
-        .forEach(lesson=>{
-
-          const text =
-            lesson.textContent
-              .toLowerCase();
-
-          const visible =
-            matchesModule &&
-            text.includes(search);
-
-          lesson.style.display =
-            visible ? "flex" : "none";
-
-          if(visible)
-            anyLesson = true;
-
-        });
-
-      module.style.display =
-        anyLesson ? "block" : "none";
-
-    });
-
-}
-
-
 $("#modules")
   .addEventListener(
     "click",
     event=>{
 
       const lesson =
-        event.target.closest(".lesson");
+        event.target.closest(
+          ".lesson"
+        );
 
       if(lesson){
 
@@ -6149,15 +6234,16 @@ $("#modules")
 
       }
 
-      const header =
-        event.target.closest(".module-head");
+      const head =
+        event.target.closest(
+          ".module-head"
+        );
 
-      if(header){
+      if(head){
 
-        const module =
-          header.closest(".module");
-
-        module.classList.toggle("open");
+        head
+          .closest(".module")
+          .classList.toggle("open");
 
       }
 
@@ -6165,12 +6251,64 @@ $("#modules")
   );
 
 
+function filterLessons(){
+
+  const search =
+    $("#lessonSearch")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const filter =
+    $("#moduleFilter").value;
+
+  $$(".module")
+    .forEach(module=>{
+
+      const moduleIndex =
+        module.dataset.module;
+
+      const allowedModule =
+        filter === "all" ||
+        filter === moduleIndex;
+
+      let visible =
+        false;
+
+      module
+        .querySelectorAll(".lesson")
+        .forEach(lesson=>{
+
+          const matches =
+            allowedModule &&
+            lesson.textContent
+              .toLowerCase()
+              .includes(search);
+
+          lesson.style.display =
+            matches
+              ? "flex"
+              : "none";
+
+          if(matches)
+            visible = true;
+
+        });
+
+      module.style.display =
+        visible
+          ? "block"
+          : "none";
+
+    });
+
+}
+
 $("#lessonSearch")
   .addEventListener(
     "input",
     filterLessons
   );
-
 
 $("#moduleFilter")
   .addEventListener(
@@ -6180,26 +6318,147 @@ $("#moduleFilter")
 
 
 /* =========================================================
-   READER
+   LESSON READER
 ========================================================= */
 
 let currentLesson = 0;
 
+function lessonArt(id){
+
+  const variant =
+    id % 3;
+
+  if(variant === 0){
+
+    return `
+
+      <svg
+        viewBox="0 0 500 320"
+        preserveAspectRatio="none">
+
+        <path
+          d="M20 260
+             C55 240 75 270 105 215
+             S155 170 185 200
+             S230 235 260 160
+             S310 120 345 145
+             S390 90 425 105
+             S460 65 485 35"
+          fill="none"
+          stroke="#7653bf"
+          stroke-width="5"
+          stroke-linecap="round"/>
+
+        <circle
+          cx="345"
+          cy="145"
+          r="8"
+          fill="#7653bf"/>
+
+        <circle
+          cx="425"
+          cy="105"
+          r="8"
+          fill="#38bdf8"/>
+
+      </svg>
+
+    `;
+
+  }
+
+  if(variant === 1){
+
+    return `
+
+      <svg
+        viewBox="0 0 500 320">
+
+        ${[
+
+          [70,190,80,"#22c55e"],
+          [120,145,55,"#ef4444"],
+          [175,170,95,"#22c55e"],
+          [230,110,75,"#22c55e"],
+          [285,130,100,"#ef4444"],
+          [340,90,120,"#22c55e"],
+          [395,115,80,"#ef4444"]
+
+        ].map(
+          c => `
+
+            <line
+              x1="${c[0]}"
+              y1="${c[1]-c[2]/2-25}"
+              x2="${c[0]}"
+              y2="${c[1]+c[2]/2+25}"
+              stroke="${c[3]}"
+              stroke-width="3"/>
+
+            <rect
+              x="${c[0]-10}"
+              y="${c[1]-c[2]/2}"
+              width="20"
+              height="${c[2]}"
+              rx="4"
+              fill="${c[3]}"/>
+
+          `
+        ).join("")}
+
+      </svg>
+
+    `;
+
+  }
+
+  return `
+
+    <svg
+      viewBox="0 0 500 320">
+
+      <path
+        d="M30 230L125 150L215 205L305 95L470 40"
+        fill="none"
+        stroke="#38bdf8"
+        stroke-width="5"
+        stroke-linecap="round"/>
+
+      <path
+        d="M30 260H470"
+        stroke="#b9aea1"
+        stroke-width="2"/>
+
+      <path
+        d="M30 230L470 40"
+        stroke="#7653bf"
+        stroke-width="2"
+        stroke-dasharray="8 8"
+        opacity=".55"/>
+
+    </svg>
+
+  `;
+
+}
+
+
 function openLesson(id){
+
+  if(!lessons[id])
+    return;
+
+  currentLesson =
+    id;
 
   const lesson =
     lessons[id];
-
-  if(!lesson)
-    return;
-
-  currentLesson = id;
 
   $("#readerLabel").textContent =
     `${lesson.moduleTitle} · Раздел ${lesson.moduleIndex+1}`;
 
   $("#readerCounter").textContent =
-    `Урок ${lesson.lessonIndex+1} из 10 · ${id+1} из ${lessons.length}`;
+    `Урок ${lesson.lessonIndex+1} из 10 · ${id+1} из 160`;
 
   $("#readerTitle").textContent =
     lesson.title;
@@ -6210,45 +6469,41 @@ function openLesson(id){
   $("#avaLessonTip").textContent =
     lesson.tip;
 
-  $("#readerPoints").innerHTML = `
+  $("#readerIllustration").innerHTML =
+    lessonArt(id);
 
-    <div class="reader-point">
+  const points = [
 
-      <i>1</i>
+    "Сначала пойми определение и основную идею темы.",
 
-      Сначала разберись в определении
-      и основном принципе темы.
+    "Посмотри на контекст рынка, а не только на один элемент графика.",
 
-    </div>
+    "Сравни несколько факторов перед формированием сценария.",
 
-    <div class="reader-point">
+    "Запиши собственное наблюдение после изучения материала.",
 
-      <i>2</i>
+    "Если условия сценария не выполнены — отсутствие сделки тоже решение."
 
-      Посмотри на контекст рынка,
-      а не только на отдельный сигнал.
+  ];
 
-    </div>
+  $("#readerPoints").innerHTML =
+    points.map(
+      (text,index)=>`
 
-    <div class="reader-point">
+        <div class="reader-point">
 
-      <i>3</i>
+          <div class="reader-point-number">
+            ${index+1}
+          </div>
 
-      Сравни несколько факторов
-      перед формированием сценария.
+          <div>
+            ${text}
+          </div>
 
-    </div>
+        </div>
 
-    <div class="reader-point">
-
-      <i>4</i>
-
-      Запиши собственное наблюдение
-      после изучения материала.
-
-    </div>
-
-  `;
+      `
+    ).join("");
 
   $("#bookmarkLesson").textContent =
     state.bookmarkedLessons.includes(id)
@@ -6280,103 +6535,12 @@ function closeReader(){
 }
 
 
-function completeCurrentLesson(){
-
-  if(
-    state.completedLessons
-      .includes(currentLesson)
-  ){
-
-    showToast(
-      "Этот урок уже завершён"
-    );
-
-    return;
-
-  }
-
-  state.completedLessons.push(
-    currentLesson
-  );
-
-  addXP(30);
-
-  addCoins(10);
-
-  save();
-
-  renderEducation();
-
-  updateAll();
-
-  openLesson(currentLesson);
-
-  showToast(
-    "✓ Урок завершён · +30 XP · +10 AVA Coins"
-  );
-
-}
-
-
-function bookmarkCurrentLesson(){
-
-  const index =
-    state.bookmarkedLessons
-      .indexOf(currentLesson);
-
-  if(index >= 0){
-
-    state.bookmarkedLessons
-      .splice(index,1);
-
-    showToast(
-      "Закладка удалена"
-    );
-
-  }else{
-
-    state.bookmarkedLessons
-      .push(currentLesson);
-
-    addXP(5);
-
-    addCoins(3);
-
-    showToast(
-      "★ Урок сохранён · +3 AVA Coins"
-    );
-
-  }
-
-  save();
-
-  updateAll();
-
-  openLesson(currentLesson);
-
-}
-
-
-function moveLesson(step){
-
-  const next =
-    Math.max(
-      0,
-      Math.min(
-        lessons.length-1,
-        currentLesson + step
-      )
-    );
-
-  openLesson(next);
-
-}
-
 $("#readerClose")
   .addEventListener(
     "click",
     closeReader
   );
+
 
 $("#readerOverlay")
   .addEventListener(
@@ -6395,33 +6559,126 @@ $("#readerOverlay")
     }
   );
 
-$("#completeLesson")
-  .addEventListener(
-    "click",
-    completeCurrentLesson
-  );
-
-$("#bookmarkLesson")
-  .addEventListener(
-    "click",
-    bookmarkCurrentLesson
-  );
 
 $("#previousLesson")
   .addEventListener(
     "click",
-    ()=>moveLesson(-1)
+    ()=>{
+      openLesson(
+        Math.max(
+          0,
+          currentLesson-1
+        )
+      );
+    }
   );
+
 
 $("#nextLesson")
   .addEventListener(
     "click",
-    ()=>moveLesson(1)
+    ()=>{
+      openLesson(
+        Math.min(
+          lessons.length-1,
+          currentLesson+1
+        )
+      );
+    }
+  );
+
+
+$("#completeLesson")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      if(
+        state.completedLessons
+          .includes(currentLesson)
+      ){
+
+        showToast(
+          "Этот урок уже завершён"
+        );
+
+        return;
+
+      }
+
+      state.completedLessons.push(
+        currentLesson
+      );
+
+      state.xp += 30;
+
+      state.coins += 10;
+
+      save();
+
+      updateAll();
+
+      renderEducation();
+
+      openLesson(
+        currentLesson
+      );
+
+      showToast(
+        "✓ Урок завершён · +30 XP · +10 Coins"
+      );
+
+    }
+  );
+
+
+$("#bookmarkLesson")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      const index =
+        state.bookmarkedLessons
+          .indexOf(currentLesson);
+
+      if(index >= 0){
+
+        state.bookmarkedLessons
+          .splice(index,1);
+
+        showToast(
+          "Закладка удалена"
+        );
+
+      }else{
+
+        state.bookmarkedLessons
+          .push(currentLesson);
+
+        state.xp += 5;
+
+        state.coins += 3;
+
+        showToast(
+          "★ Сохранено · +3 Coins"
+        );
+
+      }
+
+      save();
+
+      updateAll();
+
+      openLesson(
+        currentLesson
+      );
+
+    }
   );
 
 
 /* =========================================================
-   CURRENCY PAIRS
+   PAIRS
 ========================================================= */
 
 const pairs = [
@@ -6499,49 +6756,57 @@ const pairs = [
 
 ];
 
-let marketType = "exchange";
+let market =
+  "exchange";
 
-let selectedDuration = 1;
+let duration =
+  1;
+
 
 function fillPairs(){
 
-  const select =
-    $("#pairSelect");
-
   const list =
-    marketType === "otc"
-      ? pairs.map(pair=>pair+" OTC")
+    market === "otc"
+      ? pairs.map(
+          pair =>
+            pair + " OTC"
+        )
       : pairs;
 
-  select.innerHTML =
+  $("#pairSelect").innerHTML =
     list.map(
       pair =>
-        `<option value="${pair}">
+        `
+        <option value="${pair}">
           ${pair}
-        </option>`
+        </option>
+        `
     ).join("");
 
 }
 
+
 fillPairs();
 
 
-$$(".market-button")
+$$(".market-btn")
   .forEach(button=>{
 
     button.addEventListener(
       "click",
       ()=>{
 
-        $$(".market-button")
+        $$(".market-btn")
           .forEach(
-            b =>
-              b.classList.remove("active")
+            btn =>
+              btn.classList
+                .remove("active")
           );
 
-        button.classList.add("active");
+        button.classList
+          .add("active");
 
-        marketType =
+        market =
           button.dataset.market;
 
         fillPairs();
@@ -6552,22 +6817,24 @@ $$(".market-button")
   });
 
 
-$$(".duration")
+$$(".duration-btn")
   .forEach(button=>{
 
     button.addEventListener(
       "click",
       ()=>{
 
-        $$(".duration")
+        $$(".duration-btn")
           .forEach(
-            b =>
-              b.classList.remove("active")
+            btn =>
+              btn.classList
+                .remove("active")
           );
 
-        button.classList.add("active");
+        button.classList
+          .add("active");
 
-        selectedDuration =
+        duration =
           Number(
             button.dataset.duration
           );
@@ -6579,13 +6846,34 @@ $$(".duration")
 
 
 /* =========================================================
-   SIGNAL ENGINE
+   BOT CHART
 ========================================================= */
 
-function seededRandom(seed){
+function hash(text){
 
-  let x =
-    Math.sin(seed) * 10000;
+  let value = 0;
+
+  for(let i=0;i<text.length;i++){
+
+    value =
+      (
+        (value << 5) -
+        value +
+        text.charCodeAt(i)
+      ) | 0;
+
+  }
+
+  return Math.abs(value);
+
+}
+
+
+function random(seed){
+
+  const x =
+    Math.sin(seed) *
+    10000;
 
   return x -
     Math.floor(x);
@@ -6593,211 +6881,70 @@ function seededRandom(seed){
 }
 
 
-function hashString(text){
-
-  let hash = 0;
-
-  for(let i=0;i<text.length;i++){
-
-    hash =
-      ((hash << 5)-hash) +
-      text.charCodeAt(i);
-
-    hash |= 0;
-
-  }
-
-  return Math.abs(hash);
-
-}
-
-
-function buildCandles(
+function createCandles(
   seed,
   direction
 ){
 
   let price = 100;
 
-  const candles = [];
+  const data = [];
 
-  for(let i=0;i<45;i++){
+  for(let i=0;i<48;i++){
 
-    const random =
-      seededRandom(
+    const r =
+      random(
         seed +
-        i*17.17
+        i*17.31
       );
 
     const bias =
       direction === "UP"
-        ? .55
-        : -.55;
+        ? .52
+        : -.52;
 
     const open =
       price;
 
-    const movement =
-      (random-.5)*4 +
+    const move =
+      (r-.5)*4.2 +
       bias;
 
     const close =
       Math.max(
-        72,
+        70,
         Math.min(
           135,
-          open + movement
+          open+move
         )
       );
 
     const high =
       Math.max(open,close) +
-      seededRandom(seed+i*23)*3;
+      random(seed+i*21)*3;
 
     const low =
       Math.min(open,close) -
-      seededRandom(seed+i*31)*3;
+      random(seed+i*29)*3;
 
-    candles.push({
+    data.push({
       open,
       close,
       high,
       low
     });
 
-    price = close;
+    price =
+      close;
 
   }
 
-  return candles;
+  return data;
 
 }
 
 
-function renderSignalCandles(
-  candles
-){
-
-  const group =
-    $("#resultCandles");
-
-  group.innerHTML = "";
-
-  const width = 800;
-
-  const height = 500;
-
-  const step =
-    width / candles.length;
-
-  const min =
-    Math.min(
-      ...candles.map(c=>c.low)
-    );
-
-  const max =
-    Math.max(
-      ...candles.map(c=>c.high)
-    );
-
-  const scale =
-    height /
-    (max-min);
-
-  let trendPath = "";
-
-  candles.forEach(
-    (candle,index)=>{
-
-      const x =
-        index * step + step/2;
-
-      const highY =
-        height -
-        (candle.high-min) *
-        scale;
-
-      const lowY =
-        height -
-        (candle.low-min) *
-        scale;
-
-      const openY =
-        height -
-        (candle.open-min) *
-        scale;
-
-      const closeY =
-        height -
-        (candle.close-min) *
-        scale;
-
-      const bullish =
-        candle.close >= candle.open;
-
-      const bodyTop =
-        Math.min(
-          openY,
-          closeY
-        );
-
-      const bodyHeight =
-        Math.max(
-          4,
-          Math.abs(
-            closeY-openY
-          )
-        );
-
-      const cls =
-        bullish
-          ? "#22c55e"
-          : "#ef4444";
-
-      group.insertAdjacentHTML(
-        "beforeend",
-        `
-
-        <line
-          x1="${x}"
-          y1="${highY}"
-          x2="${x}"
-          y2="${lowY}"
-          stroke="${cls}"
-          stroke-width="2"
-          opacity=".8"/>
-
-        <rect
-          class="result-candle"
-          x="${x-step*.28}"
-          y="${bodyTop}"
-          width="${step*.56}"
-          height="${bodyHeight}"
-          rx="2"
-          fill="${cls}"
-          opacity=".9"/>
-
-        `
-      );
-
-      trendPath +=
-        index === 0
-          ? `M ${x} ${closeY}`
-          : ` L ${x} ${closeY}`;
-
-    }
-  );
-
-  $("#resultTrend")
-    .setAttribute(
-      "d",
-      trendPath
-    );
-
-}
-
-
-function renderResultGrid(){
+function drawGrid(){
 
   const grid =
     $("#resultGrid");
@@ -6810,11 +6957,11 @@ function renderResultGrid(){
       "beforeend",
       `
       <line
+        class="result-grid-line"
         x1="${x}"
         y1="0"
         x2="${x}"
-        y2="500"
-        class="result-grid"/>
+        y2="500"/>
       `
     );
 
@@ -6826,11 +6973,11 @@ function renderResultGrid(){
       "beforeend",
       `
       <line
+        class="result-grid-line"
         x1="0"
         y1="${y}"
         x2="800"
-        y2="${y}"
-        class="result-grid"/>
+        y2="${y}"/>
       `
     );
 
@@ -6838,10 +6985,149 @@ function renderResultGrid(){
 
 }
 
-renderResultGrid();
+
+drawGrid();
 
 
-function getSignal(){
+function drawCandles(data){
+
+  const group =
+    $("#resultCandles");
+
+  group.innerHTML = "";
+
+  const width = 800;
+  const height = 500;
+
+  const step =
+    width / data.length;
+
+  const min =
+    Math.min(
+      ...data.map(
+        candle =>
+          candle.low
+      )
+    );
+
+  const max =
+    Math.max(
+      ...data.map(
+        candle =>
+          candle.high
+      )
+    );
+
+  const scale =
+    height /
+    (max-min);
+
+  let trend = "";
+
+  data.forEach(
+    (candle,index)=>{
+
+      const x =
+        index*step +
+        step/2;
+
+      const high =
+        height -
+        (candle.high-min)*
+        scale;
+
+      const low =
+        height -
+        (candle.low-min)*
+        scale;
+
+      const open =
+        height -
+        (candle.open-min)*
+        scale;
+
+      const close =
+        height -
+        (candle.close-min)*
+        scale;
+
+      const bullish =
+        candle.close >=
+        candle.open;
+
+      const color =
+        bullish
+          ? "#22c55e"
+          : "#ef4444";
+
+      const top =
+        Math.min(
+          open,
+          close
+        );
+
+      const body =
+        Math.max(
+          4,
+          Math.abs(
+            close-open
+          )
+        );
+
+      group.insertAdjacentHTML(
+        "beforeend",
+        `
+
+          <line
+            x1="${x}"
+            y1="${high}"
+            x2="${x}"
+            y2="${low}"
+            stroke="${color}"
+            stroke-width="2"
+            opacity=".85"/>
+
+          <rect
+            class="result-candle"
+            x="${x-step*.27}"
+            y="${top}"
+            width="${step*.54}"
+            height="${body}"
+            rx="2"
+            fill="${color}"/>
+
+        `
+      );
+
+      trend +=
+        index === 0
+          ? `M ${x} ${close}`
+          : ` L ${x} ${close}`;
+
+    }
+  );
+
+  $("#resultTrend")
+    .setAttribute(
+      "d",
+      trend
+    );
+
+}
+
+
+/* =========================================================
+   AVA BOT ENGINE
+========================================================= */
+
+$("#generateSignal")
+  .addEventListener(
+    "click",
+    generateSignal
+  );
+
+
+function generateSignal(){
 
   const button =
     $("#generateSignal");
@@ -6850,22 +7136,22 @@ function getSignal(){
     $("#pairSelect").value;
 
   const seed =
-    hashString(pair) +
+    hash(pair) +
     Date.now();
 
   const direction =
-    seededRandom(seed) > .5
+    random(seed) > .5
       ? "UP"
       : "DOWN";
 
   const confidence =
-    70 +
+    71 +
     Math.floor(
-      seededRandom(seed+999)*25
+      random(seed+777)*24
     );
 
-  const candles =
-    buildCandles(
+  const data =
+    createCandles(
       seed,
       direction
     );
@@ -6874,31 +7160,37 @@ function getSignal(){
     pair;
 
   $("#signalFinal")
-    .classList.remove("show");
+    .classList
+    .remove("show");
 
-  $("#resultCenter")
-    .classList.add("scanning");
+  $("#botCenter")
+    .classList
+    .add("scanning");
 
-  button.classList.add("loading");
+  button
+    .classList
+    .add("loading");
 
   button.textContent =
-    "◌ Ava анализирует рынок...";
+    "◌ AVA BOT СКАНИРУЕТ...";
 
   const statuses = [
 
-    "Сканирование свечей...",
+    "ЗАПУСК РОБОТА...",
 
-    "Анализ структуры...",
+    "СКАНИРОВАНИЕ СВЕЧЕЙ...",
 
-    "Проверка импульса...",
+    "АНАЛИЗ СТРУКТУРЫ...",
 
-    "Сопоставление сценариев...",
+    "ПРОВЕРКА ИМПУЛЬСА...",
 
-    "Формирование результата..."
+    "СРАВНЕНИЕ СЦЕНАРИЕВ...",
+
+    "ФОРМИРОВАНИЕ РЕЗУЛЬТАТА..."
 
   ];
 
-  let statusIndex = 0;
+  let index = 0;
 
   const interval =
     setInterval(
@@ -6908,41 +7200,43 @@ function getSignal(){
           .textContent =
           statuses[
             Math.min(
-              statusIndex++,
+              index++,
               statuses.length-1
             )
           ];
 
       },
-      430
+      390
     );
 
   setTimeout(
     ()=>{
 
-      clearInterval(interval);
-
-      renderSignalCandles(
-        candles
+      clearInterval(
+        interval
       );
 
-      $("#resultCenter")
-        .classList.remove("scanning");
+      drawCandles(data);
+
+      $("#botCenter")
+        .classList
+        .remove("scanning");
 
       $("#botStatus")
         .textContent =
-        "Анализ завершён";
+        "АНАЛИЗ ЗАВЕРШЁН";
 
       const final =
         $("#signalFinal");
 
-      final.classList.add("show");
+      final.classList
+        .add("show");
 
       const directionElement =
-        $("#signalDirection");
+        $("#direction");
 
       directionElement.className =
-        "signal-direction " +
+        "direction " +
         (
           direction === "UP"
             ? "up"
@@ -6956,33 +7250,33 @@ function getSignal(){
 
       $("#signalMeta")
         .textContent =
-        `${pair} · ${selectedDuration}M · учебный сценарий`;
+        `${pair} · ${duration}M · ${market === "otc" ? "OTC" : "БИРЖА"}`;
 
       $("#confidenceBar")
         .style.width =
         confidence + "%";
 
-      button.classList.remove(
-        "loading"
-      );
+      button
+        .classList
+        .remove("loading");
 
       button.textContent =
-        "✦ Сгенерировать сценарий";
+        "✦ ЗАПУСТИТЬ AVA BOT";
 
       state.signalsGenerated++;
 
-      addXP(10);
+      state.xp += 10;
 
       save();
 
       updateAll();
 
       showToast(
-        "Ava завершила анализ ✦"
+        "Ava Bot завершил анализ ✦"
       );
 
     },
-    2600
+    2700
   );
 
 }
@@ -6992,120 +7286,138 @@ function getSignal(){
    AVA AI
 ========================================================= */
 
-const avaAnswers = {
+const avaKnowledge = [
 
-  "свеч":
-    "Японская свеча показывает движение цены за выбранный период. У неё есть Open, High, Low и Close. Тело показывает расстояние между открытием и закрытием, а тени — экстремумы периода.",
+  {
+    keys:[
+      "свеч",
+      "японск"
+    ],
+    answer:
+      "Японская свеча показывает движение цены за выбранный период. Open — цена открытия, Close — цена закрытия, High — максимум, Low — минимум. Тело показывает расстояние между открытием и закрытием, а тени — экстремумы периода."
+  },
 
-  "тренд":
-    "Для учебного анализа сначала смотри на структуру. Восходящий сценарий характеризуется последовательностью более высоких максимумов и минимумов, нисходящий — более низких. Одинокая свеча сама по себе ещё не определяет тренд.",
+  {
+    keys:[
+      "тренд",
+      "направлен"
+    ],
+    answer:
+      "Чтобы определить тренд, смотри не на одну свечу, а на структуру. Восходящий сценарий формирует более высокие максимумы и минимумы. Нисходящий — более низкие максимумы и минимумы. Если структура неясная, рынок может находиться во флэте."
+  },
 
-  "rsi":
-    "RSI — осциллятор импульса. Его часто используют для оценки относительной силы движения и поиска зон, где рынок может быть перегрет. Но RSI не стоит использовать как самостоятельную кнопку входа.",
+  {
+    keys:[
+      "rsi"
+    ],
+    answer:
+      "RSI — осциллятор, который помогает оценивать относительную силу движения. Его можно использовать как дополнительный фактор анализа, но не стоит воспринимать значение RSI как автоматическую команду на вход."
+  },
 
-  "поддерж":
-    "Поддержка — ценовая зона, где ранее появлялся спрос и движение вниз останавливалось или замедлялось. В реальном анализе лучше рассматривать её как зону, а не как идеально точную линию.",
+  {
+    keys:[
+      "ema",
+      "moving average",
+      "скользящ"
+    ],
+    answer:
+      "EMA — экспоненциальная скользящая средняя. Она сильнее учитывает последние значения цены и может использоваться для оценки направления и динамики рынка."
+  },
 
-  "сопротив":
-    "Сопротивление — зона, в которой движение вверх ранее сталкивалось с предложением. Важно смотреть, как цена реагирует на эту область: отбой, пробой или ложный пробой.",
+  {
+    keys:[
+      "macd"
+    ],
+    answer:
+      "MACD помогает анализировать динамику и импульс. Обычно рассматривают линию MACD, сигнальную линию и гистограмму. Как и любой индикатор, MACD лучше использовать вместе с контекстом рынка."
+  },
 
-  "риск":
-    "Риск-менеджмент важнее попытки угадать каждое движение. Определи допустимый риск заранее, используй лимиты и не увеличивай размер позиции только потому, что предыдущая сделка была убыточной.",
+  {
+    keys:[
+      "поддерж"
+    ],
+    answer:
+      "Поддержка — ценовая зона, где ранее появлялся спрос и снижение цены замедлялось или разворачивалось. Лучше воспринимать поддержку как область, а не как одну идеально точную цену."
+  },
 
-  "индикатор":
-    "Индикатор — математический инструмент обработки ценовых данных. Он может помочь увидеть структуру или импульс, но не гарантирует будущего движения.",
+  {
+    keys:[
+      "сопротив"
+    ],
+    answer:
+      "Сопротивление — зона, где движение вверх ранее сталкивалось с предложением. При работе с ней важно различать отбой, настоящий пробой и ложный пробой."
+  },
 
-  "price":
-    "Price Action — анализ самого движения цены: свечей, уровней, структуры, импульсов, коррекций и реакций на важные зоны.",
+  {
+    keys:[
+      "риск",
+      "риск-менеджмент"
+    ],
+    answer:
+      "Риск-менеджмент нужен для контроля потерь. Важно заранее определить допустимый риск, соблюдать лимиты и не увеличивать размер сделки только из-за желания быстро вернуть предыдущий убыток."
+  },
 
-  "фибо":
-    "Уровни Fibonacci используют как дополнительный инструмент для поиска потенциальных зон коррекции и оценки структуры движения. Это не самостоятельный прогноз.",
+  {
+    keys:[
+      "price action",
+      "прайс"
+    ],
+    answer:
+      "Price Action — анализ движения самой цены: свечей, структуры, импульсов, коррекций, уровней, пробоев, ретестов и реакций рынка."
+  },
 
-  "психолог":
-    "Психология влияет на дисциплину. Страх, жадность, FOMO и желание отыграться могут заставлять нарушать заранее установленный план.",
+  {
+    keys:[
+      "fomo",
+      "страх",
+      "жадност",
+      "психолог"
+    ],
+    answer:
+      "Психология напрямую влияет на дисциплину. FOMO, страх и желание отыграться могут заставлять нарушать заранее установленный план. Поэтому хороший процесс важнее одной отдельной сделки."
+  },
 
-  "default":
-    "Хороший вопрос. Я бы разобрала его по шагам: сначала определение, затем пример на графике, после этого типичные ошибки и в конце небольшая практика. Напиши конкретную тему — например «свечи», «RSI», «тренд», «поддержка», «риск» или «Price Action»."
+  {
+    keys:[
+      "индикатор"
+    ],
+    answer:
+      "Индикатор — математический инструмент обработки ценовых данных. Он помогает увидеть определённые характеристики движения, но не может гарантировать будущее направление цены."
+  }
 
-};
+];
 
 
-function getAvaAnswer(text){
+function avaAnswer(text){
 
   const query =
     text.toLowerCase();
 
   for(
-    const key of Object.keys(
-      avaAnswers
-    )
+    const item of avaKnowledge
   ){
 
     if(
-      key !== "default" &&
-      query.includes(key)
+      item.keys.some(
+        key =>
+          query.includes(key)
+      )
     ){
 
-      return avaAnswers[key];
+      return item.answer;
 
     }
 
   }
 
-  return avaAnswers.default;
-
-}
-
-
-function sendAvaMessage(){
-
-  const input =
-    $("#aiInput");
-
-  const text =
-    input.value.trim();
-
-  if(!text)
-    return;
-
-  const messages =
-    $("#messages");
-
-  messages.insertAdjacentHTML(
-    "beforeend",
-    `
-    <div class="message user">
-      ${escapeHTML(text)}
-    </div>
-    `
-  );
-
-  input.value = "";
-
-  messages.scrollTop =
-    messages.scrollHeight;
-
-  setTimeout(
-    ()=>{
-
-      const answer =
-        getAvaAnswer(text);
-
-      messages.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="message ava">
-          ${escapeHTML(answer)}
-        </div>
-        `
-      );
-
-      messages.scrollTop =
-        messages.scrollHeight;
-
-    },
-    550
-  );
+  return `
+    Хороший вопрос. Я бы разобрала его
+    в четыре шага: определение → пример
+    на графике → типичные ошибки → практика.
+    Если хочешь, напиши конкретную тему:
+    свечи, тренд, RSI, EMA, MACD, уровни,
+    Price Action, риск или психология.
+  `;
 
 }
 
@@ -7122,10 +7434,62 @@ function escapeHTML(text){
 }
 
 
+function sendAva(){
+
+  const input =
+    $("#aiInput");
+
+  const text =
+    input.value.trim();
+
+  if(!text)
+    return;
+
+  const messages =
+    $("#messages");
+
+  messages.insertAdjacentHTML(
+    "beforeend",
+    `
+      <div class="message user">
+        ${escapeHTML(text)}
+      </div>
+    `
+  );
+
+  input.value = "";
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+  setTimeout(
+    ()=>{
+
+      messages.insertAdjacentHTML(
+        "beforeend",
+        `
+          <div class="message ava">
+            ${escapeHTML(
+              avaAnswer(text)
+            )}
+          </div>
+        `
+      );
+
+      messages.scrollTop =
+        messages.scrollHeight;
+
+    },
+    550
+  );
+
+}
+
+
 $("#aiSend")
   .addEventListener(
     "click",
-    sendAvaMessage
+    sendAva
   );
 
 
@@ -7141,7 +7505,7 @@ $("#aiInput")
 
         event.preventDefault();
 
-        sendAvaMessage();
+        sendAva();
 
       }
 
@@ -7159,7 +7523,7 @@ $$(".quick")
         $("#aiInput").value =
           button.textContent.trim();
 
-        sendAvaMessage();
+        sendAva();
 
       }
     );
@@ -7168,19 +7532,20 @@ $$(".quick")
 
 
 /* =========================================================
-   QUIZ
+   PRACTICE
 ========================================================= */
 
-const quizQuestions = [
+const questions = [
 
   {
-    q:"Что показывает тело японской свечи?",
+    question:
+      "Что показывает тело японской свечи?",
 
     answers:[
       "Расстояние между Open и Close",
-      "Только максимальную цену",
-      "Только минимальную цену",
-      "Объём рынка"
+      "Только максимум",
+      "Только минимум",
+      "Объём"
     ],
 
     correct:0
@@ -7188,13 +7553,14 @@ const quizQuestions = [
   },
 
   {
-    q:"Что обычно называют восходящим трендом?",
+    question:
+      "Что характерно для восходящего тренда?",
 
     answers:[
-      "Последовательность более высоких максимумов и минимумов",
-      "Любое движение цены вверх",
+      "Более высокие максимумы и минимумы",
+      "Только красные свечи",
       "Полное отсутствие движения",
-      "Только одну зелёную свечу"
+      "Одна зелёная свеча"
     ],
 
     correct:0
@@ -7202,13 +7568,14 @@ const quizQuestions = [
   },
 
   {
-    q:"Что такое поддержка?",
+    question:
+      "Что такое поддержка?",
 
     answers:[
-      "Ценовая зона, где движение вниз может замедлиться",
-      "Всегда точная цена",
+      "Ценовая зона, где снижение может замедлиться",
+      "Всегда одна точная цена",
       "Индикатор",
-      "Название валютной пары"
+      "Валютная пара"
     ],
 
     correct:0
@@ -7216,13 +7583,29 @@ const quizQuestions = [
   },
 
   {
-    q:"Что является частью риск-менеджмента?",
+    question:
+      "Что относится к риск-менеджменту?",
 
     answers:[
-      "Заранее определённый допустимый риск",
+      "Заранее установленный допустимый риск",
       "Увеличение ставки после убытка",
       "Торговля без плана",
-      "Попытка вернуть убыток любой ценой"
+      "Попытка отыграться"
+    ],
+
+    correct:0
+
+  },
+
+  {
+    question:
+      "Для чего нужен торговый журнал?",
+
+    answers:[
+      "Для анализа собственных сделок и ошибок",
+      "Только для красивого оформления",
+      "Чтобы увеличить депозит",
+      "Чтобы заменить анализ рынка"
     ],
 
     correct:0
@@ -7231,126 +7614,43 @@ const quizQuestions = [
 
 ];
 
-let quizIndex = 0;
+let questionIndex =
+  0;
 
-let quizAnswered = false;
+let answered =
+  false;
+
 
 function renderQuiz(){
 
   const question =
-    quizQuestions[quizIndex];
+    questions[
+      questionIndex
+    ];
 
   $("#quizQuestion")
     .textContent =
-    question.q;
+    question.question;
 
   $("#quizScore")
     .textContent =
-    `Вопрос ${quizIndex+1} из ${quizQuestions.length}`;
-
-  quizAnswered = false;
+    `Вопрос ${questionIndex+1} из ${questions.length}`;
 
   $("#answers").innerHTML =
     question.answers
       .map(
         (answer,index)=>
           `
-          <button
-            class="answer"
-            data-answer="${index}">
-            ${answer}
-          </button>
+            <button
+              class="answer"
+              data-answer="${index}">
+              ${answer}
+            </button>
           `
       )
       .join("");
 
-}
-
-function answerQuestion(index){
-
-  if(quizAnswered)
-    return;
-
-  quizAnswered = true;
-
-  const question =
-    quizQuestions[quizIndex];
-
-  const answers =
-    $$(".answer");
-
-  answers.forEach(
-    (button,i)=>{
-
-      if(
-        i === question.correct
-      ){
-
-        button.classList.add(
-          "correct"
-        );
-
-      }
-
-      if(
-        i === index &&
-        i !== question.correct
-      ){
-
-        button.classList.add(
-          "wrong"
-        );
-
-      }
-
-    }
-  );
-
-  if(index === question.correct){
-
-    addXP(20);
-
-    addCoins(8);
-
-    showToast(
-      "✓ Правильно · +20 XP"
-    );
-
-  }else{
-
-    showToast(
-      "Неверно. Изучи объяснение и попробуй снова."
-    );
-
-  }
-
-  state.testsCompleted++;
-
-  save();
-
-  updateAll();
-
-}
-
-
-function nextQuestion(){
-
-  quizIndex++;
-
-  if(
-    quizIndex >=
-    quizQuestions.length
-  ){
-
-    quizIndex = 0;
-
-    showToast(
-      "Тест завершён ✦"
-    );
-
-  }
-
-  renderQuiz();
+  answered = false;
 
 }
 
@@ -7360,18 +7660,83 @@ $("#answers")
     "click",
     event=>{
 
-      const answer =
-        event.target.closest(".answer");
+      const button =
+        event.target.closest(
+          ".answer"
+        );
 
-      if(answer){
+      if(
+        !button ||
+        answered
+      )
+        return;
 
-        answerQuestion(
-          Number(
-            answer.dataset.answer
-          )
+      answered = true;
+
+      const selected =
+        Number(
+          button.dataset.answer
+        );
+
+      const question =
+        questions[
+          questionIndex
+        ];
+
+      $$(".answer")
+        .forEach(
+          (answer,index)=>{
+
+            if(
+              index ===
+              question.correct
+            ){
+
+              answer.classList
+                .add("correct");
+
+            }
+
+            if(
+              index === selected &&
+              selected !==
+              question.correct
+            ){
+
+              answer.classList
+                .add("wrong");
+
+            }
+
+          }
+        );
+
+      state.testsCompleted++;
+
+      if(
+        selected ===
+        question.correct
+      ){
+
+        state.xp += 20;
+
+        state.coins += 8;
+
+        showToast(
+          "✓ Правильно · +20 XP"
+        );
+
+      }else{
+
+        showToast(
+          "Неверно. Посмотри правильный вариант."
         );
 
       }
+
+      save();
+
+      updateAll();
 
     }
   );
@@ -7380,7 +7745,26 @@ $("#answers")
 $("#nextQuestion")
   .addEventListener(
     "click",
-    nextQuestion
+    ()=>{
+
+      questionIndex++;
+
+      if(
+        questionIndex >=
+        questions.length
+      ){
+
+        questionIndex = 0;
+
+        showToast(
+          "Тест завершён ✦"
+        );
+
+      }
+
+      renderQuiz();
+
+    }
   );
 
 
@@ -7396,19 +7780,35 @@ function initials(name){
   if(!name)
     return "A";
 
-  const parts =
-    name
-      .trim()
-      .split(/\s+/);
-
-  return parts
+  return name
+    .trim()
+    .split(/\s+/)
     .slice(0,2)
     .map(
-      part =>
-        part[0]
+      word =>
+        word[0]
           .toUpperCase()
     )
     .join("");
+
+}
+
+
+function level(){
+
+  return Math.max(
+    1,
+    Math.floor(
+      state.xp / 100
+    ) + 1
+  );
+
+}
+
+
+function levelProgress(){
+
+  return state.xp % 100;
 
 }
 
@@ -7422,15 +7822,17 @@ function renderAvatar(element){
 
     element.innerHTML =
       `
-      <img
-        src="${state.avatar}"
-        alt="avatar">
+        <img
+          src="${state.avatar}"
+          alt="avatar">
       `;
 
   }else{
 
     element.textContent =
-      initials(state.name);
+      initials(
+        state.name
+      );
 
   }
 
@@ -7441,22 +7843,26 @@ function renderProfile(){
 
   $("#profileName")
     .textContent =
-    state.name || "Студент";
+    state.name ||
+    "Студент";
 
   $("#profileNickname")
     .textContent =
-    state.nickname || "@student";
-
-  const level =
-    getLevel();
+    state.nickname ||
+    "@student";
 
   $("#profileLevel")
     .textContent =
-    level;
+    level();
 
   $("#profileXP")
     .textContent =
-    state.xp + " XP";
+    state.xp +
+    " XP";
+
+  $("#profileCoins")
+    .textContent =
+    state.coins;
 
   $("#profileLessons")
     .textContent =
@@ -7474,16 +7880,10 @@ function renderProfile(){
     .textContent =
     state.streak;
 
-  $("#profileCoins")
-    .textContent =
-    state.coins;
-
-  const progress =
-    getLevelProgress();
-
   $("#profileLevelBar")
     .style.width =
-    progress + "%";
+    levelProgress() +
+    "%";
 
   renderAvatar(
     $("#profileAvatar")
@@ -7497,36 +7897,115 @@ function renderProfile(){
     $("#sideAvatar")
   );
 
+  renderRoute();
+
   renderAchievements();
 
 }
 
 
-function getLevel(){
+function renderRoute(){
 
-  return Math.max(
-    1,
-    Math.floor(
-      state.xp / 100
-    ) + 1
-  );
+  const route = [
 
-}
+    [
+      "01",
+      "Основы",
+      0,
+      9
+    ],
 
+    [
+      "02",
+      "Свечи",
+      10,
+      19
+    ],
 
-function getLevelProgress(){
+    [
+      "03",
+      "Структура",
+      20,
+      29
+    ],
 
-  return state.xp % 100;
+    [
+      "04",
+      "Индикаторы",
+      40,
+      49
+    ]
+
+  ];
+
+  $("#learningRoute").innerHTML =
+    route.map(
+      item=>{
+
+        const done =
+          state.completedLessons
+            .filter(
+              id =>
+                id >= item[2] &&
+                id <= item[3]
+            ).length;
+
+        const percent =
+          Math.round(
+            done /
+            (item[3]-item[2]+1) *
+            100
+          );
+
+        return `
+
+          <div
+            class="route ${
+              percent === 100
+                ? "done"
+                : ""
+            }">
+
+            <div class="route-icon">
+              ${
+                percent === 100
+                  ? "✓"
+                  : item[0]
+              }
+            </div>
+
+            <div class="route-name">
+
+              <strong>
+                ${item[1]}
+              </strong>
+
+              <small>
+                ${done}/10 уроков
+              </small>
+
+            </div>
+
+            <div class="route-percent">
+              ${percent}%
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
 
 }
 
 
 function renderAchievements(){
 
-  const achievements = [
+  const items = [
 
     [
-      "Первый шаг",
+      "Первый урок",
       "1 урок",
       state.completedLessons.length >= 1
     ],
@@ -7538,14 +8017,14 @@ function renderAchievements(){
     ],
 
     [
-      "Полпути",
       "50 уроков",
+      "Полпути",
       state.completedLessons.length >= 50
     ],
 
     [
-      "Сотня",
       "100 уроков",
+      "Большой путь",
       state.completedLessons.length >= 100
     ],
 
@@ -7556,33 +8035,34 @@ function renderAchievements(){
     ],
 
     [
-      "Сигнальный",
+      "Bot User",
       "10 анализов",
       state.signalsGenerated >= 10
     ],
 
     [
-      "Опытный",
       "500 XP",
+      "Опыт",
       state.xp >= 500
     ],
 
     [
-      "Кошелёк",
       "1000 Coins",
+      "AVA Coins",
       state.coins >= 1000
     ]
 
   ];
 
   $("#achievements").innerHTML =
-    achievements
-      .map(
-        item =>
-          `
+    items.map(
+      item =>
+        `
           <div
             class="achievement ${
-              item[2] ? "" : "locked"
+              item[2]
+                ? ""
+                : "locked"
             }">
 
             <div class="achievement-icon">
@@ -7602,111 +8082,31 @@ function renderAchievements(){
             </small>
 
           </div>
-          `
-      )
-      .join("");
+        `
+    ).join("");
 
 }
 
 
 /* =========================================================
-   XP / COINS
-========================================================= */
-
-function addXP(amount){
-
-  state.xp += amount;
-
-}
-
-
-function addCoins(amount){
-
-  state.coins += amount;
-
-}
-
-
-function getToday(){
-
-  return new Date()
-    .toISOString()
-    .slice(0,10);
-
-}
-
-
-function claimBonus(){
-
-  if(
-    state.lastBonus ===
-    getToday()
-  ){
-
-    showToast(
-      "Бонус уже получен сегодня"
-    );
-
-    return;
-
-  }
-
-  state.lastBonus =
-    getToday();
-
-  addCoins(25);
-
-  addXP(15);
-
-  save();
-
-  updateAll();
-
-  showToast(
-    "🎁 +25 AVA Coins · +15 XP"
-  );
-
-}
-
-
-$("#dailyBonus")
-  .addEventListener(
-    "click",
-    claimBonus
-  );
-
-
-/* =========================================================
-   PROFILE EDIT
+   PROFILE MODAL
 ========================================================= */
 
 $("#editProfile")
   .addEventListener(
     "click",
-    openProfileModal
-  );
-
-
-function openProfileModal(){
-
-  $("#editName").value =
-    state.name || "";
-
-  $("#editNickname").value =
-    state.nickname || "";
-
-  $("#profileModal")
-    .classList.add("open");
-
-}
-
-
-$("#modalCancel")
-  .addEventListener(
-    "click",
     ()=>{
+
+      $("#editName").value =
+        state.name || "";
+
+      $("#editNickname").value =
+        state.nickname || "";
+
       $("#profileModal")
-        .classList.remove("open");
+        .classList
+        .add("open");
+
     }
   );
 
@@ -7731,6 +8131,19 @@ $("#avatarInput")
       if(!file)
         return;
 
+      if(
+        file.size >
+        3*1024*1024
+      ){
+
+        showToast(
+          "Фото слишком большое"
+        );
+
+        return;
+
+      }
+
       const reader =
         new FileReader();
 
@@ -7747,6 +8160,17 @@ $("#avatarInput")
 
       reader.readAsDataURL(file);
 
+    }
+  );
+
+
+$("#modalCancel")
+  .addEventListener(
+    "click",
+    ()=>{
+      $("#profileModal")
+        .classList
+        .remove("open");
     }
   );
 
@@ -7796,7 +8220,8 @@ $("#modalSave")
       updateAll();
 
       $("#profileModal")
-        .classList.remove("open");
+        .classList
+        .remove("open");
 
       showToast(
         "Профиль обновлён ✓"
@@ -7807,13 +8232,93 @@ $("#modalSave")
 
 
 /* =========================================================
-   GLOBAL UI
+   DAILY BONUS
+========================================================= */
+
+function today(){
+
+  return new Date()
+    .toISOString()
+    .slice(0,10);
+
+}
+
+
+$("#dailyBonus")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      if(
+        state.lastBonus ===
+        today()
+      ){
+
+        showToast(
+          "Бонус уже получен сегодня"
+        );
+
+        return;
+
+      }
+
+      state.lastBonus =
+        today();
+
+      state.coins += 25;
+
+      state.xp += 15;
+
+      save();
+
+      updateAll();
+
+      showToast(
+        "🎁 +25 AVA Coins · +15 XP"
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   COMMUNITY
+========================================================= */
+
+$("#telegramButton")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      showToast(
+        "Здесь можно установить твою Telegram-ссылку"
+      );
+
+    }
+  );
+
+
+$("#updatesButton")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      showToast(
+        "✓ Установлена актуальная версия AVA POCKET"
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   UPDATE
 ========================================================= */
 
 function updateAll(){
 
-  const level =
-    getLevel();
+  const currentLevel =
+    level();
 
   $("#sideCoins")
     .textContent =
@@ -7827,12 +8332,9 @@ function updateAll(){
     .textContent =
     state.coins;
 
-  $("#homeLessons")
-    ?.textContent;
-
   $("#homeLevel")
     .textContent =
-    level;
+    currentLevel;
 
   $("#homeXP")
     .textContent =
@@ -7850,15 +8352,7 @@ function updateAll(){
   $("#sideLevel")
     .textContent =
     "Уровень " +
-    level;
-
-  renderAvatar(
-    $("#sideAvatar")
-  );
-
-  renderAvatar(
-    $("#topAvatar")
-  );
+    currentLevel;
 
   renderProfile();
 
@@ -7875,77 +8369,23 @@ function showToast(message){
   toast.textContent =
     message;
 
-  toast.classList.add(
-    "show"
-  );
+  toast.classList
+    .add("show");
 
   clearTimeout(
-    window.toastTimer
+    window.__toast
   );
 
-  window.toastTimer =
+  window.__toast =
     setTimeout(
       ()=>{
-        toast.classList.remove(
-          "show"
-        );
+        toast.classList
+          .remove("show");
       },
       2700
     );
 
 }
-
-
-/* =========================================================
-   COMMUNITY
-========================================================= */
-
-$("#updatesButton")
-  .addEventListener(
-    "click",
-    ()=>{
-      showToast(
-        "✓ У тебя установлена последняя версия AVA POCKET"
-      );
-    }
-  );
-
-
-$("#telegramButton")
-  .addEventListener(
-    "click",
-    ()=>{
-      showToast(
-        "Здесь можно подключить твою Telegram-ссылку"
-      );
-    }
-  );
-
-
-/* =========================================================
-   DATA PAGE EVENTS
-========================================================= */
-
-document.addEventListener(
-  "click",
-  event=>{
-
-    const element =
-      event.target.closest(
-        "[data-page]"
-      );
-
-    if(!element)
-      return;
-
-    const page =
-      element.dataset.page;
-
-    if(page)
-      navigate(page);
-
-  }
-);
 
 
 /* =========================================================
@@ -7957,33 +8397,51 @@ document.addEventListener(
   event=>{
 
     if(
-      event.key === "Escape"
+      event.key ===
+      "Escape"
     ){
 
       closeReader();
 
       $("#profileModal")
-        .classList.remove("open");
+        .classList
+        .remove("open");
 
     }
 
     if(
-      event.key === "ArrowRight" &&
       $("#readerOverlay")
-        .classList.contains("open")
+        .classList
+        .contains("open")
     ){
 
-      moveLesson(1);
+      if(
+        event.key ===
+        "ArrowRight"
+      ){
 
-    }
+        openLesson(
+          Math.min(
+            lessons.length-1,
+            currentLesson+1
+          )
+        );
 
-    if(
-      event.key === "ArrowLeft" &&
-      $("#readerOverlay")
-        .classList.contains("open")
-    ){
+      }
 
-      moveLesson(-1);
+      if(
+        event.key ===
+        "ArrowLeft"
+      ){
+
+        openLesson(
+          Math.max(
+            0,
+            currentLesson-1
+          )
+        );
+
+      }
 
     }
 
@@ -7992,16 +8450,18 @@ document.addEventListener(
 
 
 /* =========================================================
-   START APP
+   START
 ========================================================= */
 
 function showApp(){
 
   $("#auth")
-    .classList.add("hidden");
+    .classList
+    .add("hidden");
 
   $("#app")
-    .classList.remove("hidden");
+    .classList
+    .remove("hidden");
 
   renderEducation();
 
@@ -8017,7 +8477,7 @@ function showApp(){
 
 function start(){
 
-  createBackgroundCandles();
+  createBackground();
 
   loadState();
 
@@ -8025,24 +8485,27 @@ function start(){
     ()=>{
 
       $("#loader")
-        .style.opacity = "0";
+        .style.opacity =
+        "0";
 
       setTimeout(
         ()=>{
 
           $("#loader")
-            .style.display = "none";
+            .style.display =
+            "none";
 
-          if(state.registered){
+          if(
+            state.registered
+          ){
 
             showApp();
 
           }else{
 
             $("#auth")
-              .classList.remove(
-                "hidden"
-              );
+              .classList
+              .remove("hidden");
 
           }
 
